@@ -1,0 +1,8 @@
+# filtering file type
+*.html
+*.pdf
+*.doc
+*.docx
+*~
+# filtering files Material
+Material/

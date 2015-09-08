@@ -1,0 +1,19 @@
+SUFFIX = cpp
+CC = g++
+CPPFLAGS = -c -w $(LOCFLAGS)
+
+LOCFLAGS = 
+# PRG=
+# OBJ=
+
+$(PRG): $(OBJ)
+	$(CC) -o $@ $(OBJ)
+
+$(OBJ): %.o : %.$(SUFFIX)
+	$(CC) $(CPPFLAGS) $< -o $@
+
+clean:
+	del *.obj 
+
+clobber: clean
+	del *.exe

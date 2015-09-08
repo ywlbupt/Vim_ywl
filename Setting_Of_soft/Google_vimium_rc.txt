@@ -1,0 +1,11 @@
+unmap d
+unmap u
+map <c-d> scrollPageDown
+map <c-u> scrollPageUp
+unmap /
+unmap x
+unmap gt
+unmap gT
+map gp previousTab
+map gn nextTab
+map <c-e> removeTab

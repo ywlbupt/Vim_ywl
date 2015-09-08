@@ -1,0 +1,107 @@
+"	## - 以后需要解决优化的地方
+
+"	Get out of VI's compatible mode.
+	set nocompatible
+	set fileformats=unix,dos
+	filetype plugin indent on " 开启插件
+
+"	Platform
+	function! MySys()
+	  return "linux"
+	endfunction
+
+"	设置$VIMFILES变量，设置$HOME变量
+	if MySys() == 'linux'
+		let g:ywl_path = '~/Dropbox'
+		let $VIMFILES = $HOME.'/.vim'
+	elseif MySys() == 'windows'
+		let g:ywl_path ='E:\yanweilin\Dropbox'
+		let $HOME = g:ywl_path
+		let $VIMFILES = $VIM.'\vimfiles'
+	endif
+
+
+"	Chinese
+if MySys() == "windows"
+	set encoding=utf-8
+	set langmenu=zh_CN.UTF-8
+	language message zh_CN.UTF-8
+	set fileencodings=ucs-bom,utf-8,gb18030,cp936,big5,euc-jp,euc-kr,latin1
+elseif MySys() == "linux"
+	set langmenu=zh_CN.UTF-8
+	set fencs=utf-8,usc-bom,euc-jp,gb18030,gbk,gb2312,cp936	
+endif
+
+
+"	Set mapleader
+    let mapleader =","
+"	个人文件夹路径的设定
+	set runtimepath=$VIM/vimfiles,$VIM/vim73,$VIM/vimfiles/after
+	set runtimepath+=$HOME/vimfiles,$HOME/vimfiles/after
+if MySys() == 'linux'
+	set runtimepath+=$HOME/Dropbox/vimfiles
+endif	
+"	Fast edit vimrc
+if MySys() == 'linux'
+"	Fast reloading of the .vimrc
+    map <silent> <leader>ss :source ~/Dropbox/_vimrc<cr>
+    map <silent> <leader>rr :source ~/.vimrc<cr>
+"	Fast editing of .vimrc
+    map <silent> <leader>ee :e ~/Dropbox/_vimrc<cr>
+    map <silent> <leader>er :e ~/.vimrc<cr>
+"	When .vimrc is edited, reload it
+    autocmd! bufwritepost _vimrc exec 'source '.g:ywl_path.'/_vimrc'
+    autocmd! bufwritepost .vimrc exec 'source ~/.vimrc'
+elseif MySys() == 'windows'
+"	Set helplang
+"	Set helplang=cn
+"	Fast reloading of the _vimrc
+    map <silent> <leader>ss :source $HOME\_vimrc<cr>
+    map <silent> <leader>rr :source $VIM\_vimrc<cr>
+"	Fast editing of _vimrc
+    map <silent> <leader>ee :e $HOME\_vimrc<cr>
+    map <silent> <leader>er :e $VIM\_vimrc<cr>
+"	When _vimrc is edited, reload it
+    autocmd! bufwritepost _vimrc exec 'source '.g:ywl_path.'/_vimrc'
+"	Open my note about Vim
+endif
+
+
+
+
+"	For windows version, using gVIM with Cygwin on a Windows PC
+if MySys() == 'windows'
+"   source $VIMRUNTIME/mswin.vim
+"   behave mswin
+"	unmap <C-A>
+    set diffexpr=MyDiff()
+    function! MyDiff()
+        let opt = '-a --binary '
+        if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+        if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+        let arg1 = v:fname_in
+        if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+        let arg2 = v:fname_new
+        if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+        let arg3 = v:fname_out
+        if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+        let eq = ''
+        if $VIMRUNTIME =~ ' '
+            if &sh =~ '/<cmd'
+                let cmd = '""' . $VIMRUNTIME . '/diff"'
+                let eq = '"'
+            else
+                let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '/diff"'
+            endif
+        else
+            let cmd = $VIMRUNTIME . '/diff'
+        endif
+        silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+    endfunction
+endif
+
+	if MySys() == 'windows'
+		exec 'source '.g:ywl_path.'/_vimrc'
+	elseif MySys() == 'linux'
+		exec 'source '.g:ywl_path.'/_vimrc'
+	endif
