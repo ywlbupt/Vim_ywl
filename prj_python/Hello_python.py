@@ -1,4 +1,3 @@
-def sayHello():
-    print 'Hello world \n'
+#!/usr/bin/env python3
+# coding:utf-8
 
-sayHello()
