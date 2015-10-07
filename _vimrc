@@ -329,20 +329,14 @@ endif
     else
         "colorscheme desert_ywl "设定配色方案
         set cursorline " 突出显示当前行
+        if &term == "xterm"
+            set t_Co=16
+            set t_Sb=^[[4%dm " 设置背景色
+            set t_Sf=^[[3%dm " 设置前景色
+            colorscheme evening_ywl
+            autocmd VimEnter * set lines=35 | set columns=118
+        endif 
     endif
-    if &term=="xterm"
-        set t_Co=16
-        set t_Sb=^[[4%dm " 设置背景色
-        set t_Sf=^[[3%dm " 设置前景色
-        colorscheme evening_ywl
-        " It works at ubuntu , not work at cygwin
-"       set <m-h>=h
-"       set <m-j>=j
-"       set <m-k>=k
-"       set <m-l>=l
-"       set ttimeoutlen=50
-        autocmd VimEnter * set lines=35 | set columns=118
-    endif 
 "}}}
 
 "   Autocmd "{{{
@@ -1012,7 +1006,8 @@ endif
         elseif &filetype == 'java'  
             exec "!java %<"
 		elseif &filetype == 'python'
-			exec "!python %"
+            exec "w"  
+			exec "!python3 %"
         endif  
     endfunc  
 
