@@ -241,7 +241,7 @@ endif
     elseif MySys() == 'linux'
         let g:session_directory=g:ywl_path.'/vimfiles/Workspace'
     endif
-    let g:session_autoload='promt'
+    let g:session_autoload='no'
 "}}}
 
 "   持久保存撤销历史"{{{
