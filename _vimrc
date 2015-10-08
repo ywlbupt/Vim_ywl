@@ -544,16 +544,6 @@ endif "has("autocmd")
     let g:vim_markdown_initial_foldlevel=2
 "}}}
 
-"   Calendar.vim"{{{
-""""""""""""""""""""""""""""""
-"   Set diary path
-    if MySys() == 'windows'
-        let diarypath=g:ywl_path.'\vimwiki\wiki\diary'
-        let g:calendar_diary=diarypath
-        map <leader>ca :Calendar<CR>
-    endif
-"}}}
-
 "{{{
 "   vimwiki.vim
 """"""""""""""""""""""""""""""""
