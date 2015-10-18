@@ -997,7 +997,11 @@ endif
             exec "!java %<"
 		elseif &filetype == 'python'
             exec "w"  
-			exec "!python3 %"
+            if MySys() == 'windows'
+                exec "!python %"
+            elseif MySys() == 'linux'
+                exec "!python3 %"
+            endif  
         endif  
     endfunc  
 
