@@ -9,6 +9,28 @@ func isinstance()
 if not isinstance(x, (int, float)):
     raise TypeError('bad operand type')
 ```
+并且还可以判断一个变量是否是某些类型中的一种，比如下面的代码就可以判断是否是list或者tuple：
+
+    >>> isinstance([1, 2, 3], (list, tuple))
+    True
+    >>> isinstance((1, 2, 3), (list, tuple))
+    True
+
+另外，可以使用type()函数检查变量类型
+
+    >>> import types
+    >>> def fn():
+    ...     pass
+    ...
+    >>> type(fn)==types.FunctionType
+    True
+    >>> type(abs)==types.BuiltinFunctionType
+    True
+    >>> type(lambda x: x)==types.LambdaType
+    True
+    >>> type((x for x in range(10)))==types.GeneratorType
+    True
+
 ### 函数参数
 
 可变参数、关键字参数、命名的关键字参数
@@ -155,6 +177,112 @@ Python 并未对尾递归函数做特殊的优化
 
 注意，这里去掉了方括号。这是因为join函数接收任意可迭代的数据，包括列表或者生成器。这个没有方括号的语法使用了生成器。这产生（与列表生成式）同样的结果，相对于之前把所有条目包装成一个列表,生成器在我们遍历时才产生相应的条目。这可以使我们不必保存整个列表到内存，并且这对于处理大量数据更有效率。
 
+### 类关键字
+
+TBD
+
+### Debug,pdb
+
+pdb, pdb.set_trace()
+
+#### pdb
+
+第4种方式是启动Python的调试器pdb，让程序以单步方式运行，可以随时查看运行状态。我们先准备好程序：
+
+```
+    # err.py
+    s = '0'
+    n = int(s)
+    print(10 / n)
+```
+
+然后启动：
+
+``` python
+    $ python3 -m pdb err.py
+    > /Users/michael/Github/learn-python3/samples/debug/err.py(2)<module>()
+    -> s = '0'
+```
+
+以参数-m pdb启动后，pdb定位到下一步要执行的代码-> s = '0'。输入命令l来查看代码：
+
+```
+    (Pdb) l
+    1     # err.py
+    2  -> s = '0'
+    3     n = int(s)
+    4     print(10 / n)
+```
+
+输入命令n可以单步执行代码：
+
+```
+    (Pdb) n
+    > /Users/michael/Github/learn-python3/samples/debug/err.py(3)<module>()
+    -> n = int(s)
+    (Pdb) n
+    > /Users/michael/Github/learn-python3/samples/debug/err.py(4)<module>()
+    -> print(10 / n)
+```
+
+任何时候都可以输入命令p 变量名来查看变量：
+
+```
+    (Pdb) p s
+    '0'
+    (Pdb) p n
+    0
+```
+
+输入命令q结束调试，退出程序：
+
+```
+    (Pdb) q
+```
+
+这种通过pdb在命令行调试的方法理论上是万能的，但实在是太麻烦了，如果有一千行代码，要运行到第999行得敲多少命令啊。还好，我们还有另一种调试方法。
+
+#### pdb.set_trace()
+
+这个方法也是用pdb，但是不需要单步执行，我们只需要import pdb，然后，在可能出错的地方放一个pdb.set_trace()，就可以设置一个断点：
+
+``` python
+    # err.py
+    import pdb
+
+    s = '0'
+    n = int(s)
+    pdb.set_trace() # 运行到这里会自动暂停
+    print(10 / n)
+```
+
+运行代码，程序会自动在pdb.set_trace()暂停并进入pdb调试环境，可以用命令p查看变量，或者用命令c继续运行：
+
+``` python
+    $ python3 err.py 
+    > /Users/michael/Github/learn-python3/samples/debug/err.py(7)<module>()
+    -> print(10 / n)
+    (Pdb) p n
+    0
+    (Pdb) c
+    Traceback (most recent call last):
+    File "err.py", line 7, in <module>
+    print(10 / n)
+    ZeroDivisionError: division by zero
+```
+
+这个方式比直接启动pdb单步调试效率要高很多，但也高不到哪去。
+
+### with 语句
+
+TBD
+
+### Process, multiprocessing
+
+1. 进程之间的通信可以通过`Queue`, `Pipes` 来实现
+2. 进程之间的同步可以通过Pool来实现
+TBD
+
 ### Next
 
-TBD 
+TBD
