@@ -121,25 +121,11 @@
 
 "}}}
 
-"{{{
-"   return hostname()
-    function! Myhostname()
-        if hostname() =~ "UBT-E420"
-            return "Ubuntu of E420"
-        elseif hostname() =~ "WIN-E420"
-            return "Windows of E420"
-        elseif hostname() =~ "WIN-U410"
-            return "Windows of U410"
-        endif
-    endfunction
-
-    if Myhostname()=="Windows of E420"
-"       let g:path_chrome='C:\Users\ywl\AppData\Local\Google\Chrome\Application\chrome.exe'
-        let g:path_chrome='C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
-    elseif Myhostname()=="Windows of U410"
-        let g:path_chrome='C:\Program Files\Google\Chrome\Application\chrome.exe'
+    if hostname() == 'M-PC'
+        let g:path_chrome='C:\Users\m\AppData\Local\Google\Chrome\Application\chrome.exe'
+    else 
+        let g:path_chrome='C:\Users\ywl\AppData\Local\Google\Chrome\Application\chrome.exe'
     endif
-"}}}
 
 "{{{
 "   启动进入自己的主目录
@@ -407,7 +393,6 @@ endif "has("autocmd")
     nnoremap gn :tabnext<CR>
     nnoremap gp :tabprev<CR>
     nnoremap <C-t> :tabnew<cr>
-    nnoremap <C-b> :bd!<cr>
     nnoremap <C-e> :tabclose<cr>
 "   map te :tabedit
 "   tabd[o] {cmd} 对每个标签页执行{cmd}, 遍历标签页
@@ -431,10 +416,10 @@ endif "has("autocmd")
 "{{{
 "   Smart way to move .btw. windows 
 "   关于窗口的扩大缩小, :help window-resize
-    noremap <C-j> <C-W>j
-    noremap <C-k> <C-W>k
-    noremap <C-h> <C-W>h
-    noremap <C-l> <C-W>l
+    " noremap <C-j> <C-W>j
+    " noremap <C-k> <C-W>k
+    " noremap <C-h> <C-W>h
+    " noremap <C-l> <C-W>l
     imap <C-h> <Left>
     imap <C-l> <Right>
     imap <C-j> <Down>
@@ -445,7 +430,7 @@ endif "has("autocmd")
     map j gj
     map k gk
     "nnoremap <S-CR> O<Esc>j
-    nnoremap <leader><cr> O<Esc>j
+    " nnoremap <leader><cr> O<Esc>j
 "   <Shift-CR>在normal模式的情况下增加一行空行
 "}}}
 
