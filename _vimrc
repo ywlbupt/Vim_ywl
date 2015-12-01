@@ -43,7 +43,7 @@
 
         " provide a reference manual for the C++ standard template library (STL)
 "       Bundle 'stlrefvim'
-"       Bundle 'Pydiction'
+        Bundle 'Pydiction'
 
 		"""""""""""""""""""""""""""""""""""""""""""""""
         Bundle 'The-NERD-tree'

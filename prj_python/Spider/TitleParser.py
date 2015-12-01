@@ -1,6 +1,5 @@
 #! /usr/bin/env python3
-# coding:utf-8
-
+# -*- coding=utf-8 -*-
 from html.parser import HTMLParser
 from html.entities import entitydefs
 
@@ -51,11 +50,18 @@ class TitleParser(HTMLParser):
     def gettitle(self):
         return self.title
 
+import io  
+import sys  
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030')
+
+
 # HTMLParser的子方法 feed()会恰当调用 handle_starttag, handle_data, handle_endtag
 # 方法，handle_data()方法会检查是否从TITLE元素中取得数据，如果是，己保存数据
 if __name__ == '__main__' :
-    fd = open ("./temp1.txt")
-    tp = TitleParser()
-    tp.feed(fd.read())
-    print ("Title is : %s" % tp.gettitle())
+    with open ("./temp1.txt",'r', encoding='utf-8') as fd :
+        # tp = TitleParser()
+        # tp.feed(fd.read())
+        print(fd.read())
+        # print ("Title is : %s" % tp.gettitle())
+        # print (tp.gettitle())
 
