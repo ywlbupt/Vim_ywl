@@ -1,0 +1,27 @@
+------------New Test begin ----------------
+Status: 200 OK
+Server : zhihu_nginx
+Connection : keep-alive
+Date : Sun, 29 Nov 2015 07:35:08 GMT
+Last-Modified : Sun, 29 Nov 2015 07:28:53 GMT
+Content-Type : text/html; charset=UTF-8
+Transfer-Encoding : chunked
+Vary : Accept-Encoding
+Content-Security-Policy : default-src *; frame-src *.zhihu.com getpocket.com note.youdao.com; script-src *.zhihu.com *.google-analytics.com zhstatic.zhihu.com 'unsafe-eval'; style-src *.zhihu.com 'unsafe-inline'
+Pragma : no-cache
+X-Frame-Options : DENY
+X-Cache-Status : HIT
+Accept-Ranges : bytes
+X-Daa-Tunnel : hop_count=1
+
+Data:
+<!DOCTYPE html>
+<html lang="zh-CN" dropEffect="none" class="no-js no-auth ">
+<head>
+<meta charset="utf-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+
+<title> 郦橙锦妖一只&amp;麋鹿 - 知&#174;乎</title>
+
