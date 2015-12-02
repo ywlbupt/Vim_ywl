@@ -1,1 +1,2083 @@
 ------------New Test begin ----------------
+Status: 200 OK 
+Server : zhihu_nginx 
+Connection : keep-alive 
+Date : Wed, 02 Dec 2015 07:35:56 GMT 
+Last-Modified : Wed, 02 Dec 2015 07:35:39 GMT 
+Content-Type : text/html; charset=UTF-8 
+Transfer-Encoding : chunked 
+Vary : Accept-Encoding 
+Content-Security-Policy : default-src *; frame-src *.zhihu.com getpocket.com note.youdao.com; script-src *.zhihu.com *.google-analytics.com zhstatic.zhihu.com 'unsafe-eval'; style-src *.zhihu.com 'unsafe-inline' 
+Pragma : no-cache 
+X-Frame-Options : DENY 
+X-Cache-Status : HIT 
+Accept-Ranges : bytes 
+X-Daa-Tunnel : hop_count=1 
+Data:
+<!DOCTYPE html>
+<html lang="zh-CN" dropEffect="none" class="no-js no-auth ">
+<head>
+<meta charset="utf-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+
+<title> 郦橙锦妖一只麋鹿 - 知乎</title>
+
+<meta name="apple-itunes-app" content="app-id=432274380, app-argument=zhihu://people/lycheeorange">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta http-equiv="mobile-agent" content="format=html5;url=http://www.zhihu.com/people/lycheeorange">
+<meta id="znonce" name="znonce" content="4acd039246b84445a09b2ede99f6424c">
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(57px).png" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(72px).png" sizes="72x72" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(76px).png" sizes="76x76" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(114px).png" sizes="114x114" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(120px).png" sizes="120x120" />
+<link rel="apple-touch-icon-precomposed" href="http://static.zhihu.com/static/img/ios/zhihu(152px).png" sizes="152x152" />
+
+
+<link rel="shortcut icon" href="http://static.zhihu.com/static/favicon.ico" type="image/x-icon">
+
+<link rel="search" type="application/opensearchdescription+xml" href="http://static.zhihu.com/static/search.xml" title="知乎" />
+<link rel="stylesheet" href="http://static.zhihu.com/static/revved/-/css/z.6441bd1f.css">
+<link rel="stylesheet" href="http://static.zhihu.com/static/revved/-/css/pages/profile/main.38bac7c8.css">
+
+<meta name="google-site-verification" content="FTeR0c8arOPKh8c5DYh_9uu98_zJbaWw53J-Sch9MTg" />
+<meta property="qc:admins" content="14414345146201056375" />
+
+
+
+<!--[if lt IE 9]>
+<script src="http://static.zhihu.com/static/components/respond/dest/respond.min.js"></script>
+<link href="http://static.zhihu.com/static/components/respond/cross-domain/respond-proxy.html" id="respond-proxy" rel="respond-proxy" />
+<link href="/static/components/respond/cross-domain/respond.proxy.gif" id="respond-redirect" rel="respond-redirect" />
+<script src="/static/components/respond/cross-domain/respond.proxy.js"></script>
+<![endif]-->
+<script src="http://static.zhihu.com/static/revved/-/js/instant.4b42dd60.js"></script>
+
+<style>
+.zm-item-top-container{
+display:none;
+}
+.zm-profile-section-head .goog-menu{
+display:none;!important;
+}
+</style>
+
+</head>
+
+<body class="zhi ">
+
+
+
+<div role="navigation" class="zu-top">
+<div class="zg-wrap modal-shifting clearfix" id="zh-top-inner">
+<a href="/" class="zu-top-link-logo" id="zh-top-link-logo" data-za-c="view_home" data-za-a="visit_home" data-za-l="top_navigation_zhihu_logo">知乎</a>
+
+
+
+<ul class="topnav-noauth clearfix">
+<li>
+<a href="javascript:;" class="js-signup-noauth"><i class="zg-icon zg-icon-dd-home"></i>注册知乎</a>
+</li>
+<li>
+<a href="javascript:;" class="js-signin-noauth">登录</a>
+</li>
+</ul>
+
+
+
+<button class="zu-top-add-question" id="zu-top-add-question">提问</button>
+
+
+<div role="search" id="zh-top-search" class="zu-top-search">
+<form method="GET" action="/search" id="zh-top-search-form" class="zu-top-search-form">
+
+
+
+<input type="hidden" name="type" value="question">
+<label for="q" class="hide-text">知乎搜索</label><input type="text" class="zu-top-search-input" id="q" name="q" autocomplete="off" value="" placeholder="搜索问题、话题或人">
+<button type="submit" class="zu-top-search-button"><span class="hide-text">搜索</span><span class="sprite-global-icon-magnifier-dark"></span></button>
+</form>
+</div>
+
+
+
+<div id="zg-top-nav" class="zu-top-nav">
+<ul class="zu-top-nav-ul zg-clear">
+
+<li class="zu-top-nav-li " id="zh-top-nav-home">
+<a class="zu-top-nav-link" href="/" id="zh-top-link-home" data-za-c="view_home" data-za-a="visit_home" data-za-l="top_navigation_home">首页</a>
+</li>
+<li class="top-nav-topic-selector zu-top-nav-li " id="zh-top-nav-topic">
+<a class="zu-top-nav-link" href="/topic" id="top-nav-dd-topic">话题</a>
+
+</li>
+<li class="zu-top-nav-li " id="zh-top-nav-explore">
+<a class="zu-top-nav-link" href="/explore">发现</a>
+</li>
+
+
+</ul>
+<div class="zu-top-nav-live zu-noti7-popup zg-r5px no-hovercard" id="zh-top-nav-live-new" role="popup" tabindex="0">
+<div class="zu-top-nav-live-inner zg-r5px">
+<div class="zu-top-live-icon">&nbsp;</div>
+<div class="zu-home-noti-inner" id="zh-top-nav-live-new-inner">
+<div class="zm-noti7-popup-tab-container clearfix" tabindex="0">
+<button class="zm-noti7-popup-tab-item message">
+<span class="icon">消息</span>
+</button>
+<button class="zm-noti7-popup-tab-item user">
+<span class="icon">用户</span>
+</button>
+<button class="zm-noti7-popup-tab-item thanks">
+<span class="icon">赞同和感谢</span>
+</button>
+</div>
+</div>
+<div class="zm-noti7-frame-border top"></div>
+<div class="zm-noti7-frame">
+<div class="zm-noti7-content">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<span class="noti-spinner-loading"></span>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-content" style="display:none;">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<span class="noti-spinner-loading"></span>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-content" style="display:none;">
+<div class="zm-noti7-content-inner">
+<div class="zm-noti7-content-body">
+<div class="zm-noti7-popup-loading">
+<span class="noti-spinner-loading"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="zm-noti7-frame-border bottom"></div>
+<div class="zm-noti7-popup-footer">
+<a href="/notifications" class="zm-noti7-popup-footer-all zg-right">查看全部 &raquo;</a>
+<a href="/settings/notification" class="zm-noti7-popup-footer-set" title="通知设置" ><i class="zg-icon zg-icon-settings"></i></a>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<div class="zu-global-notify" id="zh-global-message" style="display:none">
+<div class="zg-wrap">
+<div class="zu-global-nitify-inner">
+<a class="zu-global-notify-close" href="javascript:;" title="关闭" name="close">x</a>
+<span class="zu-global-notify-icon"></span>
+<span class="zu-global-notify-msg"></span>
+</div>
+</div>
+</div>
+
+
+
+
+<div class="zg-wrap zu-main clearfix "  role="main">
+<div class="zu-main-content">
+<div class="zu-main-content-inner">
+
+
+
+
+<div class="zm-profile-header">
+<div class="zm-profile-header-main">
+<div class="top">
+
+<div class='weibo-wrap'>
+
+<a class="zm-profile-header-user-weibo" target="_blank" href="http://weibo.com/vanessa07" data-tip="s$b$新浪微博"><i class="zm-profile-header-icon sina"></i></a>
+
+</div>
+
+<div class="title-section ellipsis">
+
+<span class="name">郦橙锦妖一只麋鹿</span>，<span class="bio" title="PM@Aol.NY | CMU Alumni">PM@Aol.NY | CMU Alumni</span>
+</div>
+</div>
+<div class="body clearfix">
+<div class="zm-profile-header-avatar-container ">
+<img class="avatar avatar-l" alt="郦橙锦妖一只麋鹿" src="https://pic1.zhimg.com/d53bf55b7d9fc84f900c369761586170_l.png" srcset="https://pic1.zhimg.com/d53bf55b7d9fc84f900c369761586170_xl.png 2x" />
+
+</div>
+<div class="zm-profile-header-info">
+<div class="zm-profile-header-user-describe">
+<div class="items">
+<div class="item editable-group" data-name="location">
+
+<i class="icon icon-profile-location"></i>
+
+<span class="info-wrap">
+
+<span class="location item" title="纽约"><a href="/topic/19553507" title="纽约" class="topic-link" data-token="19553507" data-topicid="1092">纽约</a></span>
+
+
+<span class="business item" title="高新科技">高新科技</span>
+
+
+<span class="item gender" ><i class="icon icon-profile-female"></i></span>
+
+
+</span>
+<span class="edit-wrap" style="display:none;">
+<span class="topic-input-wrap"><input autocomplete="off" aria-haspopup="true" type="text" name="location" value="纽约" class="zg-form-text-input location" placeholder="居住地"/></span>
+<div class="business-selection">
+<select name="business">
+<option value="">选择行业</option>
+
+
+<option value="高新科技" selected>高新科技</option>
+
+<option value="互联网">&nbsp;&nbsp;&nbsp;互联网</option>
+
+<option value="电子商务">&nbsp;&nbsp;&nbsp;电子商务</option>
+
+<option value="电子游戏">&nbsp;&nbsp;&nbsp;电子游戏</option>
+
+<option value="计算机软件">&nbsp;&nbsp;&nbsp;计算机软件</option>
+
+<option value="计算机硬件">&nbsp;&nbsp;&nbsp;计算机硬件</option>
+
+
+
+
+<option value="信息传媒">信息传媒</option>
+
+<option value="出版业">&nbsp;&nbsp;&nbsp;出版业</option>
+
+<option value="电影录音">&nbsp;&nbsp;&nbsp;电影录音</option>
+
+<option value="广播电视">&nbsp;&nbsp;&nbsp;广播电视</option>
+
+<option value="通信">&nbsp;&nbsp;&nbsp;通信</option>
+
+
+
+
+<option value="金融">金融</option>
+
+<option value="银行">&nbsp;&nbsp;&nbsp;银行</option>
+
+<option value="资本投资">&nbsp;&nbsp;&nbsp;资本投资</option>
+
+<option value="证券投资">&nbsp;&nbsp;&nbsp;证券投资</option>
+
+<option value="保险">&nbsp;&nbsp;&nbsp;保险</option>
+
+<option value="信贷">&nbsp;&nbsp;&nbsp;信贷</option>
+
+<option value="财务">&nbsp;&nbsp;&nbsp;财务</option>
+
+<option value="审计">&nbsp;&nbsp;&nbsp;审计</option>
+
+
+
+
+<option value="服务业">服务业</option>
+
+<option value="法律">&nbsp;&nbsp;&nbsp;法律</option>
+
+<option value="餐饮">&nbsp;&nbsp;&nbsp;餐饮</option>
+
+<option value="酒店">&nbsp;&nbsp;&nbsp;酒店</option>
+
+<option value="旅游">&nbsp;&nbsp;&nbsp;旅游</option>
+
+<option value="广告">&nbsp;&nbsp;&nbsp;广告</option>
+
+<option value="公关">&nbsp;&nbsp;&nbsp;公关</option>
+
+<option value="景观">&nbsp;&nbsp;&nbsp;景观</option>
+
+<option value="咨询分析">&nbsp;&nbsp;&nbsp;咨询分析</option>
+
+<option value="市场推广">&nbsp;&nbsp;&nbsp;市场推广</option>
+
+<option value="人力资源">&nbsp;&nbsp;&nbsp;人力资源</option>
+
+<option value="社工服务">&nbsp;&nbsp;&nbsp;社工服务</option>
+
+<option value="养老服务">&nbsp;&nbsp;&nbsp;养老服务</option>
+
+
+
+
+<option value="教育">教育</option>
+
+<option value="高等教育">&nbsp;&nbsp;&nbsp;高等教育</option>
+
+<option value="基础教育">&nbsp;&nbsp;&nbsp;基础教育</option>
+
+<option value="职业教育">&nbsp;&nbsp;&nbsp;职业教育</option>
+
+<option value="幼儿教育">&nbsp;&nbsp;&nbsp;幼儿教育</option>
+
+<option value="特殊教育">&nbsp;&nbsp;&nbsp;特殊教育</option>
+
+<option value="培训">&nbsp;&nbsp;&nbsp;培训</option>
+
+
+
+
+<option value="医疗服务">医疗服务</option>
+
+<option value="临床医疗">&nbsp;&nbsp;&nbsp;临床医疗</option>
+
+<option value="制药">&nbsp;&nbsp;&nbsp;制药</option>
+
+<option value="保健">&nbsp;&nbsp;&nbsp;保健</option>
+
+<option value="美容">&nbsp;&nbsp;&nbsp;美容</option>
+
+<option value="医疗器材">&nbsp;&nbsp;&nbsp;医疗器材</option>
+
+<option value="生物工程">&nbsp;&nbsp;&nbsp;生物工程</option>
+
+<option value="疗养服务">&nbsp;&nbsp;&nbsp;疗养服务</option>
+
+<option value="护理服务">&nbsp;&nbsp;&nbsp;护理服务</option>
+
+
+
+
+<option value="艺术娱乐">艺术娱乐</option>
+
+<option value="创意艺术">&nbsp;&nbsp;&nbsp;创意艺术</option>
+
+<option value="体育健身">&nbsp;&nbsp;&nbsp;体育健身</option>
+
+<option value="娱乐休闲">&nbsp;&nbsp;&nbsp;娱乐休闲</option>
+
+<option value="图书馆">&nbsp;&nbsp;&nbsp;图书馆</option>
+
+<option value="博物馆">&nbsp;&nbsp;&nbsp;博物馆</option>
+
+<option value="策展">&nbsp;&nbsp;&nbsp;策展</option>
+
+<option value="博彩">&nbsp;&nbsp;&nbsp;博彩</option>
+
+
+
+
+<option value="制造加工">制造加工</option>
+
+<option value="食品饮料业">&nbsp;&nbsp;&nbsp;食品饮料业</option>
+
+<option value="纺织皮革业">&nbsp;&nbsp;&nbsp;纺织皮革业</option>
+
+<option value="服装业">&nbsp;&nbsp;&nbsp;服装业</option>
+
+<option value="烟草业">&nbsp;&nbsp;&nbsp;烟草业</option>
+
+<option value="造纸业">&nbsp;&nbsp;&nbsp;造纸业</option>
+
+<option value="印刷业">&nbsp;&nbsp;&nbsp;印刷业</option>
+
+<option value="化工业">&nbsp;&nbsp;&nbsp;化工业</option>
+
+<option value="汽车">&nbsp;&nbsp;&nbsp;汽车</option>
+
+<option value="家具">&nbsp;&nbsp;&nbsp;家具</option>
+
+<option value="电子电器">&nbsp;&nbsp;&nbsp;电子电器</option>
+
+<option value="机械设备">&nbsp;&nbsp;&nbsp;机械设备</option>
+
+<option value="塑料工业">&nbsp;&nbsp;&nbsp;塑料工业</option>
+
+<option value="金属加工">&nbsp;&nbsp;&nbsp;金属加工</option>
+
+<option value="军火">&nbsp;&nbsp;&nbsp;军火</option>
+
+
+
+
+<option value="地产建筑">地产建筑</option>
+
+<option value="房地产">&nbsp;&nbsp;&nbsp;房地产</option>
+
+<option value="装饰装潢">&nbsp;&nbsp;&nbsp;装饰装潢</option>
+
+<option value="物业服务">&nbsp;&nbsp;&nbsp;物业服务</option>
+
+<option value="特殊建造">&nbsp;&nbsp;&nbsp;特殊建造</option>
+
+<option value="建筑设备">&nbsp;&nbsp;&nbsp;建筑设备</option>
+
+
+
+
+<option value="贸易零售">贸易零售</option>
+
+<option value="零售">&nbsp;&nbsp;&nbsp;零售</option>
+
+<option value="大宗交易">&nbsp;&nbsp;&nbsp;大宗交易</option>
+
+<option value="进出口贸易">&nbsp;&nbsp;&nbsp;进出口贸易</option>
+
+
+
+
+<option value="公共服务">公共服务</option>
+
+<option value="政府">&nbsp;&nbsp;&nbsp;政府</option>
+
+<option value="国防军事">&nbsp;&nbsp;&nbsp;国防军事</option>
+
+<option value="航天">&nbsp;&nbsp;&nbsp;航天</option>
+
+<option value="科研">&nbsp;&nbsp;&nbsp;科研</option>
+
+<option value="给排水">&nbsp;&nbsp;&nbsp;给排水</option>
+
+<option value="水利能源">&nbsp;&nbsp;&nbsp;水利能源</option>
+
+<option value="电力电网">&nbsp;&nbsp;&nbsp;电力电网</option>
+
+<option value="公共管理">&nbsp;&nbsp;&nbsp;公共管理</option>
+
+<option value="环境保护">&nbsp;&nbsp;&nbsp;环境保护</option>
+
+<option value="非营利组织">&nbsp;&nbsp;&nbsp;非营利组织</option>
+
+
+
+
+<option value="开采冶金">开采冶金</option>
+
+<option value="煤炭工业">&nbsp;&nbsp;&nbsp;煤炭工业</option>
+
+<option value="石油工业">&nbsp;&nbsp;&nbsp;石油工业</option>
+
+<option value="黑色金属">&nbsp;&nbsp;&nbsp;黑色金属</option>
+
+<option value="有色金属">&nbsp;&nbsp;&nbsp;有色金属</option>
+
+<option value="土砂石开采">&nbsp;&nbsp;&nbsp;土砂石开采</option>
+
+<option value="地热开采">&nbsp;&nbsp;&nbsp;地热开采</option>
+
+
+
+
+<option value="交通仓储">交通仓储</option>
+
+<option value="邮政">&nbsp;&nbsp;&nbsp;邮政</option>
+
+<option value="物流递送">&nbsp;&nbsp;&nbsp;物流递送</option>
+
+<option value="地面运输">&nbsp;&nbsp;&nbsp;地面运输</option>
+
+<option value="铁路运输">&nbsp;&nbsp;&nbsp;铁路运输</option>
+
+<option value="管线运输">&nbsp;&nbsp;&nbsp;管线运输</option>
+
+<option value="航运业">&nbsp;&nbsp;&nbsp;航运业</option>
+
+<option value="民用航空业">&nbsp;&nbsp;&nbsp;民用航空业</option>
+
+
+
+
+<option value="农林牧渔">农林牧渔</option>
+
+<option value="种植业">&nbsp;&nbsp;&nbsp;种植业</option>
+
+<option value="畜牧养殖业">&nbsp;&nbsp;&nbsp;畜牧养殖业</option>
+
+<option value="林业">&nbsp;&nbsp;&nbsp;林业</option>
+
+<option value="渔业">&nbsp;&nbsp;&nbsp;渔业</option>
+
+
+
+</select>
+</div>
+<span class="zg-bull">|</span>
+<input type="radio" name="gender" value="1"  class="male"/> 男&nbsp;&nbsp;
+<input type="radio" name="gender" value="0" checked="checked" class="female"/> 女
+<a class="zg-btn-blue" name="save" href="javascript:;">确定</a>
+</span>
+</div>
+
+<div class="item editable-group " data-name="employment">
+<i class="icon icon-profile-company"></i>
+<span class="info-wrap">
+
+<span class="employment item" title="美国在线（AOL）"><a href="/topic/19550758" title="美国在线（AOL）" class="topic-link" data-token="19550758" data-topicid="177">美国在线（AOL）</a></span>
+
+
+<span class="position item" title="打杂卖萌吃饭">打杂卖萌吃饭</span>
+
+
+</span>
+<span class='info-empty-wrap'><a href="javascript:;" name="edit" class="zg-link-litblue-normal">填写工作信息</a></span>
+<span class="edit-wrap" style="display:none;">
+<span class="topic-input-wrap"><input autocomplete="off" aria-haspopup="true" type="text" name="employment" value="美国在线（AOL）" class="zg-form-text-input employment" placeholder="公司或组织名称"/></span>
+<span class="topic-input-wrap"><input autocomplete="off" aria-haspopup="true" type="text" name="position" value="打杂卖萌吃饭" class="zg-form-text-input position" placeholder="你的职位"/></span>
+<a class="zg-btn-blue" name="save" href="javascript:;">确定</a>
+</span>
+</div>
+
+
+<div class="item editable-group " data-name="education" >
+<i class="icon icon-profile-education"></i>
+<span class="info-wrap">
+
+<span class="education item" title="Carnegie Mellon University">Carnegie Mellon Univ…</span>
+
+
+<span class="education-extra item" title='Product Design'>Product Design</span>
+
+
+</span>
+<span class='info-empty-wrap'><a href="javascript:;" name="edit" class="zg-link-litblue-normal">填写教育信息</a></span>
+<span class="edit-wrap" style="display:none;">
+<span class="topic-input-wrap"><input autocomplete="off" aria-haspopup="true" type="text" name="education" value="Carnegie Mellon University" class="zg-form-text-input education" placeholder="学校或教育机构"/></span>
+<span class="topic-input-wrap"><input autocomplete="off" aria-haspopup="true" type="text" name="education" value="Product Design" class="zg-form-text-input education-extra" placeholder="专业方向"/></span>
+<a class="zg-btn-blue" name="save" href="javascript:;">确定</a>
+</span>
+</div>
+
+
+<a class="zm-profile-header-user-detail zg-link-litblue-normal" href="/people/lycheeorange/about">
+<i class="zm-profile-header-icon"></i>
+<span>查看详细资料</span>
+</a>
+
+</div>
+
+<div class="zm-profile-header-description editable-group " data-name="description">
+<span class="info-wrap fold-wrap fold disable-fold">
+<span class="description unfold-item">
+<span class="content">
+
+喜欢：设计，Gadget，SciFi，程序员，美剧，电影。豆瓣：<a href="http://www.douban.com/people/vanessa07/" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://www.</span><span class="visible">douban.com/people/vanes</span><span class="invisible">sa07/</span><span class="ellipsis"></span><i class="icon-external"></i></a>博客：<a href="http://codesandmaze.tumblr.com/" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://</span><span class="visible">codesandmaze.tumblr.com</span><span class="invisible">/</span><span class="ellipsis"></span><i class="icon-external"></i></a>作品集（更新慢）：<a href="http://www.vanessa.li/" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://www.</span><span class="visible">vanessa.li/</span><span class="invisible"></span><i class="icon-external"></i></a>
+
+</span>
+<a href="javascript:;" name="fold" class="fold collapse meta-item"><i class="z-icon-fold"></i>收起</a>
+</span>
+<span class="fold-item">
+<span class="content">
+
+喜欢：设计，Gadget，SciFi，程序员，美剧，电影。豆瓣：<a href="http://www.douban.com/people/vanessa07/" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://www.</span><span class="visible">douban.com/people/vanes</span><span class="invisible">sa07/</span><span class="ellipsis"></span><i class="icon-external"></i></a>博客：<a href="http://codesandmaze.tumblr.com/" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://</span><span class="visible">codesandmaze.tumblr.com</span><span class="invisible">/</span><span class="ellipsis"></span><i class="icon-external"></i></a>作品集（更新慢）：<a href="http://www.vanessa.li/" class=" external" target="_blank" rel="nofollow noreferrer"><span class="invisible">http://www.</span><span class="visible">vanessa.li/</span><span class="invisible"></span><i class="icon-external"></i></a>
+
+</span>
+<a href="javascript:;" class="unfold" name="unfold">显示全部 »</a>
+</span>
+
+</span>
+<span class='info-empty-wrap'><a href="javascript:;" name="edit" class="zg-link-litblue-normal"><i class="zg-icon zg-icon-edit-button-blue"></i>填写个人简介</a></span>
+<span class="edit-wrap" style="display:none;">
+<div class="zm-editable-editor-outer">
+<div class="zm-editable-editor-inner zg-form-text-input">
+<textarea name="description" value="" class="zm-editable-editor-input description" id="profile-header-description-input">喜欢：设计，Gadget，SciFi，程序员，美剧，电影。豆瓣：http://www.douban.com/people/vanessa07/博客：http://codesandmaze.tumblr.com/作品集（更新慢）：http://www.vanessa.li/</textarea>
+</div>
+</div>
+<a class="zg-btn-blue" name="save" href="javascript:;">确定</a>
+</span>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="zm-profile-header-operation zg-clear ">
+<div class="zm-profile-header-info-list">
+<span class="zm-profile-header-info-title">获得</span>
+<span class="zm-profile-header-user-agree"><span class="zm-profile-header-icon"></span><strong>75161</strong>赞同</span>
+<span class="zm-profile-header-user-thanks"><span class="zm-profile-header-icon"></span><strong>20592</strong>感谢</span>
+
+</div>
+
+<div class="zm-profile-header-op-btns clearfix">
+
+
+<button data-follow="m:button" data-id="8517c9e0e90e40fb5d51800668477228" class="zg-btn zg-btn-follow zm-rich-follow-btn">关注她</button>
+
+
+
+<a href="/inbox/1213724000" class="zg-btn-white zm-profile-header-pm-btn" id="zm-profile-header-pm-btn"><i class="zg-icon">私信</i></a>
+
+
+</div>
+
+</div>
+<div class="profile-navbar clearfix">
+<a class="item home first active"
+href="/people/lycheeorange">
+<i class="icon icon-profile-tab-home"></i><span class="hide-text">主页</span>
+</a>
+<a class="item "
+href="/people/lycheeorange/asks">
+提问
+<span class="num">16</span>
+</a>
+<a class="item "
+href="/people/lycheeorange/answers">
+回答
+<span class="num">359</span>
+</a>
+<a class="item "
+href="/people/lycheeorange/posts">
+专栏文章
+<span class="num">44</span>
+</a>
+<a class="item "
+href="/people/lycheeorange/collections">
+收藏
+<span class="num">2</span>
+</a>
+<a class="item "
+href="/people/lycheeorange/logs">
+公共编辑
+<span class="num">134</span>
+</a>
+</div>
+
+</div>
+
+
+<div class="zm-profile-section-wrap skilled-topics">
+<div class="zm-profile-section-head">
+
+<span class="zm-profile-section-title">
+<h2 class="zm-profile-section-name" style="color:#666;">擅长话题</h2>
+</span>
+</div>
+<div class="inner zg-clear">
+<div class="zm-profile-section-list zg-clear">
+
+<div tabindex="-1" class="item" data-url-token="19577253" data-active="1" data-href="/people/lycheeorange/topic/19577253/answers" data-id="9014" title="郦橙锦妖一只麋鹿在文案下的回答">
+<span class="avatar"><img src="https://pic1.zhimg.com/2354dd91c9ee87844b68d0dcdd187004_m.jpg" /></span>
+
+<a href="/topic/19577253" title="文案"><div class="arrow zg-icon">&gt;</div></a>
+
+<div class="content">
+<div class="content-inner">
+<h3 class="ellipsis">
+<a href="/people/lycheeorange/topic/19577253/answers" class="zg-gray-darker">文案 </a>
+</h3>
+
+</p>
+<p class="meta">
+<span><i class="zg-icon vote"></i>67</span>
+<span><i class="zg-icon comment"></i>3</span>
+</p>
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="item" data-url-token="19551991" data-active="1" data-href="/people/lycheeorange/topic/19551991/answers" data-id="595" title="郦橙锦妖一只麋鹿在iOS 应用下的回答">
+<span class="avatar"><img src="https://pic1.zhimg.com/66a9d4423822b6ac0260c08f7627d990_m.jpg" /></span>
+
+<a href="/topic/19551991" title="iOS 应用"><div class="arrow zg-icon">&gt;</div></a>
+
+<div class="content">
+<div class="content-inner">
+<h3 class="ellipsis">
+<a href="/people/lycheeorange/topic/19551991/answers" class="zg-gray-darker">iOS 应用 </a>
+</h3>
+
+</p>
+<p class="meta">
+<span><i class="zg-icon vote"></i>903</span>
+<span><i class="zg-icon comment"></i>7</span>
+</p>
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="item" data-url-token="19551718" data-active="1" data-href="/people/lycheeorange/topic/19551718/answers" data-id="505" title="郦橙锦妖一只麋鹿在软件下的回答">
+<span class="avatar"><img src="https://pic2.zhimg.com/e872dc791_m.jpg" /></span>
+
+<a href="/topic/19551718" title="软件"><div class="arrow zg-icon">&gt;</div></a>
+
+<div class="content">
+<div class="content-inner">
+<h3 class="ellipsis">
+<a href="/people/lycheeorange/topic/19551718/answers" class="zg-gray-darker">软件 </a>
+</h3>
+
+</p>
+<p class="meta">
+<span><i class="zg-icon vote"></i>136</span>
+<span><i class="zg-icon comment"></i>2</span>
+</p>
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="item" data-url-token="19554862" data-active="1" data-href="/people/lycheeorange/topic/19554862/answers" data-id="1547" title="郦橙锦妖一只麋鹿在产品体验下的回答">
+<span class="avatar"><img src="https://pic2.zhimg.com/69c2014f9_m.jpg" /></span>
+
+<a href="/topic/19554862" title="产品体验"><div class="arrow zg-icon">&gt;</div></a>
+
+<div class="content">
+<div class="content-inner">
+<h3 class="ellipsis">
+<a href="/people/lycheeorange/topic/19554862/answers" class="zg-gray-darker">产品体验 </a>
+</h3>
+
+</p>
+<p class="meta">
+<span><i class="zg-icon vote"></i>62</span>
+<span><i class="zg-icon comment"></i>2</span>
+</p>
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="item" data-url-token="19562762" data-active="1" data-href="/people/lycheeorange/topic/19562762/answers" data-id="4174" title="郦橙锦妖一只麋鹿在图形图像下的回答">
+<span class="avatar"><img src="https://pic1.zhimg.com/e82bab09c_m.jpg" /></span>
+
+<a href="/topic/19562762" title="图形图像"><div class="arrow zg-icon">&gt;</div></a>
+
+<div class="content">
+<div class="content-inner">
+<h3 class="ellipsis">
+<a href="/people/lycheeorange/topic/19562762/answers" class="zg-gray-darker">图形图像 </a>
+</h3>
+
+</p>
+<p class="meta">
+<span><i class="zg-icon vote"></i>128</span>
+<span><i class="zg-icon comment"></i>2</span>
+</p>
+</div>
+</div>
+</div>
+
+<div tabindex="-1" class="item" data-url-token="19551325" data-active="1" data-href="/people/lycheeorange/topic/19551325/answers" data-id="368" title="郦橙锦妖一只麋鹿在产品经理下的回答">
+<span class="avatar"><img src="https://pic2.zhimg.com/b5100633e3189b6349e8cdf3d9f6e1d9_m.jpg" /></span>
+
+<a href="/topic/19551325" title="产品经理"><div class="arrow zg-icon">&gt;</div></a>
+
+<div class="content">
+<div class="content-inner">
+<h3 class="ellipsis">
+<a href="/people/lycheeorange/topic/19551325/answers" class="zg-gray-darker">产品经理 </a>
+</h3>
+
+</p>
+<p class="meta">
+<span><i class="zg-icon vote"></i>1010</span>
+<span><i class="zg-icon comment"></i>5</span>
+</p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-profile-section-wrap">
+<div class="zm-profile-section-head">
+<a class="zm-profile-section-title" href="/people/lycheeorange/answers">
+<h2 class="zm-profile-section-name">回答</h2>
+<i class="zg-right zg-icon zm-profile-section-more-btn"></i>
+</a>
+</div>
+<div class="zm-profile-section-list" id="zh-profile-answers-inner-list">
+
+<div class="zm-profile-section-item zg-clear">
+<div class="zm-profile-vote-count">
+<div class="zm-profile-vote-num">13</div>
+<div class="zm-profile-vote-type">赞同</div>
+</div>
+<div class="zm-profile-section-main">
+<h2 class="zm-profile-question">
+<a class="question_link" href="/question/37984468/answer/74398874">下面的图片我想知道是怎么做出来的，用什么软件的？</a>
+</h2>
+
+<p class="zm-profile-item-text">FusedBlend Photo EditorPhoto Blender总之搜blend，exposure之类的找找就好。</p>
+
+</div>
+</div>
+
+<div class="zm-profile-section-item zg-clear">
+<div class="zm-profile-vote-count">
+<div class="zm-profile-vote-num">31</div>
+<div class="zm-profile-vote-type">赞同</div>
+</div>
+<div class="zm-profile-section-main">
+<h2 class="zm-profile-question">
+<a class="question_link" href="/question/26768751/answer/74391318">你遇见过哪些概率很小很小的事？</a>
+</h2>
+
+<p class="zm-profile-item-text">高中有一次早操结束，我拿着一袋彩虹糖，跟朋友猜下一颗糖拿出来的颜色，连对了六七…</p>
+
+</div>
+</div>
+
+<div class="zm-profile-section-item zg-clear">
+<div class="zm-profile-vote-count">
+<div class="zm-profile-vote-num">107</div>
+<div class="zm-profile-vote-type">赞同</div>
+</div>
+<div class="zm-profile-section-main">
+<h2 class="zm-profile-question">
+<a class="question_link" href="/question/37956338/answer/74300982">如何评价有个猫奴说猫毛过敏是矫情，另外过敏测试多危险？</a>
+</h2>
+
+<p class="zm-profile-item-text">我就对猫过敏，最严重的一次在北京，一次在美国的某airbnb。北京那次咳得丧心病狂，…</p>
+
+</div>
+</div>
+
+
+</div>
+</div>
+<div class="zm-profile-section-wrap zm-profile-ask-wrap" id="zh-profile-ask-wrap">
+<div class="zm-profile-section-head">
+<a class="zm-profile-section-title" href="/people/lycheeorange/asks">
+<h2 class="zm-profile-section-name">提问</h2>
+<i class="zg-right zg-icon zm-profile-section-more-btn" href="/people/lycheeorange/asks"></i>
+</a>
+</div>
+<div class="zm-profile-section-list" id="zh-profile-ask-inner-list">
+
+<div class="zm-profile-section-item zg-clear">
+<span class="zm-profile-vote-count">
+<div class="zm-profile-vote-num">2728</div>
+<div class="zm-profile-vote-type">浏览</div>
+</span>
+<div class="zm-profile-section-main">
+<h2 class="zm-profile-question">
+<a class="question_link" target="_blank" href="/question/35218142">天气预报能预报朝霞晚霞么？</a>
+</h2>
+<div class="meta zg-gray">
+<a data-follow="q:link" class="follow-link zg-follow meta-item" href="javascript:;" id="sfb-6293888"><i class="z-icon-follow"></i>关注问题</a>
+<span class="zg-bull">&bull;</span>
+5 个回答
+<span class="zg-bull">&bull;</span>
+41 人关注
+</div>
+</div>
+</div>
+
+<div class="zm-profile-section-item zg-clear">
+<span class="zm-profile-vote-count">
+<div class="zm-profile-vote-num">4516</div>
+<div class="zm-profile-vote-type">浏览</div>
+</span>
+<div class="zm-profile-section-main">
+<h2 class="zm-profile-question">
+<a class="question_link" target="_blank" href="/question/31862141">微博上转发锦鲤或者其他好运微博的人是什么心理呢？</a>
+</h2>
+<div class="meta zg-gray">
+<a data-follow="q:link" class="follow-link zg-follow meta-item" href="javascript:;" id="sfb-4944103"><i class="z-icon-follow"></i>关注问题</a>
+<span class="zg-bull">&bull;</span>
+19 个回答
+<span class="zg-bull">&bull;</span>
+35 人关注
+</div>
+</div>
+</div>
+
+<div class="zm-profile-section-item zg-clear">
+<span class="zm-profile-vote-count">
+<div class="zm-profile-vote-num">1238</div>
+<div class="zm-profile-vote-type">浏览</div>
+</span>
+<div class="zm-profile-section-main">
+<h2 class="zm-profile-question">
+<a class="question_link" target="_blank" href="/question/31486089">鞋底特别软的运动鞋适合做重量训练吗？</a>
+</h2>
+<div class="meta zg-gray">
+<a data-follow="q:link" class="follow-link zg-follow meta-item" href="javascript:;" id="sfb-4793669"><i class="z-icon-follow"></i>关注问题</a>
+<span class="zg-bull">&bull;</span>
+6 个回答
+<span class="zg-bull">&bull;</span>
+18 人关注
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+<div class="zm-profile-section-wrap" id="zh-profile-activity-wrap">
+<div class="zm-profile-section-head">
+<h2 class="zm-profile-section-title" style="color:#666;">最新动态</h2>
+</a>
+</div>
+<div class="zm-profile-section-list profile-feed-wrap">
+<div id="zh-profile-activity-page-list">
+
+<div class="zm-profile-section-item zm-item clearfix" data-time="1448927080" data-type="a" data-type-detail="member_voteup_answer">
+<span class="zm-profile-setion-time zg-gray zg-right">1 天前</span>
+<div class="zm-profile-section-main zm-profile-section-activity-main zm-profile-activity-page-item-main">
+<a data-tip="p$t$lycheeorange" href="http://www.zhihu.com/people/lycheeorange" class="zg-link" title="郦橙锦妖一只麋鹿">郦橙锦妖一只麋鹿</a> 赞同了回答
+
+<a class="question_link" target="_blank" href="/question/33416642/answer/56558371">练肌肉有什么用？除了形体上的好处之外？</a>
+</div>
+<div tabindex="-1" class="zm-item-answer "
+data-aid="18030986"
+data-atoken="56558371"
+data-collapsed="0"
+data-created="1437925005"
+data-deleted="0"
+data-isowner="0"
+data-helpful="1"
+data-copyable="1"
+>
+<a class="zg-anchor-hidden" name="answer-18030986"></a>
+
+<div class="zm-item-vote">
+<a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-votecount="421">421</a>
+</div>
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">421</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link" href="/people/kmlover" data-tip="p$t$kmlover">
+<img src="https://pic2.zhimg.com/bdbc51745_s.jpg" class="zm-list-avatar avatar">
+</a>
+
+<a class="author-link" data-tip="p$t$kmlover" href="/people/kmlover">kmlover</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="421">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$fang-bei-xin" href="http://www.zhihu.com/people/fang-bei-xin" class="zg-link" title="方背心">方背心</a>、</span><span class="user-block">知乎用户、</span><span class="user-block">知乎用户</span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text js-collapse-body" data-resourceid="5573149" data-action="/answer/content" data-author-name="kmlover" data-entry-url="/question/33416642/answer/56558371">
+
+<textarea class="content hidden">
+简单说几点： &lt;br&gt;&lt;br&gt;一、肌肉是人体内最大的糖分储存仓库，也可以看做是“糖缓冲区”。体重80千克的成年男性体内糖分约0.52千克，其中0.4千克以肌糖原的形式储存于肌肉中，0.1千克以肝糖原的形式储存于肝脏中，0.02千克以血糖形式存在（此处数据引自人民体育出版社《运动生物化学》136页）。由于肝脏和血液储存糖分的能力后天基本无法改变，且其储量与肌肉无法相比。因此训练肌肉，提高其吸收和储存糖分的量，对预防糖尿病、脂肪肝及其并发症有重要作用。&lt;br&gt;&lt;br&gt;二、肌肉训练 ，或力量训练，对相应的骨骼施加压力，从而增加了矿物质在骨骼中的沉积，显著提高骨密度，对于预防骨质疏松（尤其是更年期后的女性）、提高生命晚期生活质量有重要作用。&lt;br&gt;&lt;br&gt;三、影响老年人生活质量和预期寿命的一个重要原因是随着年龄增长，肌肉纤维——特别是收缩快力量大的II型肌纤维——逐渐萎缩退化，导致在重心不稳时不能快速做出动作来回复身体平衡，结果因摔倒引发骨折。进行以增加肌肉力量和体积为目的的训练，可以有效减缓肌肉的退化，减少因摔倒骨折而影响生活质量和寿命的可能性。&lt;br&gt;&lt;br&gt;四、肌肉训练有助于增强关节组织的牢固性和抗磨损能力，从而起到预防关节退行性病变，保持身体活动能力的作用，让你不至于在老年阶段丧失生活自理能力，常年卧床不起。&lt;br&gt;&lt;br&gt;五、通过合理的肌肉力量训练，强化在日常生活中刺激不足易于萎缩的肌群，可以使人在坐、站立和行走时维持良好体态，不至于形成弓腰驼背耸肩等不良体态，也不易发生劳损。
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/33416642/answer/56558371">发布于 2015-07-26</a>
+</span>
+
+</textarea>
+
+
+<div class="zh-summary summary clearfix">
+
+简单说几点： 一、肌肉是人体内最大的糖分储存仓库，也可以看做是“糖缓冲区”。体重80千克的成年男性体内糖分约0.52千克，其中0.4千克以肌糖原的形式储存于肌肉中，0.1千克以肝糖原的形式储存于肝脏中，0.02千克以血糖形式存在（此处数据引自人民体育出版…
+
+<a href="/question/33416642/answer/56558371" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-follow meta-item" href="javascript:;" id="sfb-5573149"><i class="z-icon-follow"></i>关注问题</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>18 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright"> 作者保留权利 </a>
+
+
+<button class="meta-item item-collapse js-collapse">
+<i class="z-icon-fold"></i>收起
+</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-profile-section-item zm-item clearfix" data-time="1448890183" data-type="" data-type-detail="member_follow_question">
+<span class="zm-profile-setion-time zg-gray zg-right">1 天前</span>
+<div class="zm-profile-section-main zm-profile-section-activity-main zm-profile-activity-page-item-main">
+<a data-tip="p$t$lycheeorange" href="http://www.zhihu.com/people/lycheeorange" class="zg-link" title="郦橙锦妖一只麋鹿">郦橙锦妖一只麋鹿</a> 关注了问题
+
+<a class="question_link" href="/question/38027343">如果一个学校计算机专业几百学生毕业后绝大部分人去了外包，极少数进入网易阿里等互联网公司代表了什么？</a>
+</div>
+
+</div>
+
+<div class="zm-profile-section-item zm-item clearfix" data-time="1448844361" data-type="a" data-type-detail="member_voteup_answer">
+<span class="zm-profile-setion-time zg-gray zg-right">2 天前</span>
+<div class="zm-profile-section-main zm-profile-section-activity-main zm-profile-activity-page-item-main">
+<a data-tip="p$t$lycheeorange" href="http://www.zhihu.com/people/lycheeorange" class="zg-link" title="郦橙锦妖一只麋鹿">郦橙锦妖一只麋鹿</a> 赞同了回答
+
+<a class="question_link" target="_blank" href="/question/21400402/answer/18111520">为什么程序员无论到哪儿都喜欢背电脑包，哪怕里面没有装电脑？</a>
+</div>
+<div tabindex="-1" class="zm-item-answer "
+data-aid="2387108"
+data-atoken="18111520"
+data-collapsed="0"
+data-created="1375087003"
+data-deleted="0"
+data-isowner="0"
+data-helpful="1"
+data-copyable="1"
+>
+<a class="zg-anchor-hidden" name="answer-2387108"></a>
+
+<div class="zm-item-vote">
+<a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-votecount="4283">4283</a>
+</div>
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">4283</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link" href="/people/cascade" data-tip="p$t$cascade">
+<img src="https://pic1.zhimg.com/7387df64c_s.jpg" class="zm-list-avatar avatar">
+</a>
+
+<a class="author-link" data-tip="p$t$cascade" href="/people/cascade">Cascade</a>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="4283">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$sun-eudemon" href="http://www.zhihu.com/people/sun-eudemon" class="zg-link" title="SUN Eudemon">SUN Eudemon</a>、</span><span class="user-block"><a data-tip="p$t$yen-wu-yan" href="http://www.zhihu.com/people/yen-wu-yan" class="zg-link" title="吴俨">吴俨</a>、</span><span class="user-block"><a data-tip="p$t$hu-shen-rui-49" href="http://www.zhihu.com/people/hu-shen-rui-49" class="zg-link" title="胡申瑞">胡申瑞</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text js-collapse-body" data-resourceid="740842" data-action="/answer/content" data-author-name="Cascade" data-entry-url="/question/21400402/answer/18111520">
+
+<textarea class="content hidden">
+因为他们没有别的包。
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/21400402/answer/18111520">发布于 2013-07-29</a>
+</span>
+
+</textarea>
+
+
+<div class="zh-summary summary clearfix">
+
+因为他们没有别的包。
+
+</div>
+
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-follow meta-item" href="javascript:;" id="sfb-740842"><i class="z-icon-follow"></i>关注问题</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>215 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright"> 作者保留权利 </a>
+
+
+<button class="meta-item item-collapse js-collapse">
+<i class="z-icon-fold"></i>收起
+</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-profile-section-item zm-item clearfix" data-time="1448728944" data-type="a" data-type-detail="member_answer_question">
+<span class="zm-profile-setion-time zg-gray zg-right">3 天前</span>
+<div class="zm-profile-section-main zm-profile-section-activity-main zm-profile-activity-page-item-main">
+<a title="郦橙锦妖一只麋鹿"
+data-tip="p$t$lycheeorange"
+class="zm-item-link-avatar"
+href="/people/lycheeorange">
+<img src="https://pic1.zhimg.com/d53bf55b7d9fc84f900c369761586170_s.png" class="zm-item-img-avatar">
+</a><a data-tip="p$t$lycheeorange" href="http://www.zhihu.com/people/lycheeorange" class="zg-link" title="郦橙锦妖一只麋鹿">郦橙锦妖一只麋鹿</a> 回答了问题
+
+<a class="question_link" target="_blank" href="/question/37984468/answer/74398874">下面的图片我想知道是怎么做出来的，用什么软件的？</a>
+</div>
+<div tabindex="-1" class="zm-item-answer "
+data-aid="25182952"
+data-atoken="74398874"
+data-collapsed="0"
+data-created="1448728944"
+data-deleted="0"
+data-isowner="0"
+data-helpful="1"
+data-copyable="1"
+>
+<a class="zg-anchor-hidden" name="answer-25182952"></a>
+
+<div class="zm-item-vote">
+<a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-votecount="13">13</a>
+</div>
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">13</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link" href="/people/lycheeorange" data-tip="p$t$lycheeorange">
+<img src="https://pic1.zhimg.com/d53bf55b7d9fc84f900c369761586170_s.png" class="zm-list-avatar avatar">
+</a>
+
+<a class="author-link" data-tip="p$t$lycheeorange" href="/people/lycheeorange">郦橙锦妖一只麋鹿</a>，<span title="PM@Aol.NY | CMU Alumni" class="bio">PM@Aol.NY | CMU Alumni</span>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="13">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$jiqimaouu" href="http://www.zhihu.com/people/jiqimaouu" class="zg-link" title="机器猫uu">机器猫uu</a>、</span><span class="user-block">知乎用户、</span><span class="user-block"><a data-tip="p$t$wang-xi-19-55" href="http://www.zhihu.com/people/wang-xi-19-55" class="zg-link" title="望希">望希</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text js-collapse-body" data-resourceid="7401054" data-action="/answer/content" data-author-name="郦橙锦妖一只麋鹿" data-entry-url="/question/37984468/answer/74398874">
+
+<textarea class="content hidden">
+Fused&lt;br&gt;&lt;img data-rawwidth=&quot;1536&quot; data-rawheight=&quot;2048&quot; src=&quot;https://pic3.zhimg.com/0f00de2d710443b30ca0cd5f389285c6_b.jpg&quot; class=&quot;origin_image zh-lightbox-thumb&quot; width=&quot;1536&quot; data-original=&quot;https://pic3.zhimg.com/0f00de2d710443b30ca0cd5f389285c6_r.jpg&quot;&gt;&lt;br&gt;Blend Photo Editor&lt;br&gt;&lt;img data-rawwidth=&quot;1536&quot; data-rawheight=&quot;2048&quot; src=&quot;https://pic4.zhimg.com/9f4833edd5177676e41b6c5edf2433ab_b.jpg&quot; class=&quot;origin_image zh-lightbox-thumb&quot; width=&quot;1536&quot; data-original=&quot;https://pic4.zhimg.com/9f4833edd5177676e41b6c5edf2433ab_r.jpg&quot;&gt;&lt;br&gt;Photo Blender&lt;br&gt;&lt;img data-rawwidth=&quot;1536&quot; data-rawheight=&quot;2048&quot; src=&quot;https://pic4.zhimg.com/aaee87bab28b7ec82907a05647b3e34b_b.jpg&quot; class=&quot;origin_image zh-lightbox-thumb&quot; width=&quot;1536&quot; data-original=&quot;https://pic4.zhimg.com/aaee87bab28b7ec82907a05647b3e34b_r.jpg&quot;&gt;&lt;br&gt;&lt;br&gt;总之搜blend，exposure之类的找找就好。
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/37984468/answer/74398874">发布于 2015-11-29</a>
+</span>
+
+</textarea>
+
+
+<div class="zh-summary summary clearfix">
+<img data-rawwidth="1536" data-rawheight="2048" src="https://pic3.zhimg.com/0f00de2d710443b30ca0cd5f389285c6_xld.jpg" class="origin_image inline-img zh-lightbox-thumb" data-original="https://pic3.zhimg.com/0f00de2d710443b30ca0cd5f389285c6_r.jpg">
+FusedBlend Photo EditorPhoto Blender总之搜blend，exposure之类的找找就好。
+
+<a href="/question/37984468/answer/74398874" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-follow meta-item" href="javascript:;" id="sfb-7401054"><i class="z-icon-follow"></i>关注问题</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>添加评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright"> 作者保留权利 </a>
+
+
+<button class="meta-item item-collapse js-collapse">
+<i class="z-icon-fold"></i>收起
+</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-profile-section-item zm-item clearfix" data-time="1448725553" data-type="a" data-type-detail="member_answer_question">
+<span class="zm-profile-setion-time zg-gray zg-right">3 天前</span>
+<div class="zm-profile-section-main zm-profile-section-activity-main zm-profile-activity-page-item-main">
+<a title="郦橙锦妖一只麋鹿"
+data-tip="p$t$lycheeorange"
+class="zm-item-link-avatar"
+href="/people/lycheeorange">
+<img src="https://pic1.zhimg.com/d53bf55b7d9fc84f900c369761586170_s.png" class="zm-item-img-avatar">
+</a><a data-tip="p$t$lycheeorange" href="http://www.zhihu.com/people/lycheeorange" class="zg-link" title="郦橙锦妖一只麋鹿">郦橙锦妖一只麋鹿</a> 回答了问题
+
+<a class="question_link" target="_blank" href="/question/26768751/answer/74391318">你遇见过哪些概率很小很小的事？</a>
+</div>
+<div tabindex="-1" class="zm-item-answer "
+data-aid="25179941"
+data-atoken="74391318"
+data-collapsed="0"
+data-created="1448725553"
+data-deleted="0"
+data-isowner="0"
+data-helpful="1"
+data-copyable="1"
+>
+<a class="zg-anchor-hidden" name="answer-25179941"></a>
+
+<div class="zm-item-vote">
+<a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-votecount="31">31</a>
+</div>
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">31</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link" href="/people/lycheeorange" data-tip="p$t$lycheeorange">
+<img src="https://pic1.zhimg.com/d53bf55b7d9fc84f900c369761586170_s.png" class="zm-list-avatar avatar">
+</a>
+
+<a class="author-link" data-tip="p$t$lycheeorange" href="/people/lycheeorange">郦橙锦妖一只麋鹿</a>，<span title="PM@Aol.NY | CMU Alumni" class="bio">PM@Aol.NY | CMU Alumni</span>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="31">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$yi-ran-51-76" href="http://www.zhihu.com/people/yi-ran-51-76" class="zg-link" title="怡然">怡然</a>、</span><span class="user-block"><a data-tip="p$t$liang-zhao-wei-56-32" href="http://www.zhihu.com/people/liang-zhao-wei-56-32" class="zg-link" title="梁朝伟">梁朝伟</a>、</span><span class="user-block"><a data-tip="p$t$lu-yue-76-68" href="http://www.zhihu.com/people/lu-yue-76-68" class="zg-link" title="卢月">卢月</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text js-collapse-body" data-resourceid="2890407" data-action="/answer/content" data-author-name="郦橙锦妖一只麋鹿" data-entry-url="/question/26768751/answer/74391318">
+
+<textarea class="content hidden">
+高中有一次早操结束，我拿着一袋彩虹糖，跟朋友猜下一颗糖拿出来的颜色，连对了六七次，最后一个我想猜绿色或黄色，但是她猜了绿色，我犹豫了一下猜了黄色，结果拿出来是绿的。我那天就是有这种直觉，然而后来说起的时候没有人相信。。。毕竟概率太小了。。。（算六次的话大概1/15000，对七次是1/80000，而且我不记得连对了多少次，也可能十次呢。。。）&lt;br&gt;&lt;br&gt;可我用生命发誓，这件事是真的啊！
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2015-11-28" target="_blank" href="/question/26768751/answer/74391318">编辑于 2015-11-28</a>
+</span>
+
+</textarea>
+
+
+<div class="zh-summary summary clearfix">
+
+高中有一次早操结束，我拿着一袋彩虹糖，跟朋友猜下一颗糖拿出来的颜色，连对了六七次，最后一个我想猜绿色或黄色，但是她猜了绿色，我犹豫了一下猜了黄色，结果拿出来是绿的。我那天就是有这种直觉，然而后来说起的时候没有人相信。。。毕竟概率太小了。。…
+
+<a href="/question/26768751/answer/74391318" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-follow meta-item" href="javascript:;" id="sfb-2890407"><i class="z-icon-follow"></i>关注问题</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>18 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright"> 作者保留权利 </a>
+
+
+<button class="meta-item item-collapse js-collapse">
+<i class="z-icon-fold"></i>收起
+</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-profile-section-item zm-item clearfix" data-time="1448680142" data-type="" data-type-detail="member_follow_question">
+<span class="zm-profile-setion-time zg-gray zg-right">4 天前</span>
+<div class="zm-profile-section-main zm-profile-section-activity-main zm-profile-activity-page-item-main">
+<a data-tip="p$t$lycheeorange" href="http://www.zhihu.com/people/lycheeorange" class="zg-link" title="郦橙锦妖一只麋鹿">郦橙锦妖一只麋鹿</a> 关注了问题
+
+<a class="question_link" href="/question/37959366">有哪些你认为用光非常好的照片？</a>
+</div>
+
+</div>
+
+<div class="zm-profile-section-item zm-item clearfix" data-time="1448680056" data-type="a" data-type-detail="member_answer_question">
+<span class="zm-profile-setion-time zg-gray zg-right">4 天前</span>
+<div class="zm-profile-section-main zm-profile-section-activity-main zm-profile-activity-page-item-main">
+<a title="郦橙锦妖一只麋鹿"
+data-tip="p$t$lycheeorange"
+class="zm-item-link-avatar"
+href="/people/lycheeorange">
+<img src="https://pic1.zhimg.com/d53bf55b7d9fc84f900c369761586170_s.png" class="zm-item-img-avatar">
+</a><a data-tip="p$t$lycheeorange" href="http://www.zhihu.com/people/lycheeorange" class="zg-link" title="郦橙锦妖一只麋鹿">郦橙锦妖一只麋鹿</a> 回答了问题
+
+<a class="question_link" target="_blank" href="/question/37956338/answer/74300982">如何评价有个猫奴说猫毛过敏是矫情，另外过敏测试多危险？</a>
+</div>
+<div tabindex="-1" class="zm-item-answer "
+data-aid="25143679"
+data-atoken="74300982"
+data-collapsed="0"
+data-created="1448680056"
+data-deleted="0"
+data-isowner="0"
+data-helpful="1"
+data-copyable="1"
+>
+<a class="zg-anchor-hidden" name="answer-25143679"></a>
+
+<div class="zm-item-vote">
+<a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-votecount="107">107</a>
+</div>
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">107</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link" href="/people/lycheeorange" data-tip="p$t$lycheeorange">
+<img src="https://pic1.zhimg.com/d53bf55b7d9fc84f900c369761586170_s.png" class="zm-list-avatar avatar">
+</a>
+
+<a class="author-link" data-tip="p$t$lycheeorange" href="/people/lycheeorange">郦橙锦妖一只麋鹿</a>，<span title="PM@Aol.NY | CMU Alumni" class="bio">PM@Aol.NY | CMU Alumni</span>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="107">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$lu-ren-li-12" href="http://www.zhihu.com/people/lu-ren-li-12" class="zg-link" title="路人李">路人李</a>、</span><span class="user-block"><a data-tip="p$t$sun-xiao-jun-72-85" href="http://www.zhihu.com/people/sun-xiao-jun-72-85" class="zg-link" title="孙小骏">孙小骏</a>、</span><span class="user-block">知乎用户</span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text js-collapse-body" data-resourceid="7389799" data-action="/answer/content" data-author-name="郦橙锦妖一只麋鹿" data-entry-url="/question/37956338/answer/74300982">
+
+<textarea class="content hidden">
+我就对猫过敏，最严重的一次在北京，一次在美国的某airbnb。北京那次咳得丧心病狂，每晚尤其严重（同情并感谢我的室友TwT），但当时以为是雾霾天的缘故。Airbnb那次确定了是对猫过敏，症状是鼻涕，流泪，咳嗽，有痰，到后来几乎无法呼吸，google了一下说“严重的猫过敏可能导致死亡”，吓得我瓜子都掉了，连夜改签机票回了学校。&lt;br&gt;&lt;br&gt;所以如果新女友对猫过敏，并且有进入房子的需要，换养是理智的选择。领养是要负责，但是爱上谁，爱上的人过不过敏，基本是不可抗力，如果男主叙述的都是事实，除了不够尽心，没有主动找下家之外，并没有很大过错。我承认非常遗憾，可怜的猫猫又要换主人了，希望过渡顺利就是最大的祝福了。&lt;br&gt;&lt;br&gt;反观女主，对过敏的态度让我想起了“婆婆觉得对荞麦过敏不算什么，吃多了就好了，然后在面里加了荞麦又不告诉妹子，妹子就死掉了，婆婆说哎呀我哪知道真的会死啊”的故事。。。&lt;br&gt;&lt;br&gt;此外，女主爱猫就站在了道德的高地上，不仅做的事情creepy，言词中也全是挂人有理，大家来neng死这个负心汉的感觉。。。以爱猫为挡箭牌，对曾好心领养的人做出恐吓和指责，真是可怕。&lt;br&gt;&lt;br&gt;然而。。。最可怕的并不是女主。&lt;br&gt;&lt;br&gt;知乎回复里有人说：“如果遇到这种事情，最好直接把猫扔了，然后装作悲痛的样子告诉它猫在晚上掉下阳台了，白天起来找不到了！一了百了！”&lt;br&gt;&lt;br&gt;如果说男主的悲剧在于命运和轻率，女主的悲剧在于无知和过激，这个知乎答案的匿名人士便是四种悲剧交织的畸形的产物，一颗多么懦弱自私的心才能导演出这样的谎言。&lt;br&gt;&lt;br&gt;--&lt;br&gt;这种题目太容易撕逼，已经设置评论权限。
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2015-11-28" target="_blank" href="/question/37956338/answer/74300982">编辑于 2015-11-28</a>
+</span>
+
+</textarea>
+
+
+<div class="zh-summary summary clearfix">
+
+我就对猫过敏，最严重的一次在北京，一次在美国的某airbnb。北京那次咳得丧心病狂，每晚尤其严重（同情并感谢我的室友TwT），但当时以为是雾霾天的缘故。Airbnb那次确定了是对猫过敏，症状是鼻涕，流泪，咳嗽，有痰，到后来几乎无法呼吸，google了一下说“…
+
+<a href="/question/37956338/answer/74300982" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-follow meta-item" href="javascript:;" id="sfb-7389799"><i class="z-icon-follow"></i>关注问题</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>3 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright"> 作者保留权利 </a>
+
+
+<button class="meta-item item-collapse js-collapse">
+<i class="z-icon-fold"></i>收起
+</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-profile-section-item zm-item clearfix" data-time="1448675575" data-type="a" data-type-detail="member_voteup_answer">
+<span class="zm-profile-setion-time zg-gray zg-right">4 天前</span>
+<div class="zm-profile-section-main zm-profile-section-activity-main zm-profile-activity-page-item-main">
+<a data-tip="p$t$lycheeorange" href="http://www.zhihu.com/people/lycheeorange" class="zg-link" title="郦橙锦妖一只麋鹿">郦橙锦妖一只麋鹿</a> 赞同了回答
+
+<a class="question_link" target="_blank" href="/question/35392208/answer/62737846">你听过最伤害你的一句话是什么？</a>
+</div>
+<div tabindex="-1" class="zm-item-answer "
+data-aid="20508778"
+data-atoken="62737846"
+data-collapsed="0"
+data-created="1441638872"
+data-deleted="0"
+data-isowner="0"
+data-helpful="1"
+data-copyable="1"
+>
+<a class="zg-anchor-hidden" name="answer-20508778"></a>
+
+<div class="zm-item-vote">
+<a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-votecount="829">829</a>
+</div>
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">829</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link"  href="javascript:void(0);" >
+<img src="https://pic1.zhimg.com/da8e974dc_s.jpg" class="zm-list-avatar avatar">
+</a>
+
+<span class="name">知乎用户</span>，<span title="临床医生" class="bio">临床医生</span>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="829">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$lu-ya-60-35" href="http://www.zhihu.com/people/lu-ya-60-35" class="zg-link" title="余歌">余歌</a>、</span><span class="user-block"><a data-tip="p$t$wo-yao-tong-zhi-shi-jie" href="http://www.zhihu.com/people/wo-yao-tong-zhi-shi-jie" class="zg-link" title="我要统治世界">我要统治世界</a>、</span><span class="user-block"><a data-tip="p$t$cao-mei-wei-66" href="http://www.zhihu.com/people/cao-mei-wei-66" class="zg-link" title="草莓味">草莓味</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text js-collapse-body" data-resourceid="6363481" data-action="/answer/content" data-author-name="周三千" data-entry-url="/question/35392208/answer/62737846">
+
+<textarea class="content hidden">
+“妈你是不是怀小孩了？”&lt;br&gt;“是啊，你成绩不好，以后也没用，我们想再生一个，你爷爷也能高兴些。”&lt;br&gt;那年我初二。
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link meta-item" target="_blank" href="/question/35392208/answer/62737846">发布于 2015-09-07</a>
+</span>
+
+</textarea>
+
+
+<div class="zh-summary summary clearfix">
+
+“妈你是不是怀小孩了？”“是啊，你成绩不好，以后也没用，我们想再生一个，你爷爷也能高兴些。”那年我初二。
+
+</div>
+
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-follow meta-item" href="javascript:;" id="sfb-6363481"><i class="z-icon-follow"></i>关注问题</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>285 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright"> 作者保留权利 </a>
+
+
+<button class="meta-item item-collapse js-collapse">
+<i class="z-icon-fold"></i>收起
+</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-profile-section-item zm-item clearfix" data-time="1448674646" data-type="a" data-type-detail="member_voteup_answer">
+<span class="zm-profile-setion-time zg-gray zg-right">4 天前</span>
+<div class="zm-profile-section-main zm-profile-section-activity-main zm-profile-activity-page-item-main">
+<a data-tip="p$t$lycheeorange" href="http://www.zhihu.com/people/lycheeorange" class="zg-link" title="郦橙锦妖一只麋鹿">郦橙锦妖一只麋鹿</a> 赞同了回答
+
+<a class="question_link" target="_blank" href="/question/37616118/answer/73140981">你经历过哪些事情让你觉得对方「不愧是老手，有智慧！」？</a>
+</div>
+<div tabindex="-1" class="zm-item-answer "
+data-aid="24679013"
+data-atoken="73140981"
+data-collapsed="0"
+data-created="1448009974"
+data-deleted="0"
+data-isowner="0"
+data-helpful="1"
+data-copyable="1"
+>
+<a class="zg-anchor-hidden" name="answer-24679013"></a>
+
+<div class="zm-item-vote">
+<a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-votecount="8036">8036</a>
+</div>
+
+<div class="zm-votebar">
+<button class="up ">
+<i class="icon vote-arrow"></i>
+<span class="count">8036</span>
+<span class="label sr-only">赞同</span>
+</button>
+<button class="down ">
+<i class="icon vote-arrow"></i>
+<span class="label sr-only">反对</span>
+</button>
+</div>
+
+
+<div class="answer-head">
+
+<div class="zm-item-answer-author-info">
+
+<a class="zm-item-link-avatar avatar-link" href="/people/yizhu-75" data-tip="p$t$yizhu-75">
+<img src="https://pic1.zhimg.com/96cea27bc4b26dd974c4d398dc14b5dc_s.jpg" class="zm-list-avatar avatar">
+</a>
+
+<a class="author-link" data-tip="p$t$yizhu-75" href="/people/yizhu-75">一竹</a>，<span title="智能争霸作者" class="bio">智能争霸作者</span>
+</div>
+
+<div class="zm-item-vote-info " data-votecount="8036">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$yijia0813" href="http://www.zhihu.com/people/yijia0813" class="zg-link" title="James J">James J</a>、</span><span class="user-block"><a data-tip="p$t$ma-li-ao-li-ao-46" href="http://www.zhihu.com/people/ma-li-ao-li-ao-46" class="zg-link" title="马里奥利奥">马里奥利奥</a>、</span><span class="user-block"><a data-tip="p$t$mai-mai-47-33" href="http://www.zhihu.com/people/mai-mai-47-33" class="zg-link" title="麦麦">麦麦</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="zm-item-rich-text js-collapse-body" data-resourceid="7253658" data-action="/answer/content" data-author-name="一竹" data-entry-url="/question/37616118/answer/73140981">
+
+<textarea class="content hidden">
+谢邀，说一个我们老师的故事吧。算是一个比较牛逼的老师。郑确教授，全国最受欢迎的老师前100名，主要教沟通学。他教的沟通学曾被评为全国第一课。&lt;br&gt;老师教的另一门课是大学思想政治类的东西，上过大学的都知道那些课有多么的无聊对吧。&lt;br&gt;然后开学第一天，老师课上就有人站出来说，“我觉得这些课很无聊，毫无意义。”&lt;br&gt;老师没有反驳他，没有展开来讲，只是说道，&lt;b&gt;谢谢你的建议，请坐&lt;/b&gt;。&lt;br&gt;很多老师受到这种直接的挑战，尤其是年轻教师，无论你智商多高，内心都会受到冲击，会反驳，辩解，说教，而老师的说辞，非常礼貌谦逊，避而不战，并且以课堂的内容打动学生，气魄杀。&lt;br&gt;当然，最后那同学也成了老师的真爱粉。&lt;br&gt;说道老师就再夹带点私货，以表自己敬仰之情。&lt;br&gt;&lt;b&gt;老师最大的能量就是会慢慢帮你建立起良好的自我认识，悦纳自己，变得自信，并学会良好和有效的沟通，当然一般还会学会点幽默和邪乎&lt;/b&gt;&lt;b&gt;（玩世不恭）&lt;/b&gt;&lt;b&gt;的技能。&lt;/b&gt;&lt;br&gt;老师说，我想给你说家庭沟通的方式，教你们说怎么谈恋爱，但是如果我只能给你们上一节课，我会毫不犹豫的和你说，自我认知和自我悦纳的重要性！请你们用一分钟感受一下我的用词啊。&lt;br&gt;时至今日，也渐渐理解的&lt;b&gt;自我认知的重要性&lt;/b&gt;，老师用这种递归的方式告诉我们道理，看起来简单的话，其实有很深的内涵。&lt;br&gt;老师教的很多东西都很生动和实用，对我的人生影响很大，最主要的还是学会了死猪不怕开水烫的技能。面对困境，不会害怕，就算泰山倒下来，也得一巴掌拍住。&lt;br&gt;老师的课堂很欢乐，从开始到结束从来都不缺乏欢笑声，而在这欢笑声中也学习到了很多的知识，没上过老师课的同学可能很难想象。&lt;br&gt;简单摘录一下老师的语录，当然这看起来有点苍白，也不涉及完整的沟通学知识，只是些人生经验，但也能略微领略一下老师的风采。&lt;br&gt;&lt;p&gt;&lt;b&gt;1.妨碍我们学习的不是未知的，而是已知的，尤其是那种略知一二的。&lt;/b&gt;&lt;br&gt;&lt;b&gt;2.沟通不是为了征服，而是为了幸福。&lt;/b&gt;&lt;br&gt;&lt;b&gt;3.说一遍没有用就不要再说第二遍了。&lt;/b&gt;&lt;br&gt;4.技巧是自认为可以解决问题的东西。善大于智&lt;br&gt;5.没有善良是不行的，仅有善良是不够的。&lt;br&gt;6.伤害你的不是说你坏话的人，是传话给你的人。&lt;br&gt;7.对你所收到的信息打个折，因为其中掺杂了很多个人因素。&lt;br&gt;8.远则怨，近则不敬。&lt;br&gt;9.你自己有什么优势？你要跟人家结婚你先给人家一个理由啊。&lt;br&gt;10.老是和强人比，你说你想干嘛？你想不断证明自己比别人弱吗？&lt;br&gt;11.做菜的重要性，超越于吃。&lt;br&gt;12.别人的态度和评价一定有道理。没有必要越描越黑。（人家愿意评价你就够意思的了）&lt;br&gt;13.谁都有进一步认识自己的可能，不要轻易对自己下结论。&lt;br&gt;14.你可能对自己的要求太高，所以对自己不太满意，其实你不是很差。&lt;br&gt;15.人和猪的区别是：人给猪画一个圈，猪能走出来。人给自己画一个圈未必能自己走出来。&lt;br&gt;16.我们之所以会不安是因为我们有良心。为了摆脱不安，最简单的方法是承认自己的错误。&lt;br&gt;17.我们不会因为别人认了错而瞧不起他。一个会说“我错了”的人是勇敢的人。&lt;br&gt;&lt;b&gt;18.与其想方设法弥补你的短处，不如千方百计发挥你的长处。历史上没有那个人是因为没有缺点而名垂青史的。&lt;/b&gt;&lt;br&gt;&lt;b&gt;19.如果不能正确看待，很有可能因为一两个人就改变了你自己。&lt;/b&gt;&lt;br&gt;20.人类想要自卑，机会太多了。&lt;br&gt;21.长相怎么了？每一款都有他的需求对象。&lt;br&gt;&lt;b&gt;22.自信就是死猪不怕开水烫。&lt;/b&gt;&lt;br&gt;&lt;b&gt;23.我很笨但我不在乎。我有权利不如别人。&lt;/b&gt;&lt;br&gt;24.世界上有大狗也有小狗，大狗在叫，小狗也在叫。小狗不会因为大狗在叫它就不叫了。&lt;br&gt;25.珍惜当下，明天的还来不及。&lt;br&gt;26.贪婪，你想要得到很多东西，结果得到了不该得到的东西，然后就死了。&lt;br&gt;27.包容别人的自高自大，你没有权利要求人家因为你的审美而改变。&lt;br&gt;28.知道得越多，认识自己的问题越清楚。&lt;br&gt;29.环境怎样是一回事，但你能够做到什么程度是另一回事。&lt;br&gt;30.说谎会使交往成本大大增加。&lt;br&gt;31.结婚过日子不是看对方好的地方，而是看坏的地方你能不能容忍。&lt;br&gt;32.这个同学就属于上升空间比较大的一类。。。&lt;br&gt;33.我对待。。。一律先枪毙后审问，不及格一律59分。&lt;br&gt;34.去欣赏他的愚笨。因为一个人笨到这个程度也不容易。&lt;br&gt;35.那个谁，把窗台擦一下，下次好多老师来听课，我担心没地方坐。&lt;br&gt;36.你可以去偷人家钱，人家电脑，怎么能偷看人家日记呢？&lt;br&gt;37.你可能给人家第一印象不太好，但是没关系，你一定会有机会证明给他看的。&lt;br&gt;38.这也是一个优点，比如他干一件坏事特执著。但是他一定不觉得他做的是坏事，否则他怎么会做呢？我们只是角度不同而已。&lt;br&gt;39.倾向于把别人往好处想的人往往都是好人，倾向于把别人往坏处想的人不是受过伤就是有问题。&lt;br&gt;&lt;b&gt;40.一哭二闹三上吊是从哭开始的。她开始哭你就给她一根绳子，“请自便”。&lt;/b&gt;&lt;br&gt;&lt;b&gt;41.傲慢，咄咄逼人一般都是自卑的产物。&lt;/b&gt;&lt;br&gt;42.整齐的那是宾馆，方便的才是家。&lt;br&gt;43.在中国文化中，语言表达能力太强，诚意就打折了。&lt;br&gt;44.只要学生开小差，责任就在于自己。&lt;br&gt;45.不知道就算了，不知道我就不讲了。&lt;br&gt;46.娇羞是种好品质，但一定要由衷。。。这话有点黄有点深。&lt;br&gt;47.怒伤肝，喜伤心。&lt;br&gt;48.随时随地关心自己面貌所呈现的状态的人没意思。&lt;br&gt;49.不要老把你的眼白晾出来给人家欣赏。&lt;br&gt;50.眼睛看东西要堂堂正正，要有“他NND,我就看了，怎么样吧”的气概。&lt;br&gt;51.有鱼尾纹的人笑起来特诚恳。&lt;br&gt;52.一个女生连化妆也不会，搞什么搞？（工作以后，对此技能的重要性不会再抱有疑问了吧，不然显得太不入流了。）&lt;br&gt;53.我想呈现的是“猪脑子”的表情，这样大家比较容易原谅我。&lt;br&gt;54.我知道现在把同学教坏很不容易，同学不把你教坏就算已经可怜你老同志了。&lt;br&gt;55.&lt;b&gt;我宁可我教过的学生是茅坑里的石头又臭又硬的也不要是谦卑的。(谦卑的本质就是不自信，自信的人并不在意他人的评价，当你有一天他人一定程度上的差评具有较高的免疫能力，那差不多快修炼到家了。)&lt;/b&gt;&lt;br&gt;56.一个女生都不运动你怎么混啊？男生有没有不运动的？拉出去！&lt;br&gt;57.你坦白不坦白对我来说都不重要，因为我都知道。&lt;/p&gt;&lt;p&gt;58.脑袋掉了碗大的疤，落地之前，还有大吼一声，“哇，好快一刀。”&lt;/p&gt;&lt;p&gt;&lt;b&gt;59.谦虚是刻在骨髓里的东西，骨髓懂吗？（这是对太骄傲的人说的，也可以理解成有礼貌。）&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;60.一个人的成长取决于，很大程度上取决于他为每件事情所做的准备工作。&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;61.教育的根本目的是为了让人获得幸福。&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;62.赞美他人永远是有效的，赞美他人最好用具体的，准确的语言，以及对准他所关注和在意的地方。所有人都经不住赞美，记住是所有人，人家不受用，只是因为你没夸对地方。赞美是多多益善，但不要捧杀。&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;63.人与人是不一样的。我用了十年的时间才真正理解这句话的含义。&lt;/b&gt;&lt;/p&gt;&lt;p&gt;64.自由是需要资本的，人的能力越大他越自由。&lt;/p&gt;&lt;p&gt;65.早年还虚心接受别人的批评，现在老了，面对批评一般说，“哦，是吗？”&lt;/p&gt;&lt;p&gt;&lt;b&gt;66.父母和孩子之间融洽的家庭关系是对孩子最好的教育。（尤其是父母关系）&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;67.女人的撒娇是男人幸福的源泉。&lt;/b&gt;&lt;/p&gt;&lt;p&gt;68.沟通过程中，要表达自身的感受，而不是事实判断。举个例子，你对男朋友说，“你不爱我”，这是事实判断，稍微好一点的表达，是“我觉得你不爱我”，“我觉得”是一种主观感受，但更好的表达是“&lt;b&gt;我觉得被冷落了。&lt;/b&gt;”你男朋友听到最后一种表述，会直接说，“宝贝，去买买买。”&lt;/p&gt;&lt;p&gt;69.沟通过程中，可以用停顿来表达事务的重要性，停顿的时间越长，那句话的重要性越高。&lt;/p&gt;&lt;p&gt;&lt;b&gt;70.他人怎么评价你并不重要，重要的是你着怎么看待你自己。&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;71.自卑的人都假装自信，自信的人都玩世不恭。（沟通学另一位老师，郑亮老师说的）&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;72.两个上过我课的同学在一起，可能更容易获得幸福，我猜。&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;-----------------------------------------------------------------------------------------------------&lt;/b&gt;&lt;/p&gt;&lt;p&gt;最后一次去学校看老师，老师走路有点飘了，虽然还带着爱耍酷的风格，但明显感觉老了很多，以前都是60岁的人看起来二十几岁，但现在看起来40多岁了，我扶着老师下楼梯的时候，老师说，“好羡慕你啊。”我一听，就知道老师准备耍帅了，便奉承的说道“羡慕我这么年轻就上过你的课？”但是老师耳背没有听见，然后又得意地说道，“羡慕你这么年轻就上过我的课啊。”我哈哈大笑，抬头看见他得意的表情，心想，他开心就好。回头一想，的确也值得羡慕。&lt;/p&gt;&lt;p&gt;--------------------------------------------------------------------------&lt;/p&gt;&lt;p&gt;最后给大家一个链接吧，音质略差，勉强看看吧，老师最近还上不上课，不是太清楚，要是还上课的话，可以找南师大的人问问，是博雅课，就是那种全校公共选修课，有兴趣的同学，可以给老师录一个视频，呵呵哒。提升你们能力的时候到了，做好了，你就是夜空中最闪耀的星。&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://v.youku.com/v_show/id_XMjMwNjg5NTQw.html&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;郑确老师的讲座&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/p&gt;
+
+
+<span class="answer-date-link-wrap">
+<a class="answer-date-link last_updated meta-item" data-tip="s$t$发布于 2015-11-20" target="_blank" href="/question/37616118/answer/73140981">编辑于 15:08</a>
+</span>
+
+</textarea>
+
+
+<div class="zh-summary summary clearfix">
+
+谢邀，说一个我们老师的故事吧。算是一个比较牛逼的老师。郑确教授，全国最受欢迎的老师前100名，主要教沟通学。他教的沟通学曾被评为全国第一课。老师教的另一门课是大学思想政治类的东西，上过大学的都知道那些课有多么的无聊对吧。然后开学第一天，老师…
+
+<a href="/question/37616118/answer/73140981" class="toggle-expand">显示全部</a>
+
+</div>
+
+
+</div>
+<div class="zm-item-meta zm-item-comment-el answer-actions clearfix">
+<div class="zm-meta-panel">
+
+<a data-follow="q:link" class="follow-link zg-follow meta-item" href="javascript:;" id="sfb-7253658"><i class="z-icon-follow"></i>关注问题</a>
+
+<a href="#" name="addcomment" class=" meta-item toggle-comment">
+<i class="z-icon-comment"></i>261 条评论</a>
+
+
+<a href="#" class="meta-item zu-autohide" name="thanks" data-thanked="false"><i class="z-icon-thank"></i>感谢</a>
+
+
+
+<a href="#" class="meta-item zu-autohide" name="share">
+<i class="z-icon-share"></i>分享</a>
+<a href="#" class="meta-item zu-autohide" name="favo">
+<i class="z-icon-collect"></i>收藏</a>
+
+
+
+
+<span class="zg-bull zu-autohide">&bull;</span>
+
+<a href="#" name="nohelp" class="meta-item zu-autohide">没有帮助</a>
+
+<span class="zg-bull zu-autohide">&bull;</span>
+<a href="#" name="report" class="meta-item zu-autohide">举报</a>
+
+
+
+<span class="zg-bull">&bull;</span>
+
+<a href="/terms#sec-licence-1" target="_blank" class="meta-item copyright"> 作者保留权利 </a>
+
+
+<button class="meta-item item-collapse js-collapse">
+<i class="z-icon-fold"></i>收起
+</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="zm-profile-section-item zm-item clearfix" data-time="1448589678" data-type="p" data-type-detail="member_voteup_article">
+<span class="zm-profile-setion-time zg-gray zg-right">5 天前</span>
+<div class="zm-profile-section-main zm-profile-section-activity-main zm-profile-activity-page-item-main">
+<a data-tip="p$t$lycheeorange" href="http://www.zhihu.com/people/lycheeorange" class="zg-link" title="郦橙锦妖一只麋鹿">郦橙锦妖一只麋鹿</a> 赞同了 <a class="column_link" href="http://zhuanlan.zhihu.com/chubbypillow" data-tip="c$t$chubbypillow">Profumi e altre cose</a> 中的文章
+
+<a target='_blank' class="post-link" href="http://zhuanlan.zhihu.com/chubbypillow/20370886">【节操不要了！】小枕心目中最性感的几款男香(๑•̀ㅂ•́)و✧</a>
+</div>
+<div tabindex="-1" class="zm-item-feed zm-item-post" data-type="p">
+<meta itemprop="post-id" content="330894">
+<meta itemprop="post-url-token" content="20370886">
+<a class="zg-anchor-hidden" name="post-20370886"></a>
+
+<div class="zm-item-vote">
+<a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-votecount="863">863</a>
+</div>
+
+
+<div class="post-head">
+<div class="author-info">
+
+
+<span class="name">知乎用户</span>
+
+</div>
+<div class="zm-item-vote-info " data-votecount="863">
+
+<span class="voters">
+<span class="user-block"><a data-tip="p$t$huang-bing-han-27" href="http://www.zhihu.com/people/huang-bing-han-27" class="zg-link" title="黄冰寒">黄冰寒</a>、</span><span class="user-block"><a data-tip="p$t$hei-mo-mo-69" href="http://www.zhihu.com/people/hei-mo-mo-69" class="zg-link" title="黑嘿嘿">黑嘿嘿</a>、</span><span class="user-block"><a data-tip="p$t$lu-ye-35-2" href="http://www.zhihu.com/people/lu-ye-35-2" class="zg-link" title="陆烨">陆烨</a>、</span><span class="user-block"><a data-tip="p$t$chen-dou-dou-32-60" href="http://www.zhihu.com/people/chen-dou-dou-32-60" class="zg-link" title="陈曦">陈曦</a></span>
+</span>
+
+
+<a href="javascript:;" class="more"> 等人赞同</a>
+
+
+</div>
+</div>
+<div class="entry-body">
+<div class="zm-item-rich-text js-collapse-body" data-resourceid="330894">
+<div class="post-content" data-author-name="ChubbyPillow" data-entry-url="http://zhuanlan.zhihu.com/chubbypillow/20370886">
+<textarea class="content hidden">&lt;img src=&quot;https://pic3.zhimg.com/06807028c78a147ffecc1e92c295d142_b.jpg&quot; class=&quot;content_image&quot;&gt;是的！乃没有看错！乃们萌萌的小枕也开始干这种事了！&lt;p&gt;知乎最萌！知乎最萌香水答主！小胖枕破产了！枕枕没有办法，拿着节操抵点赞！原价都是一千多、两千多、三千多的节操，统统两百赞！统统两百赞！不点赞的王八蛋！你不是人！枕枕辛辛苦苦给乃们写了大半年，乃还不点赞！o(￣ヘ￣o＃)&lt;/p&gt;&lt;br&gt;=====================【免责声明】=====================&lt;br&gt;&lt;b&gt;由于不同人嗅觉器官对于气味的感受可能会有一定差异，不同人皮肤以及体温对于香水的呈现可能会有一定差异，不同人对于气味适用季节、性格、性别以及场合等的分类可能会有一定差异，故此本人以下推荐的香水仅为从个人视角个人喜好出发，不保证符合所有人的审美，不保证满足所有人对题目所指概念或特质的期许，如有异议请自主关闭页面，评论已限制，支持请点赞，表白请私信。&lt;/b&gt;&lt;br&gt;=======================【正文】=======================&lt;br&gt;&lt;p&gt;哈哈哈哈本枕开玩喜呢ヾ(´∀`o)也不是完全为了骗赞啦哈哈哈哈哈！&lt;br&gt;&lt;/p&gt;&lt;p&gt;其实还是因为前几天重刷了蜀黍演的Rigoletto又拖了高清所以异常鸡冻~~&lt;/p&gt;&lt;p&gt;每次看完蜀黍唱歌剧本枕节操就不见了！（╯‵□′）╯︵┴─┴ &lt;/p&gt;&lt;p&gt;所以说如果乃们觉得小枕不萌了！不纯洁了！都是这货的错！&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Vittorio_Grigolo&quot; class=&quot; external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;&lt;span class=&quot;invisible&quot;&gt;https://&lt;/span&gt;&lt;span class=&quot;visible&quot;&gt;en.wikipedia.org/wiki/V&lt;/span&gt;&lt;span class=&quot;invisible&quot;&gt;ittorio_Grigolo&lt;/span&gt;&lt;span class=&quot;ellipsis&quot;&gt;&lt;/span&gt;&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;【为了安利窝喜欢的声音费芥末大劲窝容易嘛窝！&lt;/p&gt;&lt;h2&gt;&lt;b&gt;对不起窝跑题跑远了啊啊啊骚瑞骚瑞！！！&lt;/b&gt;&lt;/h2&gt;&lt;p&gt;咳咳，好了，窝来讲一次这回的主要方向。&lt;/p&gt;&lt;p&gt;基本上窝们一提到“性感”这个关键词，窝估计大家想到的最多的就是Animalic：麝香、灵猫香、海狸香……各种重口啊神马神马的……但是在本枕这边！动物香并不是主要部分~~（*＾-＾*）本枕觉得最man的东东其实是皮！革！啊哈哈哈哈哈！所以说窝接下来要介绍的八款香水里，有好多都是带皮革啊带皮革~~不过它们风格各异！但都很有魅力哈哈哈哈哈！！！&lt;img src=&quot;https://pic3.zhimg.com/cca0e0e60e803560a29607c24c13d062_b.jpg&quot; data-rawwidth=&quot;300&quot; data-rawheight=&quot;396&quot; class=&quot;content_image&quot; width=&quot;300&quot;&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Amouage&lt;/b&gt;的&lt;b&gt;&lt;b&gt;Amouage Epic Man&lt;/b&gt;&lt;/b&gt;是一款东方香型木质调的男用香水。 &lt;b&gt;&lt;b&gt;Amouage Epic Man&lt;/b&gt;&lt;/b&gt;是在2009年推出的。 这款香水的调香师是&lt;a href=&quot;http://www.fragrantica.asia/noses/Randa_Hammami.html&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;Randa Hammami&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;。 前调是粉色胡椒, 豆蔻, 藏红花, 肉豆蔻核仁, 香芹籽, 桃金娘, 肉豆蔻皮 和 乳香; 中调是老鹤草 和 没药; 基调是沉香木, 广藿香, 焚香, 皮革, 檀木, 苏合香, 雪松, 麝香 和 海狸香。&lt;br&gt;&lt;/p&gt;&lt;p&gt;【爱慕的史诗！可能是爱慕家窝最欣赏的一款，一开始闻这款觉得还好还好，但越闻越感觉有气场！这种充满了木质、烟感、香辛以及一些香脂感的融合真的是非常完美！虽然在F网英文版上你会发现人们认为最明显的是沉香，但这绝对绝对不是你在很多其他所谓的Oud香水中能找到的沉香气味，这种丰富度是极为少见的，木质调的部分似乎稍稍有些偏苦，但恰到好处，足够具有男性气质但又不过于强势。】&lt;img src=&quot;https://pic2.zhimg.com/25adbc4269c73837600fcf27df977619_b.jpg&quot; data-rawwidth=&quot;200&quot; data-rawheight=&quot;347&quot; class=&quot;content_image&quot; width=&quot;200&quot;&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;&lt;b&gt;L`Artisan Parfumeur&lt;/b&gt;&lt;/b&gt;的&lt;b&gt;&lt;b&gt;Dzing!&lt;/b&gt;&lt;/b&gt;是一款木质香型的女用香水。 &lt;b&gt;&lt;b&gt;Dzing!&lt;/b&gt;&lt;/b&gt;是在1999年推出的。 这款香水的调香师是&lt;a href=&quot;http://www.fragrantica.asia/noses/Olivia_Giacobetti.html&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;Olivia Giacobetti&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;。 这款香水成分选用了皮革, 生姜, 零陵香豆, 麝香, 白木, 焦糖, 藏红花, 太妃糖, 糖衣苹果 和 棉花糖。&lt;br&gt;&lt;/p&gt;&lt;p&gt;【卧槽这是女香？！你逗窝？！虽然这玩意儿看着确实像是个小甜饼子，但闻起来绝逼没那么简单啊！！！而且这种甜度来讲的话男性用也绝对没有问题啊~~~准确的说！这款Dzing里面的皮革属于那种没有太多攻击性的皮革，尤其是在一定量的甜感衬托下，但这里的甜感绝不是大家想象的“腻”型甜感，它仅仅提供一种柔滑的感觉。皮革的部分还是作为主题的，苦感肯定是有的，也有轻微的咸，但都令人很舒适！】&lt;/p&gt;&lt;img src=&quot;https://pic1.zhimg.com/37d875a77908bc62a3107717d3520fbc_b.jpg&quot; data-rawwidth=&quot;300&quot; data-rawheight=&quot;450&quot; class=&quot;content_image&quot; width=&quot;300&quot;&gt;&lt;p&gt;&lt;b&gt;&lt;b&gt;Lubin&lt;/b&gt;&lt;/b&gt;的&lt;b&gt;&lt;b&gt;Idole&lt;/b&gt;&lt;/b&gt;是一款木质香型香料调的男用香水。 &lt;b&gt;&lt;b&gt;Idole&lt;/b&gt;&lt;/b&gt;是在2005年推出的。 这款香水的调香师是&lt;a href=&quot;http://www.fragrantica.asia/noses/Olivia_Giacobetti.html&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;Olivia Giacobetti&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;。 前调是朗姆酒, 藏红花, 苦橙 和 香芹籽; 中调是黑檀, 甘蔗 和 棕榈树; 基调是皮革 和 红色檀木。&lt;br&gt;&lt;/p&gt;&lt;p&gt;【Idole算是Lubin里面窝最喜欢的之一，其中很重要的一点就是，跟某些香调表里无耻的打上“朗姆酒”而并没有什么卵用的香来比，Idole在开头是真的有酒味！真的有酒味！这种感觉就好比我试Oud Immortel时遇见柠檬酒味道一样，是很欣慰的！短暂的酒味过后能够明显感受到藏红花以及黑檀所带来的苦感，但这种苦感正是窝很喜欢的！非！常！manly！像是爱喝朗姆的穿着皮夹克的大叔~~】&lt;img src=&quot;https://pic3.zhimg.com/8caa3d6752f74b6548108f64a9bf22ea_b.jpg&quot; data-rawwidth=&quot;300&quot; data-rawheight=&quot;333&quot; class=&quot;content_image&quot; width=&quot;300&quot;&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;&lt;a href=&quot;http://www.fragrantica.asia/noses/Mona_di_Orio.html&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;Mona di Orio&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/b&gt;的&lt;b&gt;&lt;b&gt;Oudh Osmanthus&lt;/b&gt;&lt;/b&gt;是一款东方香型的中性香水。 &lt;b&gt;&lt;b&gt;Oudh Osmanthus&lt;/b&gt;&lt;/b&gt;是在2011年推出的。 这款香水的调香师是&lt;a href=&quot;http://www.fragrantica.asia/noses/Mona_di_Orio.html&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;Mona di Orio&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;。 前调是苦橙叶, 榄香 和 青橘; 中调是桂花, 广藿香 和 莎草(香付子根)油; 基调是沉香木, 麝香, 阿特拉斯雪松 和 龙涎香。&lt;br&gt;&lt;/p&gt;&lt;p&gt;【首先感谢&lt;a href=&quot;https://www.zhihu.com/people/08fd83264192633e6ec3b8173c92dc68&quot; data-hash=&quot;08fd83264192633e6ec3b8173c92dc68&quot; class=&quot;member_mention&quot; data-editable=&quot;true&quot; data-title=&quot;@哇总说&quot; data-tip=&quot;p$b$08fd83264192633e6ec3b8173c92dc68&quot;&gt;@哇总说&lt;/a&gt; 姐姐对本枕的大力支持，没有乃分给窝的2ml窝估计一万年都不会去试当年卖40块一毫升的Oud2333333333，然后再强调一下，这货改版了！这货改版了！从当时漂亮的方瓶子变成现在这玩意儿了！味道变没变不知道！我就只讲原版！对这个香我最最最欣赏的就是它浓郁到极致的琥珀基底（新香调表没有了，悲伤）以及一定量的皮革，以往很少有香里面的琥珀能让我这么喜欢，但这款除外！琥珀的干燥感加上细微的桂花等几乎是神一样的组合，至于沉香的部分我似乎不是那么能闻出来，琥珀太抢镜hhhhhhh，总之这款是非常让人着迷的、充满野性气质一款香，有种心有猛虎细嗅蔷薇的即视感ヽ(✿ﾟ▽ﾟ)ノ以及它浓度极高！赞爆！】&lt;img src=&quot;https://pic3.zhimg.com/89ef2f77fdcc9454938399fdc702f89a_b.jpg&quot; data-rawwidth=&quot;300&quot; data-rawheight=&quot;413&quot; class=&quot;content_image&quot; width=&quot;300&quot;&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;&lt;b&gt;Nasomatto&lt;/b&gt;&lt;/b&gt;的&lt;b&gt;&lt;b&gt;Black Afgano&lt;/b&gt;&lt;/b&gt;是一款木质香型芳香调的中性香水。 这款香水的调香师是&lt;a href=&quot;http://www.fragrantica.asia/noses/Alessandro_Gualtieri.html&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;Alessandro Gualtieri&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;。 前调是大麻 和 绿色元素; 中调是树脂, 木质元素, 咖啡 和 烟草; 基调是焚香 和 沉香木。&lt;br&gt;&lt;/p&gt;&lt;br&gt;【黑色阿富汗这个窝之前有跟大家提过！说实在的，这货跟我讲到的其他香比，并不怎么重口……别看这名字这么屌，液体这么暗黑，实际上还好啦。其中也就是烟草以及基底沉香的部分比较明显，稍稍有那么一点咖啡的香苦感，总的来说是个虽然听着男性化但较为中性的东东，整体很温暖宜人。然后……我个人认为其中烟草带来的酸感比较明显，不过和苦的部分中和后还是颇有几分魅力的。至于适用人群……想当帅大叔但又没到大叔年纪的帅小伙？】&lt;img src=&quot;https://pic1.zhimg.com/5a7f02495aad15ee1e821781650a7d98_b.jpg&quot; data-rawwidth=&quot;300&quot; data-rawheight=&quot;416&quot; class=&quot;content_image&quot; width=&quot;300&quot;&gt;&lt;p&gt;&lt;b&gt;&lt;b&gt;Serge Lutens&lt;/b&gt;&lt;/b&gt;的&lt;b&gt;&lt;b&gt;Cuir Mauresque&lt;/b&gt;&lt;/b&gt;是一款皮革香型的中性香水。 &lt;b&gt;&lt;b&gt;Cuir Mauresque&lt;/b&gt;&lt;/b&gt;是在1996年推出的。 这款香水的调香师是&lt;a href=&quot;http://www.fragrantica.asia/noses/Christopher_Sheldrake.html&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;Christopher Sheldrake&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;。 这款香水成分选用了麝香, 非洲橙子花, 弗吉尼亚州雪松, 琥珀, 肉豆蔻核仁, 丁香, 肉桂, 苏合香, 焚香, 橘子, 没药, 果子狸, 香芹籽, 皮革 和 沉香木。&lt;br&gt;&lt;/p&gt;&lt;p&gt;【卤蛋的摩尔人皮革。这款也是我最近才试的，感觉挺喜欢。一般情况下我对东方调老是提不起兴趣，但摩尔人皮革里面相当夸张的没药量和皮革的部分融合在一起，反而比较好接受了。没药其实是偏甜且带点凉意的，但皮革给这种气味带上了重量感，和刚刚我说的很类似，同样是苦甜交织，并且在体温的催化下，皮革与香辛等营造出了一种暖意，动物香虽说很细微但又可感，想想这款皮革如果穿在面部线条硬朗且五官充满了异域风情的男人身上应该会非常搭~~~(*/ω＼*)】&lt;/p&gt;&lt;br&gt;&lt;img src=&quot;https://pic4.zhimg.com/07c37cba836965cd24f16b5cd139ef7b_b.jpg&quot; data-rawwidth=&quot;300&quot; data-rawheight=&quot;446&quot; class=&quot;content_image&quot; width=&quot;300&quot;&gt;&lt;p&gt;Private Blend &lt;b&gt;London&lt;/b&gt; 香水的开始是精致并辛香的马达加斯加黑胡椒油，藏红花，豆蔻纯香，香菜籽，小茴香油，和咖啡油组成的旋律。中心则展现出埃及老鹤草与茉莉纯香，焚香，和西班牙柑橘油的和谐搭配。基调为我们带来的则是木质气息的变化：沉香木，桦木焦油，阿特拉斯雪松，和多明尼加共和国的阿米香树；外加感性的Tonkin麝香味的烘托。&lt;br&gt;&lt;/p&gt;&lt;p&gt;【TF伦敦。我刚试的时候竟然觉得这货跟Epic有点像！不过伦敦的特点是，孜然味特！别！明！显！基本上是孜然搭上一堆香辛的味道，最开始我的思维几乎都被这种孜然占领了，但渐渐地我发现这货其实很有内涵啊！焚香、混合木质、沉香，几乎都慢慢地出来了。尽管我一般说到Oud不会提起这款，但这个调调其实很讨喜啊~~虽然有很多咸味的东西在里面，却绝对不会像忽必烈一样有脏感，如果要比喻一下啊~~那可能是在西装革履之下藏着的……嘿嘿嘿(❤´艸｀❤)】&lt;img src=&quot;https://pic1.zhimg.com/f688737cacad5835a820e36e9e1aa68c_b.jpg&quot; data-rawwidth=&quot;300&quot; data-rawheight=&quot;346&quot; class=&quot;content_image&quot; width=&quot;300&quot;&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Lothair&lt;/b&gt;，是一款由调香师&lt;a href=&quot;http://www.fragrantica.asia/noses/Bertrand_Duchaufour.html&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;Bertrand Duchaufour&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;调制的中性香水，带有红浆果，杜松果，豆蔻，佛手柑，葡萄柚，以及无花果叶构成的香调。香水的中调包括无花果奶，薰衣草，玉兰，老鹤草。红茶。基调则带来了香草，数种麝香，龙涎香，雪松，鸡翅木, 以及橡苔。&lt;br&gt;&lt;/p&gt;&lt;p&gt;【最后一只！乃们绝对不会想到是这只！绝对绝对！这货约莫是只属于枕一个人的诡异审美，虽然它看起来跟性感一点关系都没有，但如果真遇到用这货的男人窝绝对双眼放星星！我之前写过一篇这个&lt;a href=&quot;http://weibo.com/p/1001603809051136889175?mod=zwenzhang&quot; class=&quot; wrap external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;Sina Visitor System&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;，就是讲潘家男香很独特的地方。潘家似乎从来不走性感路线，但这种有些保守而不缺亮点的特质反而是非常有趣的。Lothair在薰衣草、红茶以及香草等的主导之下表现出了一种颇具现代感的绅士风骨，既有轻微的涩，又有浅浅的柔，这种融合真的是非常奇妙。潘家一开始很打动我的是Endymion，但若是和Lothair比，Endymion似乎女性特质多了些。如果说以上的香代表的多是大叔，那么这款便会是拥有非常干净的外表、微卷的棕发（但身材又超好ヾ(´∀`o)的欧洲小帅锅~~】&lt;/p&gt;&lt;h2&gt;&lt;b&gt;好啦！就先写到这里！蟹蟹大家观看！&lt;/b&gt;&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;https://pic3.zhimg.com/5100d18a13a5d0989722321015175542_b.jpg&quot; data-rawwidth=&quot;1003&quot; data-rawheight=&quot;153&quot; class=&quot;origin_image zh-lightbox-thumb&quot; width=&quot;1003&quot; data-original=&quot;https://pic3.zhimg.com/5100d18a13a5d0989722321015175542_r.jpg&quot;&gt;P.S.全部香调表以及香水图片来自&lt;a href=&quot;http://fragrantica.com&quot; class=&quot; external&quot; target=&quot;_blank&quot; rel=&quot;nofollow noreferrer&quot;&gt;&lt;span class=&quot;invisible&quot;&gt;http://&lt;/span&gt;&lt;span class=&quot;visible&quot;&gt;fragrantica.com&lt;/span&gt;&lt;span class=&quot;invisible&quot;&gt;&lt;/span&gt;&lt;i class=&quot;icon-external&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;P.P.S.啥？乃说蜀黍啊？……MKK拿去，这人没救了┑(￣Д ￣)┍&lt;/p&gt;&lt;p&gt;P.P.P.S.头图法鲨Michael Fassbender&lt;/p&gt;</textarea>
+<div class="zh-summary summary clearfix">
+<img src="https://pic3.zhimg.com/06807028c78a147ffecc1e92c295d142_xld.jpg" class="content_image inline-img">是的！乃没有看错！乃们萌萌的小枕也开始干这种事了！知乎最萌！知乎最萌香水答主！小胖枕破产了！枕枕没有办法，拿着节操抵点赞！原价都是一千多、两千多、三千多的节操，统统两百赞！统统两百赞！不点赞的王八蛋！你不是人！枕枕辛辛苦苦给乃们写了大半年…
+
+<a href="http://zhuanlan.zhihu.com/chubbypillow/20370886" class="toggle-expand">显示全部</a>
+
+</div>
+</div>
+</div>
+</div>
+<div class="zm-item-meta clearfix">
+<div class="zm-meta-panel">
+
+
+<a data-follow="c:link" class="zg-follow meta-item" href="#" id="cl-4898"><i class="z-icon-follow"></i>关注专栏</a>
+
+<a href="#" name="toggle-comment" class="meta-item toggle-comment">
+<i class="z-icon-comment"></i>33 条评论</a>
+<a href="#" class="meta-item zu-autohide" name="share"><i class="z-icon-share"></i>分享</a>
+<span class="zg-bull zu-autohide">•</span>
+<a href="#" class="meta-item zu-autohide js-report">举报</a>
+<button class="meta-item item-collapse js-collapse">
+<i class="z-ico-fold-white"></i>收起
+</button>
+</div>
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+
+
+<div class="zu-main-sidebar">
+
+<div class="zm-side-section">
+<div class="zm-side-section-inner">
+<div class="well login-reg-box">
+<span>知乎是一个真实的问答社区，在这里分享知识、经验和见解，发现更大的世界。<br>
+<a id="js-reg-with-mail-in-top" href="#">使用手机或邮箱注册</a>
+<!-- <span>·</span><a id="js-reg-with-qq-in-top" href="#">使用 QQ 登录</a> -->
+</span>
+<div class="clearfix">
+<a id="js-reg-with-wechat-in-top" href="#" class="zg-btn-green"><span class="z-ico-wechat-right-panel"></span>使用微信登录</a>
+<a id="js-reg-with-sina-in-top" href="#" class="zg-btn-red"><span class="icon-big-white-sina"></span>使用微博登录</a>
+<a id="js-reg-with-qq-in-top" href="#" class="zg-btn-blue"><span class="icon-big-white-qq"></span>使用 QQ 登录</a>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="zm-profile-side-following zg-clear">
+<a class="item" href="/people/lycheeorange/followees">
+<span class="zg-gray-normal">关注了</span><br />
+<strong>826</strong><label> 人</label>
+</a>
+<a class="item" href="/people/lycheeorange/followers">
+<span class="zg-gray-normal">关注者</span><br />
+<strong>33787</strong><label> 人</label>
+</a>
+</div>
+<div class="zm-profile-side-section">
+<div class="zm-side-section-inner zg-clear">
+<div class="zm-profile-side-section-title">
+关注了 <a href="/people/lycheeorange/columns/followed" class="zg-link-litblue"><strong>52 个专栏</strong></a>
+</div>
+<div class="zm-profile-side-columns">
+
+<a href="http://zhuanlan.zhihu.com/histart" data-tip="c$t$histart" class="link" target="_blank">
+<img class="avatar avatar-is" alt="被误诊的艺术史" src="https://pic3.zhimg.com/a18ed6ff077299e8ff06527faf37e8c2_l.jpg" srcset="https://pic3.zhimg.com/a18ed6ff077299e8ff06527faf37e8c2_l.jpg 2x" />
+</a>
+
+<a href="http://zhuanlan.zhihu.com/niceliving" data-tip="c$t$niceliving" class="link" target="_blank">
+<img class="avatar avatar-is" alt="好好住指南" src="https://pic2.zhimg.com/aa1b5c5bb4c5bf252f7b6dd2b1291581_l.jpg" srcset="https://pic2.zhimg.com/aa1b5c5bb4c5bf252f7b6dd2b1291581_l.jpg 2x" />
+</a>
+
+<a href="http://zhuanlan.zhihu.com/zhihu-product" data-tip="c$t$zhihu-product" class="link" target="_blank">
+<img class="avatar avatar-is" alt="知乎产品专栏" src="https://pic3.zhimg.com/3676e9bd6_l.jpg" srcset="https://pic3.zhimg.com/3676e9bd6_l.jpg 2x" />
+</a>
+
+<a href="http://zhuanlan.zhihu.com/thorapp" data-tip="c$t$thorapp" class="link" target="_blank">
+<img class="avatar avatar-is" alt="APP小站" src="https://pic1.zhimg.com/ac579f17524cd684ffbfa00cec166cac_l.jpg" srcset="https://pic1.zhimg.com/ac579f17524cd684ffbfa00cec166cac_l.jpg 2x" />
+</a>
+
+<a href="http://zhuanlan.zhihu.com/indieace" data-tip="c$t$indieace" class="link" target="_blank">
+<img class="avatar avatar-is" alt="IndieACE" src="https://pic4.zhimg.com/8a94f7783432f50550b9e83591d4ab7f_l.jpg" srcset="https://pic4.zhimg.com/8a94f7783432f50550b9e83591d4ab7f_l.jpg 2x" />
+</a>
+
+<a href="http://zhuanlan.zhihu.com/design-stuff" data-tip="c$t$design-stuff" class="link" target="_blank">
+<img class="avatar avatar-is" alt="Design stuff" src="https://pic2.zhimg.com/1da552199_l.jpg" srcset="https://pic2.zhimg.com/1da552199_l.jpg 2x" />
+</a>
+
+<a href="http://zhuanlan.zhihu.com/forallplt" data-tip="c$t$forallplt" class="link" target="_blank">
+<img class="avatar avatar-is" alt="Continuation" src="https://pic2.zhimg.com/4573943649082e55de6cb53a2c5de3cd_l.jpg" srcset="https://pic2.zhimg.com/4573943649082e55de6cb53a2c5de3cd_l.jpg 2x" />
+</a>
+
+</div>
+</div>
+</div>
+<div class="zm-profile-side-section">
+<div class="zm-side-section-inner zg-clear">
+<div class="zm-profile-side-section-title">
+关注了 <a href="/people/lycheeorange/topics" class="zg-link-litblue"><strong>67 个话题</strong></a>
+</div>
+<div class="zm-profile-side-topics" id="zh-profile-following-topic">
+
+<a class="link" data-tip="t$t$19550228" href="/topic/19550228">
+<img class="avatar" src="https://pic1.zhimg.com/2e33f063f1bd9221df967219167b5de0_m.jpg" title="知乎">
+</a>
+
+<a class="link" data-tip="t$t$19550517" href="/topic/19550517">
+<img class="avatar" src="https://pic4.zhimg.com/f07808da5625fef3607f8b75b770349f_m.jpg" title="互联网">
+</a>
+
+<a class="link" data-tip="t$t$19550429" href="/topic/19550429">
+<img class="avatar" src="https://pic4.zhimg.com/7d8c15df29ce6900c80f9cf630992687_m.jpg" title="电影">
+</a>
+
+<a class="link" data-tip="t$t$19551388" href="/topic/19551388">
+<img class="avatar" src="https://pic3.zhimg.com/6d422ca0a_m.jpg" title="摄影">
+</a>
+
+<a class="link" data-tip="t$t$19551991" href="/topic/19551991">
+<img class="avatar" src="https://pic1.zhimg.com/66a9d4423822b6ac0260c08f7627d990_m.jpg" title="iOS 应用">
+</a>
+
+<a class="link" data-tip="t$t$19553032" href="/topic/19553032">
+<img class="avatar" src="https://pic1.zhimg.com/70ddd5e0c_m.jpg" title="广告">
+</a>
+
+<a class="link" data-tip="t$t$19550638" href="/topic/19550638">
+<img class="avatar" src="https://pic2.zhimg.com/343a031b1_m.jpg" title="社交网络">
+</a>
+
+</div>
+</div>
+</div>
+
+
+<div class="zm-profile-side-section">
+<div class="zm-side-section-inner">
+<span class="zg-gray-normal">个人主页被 <strong>20906</strong> 人浏览</span>
+</div>
+</div>
+
+<script type="text/json" class="json-inline" data-name="current_people">["\u90e6\u6a59\u9526\u5996\u4e00\u53ea\u9e8b\u9e7f","lycheeorange","https:\/\/pic1.zhimg.com\/d53bf55b7d9fc84f900c369761586170_s.png","8517c9e0e90e40fb5d51800668477228"]</script>
+<div id="zh-footer" class="zh-footer">
+<div class="content zg-wrap clearfix">
+<ul>
+
+<li><a href="https://liukanshan.zhihu.com" target="_blank">刘看山</a></li>
+
+<li><a href="/app" target="_blank">移动应用</a></li>
+<li><a href="/careers">加入知乎</a></li>
+<li><a href="/terms" target="_blank">知乎协议</a></li>
+<li><a href="mailto:bd@zhihu.com">商务合作</a></li>
+
+</ul>
+
+<span class="copy">&copy; 2015 知乎</span>
+
+</div>
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script type="text/json" class="json-inline" data-name="guiders2">{}</script>
+<script type="text/json" class="json-inline" data-name="current_user">["","","","-1","",0,0]</script>
+<script type="text/json" class="json-inline" data-name="env">["zhihu.com","comet.zhihu.com",false,null]</script>
+<script type="text/json" class="json-inline" data-name="permissions">[]</script>
+
+
+<script type="text/json" class="json-inline" data-name="ga_vars">{"user_created":0,"now":1449041739000,"abtest_mask":"------------------------------","user_attr":[0,0,0,"-","-"],"user_hash":0}</script>
+
+<script src="http://static.zhihu.com/static/revved/-/js/vendor.1a51eb6e.js"></script>
+<script src="http://static.zhihu.com/static/revved/-/js/closure/common.d3bfcd50.js"></script>
+
+
+<script src="http://static.zhihu.com/static/revved/-/js/closure/richtexteditor.4bc37c3f.js" async></script>
+<script src="http://static.zhihu.com/static/revved/-/js/closure/page-profile.356b6d36.js"></script>
+<meta name="entry" content="ZH.entryProfile" data-module-id="page-profile">
+
+<script type="text/zscript" znonce="4acd039246b84445a09b2ede99f6424c"></script>
+
+<input type="hidden" name="_xsrf" value="fe877506e42fb05550fdead878b6d552"/>
+</body>
+</html>------------New Test End ----------------
+

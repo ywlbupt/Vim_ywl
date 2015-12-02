@@ -3,24 +3,26 @@
 from html.parser import HTMLParser
 from html.entities import entitydefs
 
-class TitleParser(HTMLParser):
+class ZhihuParser(HTMLParser):
     
 # 调用父类HTMLParser的初始化函数
 # 在创建实例的时候，把一些我们认为必须绑定的属性强制填写进去。
 # 通过定义一个特殊的__init__方法
-# 这里给子类添加 title 和 readingtitle 这两个属性
+# 这里给子类添加 title 和 readingQuesionLink 这两个属性
     def __init__(self):
-        self.title = ""
-        self.readingtitle = 0
+        self.Question = []
+        self.readingQuesionLink = 0
         HTMLParser.__init__(self)
 
     def handle_starttag(self, tag, attrs):
-        if tag == 'title' :
-            self.readingtitle = 1
+        # if tag == 'a' and attrs.get("class")=="question_link" :
+        #     self.readingQuesionLink = 1
+        pass
 
     def handle_data(self, data):
-        if self.readingtitle:
-            self.title += data
+        # if self.readingQuesionLink:
+        #     self.Question += data
+        self.Question += data
     
 # 翻译HTML实体，如&amp;的函数，这里的变量 name = 'amp'
     def handle_entityref(self, name):
@@ -45,15 +47,15 @@ class TitleParser(HTMLParser):
 
     def handle_endtag(self, tag):
         if tag == 'title':
-            self.readingtitle = 0
+            self.readingQuesionLink = 0
 
-    def gettitle(self):
-        return self.title
+    def getZhihuQuestion(self):
+        return self.Question
 
 # HTMLParser的子方法 feed()会恰当调用 handle_starttag, handle_data, handle_endtag
 # 方法，handle_data()方法会检查是否从TITLE元素中取得数据，如果是，己保存数据
 if __name__ == '__main__' :
-    with open ("./temp1.txt",'r', encoding='utf-8') as fd :
-        tp = TitleParser()
+    with open ("./temp2.txt",'r', encoding='utf-8') as fd :
+        tp = ZhihuParser()
         tp.feed(fd.read())
-        print ("Title is : %s" % tp.gettitle())
+        print (tp.getZhihuQuestion())

@@ -3,13 +3,14 @@
 # Filename: Zhihu.py
 
 from urllib import request
-from TitleParser import TitleParser
+from ZhihuParser import ZhihuParser
 import logging
+import os
 
-logging.basicconfig (level = logging.INFO)
+# logging.basicconfig (level = logging.INFO)
 
 # 新建一个文件，存放读取的内容供Debug
-f = open('./temp.txt', 'w')
+f = open('./temp.txt', 'w', encoding ='utf-8')
 f.write ("------------New Test begin ----------------\n")
 
 # 某个知乎用户的主页，未登录情况下
@@ -19,17 +20,15 @@ ZhihuRequest = request.Request(url)
 
 with request.urlopen(ZhihuRequest,timeout = 30) as r :
     data = r.read()
-
 # ---------- 解析HTML中的Title 示例
-    tp = TitleParser()
-    tp.feed(data.decode('utf-8'))
-    print ("Title is : %s" % tp.gettitle())
+    # tp = ZhihuParser()
+    # tp.feed(data.decode('utf-8'))
 # ----------
 
-    # f.write('Status: %s %s\n'% (r.status , r.reason))
-    # for key, value in r.getheaders() :
-    #     f.write ("%s : %s\n" % (key, value))
-    # f.write("\nData:\n%s" % data.decode('utf-8'))
+    f.write('Status: %s %s %s'% (r.status , r.reason, os.linesep))
+    for key, value in r.getheaders() :
+        f.write ("%s : %s %s" % (key, value, '\r\n'))
+    f.write("Data:%s%s" % (os.linesep, data.decode('utf-8')))
 
 
 f.write ("------------New Test End ----------------\n\n")
