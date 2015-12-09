@@ -1140,11 +1140,3 @@ endif
     endfunction
 "}}}
 
-"
-"   python module
-
-" function! Del(number)
-"     python << EOF
-"     print()
-"     EOF
-" endfunction
