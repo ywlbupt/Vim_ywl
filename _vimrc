@@ -44,6 +44,8 @@
         " provide a reference manual for the C++ standard template library (STL)
 "       Bundle 'stlrefvim'
         Bundle 'Pydiction'
+        Bundle 'tmhedberg/SimpylFold'
+
 
 		"""""""""""""""""""""""""""""""""""""""""""""""
         Bundle 'The-NERD-tree'
@@ -103,7 +105,7 @@
     "   Open my note about Vim
     endif
 "}}}
-
+ 
 "   Chinese
     if MySys() == "windows"
         set langmenu=zh_CN.UTF-8
@@ -155,9 +157,9 @@ endif
 	set autochdir " 自动切换当前目录为当前文件所在的目录
     if has("autocmd")
         "windows下，对包含空格的路径会有问题，修改如下：
-        autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
+        autocmd! BufEnter * silent! lcd %:p:h:gs/ /\\ /
         "开/tmp文件夹下的文件时不自动切换，则设置如下：
-        "autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
+        "autocmd! BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
     endif
 
 
@@ -294,8 +296,6 @@ endif
     set pastetoggle=<F6>
 
     if has("autocmd")
-        autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
-                    \ set formatoptions+=n
     endif
 "}}}
 
@@ -327,31 +327,44 @@ endif
 
 "   Autocmd "{{{
 if has("autocmd")
-    autocmd FileType xml,html,c,cs,java,perl,
-                \shell,bash,cpp,python,vim,php,ruby  set cc=81
-    "   autocmd FileType xml,html vmap <C-o> <ESC>'<i<!--<ESC>o<ESC>'>o-->
-    "   autocmd FileType java,c,cpp,cs vmap <C-o> <ESC>'<o
-    " autocmd FileType text,php,vim,c,java,xml,bash,
-    "             \shell,perl,python setlocal textwidth=81
-    autocmd BufRead,BufNewFile *.txt setfiletype txt
-    if MySys() == 'linux'
-        " autocmd Filetype html,xml,xsl source ~/Dropbox/vimfiles/plugin/closetag.vim
-        autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
-                    \map <leader>p :!google-chrome "%:p"<CR>
-    elseif MySys() == 'windows'
-        " autocmd Filetype html,xml,xsl source $HOME\vimfiles\plugin\closetag.vim
-        " autocmd Filetype matlab source $HOME\vimfiles\syntax\matlab.vim|set cms=%\ %s
-        " autocmd BufEnter *.m compiler mlint
-        autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
-                    \map <Leader>p :exec "!start ".g:path_chrome." %:p"<CR>
-        "\map <Leader>p :exec "!start ".substitute(g:path_chrome, '\\', '\\\\', 'g')." %:p"
-        "   autocmd Bufenter * normal zn    
+    autocmd! FileType xml,html,c,cs,java,perl,
+                \shell,bash,cpp,python,vim,php,ruby  setlocal cc=81
 
-        autocmd BufReadPost *
-                    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-                    \ exe " normal g`\"" |
-                    \ endif
-    endif
+    augroup markdownevent
+        autocmd! markdownevent
+        autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
+                        \ set formatoptions+=n
+        if MySys() == 'linux'
+            autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
+                        \map <leader>p :!google-chrome "%:p"<CR>
+        elseif MySys() == 'windows'
+            " autocmd Filetype html,xml,xsl source $HOME\vimfiles\plugin\closetag.vim
+            " autocmd Filetype matlab source $HOME\vimfiles\syntax\matlab.vim|set cms=%\ %s
+            " autocmd BufEnter *.m compiler mlint
+            autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
+                        \map <Leader>p :exec "!start ".g:path_chrome." %:p"<CR>
+            "\map <Leader>p :exec "!start ".substitute(g:path_chrome, '\\', '\\\\', 'g')." %:p"
+            "   autocmd Bufenter * normal zn    
+        endif
+    augroup END
+
+    autocmd! BufReadPost *
+                \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                \ exe " normal g`\"" |
+                \ endif
+
+    augroup  pythonevent
+        autocmd! pythonevent
+        autocmd pythonevent BufRead,BufNewFile *.py setlocal foldmethod=indent | setlocal foldlevel=0
+        autocmd pythonevent BufNewFile,BufRead *.py
+                    \ set tabstop=4 |
+                    \ set softtabstop=4 |
+                    \ set shiftwidth=4 |
+                    \ set textwidth=79 |
+                    \ set expandtab |
+                    \ set autoindent |
+                    \ set fileformat=unix 
+    augroup END
 
 
         "
@@ -454,7 +467,7 @@ endif "has("autocmd")
 "}}}
 
 "{{{
-"   Pydiction
+"   Pydiction && SimpylFold
     if MySys() == 'windows'
 		let g:pydiction_location =
 		 \ g:ywl_path.'\vimfiles\bundle\Pydiction\complete-dict'
@@ -462,6 +475,7 @@ endif "has("autocmd")
 		let g:pydiction_location = 
 		 \ g:ywl_path.'/vimfiles/bundle/Pydiction/complete-dict'
     endif
+    let g:SimpylFold_docstring_preview=1
 "}}}
 
 "{{{
@@ -785,7 +799,7 @@ endif "has("autocmd")
     "   nnoremap <buffer> <F4> :call OpenNERDTreeBoookmarks()
     "endif
     if has("autocmd")
-        autocmd BufEnter _NERD_tree_ nnoremap <buffer> <F4> :call OpenNERDTreeBoookmarks()<CR>
+        autocmd! BufEnter _NERD_tree_ nnoremap <buffer> <F4> :call OpenNERDTreeBoookmarks()<CR>
     endif
     function! OpenNERDTreeBoookmarks()
         let a:bookmark_str = input("Please enter Bookmarkname: ")
@@ -914,7 +928,7 @@ endif "has("autocmd")
     let g:bufExplorerSplitVertical=1     " Split vertically.
     let g:bufExplorerSplitVertSize = 30  " Split width
     let g:bufExplorerUseCurrentWindow=1  " Open in new window.
-    autocmd BufWinEnter \[Buf\ List\] setl nonumber 
+    autocmd! BufWinEnter \[Buf\ List\] setl nonumber 
 "}}}
 
 "{{{
@@ -1125,3 +1139,12 @@ endif
         call AddTitle()
     endfunction
 "}}}
+
+"
+"   python module
+
+" function! Del(number)
+"     python << EOF
+"     print()
+"     EOF
+" endfunction
