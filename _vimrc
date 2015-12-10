@@ -34,7 +34,7 @@
         Bundle 'tpope/vim-commentary'
         Bundle 'tpope/vim-repeat'
         Bundle 'jlanzarotta/bufexplorer'
-        Bundle 'vim-latex/vim-latex'
+        " Bundle 'vim-latex/vim-latex'
 
         Bundle 'jkeylu/vimcdoc'
 
@@ -44,14 +44,17 @@
         " provide a reference manual for the C++ standard template library (STL)
 "       Bundle 'stlrefvim'
         Bundle 'Pydiction'
+        " fold for python
         Bundle 'tmhedberg/SimpylFold'
+        Bundle 'othree/xml.vim'
+
 
 
 		"""""""""""""""""""""""""""""""""""""""""""""""
         Bundle 'The-NERD-tree'
         Bundle 'taglist.vim' 
         Bundle 'Align'
-        Bundle 'TxtBrowser'
+        " Bundle 'TxtBrowser'
         "Bundle 'load_template'
         "Bundle 'winmanager'
         Bundle 'a.vim'
@@ -327,8 +330,16 @@ endif
 
 "   Autocmd "{{{
 if has("autocmd")
-    autocmd! FileType xml,html,c,cs,java,perl,
+    autocmd! FileType html,c,cs,java,perl,
                 \shell,bash,cpp,python,vim,php,ruby  setlocal cc=81
+
+    augroup xml-fold
+        autocmd! xml-fold
+        autocmd BufReadPre *.xml 
+                    \let g:xml_syntax_folding = 1 |  
+                    \setlocal foldmethod=syntax |
+                    \setlocal cc=81
+    augroup END
 
     augroup markdownevent
         autocmd! markdownevent
@@ -1139,5 +1150,3 @@ endif
         call AddTitle()
     endfunction
 "}}}
-
-" test

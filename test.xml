@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gallery>
+    <images>
+        <title><![CDATA[PICTURE NAME]]></title>
+        <description><![CDATA[Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus id lectus. Duis turpis dui, pellentesque id, rutrum sed.]]></description>
+        <tmb>photoGallery/tmb1.jpg</tmb>
+        <img>photoGallery/img1.jpg</img>
+    </images>
+</images>
+<images>
+    <title><![CDATA[PICTURE NAME]]></title>
+    <description><![CDATA[Sed hendrerit, est sed congue luctus, arcu mauris tincidunt elit, vestibulum accumsan quam risus nec turpis.]]></description>
+    <tmb>photoGallery/tmb2.jpg</tmb>
+    <img>photoGallery/img2.jpg</img>
+
+</images>
+<images>
+    <title><![CDATA[PICTURE NAME]]></title>
+    <description><![CDATA[In lectus sapien, malesuada id, luctus eu, rhoncus in, purus. Suspendisse sapien. Nam velit. Quisque accumsan elementum.]]></description>
+    <tmb>photoGallery/tmb29.jpg</tmb>
+    <img>photoGallery/img29.jpg</img>
+</images>
+<images>
+    <title><![CDATA[PICTURE NAME]]></title>
+    <description><![CDATA[Sed hendrerit, est sed congue luctus, arcu mauris tincidunt elit, vestibulum accumsan quam risus nec turpis.]]></description>
+    <tmb>photoGallery/tmb2.jpg</tmb>
+    <img>photoGallery/img2.jpg</img>
+
+</images>
+<images>
+    <title><![CDATA[PICTURE NAME]]></title>
+    <description><![CDATA[In lectus sapien, malesuada id, luctus eu, rhoncus in, purus. Suspendisse sapien. Nam velit. Quisque accumsan elementum.]]></description>
+    <tmb>photoGallery/tmb29.jpg</tmb>
+    <img>photoGallery/img29.jpg</img>
+</images>
+<images>
+    <title><![CDATA[照片名字]]></title>
+    <description><![CDATA[照片描述.]]></description>
+    <tmb>photoGallery/tmb30.jpg</tmb>
+    <img>photoGallery/img30.jpg</img>
+</images>
+</gallery>
