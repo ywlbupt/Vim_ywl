@@ -11,7 +11,7 @@
 from html.parser import HTMLParser
 from html.entities import entitydefs
 import os
-import pdb
+import pdb # pdb.set_trace()
 
 unique_tag={'br','ul','li'}
 
@@ -74,18 +74,14 @@ class ZhihuAnswerParser(HTMLParser):
         # if self.readingflag and self.tag_stack :
         if self.processingparser and self.processingparser.tag_stack :
             if tag==self.processingparser.tag_stack[-1]:
-                # pdb.set_trace()
                 self.processingparser.tag_stack.pop()
                 self.handle_data("</%s>" % tag)
             else : pass
             if not self.processingparser.tag_stack :
-                print ("ending processing")
-                print (self.processingparser.attrs)
                 self.readingflag = 0
                 if self.processingparser :
                     self.processingparser = self.processingparser.p_last
         pass
-   
 
     def handle_starttag(self, tag, attrs):
     # tag是的html标签，attrs是 (属性，值)元组(tuple)的列表(list). 
@@ -103,26 +99,20 @@ class ZhihuAnswerParser(HTMLParser):
             list_parser = self.processingparser.p_next
 
         for parser in list_parser:
-            print ("processing paser")
-            print (parser.attrs)
             if tag == parser.tag:
-                print ("Paser Attrs:", parser.attrs)
-                print ("Attrs:", attrs)
                 tag_attrs = parser.attrs
                 if tag_attrs and set(tag_attrs) <= set(attrs):
-                    print ("get right paser")
                     parser.p_last = self.processingparser
                     self.processingparser = parser
                     parser.tag_stack = [parser.tag]
                     if parser.func:
                         getattr(self,parser.func)(parser)
-                    self.handle_data("\nbegin <%s>" % tag)
+                    self.handle_data("<%s>" % tag)
                     return
         if self.processingparser :
             self.processingparser.tag_stack.append(tag)
             self.handle_data("<%s>" % tag)
         return
-
 
         # if tag == 'a':
         #     if len(attrs)== 0 : pass
