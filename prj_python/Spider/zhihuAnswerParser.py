@@ -1,11 +1,8 @@
 #! /usr/bin/env python3
 # -*- coding=utf-8 -*-
 
-# 考虑自闭合标签
 # 考虑答案内容里面的标签的处理 ，转化成简单的 markdown 格式 
-# 应该以 Parser的内容为Key值 
-# 以指针的形式指向嵌套的标签内容
-# dingzhi class , delete , counter
+# 定制 class , delete , counter
 # 多个parser的data 处理
 
 from html.parser import HTMLParser
@@ -13,11 +10,10 @@ from html.entities import entitydefs
 import os
 import pdb # pdb.set_trace()
 
-unique_tag={'br','ul','li'}
+unique_tag={'br','ul','li','img'}
 
-# 定义 tag, 
+# 定义 tag, Serve for ZhihuAnswerParser
 class filter_tag_attrs(object):
-    tags = []
     def __init__(self,tag,func,attrs,p_next=None ):
         self.tag = tag
         self.func = func
@@ -28,26 +24,24 @@ class filter_tag_attrs(object):
         self.tag_stack = []
         pass
 
-
-
 class ZhihuAnswerParser(HTMLParser):
     
 # 调用父类HTMLParser的初始化函数
 # 在创建实例的时候，把一些我们认为必须绑定的属性强制填写进去。
 # 通过定义一个特殊的__init__方法
 # 这里给子类添加 title 和 readingQuesionLink 这两个属性
+
+
     def __init__(self):
         self.Question = []
         self.AnswerData = ""
 
         self.processingparser = None
-        self.readingQuesionLink = 0
         self.readingflag = 0
-        self.nestreading = 0
 
-        self.tag_stack = []
 
         self.parenturl = "www.zhihu.com"
+
         answer_parser1_next = filter_tag_attrs("div", "handle_startparser" ,
                 [("class","zm-editable-content clearfix")]
                 )
@@ -58,12 +52,18 @@ class ZhihuAnswerParser(HTMLParser):
                 [("class","question_link")]
                 , [answer_parser2_next])
         answer_parser2 = filter_tag_attrs("div", None ,
-                [("data-action","/answer/content"), ("data-author-name","阿猫Knight" )]
-                , [answer_parser2_next])
-        answer_parser1 = filter_tag_attrs("div", None ,
-                [("data-action","/answer/content"), ("data-author-name","杨扬" )]
+                [("data-action","/answer/content"), ("data-author-name","Laurel Dong" )]
                 , [answer_parser1_next])
-        self.list_parser = [answer_parser1,answer_parser2, answer_parser3]
+        answer_parser1 = filter_tag_attrs("div", None ,
+                [("data-action","/answer/content")]
+                , [answer_parser1_next])
+
+        question_parser1 = filter_tag_attrs("a", "handle_startparser"  ,
+                [("class","question_link")]
+                 )
+ 
+
+        self.list_parser = [question_parser1]
         HTMLParser.__init__(self)
 
     def handle_startparser(self,parser):
@@ -71,11 +71,10 @@ class ZhihuAnswerParser(HTMLParser):
         pass
 
     def handle_end_answer_parser(self,tag):
-        # if self.readingflag and self.tag_stack :
         if self.processingparser and self.processingparser.tag_stack :
             if tag==self.processingparser.tag_stack[-1]:
                 self.processingparser.tag_stack.pop()
-                self.handle_data("</%s>" % tag)
+                self.format_endtag(tag)
             else : pass
             if not self.processingparser.tag_stack :
                 self.readingflag = 0
@@ -86,12 +85,12 @@ class ZhihuAnswerParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
     # tag是的html标签，attrs是 (属性，值)元组(tuple)的列表(list). 
         if tag in unique_tag : 
-            self.handle_data("<%s>" % tag)
+            self.format_tag(tag)
             return
 
         if self.processingparser and not self.processingparser.p_next :
             self.processingparser.tag_stack.append(tag)
-            self.handle_data("<%s>" % tag)
+            self.format_tag(tag)
             return
         elif not self.processingparser:
             list_parser = self.list_parser
@@ -107,22 +106,20 @@ class ZhihuAnswerParser(HTMLParser):
                     parser.tag_stack = [parser.tag]
                     if parser.func:
                         getattr(self,parser.func)(parser)
-                    self.handle_data("<%s>" % tag)
+                        self.format_tag(tag)
                     return
         if self.processingparser :
             self.processingparser.tag_stack.append(tag)
-            self.handle_data("<%s>" % tag)
+            self.format_tag(tag)
         return
 
-        # if tag == 'a':
-        #     if len(attrs)== 0 : pass
-        #     else :
-        #         for(variable, value) in attrs:
-        #             if variable=='class' and value == 'question_link' :
-        #                 self.readingQuesionLink = 1
-        #             if variable== 'href' and self.readingQuesionLink :
-        #                 self.Question.append (
-        #                         {"Question":"","link":(value+self.parenturl)})
+    def format_tag(self, tag):
+        self.handle_data("<%s>" % tag)
+        pass
+    
+    def format_endtag(self, tag):
+        self.handle_data("</%s>" % tag)
+        pass
 
     def handle_data(self, data):
         if self.readingflag:
@@ -160,7 +157,11 @@ class ZhihuAnswerParser(HTMLParser):
 # HTMLParser的子方法 feed()会恰当调用 handle_starttag, handle_data, handle_endtag
 # 方法，handle_data()方法会检查是否从TITLE元素中取得数据，如果是，己保存数据
 if __name__ == '__main__' :
-    with open ("./temp1.txt",'r', encoding='utf-8') as fd :
+
+    # f = open('./response.txt', 'w', encoding ='utf-8')
+    with open ("./temp.txt",'r', encoding='utf-8') as fd :
         tp = ZhihuAnswerParser()
         tp.feed(fd.read())
         print(tp.getZhihuAnswerData())
+        # f.write(tp.getZhihuAnswerData())
+    # f.close()

@@ -20,6 +20,12 @@ class filter_tag_attrs(object):
         self.p_next = p_next
         self.readingflag = 0
         pass
+    
+    def __name__(self):
+        return "filter_tag_attrs"
+    
+    def __str__(self):
+        return ("self filter_tag_attrs")
 
     def getreadingflag(self):
         return self.readingflag
@@ -31,13 +37,4 @@ if __name__ == '__main__':
                     ("data-author-name","扬")], None)
     b = filter_tag_attrs("end", "handle_answer_parser", [("data-action","/answer/content"),
                     ("data-author-name","杨扬")], a)
-    
-    print(a.tag)
-    print(a.attrs)
-    print(a.func)
-    print(a.getreadingflag())
-    
-    print(b.attrs)
-    print(b.p_next.attrs)
-    b.p_next.tag="changed"
-    print(filter_tag_attrs.tags)
+    print(a)

@@ -10,12 +10,12 @@ import os
 # logging.basicconfig (level = logging.INFO)
 
 # 新建一个文件，存放读取的内容供Debug
-f = open('./answer.txt', 'w', encoding ='utf-8')
+f = open('./temp.txt', 'w', encoding ='utf-8')
 f.write ("------------New Test begin ----------------%s" %  os.linesep)
 
 # 某个知乎用户的主页，未登录情况下
-# url = "http://www.zhihu.com/people/lycheeorange"
-url = "http://www.zhihu.com/question/19733182"
+url = "http://www.zhihu.com/people/lycheeorange"
+# url = "http://www.zhihu.com/question/19733182"
 
 ZhihuRequest = request.Request(url)
 
