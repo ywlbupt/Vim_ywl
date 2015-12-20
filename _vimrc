@@ -1010,7 +1010,7 @@ endif
             if MySys() == 'windows'
                 exec "!python %"
             elseif MySys() == 'linux'
-                exec "!python3 %"
+                exec "!python %"
             endif  
         endif  
     endfunc  

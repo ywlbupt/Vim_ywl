@@ -10,19 +10,28 @@ from html.entities import entitydefs
 import os
 import pdb # pdb.set_trace()
 
-unique_tag={'br','ul','li','img'}
+unique_tag=['br','img']
+open_tag = ['ul','li','p','title']
 
 # 定义 tag, Serve for ZhihuAnswerParser
 class filter_tag_attrs(object):
-    def __init__(self,tag,func,attrs,p_next=None ):
+    def __init__(self,tag,attrs,**p_next ):
         self.tag = tag
-        self.func = func
         self.attrs = attrs
 
-        self.p_next = p_next
+        if p_next:
+            self.p_nest_next = p_next
         self.p_last = None
         self.tag_stack = []
+        self.data = ""
         pass
+
+    def set_tag_data(self, data):
+        self.data += data
+        pass
+
+    def get_tag_data(self):
+        return self.data
 
 class ZhihuAnswerParser(HTMLParser):
     
@@ -31,55 +40,30 @@ class ZhihuAnswerParser(HTMLParser):
 # 通过定义一个特殊的__init__方法
 # 这里给子类添加 title 和 readingQuesionLink 这两个属性
 
-
-    def __init__(self):
+    def __init__(self, list_parser):
         self.Question = []
-        self.AnswerData = ""
+        self.data = ""
 
         self.processingparser = None
         self.readingflag = 0
 
-
         self.parenturl = "www.zhihu.com"
 
-        answer_parser1_next = filter_tag_attrs("div", "handle_startparser" ,
-                [("class","zm-editable-content clearfix")]
-                )
-        answer_parser2_next = filter_tag_attrs("div", "handle_startparser" ,
-                [("class","zh-summary summary clearfix" )]
-                )
-        answer_parser3 = filter_tag_attrs("a", None ,
-                [("class","question_link")]
-                , [answer_parser2_next])
-        answer_parser2 = filter_tag_attrs("div", None ,
-                [("data-action","/answer/content"), ("data-author-name","Laurel Dong" )]
-                , [answer_parser1_next])
-        answer_parser1 = filter_tag_attrs("div", None ,
-                [("data-action","/answer/content")]
-                , [answer_parser1_next])
-
-        question_parser1 = filter_tag_attrs("a", "handle_startparser"  ,
-                [("class","question_link")]
-                 )
- 
-
-        self.list_parser = [question_parser1]
+        self.list_parser = list_parser
+        
         HTMLParser.__init__(self)
-
-    def handle_startparser(self,parser):
-        self.readingflag = 1
-        pass
 
     def handle_end_answer_parser(self,tag):
         if self.processingparser and self.processingparser.tag_stack :
             if tag==self.processingparser.tag_stack[-1]:
                 self.processingparser.tag_stack.pop()
-                self.format_endtag(tag)
-            else : pass
-            if not self.processingparser.tag_stack :
-                self.readingflag = 0
-                if self.processingparser :
-                    self.processingparser = self.processingparser.p_last
+                if self.processingparser.tag_stack :
+                    self.format_endtag(tag)
+                else: 
+                    self.handle_data(os.linesep)
+                    self.readingflag = 0
+                    if self.processingparser :
+                        self.processingparser = self.processingparser.p_last
         pass
 
     def handle_starttag(self, tag, attrs):
@@ -88,14 +72,14 @@ class ZhihuAnswerParser(HTMLParser):
             self.format_tag(tag)
             return
 
-        if self.processingparser and not self.processingparser.p_next :
+        if self.processingparser and not self.processingparser.p_nest_next :
             self.processingparser.tag_stack.append(tag)
             self.format_tag(tag)
             return
         elif not self.processingparser:
             list_parser = self.list_parser
-        elif self.processingparser.p_next :
-            list_parser = self.processingparser.p_next
+        elif self.processingparser.p_nest_next :
+            list_parser = self.processingparser.p_nest_next
 
         for parser in list_parser:
             if tag == parser.tag:
@@ -104,10 +88,12 @@ class ZhihuAnswerParser(HTMLParser):
                     parser.p_last = self.processingparser
                     self.processingparser = parser
                     parser.tag_stack = [parser.tag]
-                    if parser.func:
-                        getattr(self,parser.func)(parser)
-                        self.format_tag(tag)
+                    if not parser.p_nest_next:
+                        self.readingflag = 1
+                    # if parser.func:
+                    #     getattr(self,parser.func)(parser)
                     return
+        # 如果正在处理一个parser且paser.p_nest_next为空  
         if self.processingparser :
             self.processingparser.tag_stack.append(tag)
             self.format_tag(tag)
@@ -123,7 +109,8 @@ class ZhihuAnswerParser(HTMLParser):
 
     def handle_data(self, data):
         if self.readingflag:
-            self.AnswerData += data
+            self.processingparser.set_tag_data(data)
+            self.data += data
         pass
     
     def handle_entityref(self, name):
@@ -159,9 +146,28 @@ class ZhihuAnswerParser(HTMLParser):
 if __name__ == '__main__' :
 
     # f = open('./response.txt', 'w', encoding ='utf-8')
+    answer_parser1_next = filter_tag_attrs("div", 
+            [("class","zm-editable-content clearfix")]
+            )
+    answer_parser2_next = filter_tag_attrs("div", 
+            [("class","zh-summary summary clearfix" )]
+            )
+    answer_wrap2 = filter_tag_attrs("div", 
+            [("data-action","/answer/content"), ("data-author-name","Laurel Dong" )]
+            , {"p_next": answer_parser1_next})
+    answer_wrap1 = filter_tag_attrs("div", 
+            [("data-action","/answer/content")]
+            , {"p_next": answer_parser1_next})
+    question_parser1 = filter_tag_attrs("a", 
+            [("class","question_link")]
+             )
+    
     with open ("./temp.txt",'r', encoding='utf-8') as fd :
-        tp = ZhihuAnswerParser()
+        tp = ZhihuAnswerParser([question_parser1])
         tp.feed(fd.read())
-        print(tp.getZhihuAnswerData())
+        print(question_parser1.get_tag_data())
+        # print(tp.getZhihuAnswerData())
+
+
         # f.write(tp.getZhihuAnswerData())
     # f.close()
