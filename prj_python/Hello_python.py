@@ -1,6 +1,7 @@
-#!/usr/bin/env python
-# coding=utf-8
+# coding:utf-8
 
-a =[1,2,3,4,5,6,7,8]
-b =[1,2,3,4,5,6,7,8]
-
+import requests
+r = requests.get('https://www.baidu.com')
+print(r.text)
+print(r.encoding)
+print(r.status_code)

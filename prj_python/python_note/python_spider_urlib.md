@@ -1,4 +1,4 @@
-# [Python][Spider][urllib]爬虫基础-urlib
+# [Python][Spider][urllib]HTTP-urlib
 [python|urllib|spider]
 
 注:  

@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#! /usr/bin/env python
 # -*- coding=utf-8 -*-
 
 # 考虑答案内容里面的标签的处理 ，转化成简单的 markdown 格式 
@@ -9,18 +9,20 @@ from html.parser import HTMLParser
 from html.entities import entitydefs
 import os
 import pdb # pdb.set_trace()
+import logging
+logging.basicConfig(level = logging.INFO)
 
 unique_tag=['br','img']
 open_tag = ['ul','li','p','title']
 
 # 定义 tag, Serve for ZhihuAnswerParser
 class filter_tag_attrs(object):
-    def __init__(self,tag,attrs,**p_next ):
+    def __init__(self,tag,attrs, p_nest=None):
         self.tag = tag
         self.attrs = attrs
 
-        if p_next:
-            self.p_nest_next = p_next
+        self.p_nest = p_nest
+        
         self.p_last = None
         self.tag_stack = []
         self.data = ""
@@ -72,47 +74,48 @@ class ZhihuAnswerParser(HTMLParser):
             self.format_tag(tag)
             return
 
-        if self.processingparser and not self.processingparser.p_nest_next :
+        if self.processingparser and not self.processingparser.p_nest :
             self.processingparser.tag_stack.append(tag)
             self.format_tag(tag)
             return
-        elif not self.processingparser:
+        elif not self.processingparser:     # 如果当前没有在执行的Parser
             list_parser = self.list_parser
-        elif self.processingparser.p_nest_next :
-            list_parser = self.processingparser.p_nest_next
+        elif self.processingparser.p_nest :  #如果当前执行的Parser属于嵌套
+            list_parser = self.processingparser.p_nest
 
         for parser in list_parser:
             if tag == parser.tag:
                 tag_attrs = parser.attrs
-                if tag_attrs and set(tag_attrs) <= set(attrs):
+                # if tag_attrs and set(tag_attrs) <= set(attrs):
+                if set(tag_attrs) <= set(attrs):
                     parser.p_last = self.processingparser
                     self.processingparser = parser
                     parser.tag_stack = [parser.tag]
-                    if not parser.p_nest_next:
+                    if not parser.p_nest :
                         self.readingflag = 1
                     # if parser.func:
                     #     getattr(self,parser.func)(parser)
                     return
-        # 如果正在处理一个parser且paser.p_nest_next为空  
+        # 如果正在处理一个parser且paser.p_nest为空  
         if self.processingparser :
             self.processingparser.tag_stack.append(tag)
             self.format_tag(tag)
         return
 
     def format_tag(self, tag):
-        self.handle_data("<%s>" % tag)
+        # self.handle_data("<%s>" % tag)
         pass
     
     def format_endtag(self, tag):
-        self.handle_data("</%s>" % tag)
+        # self.handle_data("</%s>" % tag)
         pass
 
     def handle_data(self, data):
         if self.readingflag:
             self.processingparser.set_tag_data(data)
             self.data += data
-        pass
-    
+            return
+
     def handle_entityref(self, name):
     # 翻译HTML实体，如&amp;的函数，这里的变量 name = 'amp'
     # 表达式1 
@@ -154,20 +157,18 @@ if __name__ == '__main__' :
             )
     answer_wrap2 = filter_tag_attrs("div", 
             [("data-action","/answer/content"), ("data-author-name","Laurel Dong" )]
-            , {"p_next": answer_parser1_next})
+            , [answer_parser1_next])
     answer_wrap1 = filter_tag_attrs("div", 
             [("data-action","/answer/content")]
-            , {"p_next": answer_parser1_next})
-    question_parser1 = filter_tag_attrs("a", 
+            ,[answer_parser1_next])
+    question_parser1_next = filter_tag_attrs("a", 
             [("class","question_link")]
              )
     
     with open ("./temp.txt",'r', encoding='utf-8') as fd :
-        tp = ZhihuAnswerParser([question_parser1])
+        tp = ZhihuAnswerParser([question_parser1_next])
         tp.feed(fd.read())
-        print(question_parser1.get_tag_data())
-        # print(tp.getZhihuAnswerData())
-
+        print(question_parser1_next.get_tag_data())
 
         # f.write(tp.getZhihuAnswerData())
     # f.close()
