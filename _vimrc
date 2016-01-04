@@ -233,6 +233,9 @@ endif
         let g:session_directory=g:ywl_path.'/vimfiles/Workspace'
     endif
     let g:session_autoload='no'
+    let g:session_autosave='Yes'
+    " 每十分钟自动保存Session
+    " let g:session_autosave_periodic = 10
 "}}}
 
 "   持久保存撤销历史"{{{
@@ -948,7 +951,7 @@ endif "has("autocmd")
 "   nmap <leader>cn :cn<cr>
 "   nmap <leader>cp :cp<cr>
 "   F11 doesn't work in terms
-   nmap <F11> :cw 10<cr>
+   nmap <S-F11> :cw 10<cr>
    nmap <C-F11> :ccl<cr>
 "   nmap <leader>cc :botright lw 10<cr>
 "   map <c-u> <c-l><c-j>:q<cr>:botright cw 10<cr>
