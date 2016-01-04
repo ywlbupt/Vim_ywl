@@ -1008,7 +1008,7 @@ endif
 		elseif &filetype == 'python'
             exec "w"  
             if MySys() == 'windows'
-                exec "!python %"
+                exec "!python3 %"
             elseif MySys() == 'linux'
                 exec "!python %"
             endif  
