@@ -852,7 +852,7 @@ endif "has("autocmd")
 "   surround.vim
 "   :echo char2nr('-')=45
 "   :echo char2nr('=')=61
-    let g:surround_45 = "```\n\r```"
+    let g:surround_45 = "```\r```"
     let g:surround_61 = "**\r**"
 
 "}}}
