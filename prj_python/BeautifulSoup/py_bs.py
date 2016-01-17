@@ -34,6 +34,7 @@ re_dict = {"class_": "question_link"}
 fd = open("./answer.html", 'r', encoding="utf-8")
 if fd:
     soup = BeautifulSoup(fd.read(), "lxml")
+    # soup = BeautifulSoup(fd.read(), "html.parser")
     # soup = BeautifulSoup(html_doc, "lxml")
     zhihu_title = soup.find("head").find("title")
     print ("Title : ",zhihu_title.string.strip())
