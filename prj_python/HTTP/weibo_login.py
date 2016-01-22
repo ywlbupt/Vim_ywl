@@ -2,6 +2,7 @@
 # coding:utf-8
 # Filename: weibo_login.py
 # 微博登陆
+# 参考：廖雪峰，已经不生效了
 
 
 from urllib import request, parse

@@ -36,6 +36,8 @@ if fd:
     soup = BeautifulSoup(fd.read(), "lxml")
     # soup = BeautifulSoup(fd.read(), "html.parser")
     # soup = BeautifulSoup(html_doc, "lxml")
+    fd.close()
+    
     zhihu_title = soup.find("head").find("title")
     print ("Title : ",zhihu_title.string.strip())
 
@@ -43,7 +45,7 @@ if fd:
     question_set = soup.find_all(re_tag, **re_dict)
     for  question in question_set:
         i += 1
-        # print(i,"\t:", question.string,":",question["href"] )
+        print(i,"\t:", question.string,":",question["href"] )
 
     i = 0 
     re_dict_answer = {"data-action":"/answer/content"}
@@ -54,7 +56,6 @@ if fd:
             class_="zm-editable-content clearfix").get_text().strip())
 
 
-    fd.close()
 
 
 # [("data-action","/answer/content"), ("data-author-name","Laurel Dong" )]
