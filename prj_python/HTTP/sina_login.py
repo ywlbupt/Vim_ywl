@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # coding:utf-8
+# 新浪微博登录
 
 import requests
 import json

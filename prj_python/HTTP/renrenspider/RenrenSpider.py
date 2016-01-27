@@ -46,8 +46,6 @@ class RenrenSpider():
 
         if self.__cookies:
             print("检测到cookie文件，直接使用cookie登录")
-            # self.__session.cookies.update(self.__cookies)
-            # res = self.__session.get(self.url, timeout=10)
             res = self.__session.get(self.url, cookies = self.__cookies, timeout=10)
             m = re.search ('name\s*:\s*"(?P<name>.*?)"', res.text)
             print ("Login usr :", m.group("name"))

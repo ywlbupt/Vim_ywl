@@ -9,30 +9,119 @@
 ```
     import pickle
     cookieFile = os.path.join(sys.path[0], "cookie")
-    def __savecookies(self, requests_cookiejar):
-        """cookies 序列化到文件
-        即把dict对象转化成字符串保存
-        """
+    def save_cookies( requests_cookiejar):
         with open(self.cookieFile, "wb") as f:
-            # cookies = self.__session.cookies.get_dict()
-            # json.dump(cookies, f)
             pickle.dump(requests_cookiejar, f)
             print("=" * 50)
             print("已在同目录下生成cookie文件：", self.cookieFile)
     
-    def __loadCookies(self):
-        """读取cookie文件，返回反序列化后的dict对象，没有则返回None"""
-        if os.path.exists(self.cookieFile):
+    def loadCookies():
+        if os.path.exists(cookieFile):
             print("=" * 50)
-            with open(self.cookieFile, "rb") as f:
-                # cookies = json.load(f)
-                # cookies = [key + "=" + value for key, value in cookies.items()]
-                # cookies = ";".join(cookies)
-                # return {'Cookie': cookies}
-                # return cookies
+            with open(cookieFile, "rb") as f:
                 return pickle.load(f)
         return None
+
+    #save cookies
+    save_cookies(r.cookies, filename)
+
+    #load cookies and do a request
+    requests.get(url, cookies=load_cookies(filename))
 ```
+`requests.utils.dict_from_cookiejar` and `requests.utils.cookiejar_from_dict` are not required. They don't save cookies with the same name for different domains and don't save all the required cookies data. I spent a lot of time debugging just because of these. 
+
+### LWP save 1
+
+If you want to save your cookies in human-readable format, you have to do some work to extract the RequestsCookieJar to a LWPCookieJar.
+
+```
+    import cookielib
+    def save_cookies_lwp(cookiejar, filename):
+        lwp_cookiejar = cookielib.LWPCookieJar()
+        for c in cookiejar:
+            args = dict(vars(c).items())
+            args['rest'] = args['_rest']
+            del args['_rest']
+            c = cookielib.Cookie(**args)
+            lwp_cookiejar.set_cookie(c)
+        lwp_cookiejar.save(filename, ignore_discard=True)
+    
+    def load_cookies_from_lwp(filename):
+        lwp_cookiejar = cookielib.LWPCookieJar()
+        lwp_cookiejar.load(filename, ignore_discard=True)
+        return lwp_cookiejar
+    
+    #save human-readable
+    r = requests.get(url)
+    save_cookies_lwp(r.cookies, filename)
+    
+    #you can pass a LWPCookieJar directly to requests
+    requests.get(url, cookies=load_cookies_from_lwp(filename))
+```
+### LWP save 2
+
+requests Sessions are documented to work with any cookielib CookieJar. The LWPCookieJar (and MozillaCookieJar) can save and load their cookies to and from a file. Here is a complete code snippet which will save and load cookies for a requests session. The ignore_discard parameter is used to work with httpbin for the test, but you may not want to include it your in real code.
+
+```
+    import os
+    from cookielib import LWPCookieJar
+    
+    import requests
+    
+    
+    s = requests.Session()
+    s.cookies = LWPCookieJar('cookiejar')
+    if not os.path.exists('cookiejar'):
+        # Create a new cookies file and set our Session's cookies
+        print('setting cookies')
+        s.cookies.save()
+        r = s.get('http://httpbin.org/cookies/set?k1=v1&k2=v2')
+    else:
+        # Load saved cookies from the file and use them in a request
+        print('loading saved cookies')
+        s.cookies.load(ignore_discard=True)
+        r = s.get('http://httpbin.org/cookies')
+    print(r.text)
+    # Save the session's cookies back to the file
+    s.cookies.save(ignore_discard=True)
+```
+### pickle save added
+
+I found that the other answers had problems:
+
+* They didn't apply to sessions.
+* They didn't save and load properly. Only the cookie name and value was saved, the expiry date, domain name, etc. was all lost.
+
+This answer fixes these two issues:
+
+```
+    import requests.cookies
+    
+    def save_cookies(session, filename):
+        if not os.path.isdir(os.path.dirname(filename)):
+            return False
+        with open(filename, 'w') as f:
+            f.truncate()
+            pickle.dump(session.cookies._cookies, f)
+    
+    
+    def load_cookies(session, filename):
+        if not os.path.isfile(filename):
+            return False
+    
+        with open(filename) as f:
+            cookies = pickle.load(f)
+            if cookies:
+                jar = requests.cookies.RequestsCookieJar()
+                jar._cookies = cookies
+                session.cookies = jar
+            else:
+                return False
+```
+Then just call `save_cookies(session, filename)` to save or `load_cookies(session, filename)` to load. Simple as that.
+
+
+
 
 ## 是否需要输入验证码 showcatpcha
 
