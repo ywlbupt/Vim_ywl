@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # coding:UTF-8
 # 字符窗函数find
 # 列表list[-x:-y]
