@@ -77,6 +77,8 @@
 "}}}
 
     set fileformats=unix,dos
+    " 缩略 set ffs = unix,dos
+    set fileformat =unix
 
     highlight WhitespaceEOL ctermbg=red guibg=red
     match WhitespaceEOL /\s\+$/
@@ -852,7 +854,7 @@ endif "has("autocmd")
 "   surround.vim
 "   :echo char2nr('-')=45
 "   :echo char2nr('=')=61
-    let g:surround_45 = "```\r```"
+    let g:surround_45 = "``` \r ```"
     let g:surround_61 = "**\r**"
 
 "}}}
