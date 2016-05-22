@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding:utf-8
 # Filename: weibo_login.py
-# 微博登陆
+# 移动版微博登陆
 # 参考：廖雪峰，已经不生效了
 
 
@@ -29,4 +29,4 @@ with request.urlopen(req, data=login_data.encode('utf-8')) as f:
     print('Status:', f.status, f.reason)
     for k, v in f.getheaders():
         print('%s: %s' % (k, v))
-    print('Data:', f.read().decode('utf-8'))
+

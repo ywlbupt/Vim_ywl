@@ -374,7 +374,7 @@ if has("autocmd")
                     \ set tabstop=4 |
                     \ set softtabstop=4 |
                     \ set shiftwidth=4 |
-                    \ set textwidth=79 |
+                    " \ set textwidth=79 |
                     \ set expandtab |
                     \ set autoindent |
                     \ set fileformat=unix 
@@ -1011,7 +1011,7 @@ endif
 		elseif &filetype == 'python'
             exec "w"  
             if MySys() == 'windows'
-                exec "!python3 %"
+                exec "!python %"
             elseif MySys() == 'linux'
                 exec "!python %"
             endif  

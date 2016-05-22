@@ -40,7 +40,6 @@ class ZhiHuClient(object):
 
     headers = {
         'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36',
-        # "User-Agent": "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
         "Accept-Encoding": "gzip, deflate",
         "Host": "www.zhihu.com",
@@ -48,7 +47,7 @@ class ZhiHuClient(object):
     }
 
     captchaFile = os.path.join(sys.path[0], "captcha.gif")
-    cookieFile = os.path.join(sys.path[0], "cookie")
+    cookieFile = os.path.join(sys.path[0], "zhihu-cookie")
 
     def __init__(self):
         os.chdir(sys.path[0])  # 设置脚本所在目录为当前工作目录
@@ -161,6 +160,7 @@ if __name__ == '__main__':
         #     output.write(response.content)
         zhihu_soup = BS(response.text, "html.parser")
         question_set = zhihu_soup.find_all("a", class_="question_link")
+        print("Redirect url :", response.url)
         for question in question_set :
              # print(question.string)
              print(question.get_text())

@@ -1,3 +1,4 @@
 *.swp
 tags
 vimfiles
+__pycache__
