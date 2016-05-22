@@ -88,10 +88,9 @@ for x in range(10):
     results.append(int(round(random())))
 ```
 或者使用列表生成式使代码更简洁：
-?
-1
-2
+```
 from random import random
 results = [int(round(random())) for x in range(10)]
+```
 这里使用了range函数循环了10次。每一次我们都把random()的输出进行四舍五入。因为random()函数返回一个0到1的浮点数，所以对输出进行四舍五入就会返回0或者1。Round()函数返回一个浮点型数据，使用int()将其转为整型并添加到列表里。
 
