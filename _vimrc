@@ -449,7 +449,7 @@ endif "has("autocmd")
     " noremap <C-k> <C-W>k
     " noremap <C-h> <C-W>h
     " noremap <C-l> <C-W>l
-    imap <C-h> <Left>
+    " imap <C-h> <Left>
     imap <C-l> <Right>
     imap <C-j> <Down>
     imap <C-k> <Up>
@@ -854,8 +854,9 @@ endif "has("autocmd")
 "   surround.vim
 "   :echo char2nr('-')=45
 "   :echo char2nr('=')=61
-    let g:surround_45 = "``` \r ```"
-    let g:surround_61 = "**\r**"
+    let g:surround_45 = "```\n\r```"
+    let g:surround_61 = "**\n\r**"
+    let g:surround_98 = "**\r**"
 
 "}}}
 
