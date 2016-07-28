@@ -32,3 +32,7 @@ class SpiderHTML(object):
 		dirname = os.path.dirname(path.strip())
 		if not os.path.exists(dirname):
 			os.makedirs(dirname)
+
+
+print("Hello world!")
+

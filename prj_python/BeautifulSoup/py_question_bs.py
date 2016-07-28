@@ -26,7 +26,7 @@ and they lived at the bottom of a well.</p>
 # with open("./temp.txt", 'r', encoding= "utf-8") as fd :
 fd = open("./temp.html", 'r', encoding="utf-8")
 if fd:
-    soup = BeautifulSoup(fd.read(), "lxml")
+
     zhihu_title = soup.find("head").find("title")
     print ("Title : ",zhihu_title.string)
 

@@ -155,7 +155,8 @@ endif
 "   Set to auto read when a file is changed from the outside
     set autoread
     set mouse=a
-    set number " 显示行号
+    " set number " 显示行号
+    set relativenumber " 显示行号
     set ruler " 打开状态栏标尺
 
     set nobackup " 覆盖文件时不备份
@@ -456,8 +457,8 @@ endif "has("autocmd")
 
     
 "   Treat long lines as break lines (useful when moving around in them)
-    map j gj
-    map k gk
+    " map j gj
+    " map k gk
     "nnoremap <S-CR> O<Esc>j
     " nnoremap <leader><cr> O<Esc>j
 "   <Shift-CR>在normal模式的情况下增加一行空行
@@ -871,7 +872,7 @@ endif "has("autocmd")
 "   Ctags
 """"""""""""""""""""""""""""""
 "   将当前的工程的tags导入
-    set tags=.\tags
+    set tags=./tags
 "   将系统已经生成的tags导入
 "   set tags=tags;
 "}}}
@@ -907,8 +908,10 @@ endif "has("autocmd")
 "}}}
     
 "{{{
-"   Align 
-"   :AlignCtrl lp0P0
+"    Align
+"   AlignCtrl lp0P0
+"   p0P0表示分隔符前后有0个空格
+"   通过字母l和r进行对齐，l表示左对齐，r表示右对齐
 "   help alignctrl-p
 """"""""""""""""""""""""""""""
     let g:Align_xstrlen= 3

@@ -1,31 +1,31 @@
-//»¹²îÒôĞ§£¬´ÅÅÌ¶ÁĞ´
+//è¿˜å·®éŸ³æ•ˆï¼Œç£ç›˜è¯»å†™
 #include "colorConsole.h"
 #include <conio.h>
 #include <ctime>
 #include <stdlib.h>
-void Menu(HANDLE handle,WORD wcolors[],WORD wcolor[],WORD wcolorss[],WORD wScolor[]);//³õÊ¼»­Ãæ
-void FoodProduce(HANDLE handle,WORD wcolor[],int l);//²úÉúÊ³ÎïµÄº¯Êı
-void Direction();//·½Ïòº¯Êı
-void Move(HANDLE handle,WORD wScolor[],WORD wcolor[]);//¿ØÖÆÉßµÄÒÆ¶¯µÄº¯Êı
-void Turning(bool *start);//ÉßµÄ×ªÏòº¯Êı
-void gameover(HANDLE handle,WORD wcolor[]);//ÓÎÏ·½áÊø»­Ãæ
+void Menu(HANDLE handle,WORD wcolors[],WORD wcolor[],WORD wcolorss[],WORD wScolor[]);//åˆå§‹ç”»é¢
+void FoodProduce(HANDLE handle,WORD wcolor[],int l);//äº§ç”Ÿé£Ÿç‰©çš„å‡½æ•°
+void Direction();//æ–¹å‘å‡½æ•°
+void Move(HANDLE handle,WORD wScolor[],WORD wcolor[]);//æ§åˆ¶è›‡çš„ç§»åŠ¨çš„å‡½æ•°
+void Turning(bool *start);//è›‡çš„è½¬å‘å‡½æ•°
+void gameover(HANDLE handle,WORD wcolor[]);//æ¸¸æˆç»“æŸç”»é¢
 void begin(HANDLE handle);
-struct Food //Ê³ÎïµÄ½á¹¹Ìå
+struct Food //é£Ÿç‰©çš„ç»“æ„ä½“
 { 
-int x; //Ê³ÎïµÄºá×ø±ê
-int y; //Ê³ÎïµÄ×İ×ø±ê 
-int yes; //Ê³ÎïÊÇ·ñ³öÏÖµÄ±äÁ¿
+int x; //é£Ÿç‰©çš„æ¨ªåæ ‡
+int y; //é£Ÿç‰©çš„çºµåæ ‡ 
+int yes; //é£Ÿç‰©æ˜¯å¦å‡ºç°çš„å˜é‡
 }food; 
 
-struct Snack //ÉßµÄ½á¹¹Ìå
+struct Snack //è›‡çš„ç»“æ„ä½“
 { 
 int x[100]; 
 int y[100]; 
-int node; //ÉßµÄ½ÚÊı
-int direction; //ÉßµÄ·½Ïò
-int life; //ÉßµÄÉúÃü£¬0»î×Å£¬1ËÀÍö
+int node; //è›‡çš„èŠ‚æ•°
+int direction; //è›‡çš„æ–¹å‘
+int life; //è›‡çš„ç”Ÿå‘½ï¼Œ0æ´»ç€ï¼Œ1æ­»äº¡
 }snake; 
-//Ö÷º¯Êı
+//ä¸»å‡½æ•°
 int main(void)
 {
 	HANDLE handle;
@@ -34,63 +34,63 @@ int main(void)
 	wcolors[0]=FOREGROUND_RED|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_INTENSITY;
     wcolor[0]=FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_INTENSITY;
 	wScolor[0]=FOREGROUND_RED|FOREGROUND_INTENSITY;
-	wcolorss[0]=FOREGROUND_RED|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_INTENSITY;
+	wcolorss[0]=FOREGROUND_RED|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_rNTENSITY;
 	wcolorss[1]=FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_INTENSITY;
 	wcolorss[2]=FOREGROUND_GREEN|FOREGROUND_INTENSITY;
 	wcolorss[3]=FOREGROUND_BLUE|FOREGROUND_INTENSITY;
-	//¿ªÊ¼»­Ãæ
+	//å¼€å§‹ç”»é¢
 	begin(handle);
-	//´òÓ¡±ß¿ò
+	//æ‰“å°è¾¹æ¡†
     Menu(handle,wcolors,wcolor,wcolorss,wScolor);
-	//³õÊ¼»¯Ò»Ğ©Öµ
+	//åˆå§‹åŒ–ä¸€äº›å€¼
 	snake.direction=1;
 	snake.life=0;
 	snake.x[0]=18;
 	snake.y[0]=6;
 	snake.node=2;
 	food.yes=1;
-	if(_kbhit)//_kbhitÓë_kbhit()ÊÇÓĞÇø±ğµÄ
+	if(_kbhit)//_kbhitä¸_kbhit()æ˜¯æœ‰åŒºåˆ«çš„
 	{
 		_getch();
-    //³õÊ¼ÒÆ¶¯
+    //åˆå§‹ç§»åŠ¨
 	Move(handle,wScolor,wcolor);
 	}
 	return 0;
 }
-//¸¨Öúº¯Êı
+//è¾…åŠ©å‡½æ•°
 void Menu(HANDLE handle,WORD wcolors[],WORD wcolor[],WORD wcolorss[],WORD wScolor[])
 {
 	int i;
-textout(handle,16,5,wcolors,1,"¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò");
-textout(handle,16,25,wcolors,1,"¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò¡ò");
-//µã³öÏÖµÄÎ»ÖÃx(17-59,60)Å¼Êı,y(6-24)×ÔÈ»ĞòÁĞ
+textout(handle,16,5,wcolors,1,"â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—");
+textout(handle,16,25,wcolors,1,"â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—â—");
+//ç‚¹å‡ºç°çš„ä½ç½®x(17-59,60)å¶æ•°,y(6-24)è‡ªç„¶åºåˆ—
 for(i=6;i<25;i++)
-    textout(handle,16,i,wcolors,1,"¡ò");
+    textout(handle,16,i,wcolors,1,"â—");
 for(i=6;i<25;i++)
-    textout(handle,60,i,wcolors,1,"¡ò");
+    textout(handle,60,i,wcolors,1,"â—");
 for(i=6;i<25;i++)
-    textout(handle,74,i,wcolors,1,"¡ò");
-textout(handle,64,10,wcolor,1,"µÈ¼¶:");
+    textout(handle,74,i,wcolors,1,"â—");
+textout(handle,64,10,wcolor,1,"ç­‰çº§:");
 textout(handle,64,11,wcolor,1,"1");
-textout(handle,64,15,wcolor,1,"µÃ·Ö:");
+textout(handle,64,15,wcolor,1,"å¾—åˆ†:");
 textout(handle,64,16,wcolor,1,"0");
-textout(handle,16,27,wcolorss,4,"1.°´ÈÎÒâ¼ü£¬ÓÎÏ·¿ªÊ¼");
-textout(handle,16,28,wcolorss,4,"2.w(ÉÏ),s(ÏÂ),a(×ó),d(ÓÒ)×÷Îª·½Ïò¼ü¿ØÖÆ");
-textout(handle,16,29,wcolorss,4,"3.ÓÎÏ·ÉèÓĞ¼ÓËÙÏµÍ³£¬ËÙ¶È»áËæ×ÅµÈ¼¶µÄÌáÉı¶ø¼Ó¿ì");
-textout(handle,16,30,wcolorss,4,"4.°´¼üÅÌ¡®z¡¯¼üÔİÍ£");
-textout(handle,16,31,wcolorss,4,"5.Çë¼ì²éCapslockÊÇ·ñ¹Ø±Õ£¬Çë¹Ø±ÕºóÔÙ¿ªÊ¼ÓÎÏ·");
-textout(handle,55,36,wcolorss,4,"ÀîÄÏÏ£ÇãÇéÖÆ×÷.");
-textout(handle,38,2,wcolors,1,"Ì°!Ê³!Éß!");
-textout(handle,16,4,wcolorss,4,"ÇëÏÈ½«´°¿Ú×î´ó»¯£¬Äú½«»á¿´µ½ÌáÊ¾!");
-textout(handle,8,8,wScolor,1,"Ìô");
-textout(handle,8,9,wScolor,1,"Õ½");
-textout(handle,8,10,wScolor,1,"Äã");
-textout(handle,8,11,wScolor,1,"µÄ");
-textout(handle,8,12,wScolor,1,"¼«");
-textout(handle,8,13,wScolor,1,"ÏŞ");
+textout(handle,16,27,wcolorss,4,"1.æŒ‰ä»»æ„é”®ï¼Œæ¸¸æˆå¼€å§‹");
+textout(handle,16,28,wcolorss,4,"2.w(ä¸Š),s(ä¸‹),a(å·¦),d(å³)ä½œä¸ºæ–¹å‘é”®æ§åˆ¶");
+textout(handle,16,29,wcolorss,4,"3.æ¸¸æˆè®¾æœ‰åŠ é€Ÿç³»ç»Ÿï¼Œé€Ÿåº¦ä¼šéšç€ç­‰çº§çš„æå‡è€ŒåŠ å¿«");
+textout(handle,16,30,wcolorss,4,"4.æŒ‰é”®ç›˜â€˜zâ€™é”®æš‚åœ");
+textout(handle,16,31,wcolorss,4,"5.è¯·æ£€æŸ¥Capslockæ˜¯å¦å…³é—­ï¼Œè¯·å…³é—­åå†å¼€å§‹æ¸¸æˆ");
+textout(handle,55,36,wcolorss,4,"æå—å¸Œå€¾æƒ…åˆ¶ä½œ.");
+textout(handle,38,2,wcolors,1,"è´ª!é£Ÿ!è›‡!");
+textout(handle,16,4,wcolorss,4,"è¯·å…ˆå°†çª—å£æœ€å¤§åŒ–ï¼Œæ‚¨å°†ä¼šçœ‹åˆ°æç¤º!");
+textout(handle,8,8,wScolor,1,"æŒ‘");
+textout(handle,8,9,wScolor,1,"æˆ˜");
+textout(handle,8,10,wScolor,1,"ä½ ");
+textout(handle,8,11,wScolor,1,"çš„");
+textout(handle,8,12,wScolor,1,"æ");
+textout(handle,8,13,wScolor,1,"é™");
 textout(handle,8,14,wScolor,1,"!");
-textout(handle,2,19,wcolors,1,"<(£ş¨Œ£ş)> ");
-textout(handle,5,20,wcolors,1,"ÍÛ¹ş¹ş...");
+textout(handle,2,19,wcolors,1,"<(ï¿£â–½ï¿£)> ");
+textout(handle,5,20,wcolors,1,"å“‡å“ˆå“ˆ...");
 
 }
 void FoodProduce(HANDLE handle,WORD wcolor[],int l)
@@ -98,7 +98,7 @@ void FoodProduce(HANDLE handle,WORD wcolor[],int l)
     srand(time(NULL));
 	bool produce=true;
 	int count=0; 
-	while(produce)  //±£Ö¤Ê³Îï²»»á³öÏÖÔÚÉßµÄÉíÌåÉÏ
+	while(produce)  //ä¿è¯é£Ÿç‰©ä¸ä¼šå‡ºç°åœ¨è›‡çš„èº«ä½“ä¸Š
 	{
     food.x=(rand()%21+9)*2;
     food.y=(rand()%9+3)*2;
@@ -109,21 +109,21 @@ void FoodProduce(HANDLE handle,WORD wcolor[],int l)
 	}
 	if (count>=l) break;
 	}
-	textout(handle,food.x,food.y,wcolor,1,"¡î");
+	textout(handle,food.x,food.y,wcolor,1,"â˜†");
 }
 
 void Direction()
 {
 	switch(snake.direction)
 	{
-	case 1:snake.x[0]+=2;break; //ÓÒ
-	case 2:snake.x[0]-=2;break; //×ó
-	case 3:snake.y[0]-=1;break; //ÉÏ
-	case 4:snake.y[0]+=1;break; //ÏÂ
+	case 1:snake.x[0]+=2;break; //å³
+	case 2:snake.x[0]-=2;break; //å·¦
+	case 3:snake.y[0]-=1;break; //ä¸Š
+	case 4:snake.y[0]+=1;break; //ä¸‹
 	}
 }
 
-void Turning(bool *start)//Éè¶¨°´¼ü
+void Turning(bool *start)//è®¾å®šæŒ‰é”®
 {
 	if(_kbhit)
 	{
@@ -151,35 +151,35 @@ void Turning(bool *start)//Éè¶¨°´¼ü
 
 void Move(HANDLE handle,WORD wScolor[],WORD wcolor[])
 {
-	static bool started=true;//Éè¶¨boolĞÍ±äÁ¿£¬¿ØÖÆÑ­»·Ìõ¼ş
+	static bool started=true;//è®¾å®šboolå‹å˜é‡ï¼Œæ§åˆ¶å¾ªç¯æ¡ä»¶
 	int i;
-	while(1)//ÉßÒÆ¶¯µÄ´óÑ­»·
+	while(1)//è›‡ç§»åŠ¨çš„å¤§å¾ªç¯
 	{
 		while(started)
 		{
 		static int count=100;
 		static long int rank=1;
-		static long int initialspeed=250;//Éè¶¨³õÊ¼ÒÆËÙ¶È
+		static long int initialspeed=250;//è®¾å®šåˆå§‹ç§»é€Ÿåº¦
 		long int nowspeed=initialspeed-rank*30;
-		if(nowspeed<=0) nowspeed=10; //È·±£¸ßÊÖ²»»áÔì³ÉÓÎÏ·bug£¬±£Ö¤ËÙ¶ÈÊ¼ÖÕ´óÓÚ0
-		textout(handle,snake.x[0],snake.y[0],wScolor,1,"¡ô");
-		Sleep(nowspeed);//¿ØÖÆÒÆ¶¯ËÙ¶ÈµÄ±ä»¯£¬Ëæ×ÅµÈ¼¶µÄÉÏÉıÔ½À´Ô½¿ì
+		if(nowspeed<=0) nowspeed=10; //ç¡®ä¿é«˜æ‰‹ä¸ä¼šé€ æˆæ¸¸æˆbugï¼Œä¿è¯é€Ÿåº¦å§‹ç»ˆå¤§äº0
+		textout(handle,snake.x[0],snake.y[0],wScolor,1,"â—†");
+		Sleep(nowspeed);//æ§åˆ¶ç§»åŠ¨é€Ÿåº¦çš„å˜åŒ–ï¼Œéšç€ç­‰çº§çš„ä¸Šå‡è¶Šæ¥è¶Šå¿«
 		textout(handle,snake.x[0],snake.y[0],wScolor,1,"  ");
 		Direction();
-		//²úÉúÊ³Îï
+		//äº§ç”Ÿé£Ÿç‰©
         if(food.yes==1)
 		{
 			FoodProduce(handle,wcolor,snake.node);
 			food.yes=0;
 		}
-		for( i=snake.node;i>0;i--) //Ì°³ÔÉßµÄÒÆ¶¯Ëã·¨
+		for( i=snake.node;i>0;i--) //è´ªåƒè›‡çš„ç§»åŠ¨ç®—æ³•
 		{ 
 			snake.x[i]=snake.x[i-1]; 
-			snake.y[i]=snake.y[i-1]; //Ì°³ÔÉßµÄÉíÌåÒÆ¶¯Ëã·¨
-			textout(handle,snake.x[i],snake.y[i],wcolor,1,"¡ó");//»­³öÉíÌå
-			textout(handle,snake.x[snake.node],snake.y[snake.node],wcolor,1,"  ");//²ÁÈ¥ÉíÌå×îºóÒ»¸ö£¬ÈÃÉíÌå¶¯ÆğÀ´
+			snake.y[i]=snake.y[i-1]; //è´ªåƒè›‡çš„èº«ä½“ç§»åŠ¨ç®—æ³•
+			textout(handle,snake.x[i],snake.y[i],wcolor,1,"â—‡");//ç”»å‡ºèº«ä½“
+			textout(handle,snake.x[snake.node],snake.y[snake.node],wcolor,1,"  ");//æ“¦å»èº«ä½“æœ€åä¸€ä¸ªï¼Œè®©èº«ä½“åŠ¨èµ·æ¥
 		} 
-		for(i=3;i<snake.node;i++) //ÅĞ¶ÏÊÇ·ñÍ·²¿ÓëÉíÌåÏà×²
+		for(i=3;i<snake.node;i++) //åˆ¤æ–­æ˜¯å¦å¤´éƒ¨ä¸èº«ä½“ç›¸æ’
 		{ 
 			if(snake.x[i]==snake.x[0]&&snake.y[i]==snake.y[0]) 
 			{
@@ -188,7 +188,7 @@ void Move(HANDLE handle,WORD wScolor[],WORD wcolor[])
 				break;
 			}
 		}
-		if((snake.x[0]<17)||(snake.x[0]>58)||(snake.y[0]>24)||(snake.y[0]<6))//ÅĞ¶ÏÊÇ·ñÓëÇ½Åöµ½
+		if((snake.x[0]<17)||(snake.x[0]>58)||(snake.y[0]>24)||(snake.y[0]<6))//åˆ¤æ–­æ˜¯å¦ä¸å¢™ç¢°åˆ°
 		{
 			snake.life=1;
 			gameover(handle,wcolor);
@@ -196,11 +196,11 @@ void Move(HANDLE handle,WORD wScolor[],WORD wcolor[])
 		}
 		if(snake.x[0]==food.x&&snake.y[0]==food.y)
 		{
-			//Ôö¼ÓµÃ·Ö
+			//å¢åŠ å¾—åˆ†
 			char number1[30];
 			char number2[15];
 			textout(handle,64,16,wcolor,1,"      ");
-			textout(handle,64,16,wcolor,1,_itoa(count,number1,10));//itoa(½«ÕûĞÍ±äÎª×Ö·ûĞÍ)
+			textout(handle,64,16,wcolor,1,_itoa(count,number1,10));//itoa(å°†æ•´å‹å˜ä¸ºå­—ç¬¦å‹)
 			food.yes=1;
 			snake.node++;
 			count+=100;
@@ -210,7 +210,7 @@ void Move(HANDLE handle,WORD wScolor[],WORD wcolor[])
 		}
 				if(_kbhit()) break;
 		}
-		if(snake.life==1) break;//ÍË³ö´óÑ­»·
+		if(snake.life==1) break;//é€€å‡ºå¤§å¾ªç¯
 		Turning(&started);
 	}
 
@@ -220,36 +220,36 @@ void begin(HANDLE handle)
 {
 	WORD wcolor[1],wcolor1[1],wcolor2[1],wcolor3[1];
 	int i;
-	wcolor[0]=FOREGROUND_RED|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_INTENSITY;//°×
-	wcolor1[0]=FOREGROUND_GREEN;//ÂÌ
-	wcolor2[0]=FOREGROUND_BLUE;//À¶
-	wcolor3[0]=BACKGROUND_RED|BACKGROUND_GREEN|BACKGROUND_BLUE|BACKGROUND_INTENSITY;//±³¾°É«°×
-	textout(handle,10,8,wcolor,1,"ÕâÊÇÒ»¿î¹ÅÀÏ¶øÓÖÉñÃØµÄÓÎÏ·.....");
+	wcolor[0]=FOREGROUND_RED|FOREGROUND_BLUE|FOREGROUND_GREEN|FOREGROUND_INTENSITY;//ç™½
+	wcolor1[0]=FOREGROUND_GREEN;//ç»¿
+	wcolor2[0]=FOREGROUND_BLUE;//è“
+	wcolor3[0]=BACKGROUND_RED|BACKGROUND_GREEN|BACKGROUND_BLUE|BACKGROUND_INTENSITY;//èƒŒæ™¯è‰²ç™½
+	textout(handle,10,8,wcolor,1,"è¿™æ˜¯ä¸€æ¬¾å¤è€è€Œåˆç¥ç§˜çš„æ¸¸æˆ.....");
 	Sleep(2200);
 	for(i=10;i<40;i++)
 	{
 			textout(handle,i,8,wcolor,1,"  ");
 			Sleep(60);
 	}
-	textout(handle,15,10,wcolor1,1,"´ÓÀ´Ã»ÓĞÈËÖªµÀËüÆğÊ¼ÓÚÄÄÀï£¬¶øÓÖÖÕ½áÓÚºÎ·½....");
+	textout(handle,15,10,wcolor1,1,"ä»æ¥æ²¡æœ‰äººçŸ¥é“å®ƒèµ·å§‹äºå“ªé‡Œï¼Œè€Œåˆç»ˆç»“äºä½•æ–¹....");
 	Sleep(2200);
 	for(i=15;i<60;i++)
 	{
 			textout(handle,i,10,wcolor,1,"  ");
 			Sleep(60);
 	}
-	textout(handle,10,12,wcolor2,1,"ºÜ¶àÈË¶¼ÔÚÀïÃæÃÔÊ§£¬Ê§È¥ÁË×ÔÎÒ£¬²»ÖªµÀ×Ô¼º½«À´µÄÂ·¾¿¾¹»áÔõÑù..");
+	textout(handle,10,12,wcolor2,1,"å¾ˆå¤šäººéƒ½åœ¨é‡Œé¢è¿·å¤±ï¼Œå¤±å»äº†è‡ªæˆ‘ï¼Œä¸çŸ¥é“è‡ªå·±å°†æ¥çš„è·¯ç©¶ç«Ÿä¼šæ€æ ·..");
 	Sleep(2200);
 	for(i=10;i<80;i++)
 	{
 			textout(handle,i,12,wcolor,1,"  ");
 			Sleep(60);
 	}
-    textout(handle,25,7,wcolor,1,"Ëü");
+    textout(handle,25,7,wcolor,1,"å®ƒ");
 	Sleep(1200);
-	textout(handle,29,8,wcolor,1,"¾Í");
+	textout(handle,29,8,wcolor,1,"å°±");
 	Sleep(1200);
-	textout(handle,33,9,wcolor,1,"ÊÇ");
+	textout(handle,33,9,wcolor,1,"æ˜¯");
 	Sleep(1200);
 	textout(handle,37,10,wcolor,1,"....");
 	Sleep(1200);
@@ -276,7 +276,7 @@ void begin(HANDLE handle)
 
 }
 
-void gameover(HANDLE handle,WORD wcolor[])//Éè¶¨ÓÎÏ·½áÊø»­Ãæ
+void gameover(HANDLE handle,WORD wcolor[])//è®¾å®šæ¸¸æˆç»“æŸç”»é¢
 {
 	int i;
 	for(i=1;i<=80;i++)
@@ -290,7 +290,7 @@ void gameover(HANDLE handle,WORD wcolor[])//Éè¶¨ÓÎÏ·½áÊø»­Ãæ
 	{
 		for(i=1;i<80;i++)
 		{
-			textout(handle,i,17,wcolor,1,"ÓÎÏ·½áÊøÀ²~£¡£¡£¡£¡°´ÈÎÒâ¼üÍË³ö");
+			textout(handle,i,17,wcolor,1,"æ¸¸æˆç»“æŸå•¦~ï¼ï¼ï¼ï¼æŒ‰ä»»æ„é”®é€€å‡º");
 			Sleep(60);
             textout(handle,i,17,wcolor,1,"                               ");
 		}
