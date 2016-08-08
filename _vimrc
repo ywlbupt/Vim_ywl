@@ -10,7 +10,7 @@
         set rtp+=$VIMFILES/bundle/vundle/
         "call vundle#rc('$VIMFILES/bundle')
         call vundle#rc('$VIMFILES/bundle')
-"   Brief help  
+"   --------Brief help------------
 "	:BundleList          - list configured bundles  
 "	:BundleInstall(!)    - install(update) bundles  
 "	:BundleSearch(!) foo - search(or refresh cache first) for foo   
@@ -26,6 +26,7 @@
         Bundle 'xolox/vim-misc'
 "       Bundle 'Yggdroot/vim-mark'
 
+        " 目前还没有用上
         Bundle 'mattn/calendar-vim'
         Bundle 'yegappan/grep'
 
@@ -48,6 +49,13 @@
         Bundle 'tmhedberg/SimpylFold'
         Bundle 'othree/xml.vim'
 
+        "---------模板输入 快捷输入--------
+        "Bundle 'load_template'
+        "Bundle 'aperezdc/vim-template'
+        " snipmate 
+"       Bundle "MarcWeber/vim-addon-mw-utils"
+"       Bundle "tomtom/tlib_vim"
+"       Bundle "garbas/vim-snipmate"
 
 
 		"""""""""""""""""""""""""""""""""""""""""""""""
@@ -55,14 +63,9 @@
         Bundle 'taglist.vim' 
         Bundle 'Align'
         " Bundle 'TxtBrowser'
-        "Bundle 'load_template'
         "Bundle 'winmanager'
         Bundle 'a.vim'
 
-        " snipmate 
-"       Bundle "MarcWeber/vim-addon-mw-utils"
-"       Bundle "tomtom/tlib_vim"
-"       Bundle "garbas/vim-snipmate"
 
         " Optional:
 "       Bundle "honza/vim-snippets"
@@ -71,6 +74,11 @@
         " colors
         Bundle 'blueprint.vim'
         Bundle 'ywlbupt/vim-color-ywl'
+        " colors, recommoned solarized for gui, and Zenburn for term
+        " 在Term下使用此配色，需要设置 :t-Co=256
+        Bundle 'jnurmine/Zenburn' 
+        Bundle 'altercation/vim-colors-solarized'
+
     " endif
 
     filetype plugin indent on " 开启插件
@@ -315,7 +323,9 @@ endif
         set guioptions-=m " 隐藏菜单栏
         set guioptions-=L
         " set guioptions-=r
-        colorscheme desert_ywl  "设定配色方案
+        " colorscheme desert_ywl  "设定配色方案
+         set background=dark
+        colorscheme solarized
         autocmd GUIEnter * set lines=35 |  set columns=118 
         if MySys() == 'linux'
             "exec "winpos 400 70"
@@ -325,10 +335,13 @@ endif
         "colorscheme desert_ywl "设定配色方案
         set cursorline " 突出显示当前行
         if &term == "xterm"
-            set t_Co=16
-            set t_Sb=^[[4%dm " 设置背景色
-            set t_Sf=^[[3%dm " 设置前景色
+            " set t_Co=16
+            " set t_Co=256 " 如果colorscheme配置为zenburn，需要配置此行
+            " set t_Sb=^[[4%dm " 设置背景色
+            " set t_Sf=^[[3%dm " 设置前景色
+            set t_Co=256
             colorscheme evening_ywl
+            " colorscheme zenburn
             autocmd VimEnter * set lines=35 | set columns=118
         endif 
     endif
@@ -450,7 +463,7 @@ endif "has("autocmd")
     " noremap <C-k> <C-W>k
     " noremap <C-h> <C-W>h
     " noremap <C-l> <C-W>l
-    " imap <C-h> <Left>
+    imap <C-h> <Left>
     imap <C-l> <Right>
     imap <C-j> <Down>
     imap <C-k> <Up>
@@ -837,26 +850,26 @@ endif "has("autocmd")
 "}}}
 
 "{{{
-""   winManager setting
+""  winManager setting
 """""""""""""""""""""""""""""""
-""   let g:winManagerWindowLayout = "TagList"            
-""   FileExplorer,BufExplorer
-""   let g:winManagerWindowLayout='FileExplorer|TagList'
-"    let g:winManagerWindowLayout='NERDTree|TagList'
-"    let g:winManagerWidth = 31
-"    let g:defaultExplorer = 0
-""   nmap <C-W><C-F> :FirstExplorerWindow<cr>
-""   nmap <C-W><C-B> :BottomExplorerWindow<cr>
-"    nmap <silent> <leader>wm :WMToggle<cr>
-""   nmap <leader>wm :if IsWinManagerVisible() <BAR> WMToggle<CR> <BAR> else <BAR> WMToggle<CR>:q<CR> endif <CR><CR>
+""  let g:winManagerWindowLayout = "TagList"            
+""  FileExplorer,BufExplorer
+""  let g:winManagerWindowLayout='FileExplorer|TagList'
+"   let g:winManagerWindowLayout='NERDTree|TagList'
+"   let g:winManagerWidth = 31
+"   let g:defaultExplorer = 0
+""  nmap <C-W><C-F> :FirstExplorerWindow<cr>
+""  nmap <C-W><C-B> :BottomExplorerWindow<cr>
+"   nmap <silent> <leader>wm :WMToggle<cr>
+""  nmap <leader>wm :if IsWinManagerVisible() <BAR> WMToggle<CR> <BAR> else <BAR> WMToggle<CR>:q<CR> endif <CR><CR>
 "}}}
 
-""   Trinity of wesleyche"{{{
-"    " Open and close all the three plugins on the same time 
-"    nmap <F8>  :TrinityToggleAll<CR> 
+""  Trinity of wesleyche"{{{
+"   " Open and close all the three plugins on the same time 
+"   nmap <F8>  :TrinityToggleAll<CR> 
 "
-""   Open and close the Source Explorer separately 
-"    nmap <F9>  :TrinityToggleSourceExplorer<CR> 
+""  Open and close the Source Explorer separately 
+"   nmap <F9>  :TrinityToggleSourceExplorer<CR> 
 "
 ""}}}
 
@@ -881,7 +894,8 @@ endif "has("autocmd")
 "   Ctags
 """"""""""""""""""""""""""""""
 "   将当前的工程的tags导入
-    set tags=./tags
+"   如果源文件在当前文件夹下没有找到tags,可以到它的上层目录下继续寻找
+    set tags=tags;
 "   将系统已经生成的tags导入
 "   set tags=tags;
 "}}}
@@ -917,7 +931,7 @@ endif "has("autocmd")
 "}}}
     
 "{{{
-"    Align
+"   Align
 "   AlignCtrl lp0P0
 "   p0P0表示分隔符前后有0个空格
 "   通过字母l和r进行对齐，l表示左对齐，r表示右对齐
