@@ -51,7 +51,6 @@
 
         "---------模板输入 快捷输入--------
         Bundle 'load_template'
-        Bundle 'aperezdc/vim-template'
         " snipmate 
 "       Bundle 'MarcWeber/vim-addon-mw-utils'
 "       Bundle 'tomtom/tlib_vim'
@@ -141,6 +140,8 @@
     else 
         let g:path_chrome='C:\Users\ywl\AppData\Local\Google\Chrome\Application\chrome.exe'
     endif
+
+"   Global constant
 
 "{{{
 "   启动进入自己的主目录
@@ -323,9 +324,9 @@ endif
         set guioptions-=m " 隐藏菜单栏
         set guioptions-=L
         " set guioptions-=r
-        " colorscheme desert_ywl  "设定配色方案
-         set background=dark
-        colorscheme solarized
+        set background=dark
+        colorscheme desert_ywl  "设定配色方案
+        " colorscheme solarized
         autocmd GUIEnter * set lines=35 |  set columns=118 
         if MySys() == 'linux'
             "exec "winpos 400 70"
@@ -409,11 +410,11 @@ endif "has("autocmd")
 "{{{
 "   自动补全括号，包括大括号
     :inoremap ( ()<ESC>i
-    :inoremap ) <c-r>=ClosePair(')')<CR>
+    " :inoremap ) <c-r>=ClosePair(')')<CR>
     :inoremap { {}<ESC>i
-    :inoremap } <c-r>=ClosePair('}')<CR>
+    " :inoremap } <c-r>=ClosePair('}')<CR>
     :inoremap [ []<ESC>i
-    :inoremap ] <c-r>=ClosePair(''')<CR>
+    " :inoremap ] <c-r>=ClosePair(''')<CR>
 "   :inoremap < <><ESC>i
 "   :inoremap > <c-r>=ClosePair('>')<CR>
 "   实现括号的自动配对后防止重复输入），适用python
@@ -478,12 +479,26 @@ endif "has("autocmd")
 "}}}
 
 "{{{
-"   LoadTemplate file setting
+"   vim-scripts/Load_Template file setting
     if MySys() == 'windows'
-        let g:template_path=g:ywl_path.'\vimfiles\template\'
+        let g:template_path=g:ywl_path.'\vimfiles\load_template\'
     elseif MySys() == 'linux'
-        let g:template_path=g:ywl_path.'/vimfiles/template/'
+        let g:template_path=g:ywl_path.'/vimfiles/load_template/'
     endif
+"   Load_template 说明
+"   1. 静态模板文件中，`TEMPLATE_CURSOR`标明载入模板后光标所在位置
+"   2. 动态模板，Vim 脚本放置在`EXE_BEGIN_TEMPLATE (NEEDNEW)``EXE_END_TEMPLATE`
+"}}}
+
+"   aperezdc/vim-template Setting"{{{
+"   Manually expand cmd 插入g:templates_directory路径中符合<pattern>的模板文件
+"   :Template *.c 
+
+    " let g:templates_no_autocmd=1
+    " " let g:templates_plugin_loaded = 1 "Setting this to a non-zero value will disable the plug-in.
+" "   for vim-scripts/vim-template
+    " let g:username="ywlbupt" " `%USER%`
+    " let g:email="ywlbupt@163.com" " `%MAIL%`
 "}}}
 
 "{{{
