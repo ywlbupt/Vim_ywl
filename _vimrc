@@ -50,12 +50,12 @@
         Bundle 'othree/xml.vim'
 
         "---------模板输入 快捷输入--------
-        "Bundle 'load_template'
-        "Bundle 'aperezdc/vim-template'
+        Bundle 'load_template'
+        Bundle 'aperezdc/vim-template'
         " snipmate 
-"       Bundle "MarcWeber/vim-addon-mw-utils"
-"       Bundle "tomtom/tlib_vim"
-"       Bundle "garbas/vim-snipmate"
+"       Bundle 'MarcWeber/vim-addon-mw-utils'
+"       Bundle 'tomtom/tlib_vim'
+"       Bundle 'garbas/vim-snipmate'
 
 
 		"""""""""""""""""""""""""""""""""""""""""""""""
