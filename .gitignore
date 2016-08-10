@@ -1,4 +1,4 @@
 *.swp
 tags
-vimfiles
+vimfiles/bundle
 __pycache__
