@@ -1,26 +1,37 @@
-要在写入一个 *.html 文件时插入当前日期和时间: >
-## [Autocmd][template].md
-```bash
-  :autocmd BufWritePre,FileWritePre *.html   ms|call LastMod()|'s
-  :fun LastMod()
-  :  if line("$") > 20
-  :    let l = 20
-  :  else
-  :    let l = line("$")
-  :  endif
-  :  exe "1," . l . "g/Last modified: /s/Last modified: .*/Last modified: " .
-  :  \ strftime("%Y %b %d")
-  :endfun
-```
-要这段代码工作，你需要在文件开始的 20 行里有这行 "Last modified: <date
-time>"。 Vim 把 <date time> (包括该行其后的任何内容) 替换为当前的日期和时间。
-解释:
-```
-ms        保存当前位置到 's' 标记
-call LastMod()  调用 LastMod() 函数完成工作
-`s        光标回到旧的位置
-```
-LastMode() 函数先检查文件是否少于 20 行，然后用 ":g" 命令查找包含 "Last
-Modified:" 的行。在这些行上执行 ":s" 命令实现从已有的时间到当前时间的替换。
-":execute" 命令使 ":g" 和 ":s" 命令可以使用表达式。日期用 strftime() 函数取
-得。它可以用别的参数取得不同格式的日期字符串。
+# 【SQLite】Python的数据库操作
+
+SQLite3 可使用 sqlite3 模块与 Python 进行集成。
+
+Python 2.5.x 以上版本默认自带了该模块。
+
+1. [sqlite3的官方文档](https://docs.python.org/3.5/library/sqlite3.html?highlight=sqlite)
+
+
+### SQL 记录
+
+CREATE TABLE COMPANY (ID INT PRIMARY KEY NOT NULL, NAME TEXT NOT NULL, AGE INT NOT NULL, ADDRESS CHAR(50), SALARY REAL);
+
+
+
+### INSERT & SELECT -python
+在conn.execute()中执行SQL语句，这里不能够用python中操作string的方法，会导致不安全，易遭受到SQL的注入攻击
+> Usually your SQL operations will need to use values from Python variables. You shouldn’t assemble your query using Python’s string operations because doing so is insecure; 
+> it makes your program vulnerable to an SQL injection attack (see https://xkcd.com/327/ for humorous example of what can go wrong).
+
+```python
+# Never do this -- insecure!
+symbol = 'RHAT'
+c.execute("SELECT * FROM stocks WHERE symbol = '%s'" % symbol)
+
+# Do this instead, makes t a tuple; don't forget the common at the end
+t = ('RHAT',)
+c.execute('SELECT * FROM stocks WHERE symbol=?', t)
+print(c.fetchone())
+
+# Larger example that inserts many records at a time
+purchases = [('2006-03-28', 'BUY', 'IBM', 1000, 45.00),
+('2006-04-05', 'BUY', 'MSFT', 1000, 72.00),
+('2006-04-06', 'SELL', 'IBM', 500, 53.00),
+]
+c.executemany('INSERT INTO stocks VALUES (?,?,?,?,?)', purchases)
+```                                    
