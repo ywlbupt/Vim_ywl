@@ -1,1 +1,3 @@
+sqlite C:\Vim_ywl\prj_python\SQLite3
+bundle C:\Vim_ywl\vimfiles\bundle
 

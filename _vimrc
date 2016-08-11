@@ -50,7 +50,8 @@
         Bundle 'othree/xml.vim'
 
         "---------模板输入 快捷输入--------
-        Bundle 'load_template'
+        " Bundle 'load_template'
+        Bundle 'ywlbupt/load_template'
         " snipmate 
 "       Bundle 'MarcWeber/vim-addon-mw-utils'
 "       Bundle 'tomtom/tlib_vim'
@@ -327,7 +328,7 @@ endif
         set background=dark
         colorscheme desert_ywl  "设定配色方案
         " colorscheme solarized
-        autocmd GUIEnter * set lines=35 |  set columns=118 
+        autocmd GUIEnter * set lines=35 |  set columns=119 
         if MySys() == 'linux'
             "exec "winpos 400 70"
         endif
@@ -343,7 +344,7 @@ endif
             set t_Co=256
             colorscheme evening_ywl
             " colorscheme zenburn
-            autocmd VimEnter * set lines=35 | set columns=118
+            autocmd VimEnter * set lines=35 | set columns=119
         endif 
     endif
 "}}}
@@ -481,9 +482,9 @@ endif "has("autocmd")
 "{{{
 "   vim-scripts/Load_Template file setting
     if MySys() == 'windows'
-        let g:template_path=g:ywl_path.'\vimfiles\load_template\'
+        let g:template_path=g:ywl_path.'\vimfiles\bundle\load_template\template\'
     elseif MySys() == 'linux'
-        let g:template_path=g:ywl_path.'/vimfiles/load_template/'
+        let g:template_path=g:ywl_path.'/vimfiles/bundle/load_template/template/'
     endif
 "   Load_template 说明
 "   1. 静态模板文件中，`TEMPLATE_CURSOR`标明载入模板后光标所在位置
