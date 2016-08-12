@@ -756,7 +756,7 @@ endif "has("autocmd")
     "不同时显示多个文件的tag，只显示当前文件的
     let Tlist_Exit_OnlyWindow = 1
     "如果taglist窗口是最后一个窗口，则退出vim
-    let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
+    let Tlist_Use_Right_Window = 0         "在右侧窗口中显示taglist窗口
     let Tlist_WinWidth=31
     " 如果希望taglist始终解析文件中的tag，不管taglist窗口有没有打开，设置Tlist_Process_File_Always 为 1
 "}}}

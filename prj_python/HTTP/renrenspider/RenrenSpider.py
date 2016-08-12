@@ -2,7 +2,11 @@
 # -*- coding:utf -8-*-
 # author : Wlin
 # Date : Sat Jan 23 19:56:21 CST 2016
-# Description: 登录renren.com，并爬取我的好友的列表
+# Description: 
+'''
+登录renren.com，并爬取我的好友的列表
+2016-08-12 代码依然成立
+'''
 
 import requests
 import lxml
