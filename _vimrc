@@ -73,6 +73,7 @@
 
         " colors
         Bundle 'blueprint.vim'
+        Bundle 'SWIG-syntax'
         Bundle 'ywlbupt/vim-color-ywl'
         " colors, recommoned solarized for gui, and Zenburn for term
         " 在Term下使用此配色，需要设置 :t-Co=256
@@ -361,6 +362,8 @@ if has("autocmd")
                     \setlocal foldmethod=syntax |
                     \setlocal cc=81
     augroup END
+
+    au BufNewFile,BufRead *.swig set filetype=swig 
 
     augroup markdownevent
         autocmd! markdownevent
