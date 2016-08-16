@@ -411,11 +411,11 @@ endif "has("autocmd")
 "{{{
 "   自动补全括号，包括大括号
     :inoremap ( ()<ESC>i
-    " :inoremap ) <c-r>=ClosePair(')')<CR>
+    :inoremap ) <c-r>=ClosePair(')')<CR>
     :inoremap { {}<ESC>i
-    " :inoremap } <c-r>=ClosePair('}')<CR>
+    :inoremap } <c-r>=ClosePair('}')<CR>
     :inoremap [ []<ESC>i
-    " :inoremap ] <c-r>=ClosePair(''')<CR>
+    :inoremap ] <c-r>=ClosePair(''')<CR>
 "   :inoremap < <><ESC>i
 "   :inoremap > <c-r>=ClosePair('>')<CR>
 "   实现括号的自动配对后防止重复输入），适用python
@@ -470,11 +470,9 @@ endif "has("autocmd")
     imap <C-j> <Down>
     imap <C-k> <Up>
 
-    
 "   Treat long lines as break lines (useful when moving around in them)
     " map j gj
     " map k gk
-    "nnoremap <S-CR> O<Esc>j
     " nnoremap <leader><cr> O<Esc>j
 "   <Shift-CR>在normal模式的情况下增加一行空行
 "}}}
