@@ -73,7 +73,6 @@
 
         " colors
         Bundle 'blueprint.vim'
-        Bundle 'SWIG-syntax'
         Bundle 'ywlbupt/vim-color-ywl'
         " colors, recommoned solarized for gui, and Zenburn for term
         " 在Term下使用此配色，需要设置 :t-Co=256
@@ -88,6 +87,7 @@
     set fileformats=unix,dos
     " 缩略 set ffs = unix,dos
     set fileformat =unix
+
 
     highlight WhitespaceEOL ctermbg=red guibg=red
     match WhitespaceEOL /\s\+$/
@@ -247,7 +247,7 @@ endif
         let g:session_directory=g:ywl_path.'/vimfiles/Workspace'
     endif
     let g:session_autoload='no'
-    let g:session_autosave='Yes'
+    " let g:session_autosave='Yes'
     " 每十分钟自动保存Session
     " let g:session_autosave_periodic = 10
 "}}}
@@ -363,7 +363,7 @@ if has("autocmd")
                     \setlocal cc=81
     augroup END
 
-    au BufNewFile,BufRead *.swig set filetype=swig 
+    au BufNewFile,BufRead *.swig,*.ejs set filetype=javascript 
 
     augroup markdownevent
         autocmd! markdownevent
