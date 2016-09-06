@@ -55,7 +55,7 @@ Plugin 'VundleVim/Vundle.vim'
         " 类似于公共支持插件，支持surroud,
         Plugin 'tpope/vim-repeat'
         " Git 集成工具
-        " Plugin 'tpope/vim-fugitive'
+        Plugin 'tpope/vim-fugitive'
 
 
         Plugin 'jkeylu/vimcdoc'
@@ -65,7 +65,9 @@ Plugin 'VundleVim/Vundle.vim'
 
         " markdown的实时预览
         " Plugin 'suan/vim-instant-markdown'
-        Plugin 'Valloric/YouCompleteMe'
+        if MySys() == "linux"
+            Plugin 'Valloric/YouCompleteMe'
+        endif
 
         " provide a reference manual for the C++ standard template library (STL)
 "       Plugin 'stlrefvim'
@@ -96,15 +98,15 @@ Plugin 'VundleVim/Vundle.vim'
 "       Plugin "honza/vim-snippets"
         """"""""""" end of snipmate
 
+        " autocomplete pairs自动补全括号
+        Plugin 'Raimondi/delimitMate'
+
         " colors
         Plugin 'vim-airline/vim-airline' 
         Plugin 'vim-airline/vim-airline-themes'
 
         Plugin 'blueprint.vim'
         Plugin 'ywlbupt/vim-color-ywl'
-        " colors, recommoned solarized for gui, and Zenburn for term
-        " 在Term下使用此配色，需要设置 :t-Co=256
-        Plugin 'jnurmine/Zenburn' 
         Plugin 'altercation/vim-colors-solarized'
     " endif
     call vundle#end()            " required
@@ -364,6 +366,7 @@ endif
 
     highlight WhitespaceEOL ctermbg=red guibg=red
     match WhitespaceEOL /\s\+$/
+    set cursorline " 突出显示当前行
 
     if has("gui_running")
         set guioptions-=T " 隐藏工具栏
@@ -371,24 +374,22 @@ endif
         set guioptions-=L
         " set guioptions-=r
         set background=dark
-        colorscheme desert_ywl  "设定配色方案
-        " colorscheme solarized
+        " colorscheme desert_ywl  "设定配色方案
+        colorscheme solarized
         autocmd GUIEnter * set lines=35 |  set columns=119 
         if MySys() == 'linux'
             "exec "winpos 400 70"
         endif
-        set cursorline " 突出显示当前行
     else
-        "colorscheme desert_ywl "设定配色方案
-        set cursorline " 突出显示当前行
         if &term == "xterm"
             " set t_Co=16
             " set t_Co=256 " 如果colorscheme配置为zenburn，需要配置此行
             " set t_Sb=^[[4%dm " 设置背景色
             " set t_Sf=^[[3%dm " 设置前景色
             set t_Co=256
-            colorscheme evening_ywl
-            " colorscheme zenburn
+            set background=light
+            " colorscheme evening_ywl
+            colorscheme solarized
             autocmd VimEnter * set lines=35 | set columns=119
         endif 
     endif
@@ -479,22 +480,22 @@ endif "has("autocmd")
 
 "{{{
 " 自动补全括号，包括大括号
-    :inoremap ( ()<ESC>i
-    :inoremap ) <c-r>=ClosePair(')')<CR>
-    :inoremap { {}<ESC>i
-    :inoremap } <c-r>=ClosePair('}')<CR>
-    :inoremap [ []<ESC>i
-    :inoremap ] <c-r>=ClosePair(''')<CR>
-"   :inoremap < <><ESC>i
-"   :inoremap > <c-r>=ClosePair('>')<CR>
+    " :inoremap ( ()<ESC>i
+    " :inoremap ) <c-r>=ClosePair(')')<CR>
+    " :inoremap { {}<ESC>i
+    " :inoremap } <c-r>=ClosePair('}')<CR>
+    " :inoremap [ []<ESC>i
+    " :inoremap ] <c-r>=ClosePair(''')<CR>
+    " :inoremap < <><ESC>i
+    " :inoremap > <c-r>=ClosePair('>')<CR>
 " 实现括号的自动配对后防止重复输入），适用python
-     function! ClosePair(char)
-        if getline('.')[col('.') - 1] == a:char
-            return "\<Right>"
-        else
-          return a:char
-       endif
-    endf
+     " function! ClosePair(char)
+        " if getline('.')[col('.') - 1] == a:char
+            " return "\<Right>"
+        " else
+          " return a:char
+       " endif
+    " endf
 "}}}
 
 "{{{
@@ -547,15 +548,24 @@ endif "has("autocmd")
 "}}}
 "}}}
 
+" altercation/vim-colors-solarized"{{{
+    if g:colors_name == 'solarized' 
+        let g:solarized_termcolors= 256
+        let g:solarized_termtrans = 1
+        let g:solarized_contrast = "high"    " 'normal' 'high' or 'low'
+        let g:solarized_visibility= "normal"
+    endif
+"}}}
+
 "{{{
 " vim-airline/vim-airline  "好看轻量级的powerline，不依赖python
     let g:airline_powerline_fonts = 1    
-    let g:airline_theme = "luna"
+    let g:airline_theme = "base16_google"
     if MySys() == 'windows'
         " set guifont=Sauce_Code_Powerline:h11:cANSI
         " set guifont=Anonymice_Powerline:h13:cANSI     " 字体太大
-        set guifont=Droid_Sans_Mono_Dotted_for_Powe:h11:cANSI
-        " set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI
+        " set guifont=Droid_Sans_Mono_Dotted_for_Powe:h11:cANSI
+        set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI
         " set guifont=Inconsolata-g_for_Powerline:h11:cANSI
         " set guifont=Hack:h11:cANSI
         " set guifont=monofur_for_Powerline:h13:cANSI
@@ -669,6 +679,22 @@ endif "has("autocmd")
     " 如果希望taglist始终解析文件中的tag，不管taglist窗口有没有打开，设置Tlist_Process_File_Always 为 1
 "}}}
 
+" Raimondi/delimitMate"{{{
+" --------Brief help------------
+" <BS>         is mapped to <Plug>delimitMateBS
+" <S-BS>       is mapped to <Plug>delimitMateS-BS
+" <S-Tab>      is mapped to <Plug>delimitMateS-Tab
+" <C-G>g       is mapped to <Plug>delimitMateJumpMany
+    let delimitMate_matchpairs = "(:),[:],{:},<:>"
+    let delimitMate_quotes = " "
+    if has("autocmd")
+    " If this option is set to 0, delimitMate will not add a closing
+    " delimiter automagically.
+        " au FileType mail,text let b:delimitMate_autoclose = 0
+        " let delimitMate_excluded_regions = "Comment"
+    endif
+    "}}}
+
 "{{{
 " scrooloose/nerdtree
 " The-NERD-Tree / netrw setting"{{{
@@ -754,7 +780,7 @@ endif "has("autocmd")
 "}}}
 
 "{{{
-" vim-surround.vim
+" tpope/vim-surround.vim
 " :echo char2nr('-')=45
 " :echo char2nr('=')=61
     let g:surround_45 = "```\n\r```"
@@ -762,6 +788,9 @@ endif "has("autocmd")
     let g:surround_98 = "**\r**"
 
 "}}}
+
+" tpope/vim-fugitive
+
 
 " Valloric/YouCompleteMe"{{{
     " let g:ycm_python_binary_path = 'python'
@@ -956,7 +985,7 @@ endif
 "}}}
 
 "{{{
-"   瞎捣鼓
+" 瞎捣鼓
 
 "   获取当前文件的后缀名：抛砖引玉
     function! GetFileType()
@@ -1039,7 +1068,7 @@ endif
 "}}}
 
 "{{{
-"   Plugin unused 
+" Plugin unused 
 "{{{
 "   BufExplorer
 """"""""""""""""""""""""""""""
