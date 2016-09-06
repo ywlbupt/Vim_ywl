@@ -10,9 +10,6 @@
 "   Platform
 " -----------------------------------------------------------------------------
 "  < 判断操作系统是否是 Windows 还是 Linux >
-" 如果是在Linux，该文件重命名为 ~/.vimrc（$HOME$/.vimrc）
-" 如果是在Windows下，该文件重命名为（$HOME$\_vimrc）
-" 个人个性化配置文件夹目录为变量 g:ywl_path
 " ----------------------------------------------------------------------------- 
     function! MySys()
         if(has("win32") || has("win64") || has("win95") || has("win16"))
@@ -35,8 +32,9 @@
         let g:ywl_path = '/home/ywl/Vim_ywl'
         let $VIMFILES  = g:ywl_path.'/vimfiles'
     elseif MySys() == "windows"
-        "   个人配置文件夹存放目录
+        "let g:ywl_path = 'E:\yanweilin\Dropbox'
         let g:ywl_path = 'C:\Vim_ywl'
+        "let $VIMFILES  = 'E:\yanweilin\Dropbox\vimfiles'
         let $VIMFILES  = g:ywl_path.'\vimfiles'
     endif
 
@@ -53,21 +51,6 @@
         set runtimepath+=$VIMFILES,$VIMFILES\after
     endif	
 
-
-"   ## - 以后需要解决优化的地方
-"   Get out of VI's compatible mode.
-    set nocompatible
-    filetype off
-    " if MySys() == "windows"
-        set rtp+=$VIMFILES/bundle/vundle/
-        call vundle#rc('$VIMFILES/bundle')
-        " let Vundle manage Vundle, required
-        Bundle 'gmarik/vundle'
-        " Bundle 'tpope/vim-fugitive'
-        Bundle 'plasticboy/vim-markdown'
-        " Bundle 'taglist.vim' 
-    " endif
-    filetype plugin indent on " 开启插件
 
     set fileformats=unix,dos
 "   Chinese

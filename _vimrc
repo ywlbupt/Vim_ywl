@@ -1,100 +1,119 @@
-"   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     source $VIMRUNTIME/macros/matchit.vim
 
-"   Bundle management"{{{
-"   Get out of VI's compatible mode.
-    set nocompatible
-    filetype off
-    " if MySys() == "windows"
-        set rtp+=$VIMFILES/bundle/vundle/
-        "call vundle#rc('$VIMFILES/bundle')
-        call vundle#rc('$VIMFILES/bundle')
-"   --------Brief help------------
+" Bundle management"{{{
+" Get out of VI's compatible mode.
+" --------Brief help------------
 "	:BundleList          - list configured bundles  
 "	:BundleInstall(!)    - install(update) bundles  
 "	:BundleSearch(!) foo - search(or refresh cache first) for foo   
 "	:BundleClean(!)      - confirm(or auto-approve) removal of unused bundles         
+
+set nocompatible    " required
+filetype off        " required
+" ----------------------------------------------
+" for VundleVim/Vundle.vim "
+set rtp+=$VIMFILES/bundle/Vundle.vim
+call vundle#begin('$VIMFILES/bundle')
+Plugin 'VundleVim/Vundle.vim'
+
 "	"let Vundle manage Vundle, required
-        Bundle 'gmarik/vundle'
-		""""""""""""""""""""""""""""""""""""""""""""""""
-"       Bundle 'vimwiki/vimwiki'
-        Bundle 'plasticboy/vim-markdown'
-"       Bundle 'wesleyche/Trinity'
-"       Bundle 'wesleyche/SrcExpl'
-        Bundle 'xolox/vim-session'
-        Bundle 'xolox/vim-misc'
-"       Bundle 'Yggdroot/vim-mark'
+
+        " ----------------------------------------------
+        " vim-markdown 要求tabular插件，feature as Align
+        Plugin 'godlygeek/tabular'
+        Plugin 'plasticboy/vim-markdown'
+        " ----------------------------------------------
+
+"       Plugin 'vimwiki/vimwiki'
+
+        " ----------------------------------------------
+        "  for Sourcecode-like ide
+"       Plugin 'wesleyche/Trinity'
+"       Plugin 'wesleyche/SrcExpl'
+
+        " xolox/vim-misc 以下plugin的依赖包
+        " vim-colorscheme-switcher (vimscript #4586) 
+        " vim-easytags (vimscript #3114) 
+        " vim-lua-ftplugin (vimscript #3625) 
+        " vim-lua-inspect (vimscript #3169) 
+        " vim-notes (vimscript #3375) 
+        " vim-reload (vimscript #3148) 
+        " vim-session (vimscript #3150) 
+        " vim-shell (vimscript #3123)
+        Plugin 'xolox/vim-misc'
+        Plugin 'xolox/vim-session'
 
         " 目前还没有用上
-        Bundle 'mattn/calendar-vim'
-        Bundle 'yegappan/grep'
+        Plugin 'yegappan/grep'
 
-    	Bundle 'verilog.vim'
-    	Bundle 'surround.vim'
-        Bundle 'tpope/vim-commentary'
-        Bundle 'tpope/vim-repeat'
-        Bundle 'jlanzarotta/bufexplorer'
-        " Bundle 'vim-latex/vim-latex'
+        " tpope 大神
+        Plugin 'tpope/vim-surround'
+        " 强大的注释工具
+        " Plugin 'tpope/vim-commentary'
+        " 类似于公共支持插件，支持surroud,
+        Plugin 'tpope/vim-repeat'
+        " Git 集成工具
+        " Plugin 'tpope/vim-fugitive'
 
-        Bundle 'jkeylu/vimcdoc'
+
+        Plugin 'jkeylu/vimcdoc'
 
         " 这个插件用于自动补全，可用于 . ->  :: 等操作符。
-     "  Bundle 'FromtonRouge/OmniCppComplete'
+        " Plugin 'FromtonRouge/OmniCppComplete'
+
+        " markdown的实时预览
+        " Plugin 'suan/vim-instant-markdown'
+        Plugin 'Valloric/YouCompleteMe'
 
         " provide a reference manual for the C++ standard template library (STL)
-"       Bundle 'stlrefvim'
-        Bundle 'Pydiction'
+"       Plugin 'stlrefvim'
+        " Auto Complete of python
+        Plugin 'Pydiction'
         " fold for python
-        Bundle 'tmhedberg/SimpylFold'
-        Bundle 'othree/xml.vim'
+        Plugin 'tmhedberg/SimpylFold'
 
         "---------模板输入 快捷输入--------
-        " Bundle 'load_template'
-        Bundle 'ywlbupt/load_template'
-        " snipmate 
-"       Bundle 'MarcWeber/vim-addon-mw-utils'
-"       Bundle 'tomtom/tlib_vim'
-"       Bundle 'garbas/vim-snipmate'
+        " Plugin 'load_template'
+        Plugin 'ywlbupt/load_template'
 
+        " snipmate 
+"       Plugin 'MarcWeber/vim-addon-mw-utils'
+"       Plugin 'tomtom/tlib_vim'
+"       Plugin 'garbas/vim-snipmate'
 
 		"""""""""""""""""""""""""""""""""""""""""""""""
-        Bundle 'The-NERD-tree'
-        Bundle 'taglist.vim' 
-        Bundle 'Align'
-        " Bundle 'TxtBrowser'
-        "Bundle 'winmanager'
-        Bundle 'a.vim'
-
+        Plugin 'scrooloose/nerdcommenter'
+        Plugin 'scrooloose/nerdtree'
+        Plugin 'taglist.vim' 
+        Plugin 'Align'
+        " Plugin 'TxtBrowser'
+        " Plugin 'winmanager'
+        Plugin 'a.vim'
 
         " Optional:
-"       Bundle "honza/vim-snippets"
+"       Plugin "honza/vim-snippets"
         """"""""""" end of snipmate
 
         " colors
-        Bundle 'blueprint.vim'
-        Bundle 'SWIG-syntax'
-        Bundle 'ywlbupt/vim-color-ywl'
+        Plugin 'vim-airline/vim-airline' 
+        Plugin 'vim-airline/vim-airline-themes'
+
+        Plugin 'blueprint.vim'
+        Plugin 'ywlbupt/vim-color-ywl'
         " colors, recommoned solarized for gui, and Zenburn for term
         " 在Term下使用此配色，需要设置 :t-Co=256
-        Bundle 'jnurmine/Zenburn' 
-        Bundle 'altercation/vim-colors-solarized'
-
+        Plugin 'jnurmine/Zenburn' 
+        Plugin 'altercation/vim-colors-solarized'
     " endif
-
-    filetype plugin indent on " 开启插件
+    call vundle#end()            " required
+    filetype plugin indent on    " required
 "}}}
 
-    set fileformats=unix,dos
-    " 缩略 set ffs = unix,dos
-    set fileformat =unix
+" Fast edit vimrc & font coding Setting "{{{
 
-    highlight WhitespaceEOL ctermbg=red guibg=red
-    match WhitespaceEOL /\s\+$/
-
-"   Fast edit vimrc & font coding Setting "{{{
-
-"   Fast edit vimrc"{{{
+" Fast edit vimrc"{{{
     if MySys() == "linux"
     "   Fast reloading of the .vimrc
         map <silent> <leader>ss :exec 'source '.g:ywl_path.'/_vimrc'<cr>
@@ -120,7 +139,39 @@
     endif
 "}}}
  
-"   Chinese
+" Reformate 排版与文本格式"{{{
+" 文本格式化
+" B在连接行时，不要在两个多字节字符之间插入空格。有'M' 标志位时无效。
+    set formatoptions+=B
+        
+    set expandtab
+    set shiftwidth=4 " 设定 << 和 >> 命令移动时的宽度为 4
+    set softtabstop=4 " 使得按退格键时可以一次删掉 4 个空格
+    " set tabstop=8 " 设定 tab 长度为 8
+    set tabstop=4 " 设定 tab 长度为 4
+
+    set wrap "文本的回绕，不超过窗口宽度
+
+    auto FileType c,cpp  set cindent " Strict rules for C Programs
+    "auto FileType c,cpp  set smartindent " Strict rules for C Programs
+    set autoindent
+    set smartindent " 开启行时使用智能自动缩进，为C程序
+    set backspace=indent,eol,start
+    "   不设定在插入状态无法用退格键和 Delete 键删除回车符
+
+    " set paste的Toggle
+    set pastetoggle=<F6>
+
+    if has("autocmd")
+    endif
+"}}}
+
+" Chinese encoding "{{{
+
+    set fileformats=unix,dos
+    " 缩略 set ffs = unix,dos
+    set fileformat =unix
+    
     if MySys() == "windows"
         set langmenu=zh_CN.UTF-8
         language message zh_CN.UTF-8
@@ -134,7 +185,20 @@
         set fileencoding=utf-8
         set fencs=utf-8,usc-bom,gb18030,gbk,gb2312,cp936 
     endif
+"}}}
 
+"}}}
+
+" Default Path & Global constant - chrome "{{{
+
+"{{{
+" 启动进入自己的主目录
+    if MySys() == 'linux'
+        exec 'cd '.g:ywl_path
+    elseif MySys() == 'windows'
+        exec 'cd '.g:ywl_path
+    "   set shell=c:\\cygwin\\bin\\bash.exe shellcmdflag=--login\ -c shellxquote=\"
+    endif
 "}}}
 
     if hostname() == 'M-PC'
@@ -142,20 +206,10 @@
     else 
         let g:path_chrome='C:\Users\ywl\AppData\Local\Google\Chrome\Application\chrome.exe'
     endif
-
-"   Global constant
-
-"{{{
-"   启动进入自己的主目录
-if MySys() == 'linux'
-    exec 'cd '.g:ywl_path
-elseif MySys() == 'windows'
-    exec 'cd '.g:ywl_path
-"   set shell=c:\\cygwin\\bin\\bash.exe shellcmdflag=--login\ -c shellxquote=\"
-endif
 "}}}
 
-"   Base Setting "{{{
+" Base Setting "{{{
+" Basic{{{
     syntax enable
     syntax on " 自动语法高亮
     set showcmd     " Show (partial) command in status line."
@@ -163,7 +217,7 @@ endif
     exec "noh"
     " 设置宽度不明的文字(如 “”①②→ )为双宽度文本
     set ambiwidth=double
-"   Set to auto read when a file is changed from the outside
+" Set to auto read when a file is changed from the outside
     set autoread
     set mouse=a
     " set number " 显示行号
@@ -211,54 +265,9 @@ endif
     if MySys()=='windows'
         set winaltkeys=no
     endif
-"   提示自己代码别超过81列
-"}}}
+" 提示自己代码别超过81列"}}}
 
-"{{{
-"   view,buffer Operation
-if MySys() == 'linux'
-    set viewdir=$HOME/Dropbox/vimfiles/view
-elseif MySys() == 'windows'
-    set viewdir=$HOME/vimfiles/view
-endif
-"   谨慎使用，防止修改了全局映射变量在里面没有体现
-    set viewoptions=cursor,folds,slash,unix
-    " ,options
-"   au BufWinLeave * if expand("%") != '' && &buftype=='' | silent
-"               \mkview! | endif
-"   au BufWinEnter * if expand("%") != '' && &buftype=='' | silent
-"               \loadview |syntax on| endif
-
-"   function! RemoveOldViewFiles()
-"   if MySys() == 'windows'
-"       exe '!find '.g:ywl_path.'/vimfiles/view/* -mtime +90 -exec rm {} \;'
-"   else if MySys() == 'linux'
-"       exe '!find '.g:ywl_path.'/vimfiles/view/* -mtime +90 -exec rm {} \;'
-"   endfunction
-
-"------------------------view--------------------------------
-"}}}
-
-"{{{
-"   Session.vim
-    if MySys() == 'windows'
-        let g:session_directory=g:ywl_path.'\vimfiles\Workspace'
-    elseif MySys() == 'linux'
-        let g:session_directory=g:ywl_path.'/vimfiles/Workspace'
-    endif
-    let g:session_autoload='no'
-    let g:session_autosave='Yes'
-    " 每十分钟自动保存Session
-    " let g:session_autosave_periodic = 10
-"}}}
-
-"   持久保存撤销历史"{{{
-    exec 'set undodir='.g:ywl_path.'/vimfiles/undodirfile'
-    set undolevels=1000 "maximum number of changes that can be undone
-    set undofile
-"}}}
-
-"   fold setting "{{{
+" Fold setting "{{{
     set foldtext=MyFoldText()
     function! MyFoldText()
       let a:line=getline(v:foldstart)
@@ -292,35 +301,70 @@ endif
     set foldcolumn=3 " 设置折叠区域的宽度
     "}}}
 
-"   Reformate 排版与文本格式"{{{
-"   文本格式化
-"   B在连接行时，不要在两个多字节字符之间插入空格。有'M' 标志位时无效。
-    set formatoptions+=B
-        
-    set expandtab
-    set shiftwidth=4 " 设定 << 和 >> 命令移动时的宽度为 4
-    set softtabstop=4 " 使得按退格键时可以一次删掉 4 个空格
-    " set tabstop=8 " 设定 tab 长度为 8
-    set tabstop=4 " 设定 tab 长度为 4
+"{{{
+" view,buffer Operation
+if MySys() == 'linux'
+    set viewdir=$HOME/Dropbox/vimfiles/view
+elseif MySys() == 'windows'
+    set viewdir=$HOME/vimfiles/view
+endif
+" 谨慎使用，防止修改了全局映射变量在里面没有体现
+    set viewoptions=cursor,folds,slash,unix
+    " ,options
+" au BufWinLeave * if expand("%") != '' && &buftype=='' | silent
+"               \mkview! | endif
+"   au BufWinEnter * if expand("%") != '' && &buftype=='' | silent
+"               \loadview |syntax on| endif
 
-    set wrap "文本的回绕，不超过窗口宽度
+"   function! RemoveOldViewFiles()
+"   if MySys() == 'windows'
+"       exe '!find '.g:ywl_path.'/vimfiles/view/* -mtime +90 -exec rm {} \;'
+"   else if MySys() == 'linux'
+"       exe '!find '.g:ywl_path.'/vimfiles/view/* -mtime +90 -exec rm {} \;'
+"   endfunction
 
-    auto FileType c,cpp  set cindent " Strict rules for C Programs
-    "auto FileType c,cpp  set smartindent " Strict rules for C Programs
-    set autoindent
-    set smartindent " 开启行时使用智能自动缩进，为C程序
-    set backspace=indent,eol,start
-    "   不设定在插入状态无法用退格键和 Delete 键删除回车符
+"------------------------view--------------------------------
+"}}}
 
-    " set paste的Toggle
-    set pastetoggle=<F6>
+" undodir 持久保存撤销历史"{{{
+    exec 'set undodir='.g:ywl_path.'/vimfiles/undodirfile'
+    set undolevels=1000 "maximum number of changes that can be undone
+    set undofile
+"}}}
 
-    if has("autocmd")
-    endif
 "}}}
 
 "{{{
-"   gui_running
+" xolox/vim-session
+" --------Brief help------------
+" :SaveSession sessionname  - 如果不提供sessionname，默认保存为default会话
+" :OpenSession sessionname  - 如果不提供sessionname，默认打开default会话
+" :CloseSession  - 关闭当前会话，关闭所有标签，打开一个空缓冲区
+" :DeleteSession - 关闭会话，当前标签保留
+
+" Session保存路径
+    if MySys() == 'windows'
+        let g:session_directory=g:ywl_path.'\vimfiles\Workspace'
+    elseif MySys() == 'linux'
+        let g:session_directory=g:ywl_path.'/vimfiles/Workspace'
+    endif
+
+    " 每次打开空Vim，不提示是否打开 default session
+    let g:session_autoload='no'
+
+    " 每次退出session时，是否提示保存会话
+    let g:session_autosave='no'
+
+    " 每十分钟自动保存Session
+    " let g:session_autosave_periodic = 10
+"}}}
+
+"{{{
+" gui_running
+
+    highlight WhitespaceEOL ctermbg=red guibg=red
+    match WhitespaceEOL /\s\+$/
+
     if has("gui_running")
         set guioptions-=T " 隐藏工具栏
         set guioptions-=m " 隐藏菜单栏
@@ -350,10 +394,19 @@ endif
     endif
 "}}}
 
-"   Autocmd "{{{
+" Autocmd "{{{
 if has("autocmd")
-    autocmd! FileType html,c,cs,java,perl,
+    autocmd! FileType c,cs,java,perl,
                 \shell,bash,cpp,python,vim,php,ruby  setlocal cc=81
+    
+    augroup htmlevent
+        autocmd! htmlevent
+        autocmd BufRead,BufNewFile *.html  
+                    \setlocal tabstop=2 |
+                    \setlocal softtabstop=2 |
+                    \setlocal shiftwidth=2 |
+                    \setlocal cc=81
+    augroup END
 
     augroup xml-fold
         autocmd! xml-fold
@@ -363,7 +416,7 @@ if has("autocmd")
                     \setlocal cc=81
     augroup END
 
-    au BufNewFile,BufRead *.swig set filetype=swig 
+    au BufNewFile,BufRead *.swig,*.ejs set filetype=javascript 
 
     augroup markdownevent
         autocmd! markdownevent
@@ -392,18 +445,18 @@ if has("autocmd")
         autocmd! pythonevent
         autocmd pythonevent BufRead,BufNewFile *.py setlocal foldmethod=indent | setlocal foldlevel=0
         autocmd pythonevent BufNewFile,BufRead *.py
-                    \ set tabstop=4 |
-                    \ set softtabstop=4 |
-                    \ set shiftwidth=4 |
+                    \ setlocal tabstop=4 |
+                    \ setlocal softtabstop=4 |
+                    \ setlocal shiftwidth=4 |
                     " \ set textwidth=79 |
-                    \ set expandtab |
-                    \ set autoindent |
-                    \ set fileformat=unix 
+                    \ setlocal expandtab |
+                    \ setlocal autoindent |
+                    \ setlocal fileformat=unix 
     augroup END
 
 
         "
-"   使用模板文件
+" 使用模板文件
 "   autocmd BufNewFile  *.html 0r ~/.vim/template/html.tpl
 "   autocmd BufNewFile  *.js   0r ~/.vim/template/javascript.tpl
 "   autocmd BufNewFile  *.php  0r ~/.vim/template/php.tpl
@@ -411,8 +464,21 @@ if has("autocmd")
 endif "has("autocmd")
 "}}}
 
+" Global Mapping "{{{
 "{{{
-"   自动补全括号，包括大括号
+" Quickfix
+""""""""""""""""""""""""""""""
+"   nmap <leader>cn :cn<cr>
+"   nmap <leader>cp :cp<cr>
+" F11 doesn't work in terms
+   nmap <S-F11> :cw 10<cr>
+   nmap <C-F11> :ccl<cr>
+"   nmap <leader>cc :botright lw 10<cr>
+"   map <c-u> <c-l><c-j>:q<cr>:botright cw 10<cr>
+"}}}
+
+"{{{
+" 自动补全括号，包括大括号
     :inoremap ( ()<ESC>i
     :inoremap ) <c-r>=ClosePair(')')<CR>
     :inoremap { {}<ESC>i
@@ -421,7 +487,7 @@ endif "has("autocmd")
     :inoremap ] <c-r>=ClosePair(''')<CR>
 "   :inoremap < <><ESC>i
 "   :inoremap > <c-r>=ClosePair('>')<CR>
-"   实现括号的自动配对后防止重复输入），适用python
+" 实现括号的自动配对后防止重复输入），适用python
      function! ClosePair(char)
         if getline('.')[col('.') - 1] == a:char
             return "\<Right>"
@@ -432,21 +498,21 @@ endif "has("autocmd")
 "}}}
 
 "{{{
-"   关于tab的快捷键
+" 关于tab的快捷键
 
-"   跳转，翻页 向下翻半夜  向上翻半夜
-"   Tab操作快捷方式!
+" 跳转，翻页 向下翻半夜  向上翻半夜
+" Tab操作快捷方式!
     nnoremap <C-TAB> :tabnext<CR>
     nnoremap <C-S-TAB> :tabprev<CR>
     nnoremap gn :tabnext<CR>
     nnoremap gp :tabprev<CR>
     nnoremap <C-t> :tabnew<cr>
     nnoremap <C-e> :tabclose<cr>
-"   map te :tabedit
-"   tabd[o] {cmd} 对每个标签页执行{cmd}, 遍历标签页
-"   tablast 最后一个标签页
-"   tabmove N  将当前标签页移动到N个标签页之后
-"   移动到第一个标签页
+" map te :tabedit
+" tabd[o] {cmd} 对每个标签页执行{cmd}, 遍历标签页
+" tablast 最后一个标签页
+" tabmove N  将当前标签页移动到N个标签页之后
+" 移动到第一个标签页
     nnoremap g1 1gt
     nnoremap g2 2gt
     nnoremap g3 3gt
@@ -462,8 +528,8 @@ endif "has("autocmd")
 "}}}
 
 "{{{
-"   Smart way to move .btw. windows 
-"   关于窗口的扩大缩小, :help window-resize
+" Smart way to move .btw. windows 
+" 关于窗口的扩大缩小, :help window-resize
     " noremap <C-j> <C-W>j
     " noremap <C-k> <C-W>k
     " noremap <C-h> <C-W>h
@@ -473,48 +539,47 @@ endif "has("autocmd")
     imap <C-j> <Down>
     imap <C-k> <Up>
 
-"   Treat long lines as break lines (useful when moving around in them)
+" Treat long lines as break lines (useful when moving around in them)
     " map j gj
     " map k gk
     " nnoremap <leader><cr> O<Esc>j
-"   <Shift-CR>在normal模式的情况下增加一行空行
+" <Shift-CR>在normal模式的情况下增加一行空行
+"}}}
 "}}}
 
 "{{{
-"   vim-scripts/Load_Template file setting
+" vim-airline/vim-airline  "好看轻量级的powerline，不依赖python
+    let g:airline_powerline_fonts = 1    
+    let g:airline_theme = "luna"
+    if MySys() == 'windows'
+        " set guifont=Sauce_Code_Powerline:h11:cANSI
+        " set guifont=Anonymice_Powerline:h13:cANSI     " 字体太大
+        set guifont=Droid_Sans_Mono_Dotted_for_Powe:h11:cANSI
+        " set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI
+        " set guifont=Inconsolata-g_for_Powerline:h11:cANSI
+        " set guifont=Hack:h11:cANSI
+        " set guifont=monofur_for_Powerline:h13:cANSI
+    else 
+	    if has("gui_gtk2")
+            set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
+        endif
+    endif
+"}}}
+
+"{{{
+" vim-scripts/Load_Template file setting
     if MySys() == 'windows'
         let g:template_path=g:ywl_path.'\vimfiles\bundle\load_template\template\'
     elseif MySys() == 'linux'
         let g:template_path=g:ywl_path.'/vimfiles/bundle/load_template/template/'
     endif
-"   Load_template 说明
-"   1. 静态模板文件中，`TEMPLATE_CURSOR`标明载入模板后光标所在位置
-"   2. 动态模板，Vim 脚本放置在`EXE_BEGIN_TEMPLATE (NEEDNEW)``EXE_END_TEMPLATE`
-"}}}
-
-"   aperezdc/vim-template Setting"{{{
-"   Manually expand cmd 插入g:templates_directory路径中符合<pattern>的模板文件
-"   :Template *.c 
-
-    " let g:templates_no_autocmd=1
-    " " let g:templates_plugin_loaded = 1 "Setting this to a non-zero value will disable the plug-in.
-" "   for vim-scripts/vim-template
-    " let g:username="ywlbupt" " `%USER%`
-    " let g:email="ywlbupt@163.com" " `%MAIL%`
+" Load_template 说明
+" 1. 静态模板文件中，`TEMPLATE_CURSOR`标明载入模板后光标所在位置
+" 2. 动态模板，Vim 脚本放置在`EXE_BEGIN_TEMPLATE (NEEDNEW)``EXE_END_TEMPLATE`
 "}}}
 
 "{{{
-"   snipMate
-"   let g:snips_author = 'MelonLin'
-"   if MySys() == 'windows'
-"       let g:snippets_dir=g:ywl_path.'\vimfiles\snippets\'
-"   elseif MySys() == 'linux'
-"       let g:snippets_dir=g:ywl_path.'/vimfiles/snippets/'
-"   endif
-"}}}
-
-"{{{
-"   Pydiction && SimpylFold
+" Pydiction && SimpylFold
     if MySys() == 'windows'
 		let g:pydiction_location =
 		 \ g:ywl_path.'\vimfiles\bundle\Pydiction\complete-dict'
@@ -525,6 +590,7 @@ endif "has("autocmd")
     let g:SimpylFold_docstring_preview=1
 "}}}
 
+" Customed Function"{{{
 "{{{
 "   function! RunmeCmd()
     function! RunmeCmd()
@@ -540,54 +606,451 @@ endif "has("autocmd")
     let s:text = getline('.')
     if strlen('s:text')!=0
     exec ":r ! " . s:text
-"   上行中的 . 为连接符号，连接前面的字符串和后面的字符变量
+" 上行中的 . 为连接符号，连接前面的字符串和后面的字符变量
     else
     echo "no find"
     endif
     endfunction
     
-"   将当前行作为命令行在shell/cmd中执行
-    map <F4> :call RunmeCmd()<CR>
-"   将当前行作为命令行在shell/cmd中执行，并写入当前行中
-    map <S-F4> :call RunmeCmdRead()<CR>
+" 将当前行作为命令行在shell/cmd中执行
+    " map <F4> :call RunmeCmd()<CR>
+" 将当前行作为命令行在shell/cmd中执行，并写入当前行中
+    " map <S-F4> :call RunmeCmdRead()<CR>
 "}}}
 
 "{{{
-"   Time.function
-"   在插入模式下输入xdate就会自动显示当前的时间
+" Time.function
+" 在插入模式下输入xdate就会自动显示当前的时间
     iab tdate <c-r>=strftime("%Y/%m/%d %H:%M:%S")<cr>
     iab ydate <c-r>=strftime("%Y-%m-%d")<cr>
 "}}}
-
-"{{{
-"   Yggdroot/vim-mark
-""""""""""""""""""""""""""""""
-"   To enable the automatic restore of marks from a previous Vim session
-    let g:mwAutoLoadMarks = 1
-
-    noremap <Leader>1  <Plug>MarkSearchGroup1Next
-    noremap <Leader>!  <Plug>MarkSearchGroup1Prev
-    noremap <Leader>2  <Plug>MarkSearchGroup2Next
-    noremap <Leader>@  <Plug>MarkSearchGroup2Prev
-    noremap <Leader>3  <Plug>MarkSearchGroup3Next
-    noremap <Leader>#  <Plug>MarkSearchGroup3Prev
-    noremap <Leader>4  <Plug>MarkSearchGroup4Next
-    noremap <Leader>$  <Plug>MarkSearchGroup4Prev
-    noremap <Leader>5  <Plug>MarkSearchGroup5Next
-    noremap <Leader>%  <Plug>MarkSearchGroup5Prev
-    noremap <Leader>6  <Plug>MarkSearchGroup6Next
-    noremap <Leader>^  <Plug>MarkSearchGroup6Prev
-"   There are no default mappings for toggling all marks and for the :MarkClear 
-"   command, but you can define some yourself: 
-    nmap <Leader>M <Plug>MarkToggle
-    nmap <Leader>N <Plug>MarkAllClear
 "}}}
 
-"   plasticboy/vim-markdown"{{{
-"   The following line to disable folding
+" plasticboy/vim-markdown"{{{
+" --------Brief help------------
+" :Toc " 左侧打开目录栏quickfix Windows
+
+    " The following line to disable folding
     " let g:vim_markdown_folding_disable=1
-"   set the initial foldlevel
-    let g:vim_markdown_initial_foldlevel=2
+    " set the initial foldlevel
+    let g:vim_markdown_initial_foldlevel=3
+    " Add the following line to your '.vimrc' to disable the folding configuration:
+    let g:vim_markdown_folding_disabled = 0
+    " Markdown Toc width autofit
+    let g:vim_markdown_toc_autofit = 1
+    " Disable vim-markdown mapping
+    let g:vim_markdown_no_default_key_mappings = 1
+
+"}}}
+
+" suan/vim-instant-markdown"{{{
+" 该插件用于Markdown的实时预览，Ubuntu下需要有ruby的支持
+
+    let g:instant_markdown_slow = 1
+    " 手动通过命令 :InstantMarkdownPreview 来决定是否预览
+    let g:instant_markdown_autostart = 0
+"}}}
+
+"{{{
+" taglist.vim
+""""""""""""""""""""""""""""""
+    noremap <leader>tl :TlistToggle<cr>
+    if MySys() == "windows"                "设定windows系统中ctags程序的位
+        let Tlist_Ctags_Cmd = 'ctags'
+    elseif MySys() == "linux"              "设定linux系统中ctags程序的位置
+        let Tlist_Ctags_Cmd = '/usr/bin/ctags'
+    endif
+    " let Tlist_Show_One_File = 1
+    "不同时显示多个文件的tag，只显示当前文件的
+    let Tlist_Exit_OnlyWindow = 1
+    "如果taglist窗口是最后一个窗口，则退出vim
+    let Tlist_Use_Right_Window = 0         "在右侧窗口中显示taglist窗口
+    let Tlist_WinWidth=31
+    " 如果希望taglist始终解析文件中的tag，不管taglist窗口有没有打开，设置Tlist_Process_File_Always 为 1
+"}}}
+
+"{{{
+" scrooloose/nerdtree
+" The-NERD-Tree / netrw setting"{{{
+""""""""""""""""""""""""""""""
+    let g:netrw_winsize = 31
+    " Vexplore!为在左侧打开netrw
+    " nmap <silent> <leader>fe :Vexplore<cr>
+    nmap <silent> <leader>fe :NERDTreeToggle<cr>
+
+    if MySys() == 'windows'
+        let g:NERDTreeBookmarksFile=g:ywl_path.'\vimfiles\plugindata\NERDTreeBookmarks.txt'
+    elseif MySys() == 'linux'
+        let g:NERDTreeBookmarksFile=g:ywl_path.'/vimfiles/plugindata/NERDTreeBookmarks.txt'     
+    endif
+    " 将 NERDTree 的窗口设置在 vim 窗口的右侧（默认为左侧）
+    let  g:NERDTreeWinPos="left"
+    " 当打开 NERDTree 窗口时，自动显示 Bookmarks
+    let g:NERDTreeShowBookmarks=1
+    " 让Tree把自己给装饰得多姿多彩漂亮点
+    let g:NERDChristmasTree=1
+    let g:NERDTreeWinSize=31
+    " 当输入 [:e filename]不再显示netrw,而是显示nerdtree
+    let g:NERDTreeHijackNetrw=1 
+    " When switching into a tab, make sure that focus is on the file window, not in the NERDTree window.
+    let g:nerdtree_tabs_focus_on_files=1
+    "}}}
+
+" Used by winmanager "{{{
+    let g:NERDTree_title = "[NERDTree]" 
+    function! NERDTree_Start() 
+        exe 'NERDTree'
+    endfunction 
+
+    function! NERDTree_IsValid() 
+      return 1 
+    endfunction
+"}}}
+
+"{{{
+" 自定义命令，让NERDTree进入当前文件所在的目录
+    command! -n=? -complete=dir -bar Ncd :call MyNerdtreeToggle('<args>')
+    function! MyNerdtreeToggle(dir) 
+        exec "cd ".expand('%:h')
+        exec "NERDTree ".expand('%:h')
+    endfunction
+
+        "if expand('%')=~"NERD_tree_\\d\\+"
+    "   nnoremap <buffer> <F4> :call OpenNERDTreeBoookmarks()
+    "endif
+    " if has("autocmd")
+        " autocmd! BufEnter _NERD_tree_ nnoremap <buffer> <F4> :call OpenNERDTreeBoookmarks()<CR>
+    " endif
+    function! OpenNERDTreeBoookmarks()
+        let a:bookmark_str = input("Please enter Bookmarkname: ")
+        execute "BookmarkToRoot ".a:bookmark_str
+        execute "normal pcd"
+    endfunction
+
+"}}}
+"}}}
+
+" scrooloose/nerdcommenter"{{{
+" --------Brief help------------
+" <leader>cc  - Comment out the current line or text selected in visual mode.
+" <leader>cn  - Nested Comment 
+" <leader>cu  - Uncomments
+" <leader>cm  - multiple line NERDComMinimalComment 包裹性的注释时管用
+
+    " Add spaces after comment delimiters by default
+    let g:NERDSpaceDelims = 0
+    let g:NERDDefaultAlign = 'none'
+
+    let NERDCreateDefaultMappings = 1
+
+    let g:NERDCustomDelimiters = { 'vim': { 'left': '" ' } }
+    nmap \\\ <Plug>NERDCommenterToggle
+    xmap \\ <Plug>NERDCommenterToggle
+    nmap <leader>cc <plug>NERDCommenterComment
+    xmap <leader>cc <plug>NERDCommenterComment
+    nmap <leader>cu <plug>NERDCommenterUncomment
+    xmap <leader>cu <plug>NERDCommenterUncomment
+    xmap <leader>cm <Plug>NERDComMinimalComment
+"}}}
+
+"{{{
+" vim-surround.vim
+" :echo char2nr('-')=45
+" :echo char2nr('=')=61
+    let g:surround_45 = "```\n\r```"
+    let g:surround_61 = "**\n\r**"
+    let g:surround_98 = "**\r**"
+
+"}}}
+
+" Valloric/YouCompleteMe"{{{
+    " let g:ycm_python_binary_path = 'python'
+    " nnoremap <leader>y :let g:ycm_auto_trigger=0<cr> "turn off YCM nnoremap
+    " nnoremap <leader>Y :let g:ycm_auto_trigger=1<cr> "turn on YCM nnoremap
+    if MySys() == 'windows'
+        let g:ycm_auto_trigger=0
+    else
+        let g:ycm_python_binary_path = '/home/ywl/.pyenv/versions/anaconda3-2.4.0/bin/python'
+        let g:ycm_auto_trigger=1
+        nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+        nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+        nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        let g:ycm_error_symbol = '>>'
+        let g:ycm_warning_symbol = '>*'
+        nmap <F4> :YcmDiags<CR>
+        " 往前跳和往后跳的快捷键为Ctrl+O以及Ctrl+I
+    endif
+"}}}
+
+"{{{
+" Ctags
+" """"""""""""""""""""""""""""""
+" 将当前的工程的tags导入
+" 如果源文件在当前文件夹下没有找到tags,可以到它的上层目录下继续寻找
+    set tags=tags;
+"}}}
+
+"{{{
+" Tohtml
+""""""""""""""""""""""""""""""
+" 步骤如下：
+" 1、vim编辑代码；
+" 2、如果有中文字符，则:let html_use_encoding='gb2312'；
+" 4、设置let html_no_pre = 1，This makes it show up as you see it in Vim, but without wrapping。懒得翻译，自己看吧
+" 3、:TOhtml，保存；
+" 4、用浏览器将3保存的文件打开；
+" 5、复制4的页面内容粘贴到博客的编辑框（如果是cnblogs，则需要将4生成的html代码拷贝到html编辑框内）；
+" 6、搞定。
+    let g:html_start_line = line("'<")
+    let g:html_end_line = line("'>")
+    "   强制给行编号
+    let g:html_number_lines = 0
+    "let g:html_no_pre = 1 
+    "let g:html_use_css = 0
+    "let g:html_use_xhtml = 1
+"}}}
+    
+"{{{
+" Align
+" AlignCtrl lp0P0
+" p0P0表示分隔符前后有0个空格
+" 通过字母l和r进行对齐，l表示左对齐，r表示右对齐
+" help alignctrl-p
+""""""""""""""""""""""""""""""
+    let g:Align_xstrlen= 3
+"}}}
+
+"{{{
+" vimgrep.vim
+" 对搜索的设置
+    map <leader>ff :call Search_Word()<CR>:copen<CR>
+    function! Search_Word()
+        let w = expand("<cword>") " 在当前光标位置抓词
+        execute "vimgrep " w " %"
+    endfunction
+
+    map <leader>tn :call Tabe_edit()<CR>
+    function! Tabe_edit()
+        let w = expand("%:p")   "当前文件的完整路径文件名
+        execute "close|tabedit "w
+    endfunction
+
+""""""""""""""""""""""""""""""
+" grep setting
+""""""""""""""""""""""""""""""
+    nnoremap <silent> <F3> :Grep<CR>
+    "}}}
+
+"{{{
+" 调用AStyle程序，进行代码美化
+
+func! CodeFormat()
+	"取得当前光标所在行号
+	let lineNum = line(".")
+	"C源程序
+	if &filetype == 'c'
+		"执行调用外部程序的命令
+		exec "! astyle --style=ansi -A3Lfpjk3NS %"
+		"H头文件(文件类型识别为cpp)，CPP源程序
+	elseif &filetype == 'cpp'
+		"执行调用外部程序的命令
+		"exec "%! astyle -A3Lfpjk3NS\<CR>"
+		"exec '! astyle --style=ansi -A3Lfpjk3NS '.expand('%:p')
+		exec '! astyle --style=ansi -A3Lfpjk3NS %'
+		"exec "%! astyle -p -V --style=ansi --indent=spaces=4"
+		"JAVA源程序
+	elseif &filetype == 'java'
+		"执行调用外部程序的命令
+		exec "%! astyle -A2Lfpjk3NS\<CR>"
+	else 
+		"提示信息
+		echo "no support ".&filetype." filetype."
+	endif
+	"返回先前光标所在行
+	exec lineNum
+endfunc
+"映射代码美化函数到Shift+f快捷键
+if MySys() == "windows"
+	map <leader>fm <Esc>:call CodeFormat()<CR>
+endif
+"}}}
+
+"{{{
+" 定义CompileRun函数，用来调用编译和运行  
+    func! ComplieX()  
+        exec "w"  
+        if &filetype == 'c'  
+            exec "!gcc % -g -Wall -o %<"
+        elseif &filetype == 'cpp'  
+            exec "!g++ % -g -Wall -o %<"
+        endif
+    endfunc
+
+" 定义Run函数  
+    func! RunX()  
+        if &filetype == 'c' || &filetype == 'cpp'  
+            exec "!./%<"
+        elseif &filetype == 'java'  
+            exec "!java %<"
+		elseif &filetype == 'python'
+            exec "w"  
+            if MySys() == 'windows'
+                exec "!python %"
+            elseif MySys() == 'linux'
+                exec "!python %"
+            endif  
+        endif  
+    endfunc  
+
+" 定义Debug函数，用来调试程序  
+    func! Debug()  
+        exec "w"  
+        if &filetype == 'c'  
+            exec "!gcc % -g -o %<" 
+            exec "!gdb %<"
+        elseif &filetype == 'cpp'  
+            exec "!g++ % -g -o %<"
+            exec "!gdb %<" 
+        elseif &filetype == 'java'  
+            exec "!javac %"  
+            exec "!jdb %<"
+        endif  
+    endfunc  
+
+"-----------------CPP @ windows---------------
+    if MySys() == 'windows'
+        func! ComplieRunGpp()
+            "if &filetype == 'cpp'
+                exec "w"
+                exec "!cl -EHsc %"
+                exec "!%<"
+                " %< 表示没有后缀的本文件
+            "endif
+        endfunc
+" -------------Cpp @ ubuntu --------------------
+    elseif MySys() == 'linux'
+        func! ComplieRunGpp()
+            if &filetype == 'cpp'
+                exec "w"
+                exec "!g++ % -g -Wall -o %<"
+                exec "! %<"
+                " exec "! ./%<"     
+                " %< 表示没有后缀的本文件
+            endif
+            if &filetype == 'c'
+                exec "w"
+                exec "!gcc % -g -Wall -o %<"
+                exec "! ./%<"       
+                " %< 表示没有后缀的本文件
+            endif
+        endfunc
+    endif
+    
+    
+" 单文件编译运行
+    map <silent> <C-F5> :call ComplieRunGpp()<CR>
+    map <silent> <F5> :call ComplieX()<CR>
+    map <silent> <F7> :call RunX()<CR>
+" make
+    autocmd FileType c,cpp map <silent> <leader><space> :make<CR>
+"}}}
+
+"{{{
+"   瞎捣鼓
+
+"   获取当前文件的后缀名：抛砖引玉
+    function! GetFileType()
+        let uFileSuffix = expand('%:e')
+        return uFileSuffix
+    endfunction
+
+
+"   进行版权声明的设置
+"   添加或更新头
+    function! AddTitle()
+        if GetFileType() == 'wiki'
+            let uAnnotation = '# ' 
+        else
+            let uAnnotation = '//'
+        endif
+            call append(0,uAnnotation."========================
+                        \=====================================================")
+            call append(1,uAnnotation)
+            call append(2,uAnnotation." Author: ywlbupt - ywlbupt@163.com")
+            call append(3,uAnnotation)
+            call append(4,uAnnotation)
+            call append(5,uAnnotation." Last modified:  XXXX-XX-XX XX:XX")
+            call append(6,uAnnotation)
+            call append(7,uAnnotation." Filename:       _vimrc")
+            call append(8,uAnnotation)
+            call append(9,uAnnotation." Description: ")
+            call append(10,uAnnotation)
+            call append(11,uAnnotation."=======================
+                        \======================================================")
+        echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
+    endf
+
+"   更新最近修改时间和文件名
+"   以后考虑使用查找替换字符串函数来优化这段代码 ##
+    function! UpdateTitle()
+        if GetFileType() != 'wiki'
+            normal m'
+            execute '/\/\/ *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
+            normal ''
+            normal mk
+            execute '/\/\/ *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
+            execute "noh"
+            normal 'k
+        else 
+            normal m'
+            execute '/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
+            normal ''
+            normal mk
+            execute '/# *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
+            execute "noh"
+            normal 'k
+        endif
+        echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
+    endfunction
+
+"   判断前10行代码里面，是否有Last modified这个单词，
+"   如果没有的话，代表没有添加过作者信息，需要新添加；
+"   如果有的话，那么只需要更新即可
+    function! TitleDet()
+        if GetFileType() == 'wiki'
+            let uAnnotation = '# ' 
+        else
+            let uAnnotation = '//'
+        endif
+        let n=1
+        normal gg
+    "   默认为添加
+        while n < 10
+            let line = getline(n)
+    "       if line =~ '^\/\/\s*\S*Last\smodified:\S*.*$'
+            if line =~ '^'.uAnnotation.'\s*\S*Last\smodified:\S*.*$'
+                call UpdateTitle()
+                return
+            endif
+            let n = n + 1
+        endwhile
+        call AddTitle()
+    endfunction
+"}}}
+
+"{{{
+"   Plugin unused 
+"{{{
+"   BufExplorer
+""""""""""""""""""""""""""""""
+    let g:bufExplorerDefaultHelp=0       " Do not show default help.
+    let g:bufExplorerShowRelativePath=1  " Show relative paths.
+    let g:bufExplorerSortBy='mru'        " Sort by most recently used.
+    let g:bufExplorerSplitRight=0        " Split left.
+    let g:bufExplorerSplitVertical=1     " Split vertically.
+    let g:bufExplorerSplitVertSize = 30  " Split width
+    let g:bufExplorerUseCurrentWindow=1  " Open in new window.
+    autocmd! BufWinEnter \[Buf\ List\] setl nonumber 
 "}}}
 
 "{{{
@@ -745,129 +1208,41 @@ endif "has("autocmd")
 ""}}}
 
 "{{{
-"   taglist.vim
+"   snipMate
+"   let g:snips_author = 'MelonLin'
+"   if MySys() == 'windows'
+"       let g:snippets_dir=g:ywl_path.'\vimfiles\snippets\'
+"   elseif MySys() == 'linux'
+"       let g:snippets_dir=g:ywl_path.'/vimfiles/snippets/'
+"   endif
+"}}}
+
+"{{{
+"   Yggdroot/vim-mark
 """"""""""""""""""""""""""""""
-    noremap <leader>tl :TlistToggle<cr>
-    if MySys() == "windows"                "设定windows系统中ctags程序的位
-        let Tlist_Ctags_Cmd = 'ctags'
-    elseif MySys() == "linux"              "设定linux系统中ctags程序的位置
-        let Tlist_Ctags_Cmd = '/usr/bin/ctags'
-    endif
-    " let Tlist_Show_One_File = 1
-    "不同时显示多个文件的tag，只显示当前文件的
-    let Tlist_Exit_OnlyWindow = 1
-    "如果taglist窗口是最后一个窗口，则退出vim
-    let Tlist_Use_Right_Window = 0         "在右侧窗口中显示taglist窗口
-    let Tlist_WinWidth=31
-    " 如果希望taglist始终解析文件中的tag，不管taglist窗口有没有打开，设置Tlist_Process_File_Always 为 1
+"   To enable the automatic restore of marks from a previous Vim session
+    " let g:mwAutoLoadMarks = 1
+
+    " noremap <Leader>1  <Plug>MarkSearchGroup1Next
+    " noremap <Leader>!  <Plug>MarkSearchGroup1Prev
+    " noremap <Leader>2  <Plug>MarkSearchGroup2Next
+    " noremap <Leader>@  <Plug>MarkSearchGroup2Prev
+    " noremap <Leader>3  <Plug>MarkSearchGroup3Next
+    " noremap <Leader>#  <Plug>MarkSearchGroup3Prev
+    " noremap <Leader>4  <Plug>MarkSearchGroup4Next
+    " noremap <Leader>$  <Plug>MarkSearchGroup4Prev
+    " noremap <Leader>5  <Plug>MarkSearchGroup5Next
+    " noremap <Leader>%  <Plug>MarkSearchGroup5Prev
+    " noremap <Leader>6  <Plug>MarkSearchGroup6Next
+    " noremap <Leader>^  <Plug>MarkSearchGroup6Prev
+" "   There are no default mappings for toggling all marks and for the :MarkClear 
+" "   command, but you can define some yourself: 
+    " nmap <Leader>M <Plug>MarkToggle
+    " nmap <Leader>N <Plug>MarkAllClear
 "}}}
 
 "{{{
-"   The-NERD-Tree / netrw setting"{{{
-""""""""""""""""""""""""""""""
-    let g:netrw_winsize = 31
-    "Vexplore!为在左侧打开netrw
-"   nmap <silent> <leader>fe :Vexplore<cr>
-    nmap <silent> <leader>fe :NERDTreeToggle<cr>
-
-    if MySys() == 'windows'
-        let g:NERDTreeBookmarksFile=g:ywl_path.'\vimfiles\plugindata\NERDTreeBookmarks.txt'
-    elseif MySys() == 'linux'
-        let g:NERDTreeBookmarksFile=g:ywl_path.'/vimfiles/plugindata/NERDTreeBookmarks.txt'     
-    endif
-    " 将 NERDTree 的窗口设置在 vim 窗口的右侧（默认为左侧）
-    let  g:NERDTreeWinPos="left"
-    " 当打开 NERDTree 窗口时，自动显示 Bookmarks
-    let g:NERDTreeShowBookmarks=1
-    " 让Tree把自己给装饰得多姿多彩漂亮点
-    let g:NERDChristmasTree=1
-    let g:NERDTreeWinSize=31
-    " 当输入 [:e filename]不再显示netrw,而是显示nerdtree
-    let g:NERDTreeHijackNetrw=1 
-    " When switching into a tab, make sure that focus is on the file window, not in the NERDTree window.
-    let g:nerdtree_tabs_focus_on_files=1
-    "}}}
-
-"{{{
-"   路径转换，WIN to Ubuntu，Ubuntu to WIN  FOR NERDTree的书签路径
-"   dirpath为一个字符串，只有在Dropbox文件夹里的路径能都转换
-"   添加了在$VIM目录的转换
-"   let g:ywl_path_win='E:\yanweilin\Dropbox'
-"   let g:vim_path_win='C:\Program Files\Vim'
-"   let g:ywl_path_ubuntu='/home/yanweilin/Dropbox'
-"   let g:vim_path_ubuntu='/usr/share/vim'
-
-"   function! TransPath_ywl(dirpath) 
-"       let s:winpath2param_ywl=substitute(g:ywl_path_win, '\\', '\\\\', 'g')
-"       let s:winpath2param_vim=substitute(g:vim_path_win, '\\', '\\\\', 'g')
-"       if MySys() == 'linux'
-"           if match(a:dirpath, g:ywl_path_ubuntu)==-1 && match(a:dirpath, g:vim_path_ubuntu)==-1
-"               if match(a:dirpath, s:winpath2param_ywl)!=-1
-"                   let s:ubuntupath=substitute(substitute(a:dirpath, s:winpath2param_ywl, 
-"                               \       g:ywl_path_ubuntu,'g'), '\\', '/', 'g')
-"                   return s:ubuntupath
-"               elseif match(a:dirpath, s:winpath2param_vim)!=-1
-"                   let s:ubuntupath=substitute(substitute(a:dirpath, s:winpath2param_vim, 
-"                               \       g:vim_path_ubuntu,'g'), '\\', '/', 'g')
-"                   return s:ubuntupath
-"               endif
-"           else
-"               return a:dirpath
-"           endif
-"       elseif MySys() == 'windows'
-"           if match(a:dirpath, s:winpath2param_ywl)==-1 && match(a:dirpath, s:winpath2param_vim)==-1
-"               if match(a:dirpath, g:ywl_path_ubuntu)!=-1
-"                   let s:winpath=substitute(substitute(a:dirpath, g:ywl_path_ubuntu, 
-"                               \       s:winpath2param_ywl,'g'), '/', '\\', 'g')
-"                   return s:winpath
-"               elseif match(a:dirpath, g:vim_path_ubuntu)!=-1
-"                   let s:winpath=substitute(substitute(a:dirpath, g:vim_path_ubuntu, 
-"                               \       s:winpath2param_vim,'g'), '/', '\\', 'g')
-"                   return s:winpath
-"               endif
-"           else
-"               return a:dirpath
-"           endif
-"       endif           
-"   endfunction
-"}}}
-
-"   Used by winmanager "{{{
-    let g:NERDTree_title = "[NERDTree]" 
-    function! NERDTree_Start() 
-        exe 'NERDTree'
-    endfunction 
-
-    function! NERDTree_IsValid() 
-      return 1 
-    endfunction
-"}}}
-
-"{{{
-"   自定义命令，让NERDTree进入当前文件所在的目录
-    command! -n=? -complete=dir -bar Ncd :call MyNerdtreeToggle('<args>')
-    function! MyNerdtreeToggle(dir) 
-        exec "cd ".expand('%:h')
-        exec "NERDTree ".expand('%:h')
-    endfunction
-
-        "if expand('%')=~"NERD_tree_\\d\\+"
-    "   nnoremap <buffer> <F4> :call OpenNERDTreeBoookmarks()
-    "endif
-    if has("autocmd")
-        autocmd! BufEnter _NERD_tree_ nnoremap <buffer> <F4> :call OpenNERDTreeBoookmarks()<CR>
-    endif
-    function! OpenNERDTreeBoookmarks()
-        let a:bookmark_str = input("Please enter Bookmarkname: ")
-        execute "BookmarkToRoot ".a:bookmark_str
-        execute "normal pcd"
-    endfunction
-
-"}}}
-"}}}
-
-"{{{
-""  winManager setting
+"   winManager setting
 """""""""""""""""""""""""""""""
 ""  let g:winManagerWindowLayout = "TagList"            
 ""  FileExplorer,BufExplorer
@@ -881,7 +1256,7 @@ endif "has("autocmd")
 ""  nmap <leader>wm :if IsWinManagerVisible() <BAR> WMToggle<CR> <BAR> else <BAR> WMToggle<CR>:q<CR> endif <CR><CR>
 "}}}
 
-""  Trinity of wesleyche"{{{
+"   Trinity of wesleyche"{{{
 "   " Open and close all the three plugins on the same time 
 "   nmap <F8>  :TrinityToggleAll<CR> 
 "
@@ -890,31 +1265,11 @@ endif "has("autocmd")
 "
 ""}}}
 
-"{{{
-"   surround.vim
-"   :echo char2nr('-')=45
-"   :echo char2nr('=')=61
-    let g:surround_45 = "```\n\r```"
-    let g:surround_61 = "**\n\r**"
-    let g:surround_98 = "**\r**"
-
-"}}}
-
 "   Txtbrowser"{{{
 "   定制自己的搜索引擎:h txt-search-engine
-    let Txtbrowser_Search_Engine='https://www.google.com.hk/#newwindow=1&q=text&safe=strict'
+    " let Txtbrowser_Search_Engine='https://www.google.com.hk/#newwindow=1&q=text&safe=strict'
 "   定制自己的词典:h txt-dict
-    let TxtBrowser_Dict_Url='http://dict.youdao.com/search?q=text&keyfrom=dict.index'
-"}}}
-
-"{{{
-"   Ctags
-""""""""""""""""""""""""""""""
-"   将当前的工程的tags导入
-"   如果源文件在当前文件夹下没有找到tags,可以到它的上层目录下继续寻找
-    set tags=tags;
-"   将系统已经生成的tags导入
-"   set tags=tags;
+    " let TxtBrowser_Dict_Url='http://dict.youdao.com/search?q=text&keyfrom=dict.index'
 "}}}
 
 "{{{
@@ -922,280 +1277,8 @@ endif "has("autocmd")
 """"""""""""""""""""""""""""""
 "   mapping
 "   如果下拉菜单弹出，回车映射为接受当前所选项目，否则，仍映射为回车
-    inoremap <expr> <CR> pumvisible()?"\<C-Y>":"\<CR>"
+    " inoremap <expr> <CR> pumvisible()?"\<C-Y>":"\<CR>"
 "   如果下拉菜单弹出，CTRL-U映射为CTRL-E，即停止补全，否则，仍映射为CTRL-U
-    inoremap <expr> <C-U> pumvisible()?"\<C-E>":"\<C-U>"
+    " inoremap <expr> <C-U> pumvisible()?"\<C-E>":"\<C-U>"
 "}}}
-
-"{{{
-"   Tohtml
-""""""""""""""""""""""""""""""
-"步骤如下：
-"1、vim编辑代码；
-"2、如果有中文字符，则:let html_use_encoding='gb2312'；
-"4、设置let html_no_pre = 1，This makes it show up as you see it in Vim, but without wrapping。懒得翻译，自己看吧
-"3、:TOhtml，保存；
-"4、用浏览器将3保存的文件打开；
-"5、复制4的页面内容粘贴到博客的编辑框（如果是cnblogs，则需要将4生成的html代码拷贝到html编辑框内）；
-"6、搞定。
-    let g:html_start_line = line("'<")
-    let g:html_end_line = line("'>")
-    "   强制给行编号
-    let g:html_number_lines = 0
-    "let g:html_no_pre = 1 
-    "let g:html_use_css = 0
-    "let g:html_use_xhtml = 1
-"}}}
-    
-"{{{
-"   Align
-"   AlignCtrl lp0P0
-"   p0P0表示分隔符前后有0个空格
-"   通过字母l和r进行对齐，l表示左对齐，r表示右对齐
-"   help alignctrl-p
-""""""""""""""""""""""""""""""
-    let g:Align_xstrlen= 3
-"}}}
-
-"{{{
-"   vimgrep.vim
-"   对搜索的设置
-    map <leader>ff :call Search_Word()<CR>:copen<CR>
-    function! Search_Word()
-        let w = expand("<cword>") " 在当前光标位置抓词
-        execute "vimgrep " w " %"
-    endfunction
-
-    map <leader>tn :call Tabe_edit()<CR>
-    function! Tabe_edit()
-        let w = expand("%:p")   "当前文件的完整路径文件名
-        execute "close|tabedit "w
-    endfunction
-
-""""""""""""""""""""""""""""""
-"   grep setting
-""""""""""""""""""""""""""""""
-    nnoremap <silent> <F3> :Grep<CR>
-    "}}}
-
-"{{{
-"   BufExplorer
-""""""""""""""""""""""""""""""
-    let g:bufExplorerDefaultHelp=0       " Do not show default help.
-    let g:bufExplorerShowRelativePath=1  " Show relative paths.
-    let g:bufExplorerSortBy='mru'        " Sort by most recently used.
-    let g:bufExplorerSplitRight=0        " Split left.
-    let g:bufExplorerSplitVertical=1     " Split vertically.
-    let g:bufExplorerSplitVertSize = 30  " Split width
-    let g:bufExplorerUseCurrentWindow=1  " Open in new window.
-    autocmd! BufWinEnter \[Buf\ List\] setl nonumber 
-"}}}
-
-"{{{
-"   Quickfix
-""""""""""""""""""""""""""""""
-"   nmap <leader>cn :cn<cr>
-"   nmap <leader>cp :cp<cr>
-"   F11 doesn't work in terms
-   nmap <S-F11> :cw 10<cr>
-   nmap <C-F11> :ccl<cr>
-"   nmap <leader>cc :botright lw 10<cr>
-"   map <c-u> <c-l><c-j>:q<cr>:botright cw 10<cr>
-"}}}
-
-"{{{
-"   调用AStyle程序，进行代码美化
-
-func! CodeFormat()
-	"取得当前光标所在行号
-	let lineNum = line(".")
-	"C源程序
-	if &filetype == 'c'
-		"执行调用外部程序的命令
-		exec "! astyle --style=ansi -A3Lfpjk3NS %"
-		"H头文件(文件类型识别为cpp)，CPP源程序
-	elseif &filetype == 'cpp'
-		"执行调用外部程序的命令
-		"exec "%! astyle -A3Lfpjk3NS\<CR>"
-		"exec '! astyle --style=ansi -A3Lfpjk3NS '.expand('%:p')
-		exec '! astyle --style=ansi -A3Lfpjk3NS %'
-		"exec "%! astyle -p -V --style=ansi --indent=spaces=4"
-		"JAVA源程序
-	elseif &filetype == 'java'
-		"执行调用外部程序的命令
-		exec "%! astyle -A2Lfpjk3NS\<CR>"
-	else 
-		"提示信息
-		echo "no support ".&filetype." filetype."
-	endif
-	"返回先前光标所在行
-	exec lineNum
-endfunc
-"映射代码美化函数到Shift+f快捷键
-if MySys() == "windows"
-	map <leader>fm <Esc>:call CodeFormat()<CR>
-endif
-"}}}
-
-"{{{
-"   定义CompileRun函数，用来调用编译和运行  
-    func! ComplieX()  
-        exec "w"  
-        if &filetype == 'c'  
-            exec "!gcc % -g -Wall -o %<"
-        elseif &filetype == 'cpp'  
-            exec "!g++ % -g -Wall -o %<"
-        endif
-    endfunc
-
-"   定义Run函数  
-    func! RunX()  
-        if &filetype == 'c' || &filetype == 'cpp'  
-            exec "!./%<"
-        elseif &filetype == 'java'  
-            exec "!java %<"
-		elseif &filetype == 'python'
-            exec "w"  
-            if MySys() == 'windows'
-                exec "!python %"
-            elseif MySys() == 'linux'
-                exec "!python %"
-            endif  
-        endif  
-    endfunc  
-
-"   定义Debug函数，用来调试程序  
-    func! Debug()  
-        exec "w"  
-        if &filetype == 'c'  
-            exec "!gcc % -g -o %<" 
-            exec "!gdb %<"
-        elseif &filetype == 'cpp'  
-            exec "!g++ % -g -o %<"
-            exec "!gdb %<" 
-        elseif &filetype == 'java'  
-            exec "!javac %"  
-            exec "!jdb %<"
-        endif  
-    endfunc  
-
-"-----------------CPP @ windows---------------
-    if MySys() == 'windows'
-        func! ComplieRunGpp()
-            "if &filetype == 'cpp'
-                exec "w"
-                exec "!cl -EHsc %"
-                exec "!%<"
-                " %< 表示没有后缀的本文件
-            "endif
-        endfunc
-"   -------------Cpp @ ubuntu --------------------
-    elseif MySys() == 'linux'
-        func! ComplieRunGpp()
-            if &filetype == 'cpp'
-                exec "w"
-                exec "!g++ % -g -Wall -o %<"
-                exec "! %<"
-                " exec "! ./%<"     
-                " %< 表示没有后缀的本文件
-            endif
-            if &filetype == 'c'
-                exec "w"
-                exec "!gcc % -g -Wall -o %<"
-                exec "! ./%<"       
-                " %< 表示没有后缀的本文件
-            endif
-        endfunc
-    endif
-    
-    
-"   单文件编译运行
-    map <silent> <C-F5> :call ComplieRunGpp()<CR>
-    map <silent> <F5> :call ComplieX()<CR>
-    map <silent> <F7> :call RunX()<CR>
-"   make
-    autocmd FileType c,cpp map <silent> <leader><space> :make<CR>
-"}}}
-
-"{{{
-"   瞎捣鼓
-
-"   获取当前文件的后缀名：抛砖引玉
-    function! GetFileType()
-        let uFileSuffix = expand('%:e')
-        return uFileSuffix
-    endfunction
-
-
-"   进行版权声明的设置
-"   添加或更新头
-    function! AddTitle()
-        if GetFileType() == 'wiki'
-            let uAnnotation = '# ' 
-        else
-            let uAnnotation = '//'
-        endif
-            call append(0,uAnnotation."========================
-                        \=====================================================")
-            call append(1,uAnnotation)
-            call append(2,uAnnotation." Author: ywlbupt - ywlbupt@163.com")
-            call append(3,uAnnotation)
-            call append(4,uAnnotation)
-            call append(5,uAnnotation." Last modified:  XXXX-XX-XX XX:XX")
-            call append(6,uAnnotation)
-            call append(7,uAnnotation." Filename:       _vimrc")
-            call append(8,uAnnotation)
-            call append(9,uAnnotation." Description: ")
-            call append(10,uAnnotation)
-            call append(11,uAnnotation."=======================
-                        \======================================================")
-        echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
-    endf
-
-"   更新最近修改时间和文件名
-"   以后考虑使用查找替换字符串函数来优化这段代码 ##
-    function! UpdateTitle()
-        if GetFileType() != 'wiki'
-            normal m'
-            execute '/\/\/ *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
-            normal ''
-            normal mk
-            execute '/\/\/ *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
-            execute "noh"
-            normal 'k
-        else 
-            normal m'
-            execute '/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
-            normal ''
-            normal mk
-            execute '/# *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
-            execute "noh"
-            normal 'k
-        endif
-        echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
-    endfunction
-
-"   判断前10行代码里面，是否有Last modified这个单词，
-"   如果没有的话，代表没有添加过作者信息，需要新添加；
-"   如果有的话，那么只需要更新即可
-    function! TitleDet()
-        if GetFileType() == 'wiki'
-            let uAnnotation = '# ' 
-        else
-            let uAnnotation = '//'
-        endif
-        let n=1
-        normal gg
-    "   默认为添加
-        while n < 10
-            let line = getline(n)
-    "       if line =~ '^\/\/\s*\S*Last\smodified:\S*.*$'
-            if line =~ '^'.uAnnotation.'\s*\S*Last\smodified:\S*.*$'
-                call UpdateTitle()
-                return
-            endif
-            let n = n + 1
-        endwhile
-        call AddTitle()
-    endfunction
 "}}}
