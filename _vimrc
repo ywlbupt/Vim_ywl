@@ -1,7 +1,6 @@
 " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     source $VIMRUNTIME/macros/matchit.vim
-
 " Bundle management"{{{
 " Get out of VI's compatible mode.
 " --------Brief help------------
@@ -63,8 +62,6 @@ Plugin 'VundleVim/Vundle.vim'
         " 这个插件用于自动补全，可用于 . ->  :: 等操作符。
         " Plugin 'FromtonRouge/OmniCppComplete'
 
-        " markdown的实时预览
-        " Plugin 'suan/vim-instant-markdown'
         if MySys() == "linux"
             Plugin 'Valloric/YouCompleteMe'
         endif
@@ -212,8 +209,9 @@ Plugin 'VundleVim/Vundle.vim'
 
 " Base Setting "{{{
 " Basic{{{
-    syntax enable
     syntax on " 自动语法高亮
+    syntax enable
+
     set showcmd     " Show (partial) command in status line."
     set hlsearch
     exec "noh"
@@ -222,8 +220,8 @@ Plugin 'VundleVim/Vundle.vim'
 " Set to auto read when a file is changed from the outside
     set autoread
     set mouse=a
-    " set number " 显示行号
-    set relativenumber " 显示行号
+    set number " 显示行号
+    " set relativenumber " 显示相对行号
     set ruler " 打开状态栏标尺
 
     set nobackup " 覆盖文件时不备份
@@ -361,12 +359,23 @@ endif
     " let g:session_autosave_periodic = 10
 "}}}
 
+" altercation/vim-colors-solarized"{{{
+    " if g:colors_name == 'solarized' 
+        let g:solarized_termcolors= 256
+        let g:solarized_termtrans = 1
+        let g:solarized_contrast = "normal"    " 'normal' 'high' or 'low'
+        let g:solarized_visibility= "normal"
+    " endif
+"}}}
+
 "{{{
 " gui_running
 
     highlight WhitespaceEOL ctermbg=red guibg=red
     match WhitespaceEOL /\s\+$/
     set cursorline " 突出显示当前行
+    set background=dark
+    colorscheme solarized
 
     if has("gui_running")
         set guioptions-=T " 隐藏工具栏
@@ -375,7 +384,6 @@ endif
         " set guioptions-=r
         set background=dark
         " colorscheme desert_ywl  "设定配色方案
-        colorscheme solarized
         autocmd GUIEnter * set lines=35 |  set columns=119 
         if MySys() == 'linux'
             "exec "winpos 400 70"
@@ -387,9 +395,7 @@ endif
             " set t_Sb=^[[4%dm " 设置背景色
             " set t_Sf=^[[3%dm " 设置前景色
             set t_Co=256
-            set background=light
             " colorscheme evening_ywl
-            colorscheme solarized
             autocmd VimEnter * set lines=35 | set columns=119
         endif 
     endif
@@ -539,6 +545,8 @@ endif "has("autocmd")
     imap <C-l> <Right>
     imap <C-j> <Down>
     imap <C-k> <Up>
+    " <C-B>插入模式下一次性删除一个词
+    imap <c-b> <c-o>diw
 
 " Treat long lines as break lines (useful when moving around in them)
     " map j gj
@@ -546,15 +554,6 @@ endif "has("autocmd")
     " nnoremap <leader><cr> O<Esc>j
 " <Shift-CR>在normal模式的情况下增加一行空行
 "}}}
-"}}}
-
-" altercation/vim-colors-solarized"{{{
-    if g:colors_name == 'solarized' 
-        let g:solarized_termcolors= 256
-        let g:solarized_termtrans = 1
-        let g:solarized_contrast = "high"    " 'normal' 'high' or 'low'
-        let g:solarized_visibility= "normal"
-    endif
 "}}}
 
 "{{{
@@ -602,7 +601,7 @@ endif "has("autocmd")
 
 " Customed Function"{{{
 "{{{
-"   function! RunmeCmd()
+" function! RunmeCmd()
     function! RunmeCmd()
     let s:text = getline('.')
     if strlen('s:text')!=0
@@ -636,29 +635,20 @@ endif "has("autocmd")
 "}}}
 "}}}
 
-" plasticboy/vim-markdown"{{{
+" plasticboy/vim-markdown : markdown　syntax"{{{
 " --------Brief help------------
 " :Toc " 左侧打开目录栏quickfix Windows
-
-    " The following line to disable folding
-    " let g:vim_markdown_folding_disable=1
-    " set the initial foldlevel
-    let g:vim_markdown_initial_foldlevel=3
     " Add the following line to your '.vimrc' to disable the folding configuration:
     let g:vim_markdown_folding_disabled = 0
+    " set the initial foldlevel
+    let g:vim_markdown_initial_foldlevel=3
     " Markdown Toc width autofit
     let g:vim_markdown_toc_autofit = 1
-    " Disable vim-markdown mapping
+    " Disable vim-markdown mapping :1 disable ; 0: enable
     let g:vim_markdown_no_default_key_mappings = 1
+    " 列表的自动缩进
+    let g:vim_markdown_new_list_item_indent = 0
 
-"}}}
-
-" suan/vim-instant-markdown"{{{
-" 该插件用于Markdown的实时预览，Ubuntu下需要有ruby的支持
-
-    let g:instant_markdown_slow = 1
-    " 手动通过命令 :InstantMarkdownPreview 来决定是否预览
-    let g:instant_markdown_autostart = 0
 "}}}
 
 "{{{
@@ -679,19 +669,21 @@ endif "has("autocmd")
     " 如果希望taglist始终解析文件中的tag，不管taglist窗口有没有打开，设置Tlist_Process_File_Always 为 1
 "}}}
 
-" Raimondi/delimitMate"{{{
+" Raimondi/delimitMate : 自动补全括号 "{{{
 " --------Brief help------------
 " <BS>         is mapped to <Plug>delimitMateBS
 " <S-BS>       is mapped to <Plug>delimitMateS-BS
 " <S-Tab>      is mapped to <Plug>delimitMateS-Tab
 " <C-G>g       is mapped to <Plug>delimitMateJumpMany
-    let delimitMate_matchpairs = "(:),[:],{:},<:>"
-    let delimitMate_quotes = " "
+    let g:delimitMate_matchpairs = "(:),[:],{:},<:>"
     if has("autocmd")
     " If this option is set to 0, delimitMate will not add a closing
     " delimiter automagically.
         " au FileType mail,text let b:delimitMate_autoclose = 0
-        " let delimitMate_excluded_regions = "Comment"
+        " au FileType markdown let b:delimitMate_quotes = "`"
+        autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} 
+            \ let b:delimitMate_quotes = "'" |
+            \ let b:delimitMate_excluded_regions = " "
     endif
     "}}}
 
@@ -718,9 +710,23 @@ endif "has("autocmd")
     let g:NERDTreeWinSize=31
     " 当输入 [:e filename]不再显示netrw,而是显示nerdtree
     let g:NERDTreeHijackNetrw=1 
-    " When switching into a tab, make sure that focus is on the file window, not in the NERDTree window.
-    let g:nerdtree_tabs_focus_on_files=1
-    "}}}
+    " Nerdtree Display line numbers
+    let NERDTreeShowLineNumbers=1
+    " 处理文件夹下单一文件夹的显示
+    let NERDTreeCascadeOpenSingleChildDir=0
+
+    " Note: Now start vim with plain `vim`, not `vim .`
+    if has("autocmd")
+        autocmd StdinReadPre * let s:std_in=1
+        autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+    endif
+" 自定义命令，让NERDTree进入当前文件所在的目录
+    command! -n=? -complete=dir -bar Ncd :call MyNerdtreeToggle('<args>')
+    function! MyNerdtreeToggle(dir) 
+        exec "cd ".expand('%:h')
+        exec "NERDTree ".expand('%:h')
+    endfunction
+"}}}
 
 " Used by winmanager "{{{
     let g:NERDTree_title = "[NERDTree]" 
@@ -733,13 +739,7 @@ endif "has("autocmd")
     endfunction
 "}}}
 
-"{{{
-" 自定义命令，让NERDTree进入当前文件所在的目录
-    command! -n=? -complete=dir -bar Ncd :call MyNerdtreeToggle('<args>')
-    function! MyNerdtreeToggle(dir) 
-        exec "cd ".expand('%:h')
-        exec "NERDTree ".expand('%:h')
-    endfunction
+" Cunstomed Function"{{{
 
         "if expand('%')=~"NERD_tree_\\d\\+"
     "   nnoremap <buffer> <F4> :call OpenNERDTreeBoookmarks()
@@ -752,7 +752,6 @@ endif "has("autocmd")
         execute "BookmarkToRoot ".a:bookmark_str
         execute "normal pcd"
     endfunction
-
 "}}}
 "}}}
 
