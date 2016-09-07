@@ -102,6 +102,8 @@ Plugin 'VundleVim/Vundle.vim'
         Plugin 'vim-airline/vim-airline' 
         Plugin 'vim-airline/vim-airline-themes'
 
+        Plugin 'vim-ctrlspace/vim-ctrlspace'
+
         Plugin 'blueprint.vim'
         Plugin 'ywlbupt/vim-color-ywl'
         Plugin 'altercation/vim-colors-solarized'
@@ -254,6 +256,8 @@ Plugin 'VundleVim/Vundle.vim'
     "   我的状态栏显示的内容
     set statusline=%F%m%r%h%w\[POS=%l,%v][%p%%]\%{
                 \strftime(\"%d/%m/%y\ -\ %H:%M\")}
+    " 从左到右分别是: 相对路径, 光标处字符 Unicode 编码, 系统, 文件编码, " 文件类型, tab长度, 行/列, 光标位置, 视窗位置
+    " set statusline=%h%w%r\ %f\ %m%=\ %B\ \|\ %{&ff}\ \|\ %{&fenc!=''?&fenc:&enc}\ \|\ %{&ft!=''?&ft:'none'}\ \|\ %{&tabstop}\ %8(%l,%v%)\ %10(%p%%,%P%)
     if MySys() == 'windows'
         "用空格键来开关折叠
         nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
@@ -526,12 +530,8 @@ endif "has("autocmd")
     nnoremap g4 4gt
     nnoremap g5 5gt
     nnoremap g6 6gt
-"   nnoremap <C-1> 1gt
-"   nnoremap <C-2> 2gt
-"   nnoremap <C-3> 3gt
-"   nnoremap <C-4> 4gt
-"   nnoremap <C-5> 5gt
-"   nnoremap <C-6> 6gt
+    nnoremap <c-b>n :bn<CR>
+    nnoremap <c-b>p :bp<CR>
 "}}}
 
 "{{{
@@ -573,7 +573,25 @@ endif "has("autocmd")
             set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
         endif
     endif
+    " 打开tabline功能,方便查看Buffer和切换，这个功能比较不错
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#buffer_nr_show = 1
+
+    " let g:airline#extensions#tabline#show_buffers = 1
+    " let g:airline#extensions#tabline#show_tabs = 1
+    " " parent filename collaps
+    " let g:airline#extensions#tabline#fnamecollapse = 1
 "}}}
+
+" vim-ctrlspace/vim-ctrlspace  " Tab 与 Buffer 的导航增强
+    set hidden
+    " 与airline statusline的冲突
+    let g:CtrlSpaceDefaultMappingKey = "<leader><Space>"
+    let g:airline_exclude_preview = 1
+    if has("gui_running")
+        " Settings for MacVim and Inconsolata font
+        let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
+    endif
 
 "{{{
 " vim-scripts/Load_Template file setting
@@ -641,13 +659,17 @@ endif "has("autocmd")
     " Add the following line to your '.vimrc' to disable the folding configuration:
     let g:vim_markdown_folding_disabled = 0
     " set the initial foldlevel
-    let g:vim_markdown_initial_foldlevel=3
+    let g:vim_markdown_initial_foldlevel=0
     " Markdown Toc width autofit
     let g:vim_markdown_toc_autofit = 1
     " Disable vim-markdown mapping :1 disable ; 0: enable
     let g:vim_markdown_no_default_key_mappings = 1
     " 列表的自动缩进
     let g:vim_markdown_new_list_item_indent = 0
+    " 'g:vim_markdown_folding_level' setting is not active with this fold style.
+    let g:vim_markdown_folding_style_pythonic = 1
+    " Highlight YAML front matter as used by Jekyll or Hugo [7].
+    let g:vim_markdown_frontmatter = 1
 
 "}}}
 
@@ -788,8 +810,10 @@ endif "has("autocmd")
 
 "}}}
 
-" tpope/vim-fugitive
-
+" tpope/vim-fugitive"{{{
+" 快捷键
+    " nnoremap <leader>ge :Gdiff<CR>
+"}}}
 
 " Valloric/YouCompleteMe"{{{
     " let g:ycm_python_binary_path = 'python'
