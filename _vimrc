@@ -1,14 +1,13 @@
 " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    source $VIMRUNTIME/macros/matchit.vim
 " Bundle management"{{{
-" Get out of VI's compatible mode.
-" --------Brief help------------
-"	:BundleList          - list configured bundles  
-"	:BundleInstall(!)    - install(update) bundles  
-"	:BundleSearch(!) foo - search(or refresh cache first) for foo   
-"	:BundleClean(!)      - confirm(or auto-approve) removal of unused bundles         
+" --------Brief help----------------------------
+" :PluginList          - list configured bundles  
+" :PluginInstall(!)    - install(update) bundles  
+" :PluginSearch(!) foo - search(or refresh cache first) for foo   
+" :PluginClean(!)      - confirm(or auto-approve) removal of unused bundles 
 
+" Get out of VI's compatible mode.
 set nocompatible    " required
 filetype off        " required
 " ----------------------------------------------
@@ -19,18 +18,17 @@ Plugin 'VundleVim/Vundle.vim'
 
 "	"let Vundle manage Vundle, required
 
+        " Plugin 'vimwiki/vimwiki'
+
         " ----------------------------------------------
         " vim-markdown 要求tabular插件，feature as Align
-        Plugin 'godlygeek/tabular'
-        Plugin 'plasticboy/vim-markdown'
+        Plugin 'godlygeek/tabular' | Plugin 'plasticboy/vim-markdown'
         " ----------------------------------------------
 
-"       Plugin 'vimwiki/vimwiki'
-
         " ----------------------------------------------
-        "  for Sourcecode-like ide
-"       Plugin 'wesleyche/Trinity'
-"       Plugin 'wesleyche/SrcExpl'
+    "  for Sourcecode-like ide
+        " Plugin 'wesleyche/Trinity'
+        " Plugin 'wesleyche/SrcExpl'
 
         " xolox/vim-misc 以下plugin的依赖包
         " vim-colorscheme-switcher (vimscript #4586) 
@@ -41,23 +39,21 @@ Plugin 'VundleVim/Vundle.vim'
         " vim-reload (vimscript #3148) 
         " vim-session (vimscript #3150) 
         " vim-shell (vimscript #3123)
-        Plugin 'xolox/vim-misc'
-        Plugin 'xolox/vim-session'
+        Plugin 'xolox/vim-misc' |  Plugin 'xolox/vim-session'
 
         " 目前还没有用上
         Plugin 'yegappan/grep'
 
-        " tpope 大神
-        Plugin 'tpope/vim-surround'
+    " tpope 大神
+        Plugin 'tpope/vim-repeat' | Plugin 'tpope/vim-surround'
+        " Git 集成工具
+        Plugin 'tpope/vim-fugitive'
         " 强大的注释工具
         " Plugin 'tpope/vim-commentary'
         " 类似于公共支持插件，支持surroud,
-        Plugin 'tpope/vim-repeat'
-        " Git 集成工具
-        Plugin 'tpope/vim-fugitive'
-
 
         Plugin 'jkeylu/vimcdoc'
+
 
         " 这个插件用于自动补全，可用于 . ->  :: 等操作符。
         " Plugin 'FromtonRouge/OmniCppComplete'
@@ -103,18 +99,76 @@ Plugin 'VundleVim/Vundle.vim'
         Plugin 'vim-airline/vim-airline-themes'
 
         Plugin 'vim-ctrlspace/vim-ctrlspace'
-
-        Plugin 'blueprint.vim'
-        Plugin 'ywlbupt/vim-color-ywl'
+        " Plugin 'ywlbupt/vim-color-ywl'
         Plugin 'altercation/vim-colors-solarized'
+
+        " 括号显示增强
+        Plugin 'kien/rainbow_parentheses.vim'
+        " quickrun
+        Plugin 'thinca/vim-quickrun'
+        " 
+        Plugin 'ctrlpvim/ctrlp.vim' " or 
+        Plugin 'majutsushi/tagbar'
+        " gitgutter
+        Plugin 'airblade/vim-gitgutter'
+        " nerd tree tabs
+        Plugin 'jistr/vim-nerdtree-tabs'
+        Plugin 'scrooloose/syntastic'
+        " " text object
+        " " 支持自定义文本对象
+        " Plug 'kana/vim-textobj-user'
+        " " 增加行文本对象: l   dal yal cil
+        " Plug 'kana/vim-textobj-line'
+        " " 增加文件文本对象: e   dae yae cie
+        " Plug 'kana/vim-textobj-entire'
+        " " 增加缩进文本对象: i   dai yai cii - 相同缩进属于同一块
+        " Plug 'kana/vim-textobj-indent'
+    
     " endif
     call vundle#end()            " required
     filetype plugin indent on    " required
 "}}}
 
+"  matchit.vim插件扩展了%匹配字符的范围,根据不同的filetype来做不同的匹配
+    source $VIMRUNTIME/macros/matchit.vim
+
+"	For windows version, using gVIM with Cygwin on a Windows PC"{{{
+if MySys() == "windows"
+"   source $VIMRUNTIME/mswin.vim
+"   behave mswin
+"	unmap <C-A>
+    set diffexpr=MyDiff()
+    function! MyDiff()
+        let opt = '-a --binary '
+        if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+        if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+        let arg1 = v:fname_in
+        if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+        let arg2 = v:fname_new
+        if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+        let arg3 = v:fname_out
+        if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+        let eq = ''
+        if $VIMRUNTIME =~ ' '
+            if &sh =~ '/<cmd'
+                let cmd = '""' . $VIMRUNTIME . '/diff"'
+                let eq = '"'
+            else
+                let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '/diff"'
+            endif
+        else
+            let cmd = $VIMRUNTIME . '/diff'
+        endif
+        silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+    endfunction
+endif
+"}}}
+
 " Fast edit vimrc & font coding Setting "{{{
 
-" Fast edit vimrc"{{{
+" Set mapleader & Fast edit vimrc
+    let mapleader =","
+" Fast edit vimrc
     if MySys() == "linux"
     "   Fast reloading of the .vimrc
         map <silent> <leader>ss :exec 'source '.g:ywl_path.'/_vimrc'<cr>
@@ -123,7 +177,7 @@ Plugin 'VundleVim/Vundle.vim'
         map <silent> <leader>ee :exec 'edit '.g:ywl_path.'/_vimrc'<cr>
         map <silent> <leader>er :e ~/.vimrc<cr>
     "   When .vimrc is edited, reload it
-        autocmd! bufwritepost _vimrc exec 'source '.g:ywl_path.'/_vimrc'
+        autocmd! bufwritepost _vimrc exec 'source ~/.vimrc'
         autocmd! bufwritepost .vimrc exec 'source ~/.vimrc'
     elseif MySys() == "windows"
     "   Set helplang
@@ -160,8 +214,6 @@ Plugin 'VundleVim/Vundle.vim'
     set backspace=indent,eol,start
     "   不设定在插入状态无法用退格键和 Delete 键删除回车符
 
-    " set paste的Toggle
-    set pastetoggle=<F6>
 
     if has("autocmd")
     endif
@@ -186,8 +238,6 @@ Plugin 'VundleVim/Vundle.vim'
         set fileencoding=utf-8
         set fencs=utf-8,usc-bom,gb18030,gbk,gb2312,cp936 
     endif
-"}}}
-
 "}}}
 
 " Default Path & Global constant - chrome "{{{
@@ -228,13 +278,13 @@ Plugin 'VundleVim/Vundle.vim'
 
     set nobackup " 覆盖文件时不备份
 	set autochdir " 自动切换当前目录为当前文件所在的目录
+
     if has("autocmd")
         "windows下，对包含空格的路径会有问题，修改如下：
         autocmd! BufEnter * silent! lcd %:p:h:gs/ /\\ /
         "开/tmp文件夹下的文件时不自动切换，则设置如下：
         "autocmd! BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
     endif
-
 
     "let &autochdir=0
     set backupcopy=yes " 设置备份时的行为为覆盖
@@ -248,7 +298,7 @@ Plugin 'VundleVim/Vundle.vim'
     "   置空错误铃声的终端代码,set silent (no beep)
     "   set showmatch " 插入括号时，短暂地跳转到匹配的对应括号
     "   set matchtime=2 " 短暂跳转到匹配括号的时间
-    set magic " 设置魔术
+    set magic " 设置魔术，搜索设置
     set hidden " 允许在有未保存的修改时切换缓冲区，此时的修改由 vim 负责保存
 
     set cmdheight=1 " 设定命令行的行数为 1
@@ -258,14 +308,12 @@ Plugin 'VundleVim/Vundle.vim'
                 \strftime(\"%d/%m/%y\ -\ %H:%M\")}
     " 从左到右分别是: 相对路径, 光标处字符 Unicode 编码, 系统, 文件编码, " 文件类型, tab长度, 行/列, 光标位置, 视窗位置
     " set statusline=%h%w%r\ %f\ %m%=\ %B\ \|\ %{&ff}\ \|\ %{&fenc!=''?&fenc:&enc}\ \|\ %{&ft!=''?&ft:'none'}\ \|\ %{&tabstop}\ %8(%l,%v%)\ %10(%p%%,%P%)
-    if MySys() == 'windows'
-        "用空格键来开关折叠
-        nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
-    elseif MySys() == "linux"
-        nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
-    endif
+    "用空格键来开关折叠
+    nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+    
     "带有如下符号的单词不要被换行分割
     set iskeyword+=_,$,@,%,#,-
+    " 在gui环境下altkey快捷键的
     if MySys()=='windows'
         set winaltkeys=no
     endif
@@ -338,6 +386,120 @@ endif
 
 "}}}
 
+" Global Mapping "{{{ 
+
+" Save and Quit
+    
+    " F1 废弃这个键,防止调出系统帮助
+    noremap <F1> <Esc>"
+    " F2 语法开关，关闭语法可以加快大文件的展示
+    nnoremap <F2> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
+    " F3 显示可打印字符开关
+    nnoremap <F3> :set list! list?<CR>
+    " set paste的Toggle，有格式的代码粘贴
+    set pastetoggle=<F6>
+    
+    " Quickly close the current window
+    nnoremap <leader>q :q<CR>
+
+    " Quickly save the current file
+    nnoremap <leader>w :w<CR>
+
+    " remap U to <C-r> for easier redo
+    nnoremap U <C-r>
+
+    " 方便书签的跳转
+    nnoremap ' `
+    nnoremap ` '
+
+    " mapping
+    " 如果下拉菜单弹出，回车映射为接受当前所选项目，否则，仍映射为回车
+    inoremap <expr> <CR> pumvisible()?"\<C-Y>":"\<CR>"
+    " 如果下拉菜单弹出，CTRL-U映射为CTRL-E，即停止补全，否则，仍映射为CTRL-U
+    " inoremap <expr> <C-U> pumvisible()?"\<C-E>":"\<C-U>"
+
+
+
+"{{{
+" 自定义／个性化快捷键
+
+" 关于tab buffer 的快捷键
+" 跳转，翻页 向下翻半夜  向上翻半夜
+" Tab操作快捷方式!
+    nnoremap <C-TAB> :tabnext<CR>
+    nnoremap <C-S-TAB> :tabprev<CR>
+    nnoremap gn :tabnext<CR>
+    nnoremap gp :tabprev<CR>
+    nnoremap <C-t> :tabnew<cr>
+    nnoremap <C-e> :tabclose<cr>
+" map te :tabedit
+" tabd[o] {cmd} 对每个标签页执行{cmd}, 遍历标签页
+" tablast 最后一个标签页
+" tabmove N  将当前标签页移动到N个标签页之后
+" 移动到第一个标签页
+    nnoremap g1 1gt
+    nnoremap g2 2gt
+    nnoremap g3 3gt
+    nnoremap g4 4gt
+    nnoremap g5 5gt
+    nnoremap g6 6gt
+    nnoremap <c-b>n :bn<CR>
+    nnoremap <c-b>p :bp<CR>
+"}}}
+
+"{{{
+" Smart way to move .btw. windows 
+" 关于窗口的扩大缩小, :help window-resize
+    " noremap <C-j> <C-W>j
+    " noremap <C-k> <C-W>k
+    " noremap <C-h> <C-W>h
+    " noremap <C-l> <C-W>l
+    imap <C-h> <Left>
+    imap <C-l> <Right>
+    imap <C-j> <Down>
+    imap <C-k> <Up>
+    " <C-B>插入模式下一次性删除一个词
+    imap <c-b> <c-o>diw
+
+" Treat long lines as break lines (useful when moving around in them)
+    nnoremap j gj
+    nnoremap k gk
+"}}}
+
+"{{{
+" Quickfix
+""""""""""""""""""""""""""""""
+"   nmap <leader>cn :cn<cr>
+"   nmap <leader>cp :cp<cr>
+" F11 doesn't work in terms
+   nmap <S-F11> :cw 10<cr>
+   nmap <C-F11> :ccl<cr>
+"   nmap <leader>cc :botright lw 10<cr>
+"   map <c-u> <c-l><c-j>:q<cr>:botright cw 10<cr>
+"}}}
+
+"{{{
+" 自动补全括号，包括大括号 ( 用插件 delimitMate 代替了）
+    " :inoremap ( ()<ESC>i
+    " :inoremap ) <c-r>=ClosePair(')')<CR>
+    " :inoremap { {}<ESC>i
+    " :inoremap } <c-r>=ClosePair('}')<CR>
+    " :inoremap [ []<ESC>i
+    " :inoremap ] <c-r>=ClosePair(''')<CR>
+    " :inoremap < <><ESC>i
+    " :inoremap > <c-r>=ClosePair('>')<CR>
+" 实现括号的自动配对后防止重复输入），适用python
+     " function! ClosePair(char)
+        " if getline('.')[col('.') - 1] == a:char
+            " return "\<Right>"
+        " else
+          " return a:char
+       " endif
+    " endf
+"}}}
+
+"}}}
+
 "{{{
 " xolox/vim-session
 " --------Brief help------------
@@ -395,7 +557,6 @@ endif
     else
         if &term == "xterm"
             " set t_Co=16
-            " set t_Co=256 " 如果colorscheme配置为zenburn，需要配置此行
             " set t_Sb=^[[4%dm " 设置背景色
             " set t_Sf=^[[3%dm " 设置前景色
             set t_Co=256
@@ -475,87 +636,6 @@ if has("autocmd")
 endif "has("autocmd")
 "}}}
 
-" Global Mapping "{{{
-"{{{
-" Quickfix
-""""""""""""""""""""""""""""""
-"   nmap <leader>cn :cn<cr>
-"   nmap <leader>cp :cp<cr>
-" F11 doesn't work in terms
-   nmap <S-F11> :cw 10<cr>
-   nmap <C-F11> :ccl<cr>
-"   nmap <leader>cc :botright lw 10<cr>
-"   map <c-u> <c-l><c-j>:q<cr>:botright cw 10<cr>
-"}}}
-
-"{{{
-" 自动补全括号，包括大括号
-    " :inoremap ( ()<ESC>i
-    " :inoremap ) <c-r>=ClosePair(')')<CR>
-    " :inoremap { {}<ESC>i
-    " :inoremap } <c-r>=ClosePair('}')<CR>
-    " :inoremap [ []<ESC>i
-    " :inoremap ] <c-r>=ClosePair(''')<CR>
-    " :inoremap < <><ESC>i
-    " :inoremap > <c-r>=ClosePair('>')<CR>
-" 实现括号的自动配对后防止重复输入），适用python
-     " function! ClosePair(char)
-        " if getline('.')[col('.') - 1] == a:char
-            " return "\<Right>"
-        " else
-          " return a:char
-       " endif
-    " endf
-"}}}
-
-"{{{
-" 关于tab的快捷键
-
-" 跳转，翻页 向下翻半夜  向上翻半夜
-" Tab操作快捷方式!
-    nnoremap <C-TAB> :tabnext<CR>
-    nnoremap <C-S-TAB> :tabprev<CR>
-    nnoremap gn :tabnext<CR>
-    nnoremap gp :tabprev<CR>
-    nnoremap <C-t> :tabnew<cr>
-    nnoremap <C-e> :tabclose<cr>
-" map te :tabedit
-" tabd[o] {cmd} 对每个标签页执行{cmd}, 遍历标签页
-" tablast 最后一个标签页
-" tabmove N  将当前标签页移动到N个标签页之后
-" 移动到第一个标签页
-    nnoremap g1 1gt
-    nnoremap g2 2gt
-    nnoremap g3 3gt
-    nnoremap g4 4gt
-    nnoremap g5 5gt
-    nnoremap g6 6gt
-    nnoremap <c-b>n :bn<CR>
-    nnoremap <c-b>p :bp<CR>
-"}}}
-
-"{{{
-" Smart way to move .btw. windows 
-" 关于窗口的扩大缩小, :help window-resize
-    " noremap <C-j> <C-W>j
-    " noremap <C-k> <C-W>k
-    " noremap <C-h> <C-W>h
-    " noremap <C-l> <C-W>l
-    imap <C-h> <Left>
-    imap <C-l> <Right>
-    imap <C-j> <Down>
-    imap <C-k> <Up>
-    " <C-B>插入模式下一次性删除一个词
-    imap <c-b> <c-o>diw
-
-" Treat long lines as break lines (useful when moving around in them)
-    " map j gj
-    " map k gk
-    " nnoremap <leader><cr> O<Esc>j
-" <Shift-CR>在normal模式的情况下增加一行空行
-"}}}
-"}}}
-
 "{{{
 " vim-airline/vim-airline  "好看轻量级的powerline，不依赖python
     let g:airline_powerline_fonts = 1    
@@ -574,16 +654,12 @@ endif "has("autocmd")
         endif
     endif
     " 打开tabline功能,方便查看Buffer和切换，这个功能比较不错
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline#extensions#tabline#buffer_nr_show = 1
+    " let g:airline#extensions#tabline#enabled = 1
+    " let g:airline#extensions#tabline#buffer_nr_show = 1
 
-    " let g:airline#extensions#tabline#show_buffers = 1
-    " let g:airline#extensions#tabline#show_tabs = 1
-    " " parent filename collaps
-    " let g:airline#extensions#tabline#fnamecollapse = 1
 "}}}
 
-" vim-ctrlspace/vim-ctrlspace  " Tab 与 Buffer 的导航增强
+" vim-ctrlspace/vim-ctrlspace  " Tab 与 Buffer 的导航增强"{{{
     set hidden
     " 与airline statusline的冲突
     let g:CtrlSpaceDefaultMappingKey = "<leader><Space>"
@@ -592,6 +668,7 @@ endif "has("autocmd")
         " Settings for MacVim and Inconsolata font
         let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
     endif
+"}}}
 
 "{{{
 " vim-scripts/Load_Template file setting
@@ -698,15 +775,13 @@ endif "has("autocmd")
 " <S-Tab>      is mapped to <Plug>delimitMateS-Tab
 " <C-G>g       is mapped to <Plug>delimitMateJumpMany
     let g:delimitMate_matchpairs = "(:),[:],{:},<:>"
-    if has("autocmd")
-    " If this option is set to 0, delimitMate will not add a closing
-    " delimiter automagically.
-        " au FileType mail,text let b:delimitMate_autoclose = 0
-        " au FileType markdown let b:delimitMate_quotes = "`"
-        autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} 
-            \ let b:delimitMate_quotes = "'" |
-            \ let b:delimitMate_excluded_regions = " "
-    endif
+    " 关闭某类型文件的自动补全
+    " au FileType mail,text let b:delimitMate_autoclose = 0
+    " for python docstring ",优化输入
+    au FileType python let b:delimitMate_nesting_quotes = ['"']
+    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} 
+        \ let b:delimitMate_quotes = "'" |
+        \ let b:delimitMate_excluded_regions = " "
     "}}}
 
 "{{{
@@ -812,7 +887,16 @@ endif "has("autocmd")
 
 " tpope/vim-fugitive"{{{
 " 快捷键
-    " nnoremap <leader>ge :Gdiff<CR>
+    nnoremap <leader>ge :Gvdiff<CR>
+"}}}
+
+" airblade/gitgutter　同用于git diff "{{{
+    " " 同git diff,实时展示文件中修改的行
+    " " 只是不喜欢除了行号多一列, 默认关闭,gs时打开
+    " let g:gitgutter_map_keys = 0
+    " let g:gitgutter_enabled = 0
+    " let g:gitgutter_highlight_lines = 1
+    " nnoremap <leader>gs :GitGutterToggle<CR>
 "}}}
 
 " Valloric/YouCompleteMe"{{{
@@ -829,9 +913,44 @@ endif "has("autocmd")
         nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
         let g:ycm_error_symbol = '>>'
         let g:ycm_warning_symbol = '>*'
-        nmap <F4> :YcmDiags<CR>
+        let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
+        let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
+        " 注释和字符串中的文字也会被收入补全
+        let g:ycm_collect_identifiers_from_comments_and_strings = 1   
+        let g:ycm_collect_identifiers_from_tags_files = 1
+        " nmap <F4> :YcmDiags<CR>
         " 往前跳和往后跳的快捷键为Ctrl+O以及Ctrl+I
+        " 黑名单策略
+        let g:ycm_filetype_blacklist = {'tagbar': 1,}
     endif
+"}}}
+
+" kien/rainbow_parentheses  彩虹括号"{{{
+    " 不加入这行, 防止黑色括号出现, 很难识别
+    " \ ['black',       'SeaGreen3'],
+    let g:rbpt_colorpairs = [
+        \ ['brown',       'RoyalBlue3'],
+        \ ['Darkblue',    'SeaGreen3'],
+        \ ['darkgray',    'DarkOrchid3'],
+        \ ['darkgreen',   'firebrick3'],
+        \ ['darkcyan',    'RoyalBlue3'],
+        \ ['darkred',     'SeaGreen3'],
+        \ ['darkmagenta', 'DarkOrchid3'],
+        \ ['brown',       'firebrick3'],
+        \ ['gray',        'RoyalBlue3'],
+        \ ['darkmagenta', 'DarkOrchid3'],
+        \ ['Darkblue',    'firebrick3'],
+        \ ['darkgreen',   'RoyalBlue3'],
+        \ ['darkcyan',    'SeaGreen3'],
+        \ ['darkred',     'DarkOrchid3'],
+        \ ['red',         'firebrick3'],
+        \ ]
+    let g:rbpt_max = 16
+    let g:rbpt_loadcmd_toggle = 0
+    au VimEnter * RainbowParenthesesToggle
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
 "}}}
 
 "{{{
@@ -890,7 +1009,7 @@ endif "has("autocmd")
 """"""""""""""""""""""""""""""
 " grep setting
 """"""""""""""""""""""""""""""
-    nnoremap <silent> <F3> :Grep<CR>
+    " nnoremap <silent> <F3> :Grep<CR>
     "}}}
 
 "{{{
@@ -1202,61 +1321,6 @@ endif
 "
 "    let g:vimwiki_list = [mkd_wiki,blog]
 ""}}}
-"
-""   function vimwiki_insert"{{{
-"function! Vimwiki_Insert_img_url()
-"    if MySys() == "windows"
-"        let l:mkd_path=substitute(g:vimwiki_list[0].path,'\(\\\|/\)','\\\\','g')
-"    elseif MySys() == "linux"
-"        let l:mkd_path=g:vimwiki_list[0].path
-"    endif
-"    if match(expand('%:p:r'),l:mkd_path )!=-1
-"        " let l:Insert_str='![](/public/images/'.substitute(substitute
-"        "             \(expand('%:p:r'), l:mkd_path ,"",'g')
-"        "             \,g:ossep,'-','g').'='.@+.')'
-"
-"        let l:Insert_str='<img src="/public/images/'.substitute(substitute
-"                    \(expand('%:p:r'), l:mkd_path ,"",'g')
-"                    \,g:ossep,'-','g').'='.@+.'">'
-"
-"        let l:rep_str=substitute(substitute(expand('%:p:r'),l:mkd_path,"",'g'),
-"                            \g:ossep,'-','g').'='.@+
-"
-"        call rename(g:vimwiki_list[0].path.'public'.g:ossep.'images'.g:ossep.@+, 
-"                    \g:vimwiki_list[0].path.'public\images\'.l:rep_str)
-"
-"        return l:Insert_str
-"    else
-"        return ''
-"    endif
-"endfunction
-"
-"function! Vimwiki_Insert_pdf_url()
-"    if MySys() == "windows"
-"        let l:mkd_path=substitute(g:vimwiki_list[0].path,'\(\\\|/\)','\\\\','g')
-"    elseif MySys() == "linux"
-"        let l:mkd_path=g:vimwiki_list[0].path
-"    endif
-"    if match(expand('%:p:r'),l:mkd_path )!=-1
-"
-"        let l:Insert_str='['.@+.'](/public/pdf/'.substitute(substitute
-"                    \(expand('%:p:r'),l:mkd_path,"",'g'),
-"                    \g:ossep,'-','g').'='.@+.'.pdf)'
-"
-"        let l:rep_str=substitute(substitute(expand('%:p:r'),l:mkd_path,"",'g'),
-"                            \g:ossep,'-','g').'='.@+.'.pdf'
-"
-"        call rename(g:vimwiki_list[0].path.'public'.g:ossep.'pdf'.g:ossep.@+.'.pdf', 
-"                    \g:vimwiki_list[0].path.'public'.g:ossep.'pdf'.g:ossep.l:rep_str)
-"
-"/       return l:Insert_str
-"    else
-"        return ''
-"    endif
-"endfunction
-"    autocmd Filetype vimwiki iab <buffer> iig <c-r>=Vimwiki_Insert_img_url()<cr>
-"    autocmd Filetype vimwiki iab <buffer> ipd <c-r>=Vimwiki_Insert_pdf_url()<cr>
-""}}}
 ""}}}
 
 "{{{
@@ -1327,10 +1391,5 @@ endif
 "{{{
 "   FromtonRouge/OmniCppcomplete.vim
 """"""""""""""""""""""""""""""
-"   mapping
-"   如果下拉菜单弹出，回车映射为接受当前所选项目，否则，仍映射为回车
-    " inoremap <expr> <CR> pumvisible()?"\<C-Y>":"\<CR>"
-"   如果下拉菜单弹出，CTRL-U映射为CTRL-E，即停止补全，否则，仍映射为CTRL-U
-    " inoremap <expr> <C-U> pumvisible()?"\<C-E>":"\<C-U>"
 "}}}
 "}}}
