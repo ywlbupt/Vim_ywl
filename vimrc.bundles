@@ -1,0 +1,513 @@
+" Dependency
+" python : [flake8](http://flake8.readthedocs.io/en/latest/#quickstart)
+" Plugin management "插件管理"{{{
+" --------Brief help----------------------------
+" :PluginList          - list configured bundles  
+" :PluginInstall(!)    - install(update) bundles  
+" :PluginSearch(!) foo - search(or refresh cache first) for foo   
+" :PluginClean(!)      - confirm(or auto-approve) removal of unused bundles 
+
+" Get out of VI's compatible mode.
+set nocompatible    " required
+filetype off        " required
+" ----------------------------------------------
+" for VundleVim/Vundle.vim "
+set rtp+=$VIMFILES/bundle/Vundle.vim
+call vundle#begin('$VIMFILES/bundle')
+	"let Vundle manage Vundle, required
+        Plugin 'VundleVim/Vundle.vim'
+    " vim-markdown 要求tabular插件，feature as Align
+        Plugin 'godlygeek/tabular' | Plugin 'plasticboy/vim-markdown'
+
+    " for Sourcecode-like ide
+        " Plugin 'wesleyche/Trinity'
+        " Plugin 'wesleyche/SrcExpl'
+
+        Plugin 'xolox/vim-misc' |  Plugin 'xolox/vim-session'
+
+    " 目前还没有用上
+        Plugin 'yegappan/grep'
+
+    " tpope 大神
+        Plugin 'tpope/vim-repeat' | Plugin 'tpope/vim-surround'
+        " Git 集成工具
+        Plugin 'tpope/vim-fugitive'
+
+        Plugin 'jkeylu/vimcdoc'
+
+    " Windows 下未安装成功
+        if MySys() == "linux"
+            Plugin 'Valloric/YouCompleteMe'
+        endif
+        Plugin 'Valloric/ListToggle'
+
+    " provide a reference manual for the C++ standard template library (STL)
+        " Plugin 'stlrefvim'
+   
+    " -------------------- Python ---------------- 
+    " Auto Completement of python
+        Plugin 'Pydiction'
+    " fold for python
+        Plugin 'tmhedberg/SimpylFold'
+    " python vim built-in help
+        Plugin 'fs111/pydoc.vim'
+    " syntasitc checkers
+        Plugin 'hynek/vim-python-pep8-indent'
+
+    "---------模板输入 快捷输入--------
+        Plugin 'ywlbupt/load_template'
+
+    """""""""""""""""""""""""""""""""""""""""""""
+        Plugin 'scrooloose/nerdcommenter'
+        Plugin 'scrooloose/nerdtree'
+        " " nerd tree tabs, tab操作，使各个窗口的tab布局一致
+        " Plugin 'jistr/vim-nerdtree-tabs'
+        Plugin 'scrooloose/syntastic'
+        
+        " Plugin 'taglist.vim' 
+        Plugin 'Align'
+        " Plugin 'TxtBrowser'
+        " Plugin 'winmanager'
+        Plugin 'a.vim'
+
+        " autocomplete pairs自动补全括号
+        Plugin 'Raimondi/delimitMate'
+
+        " colors
+        Plugin 'vim-airline/vim-airline' 
+        Plugin 'vim-airline/vim-airline-themes'
+
+        " Plugin 'vim-ctrlspace/vim-ctrlspace'
+        Plugin 'ywlbupt/vim-color-ywl'
+        Plugin 'altercation/vim-colors-solarized'
+
+        " 括号显示增强
+        Plugin 'kien/rainbow_parentheses.vim'
+        " ctlp-funky for super simple func navigator for vim
+        " for lazy people who cannot wait until ctags finished
+        Plugin 'ctrlpvim/ctrlp.vim' | Plugin 'tacahiroy/ctrlp-funky'
+        Plugin 'majutsushi/tagbar'
+        " gitgutter
+        Plugin 'airblade/vim-gitgutter'
+        
+        " gundo
+        " edit history, 可以查看回到某个历史状态
+        Plugin 'sjl/gundo.vim'
+        
+        " tmux 多终端操作
+        Plugin 'christoomey/vim-tmux-navigator'
+
+        " " text object
+        " " 支持自定义文本对象
+        " Plug 'kana/vim-textobj-user'
+        " " 增加行文本对象: l   dal yal cil
+        " Plug 'kana/vim-textobj-line'
+        " " 增加文件文本对象: e   dae yae cie
+        " Plug 'kana/vim-textobj-entire'
+        " " 增加缩进文本对象: i   dai yai cii - 相同缩进属于同一块
+        " Plug 'kana/vim-textobj-indent'
+    
+    " endif
+    call vundle#end()            " required
+    filetype plugin indent on    " required
+"}}}
+                                                                                                                
+" altercation/vim-colors-solarized" "主题方案"{{{
+    " if g:colors_name == 'solarized' 
+        let g:solarized_termcolors= 256
+        let g:solarized_termtrans = 1
+        let g:solarized_contrast = "normal"    " 'normal' 'high' or 'low'
+        let g:solarized_visibility= "normal"
+    " endif
+"}}}
+
+" vim-airline/vim-airline  "好看轻量级的powerline，不依赖python "{{{
+    let g:airline_powerline_fonts = 1    
+    let g:airline_theme = "base16_google"
+    if MySys() == 'windows'
+        set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI
+    else 
+	    if has("gui_gtk2")
+            set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
+        endif
+    endif
+
+    " 打开tabline功能,方便查看Buffer和切换，这个功能比较不错
+    let g:airline#extensions#tabline#enabled = 1
+    " show just the filename
+    let g:airline#extensions#tabline#fnamemod = ":t"
+    " show buffer number
+    let g:airline#extensions#tabline#buffer_nr_show = 1
+
+"}}}
+
+" vim-ctrlspace/vim-ctrlspace  " Tab 与 Buffer 的导航增强 TODO:Workspace"{{{
+    " set hidden
+    " " 与airline statusline的冲突
+    " let g:CtrlSpaceDefaultMappingKey = "<leader><Space>"
+    " " Should Vim-CtrlSpace change your default tabline to its own? default:1 
+    " let g:CtrlSpaceUseTabline = 0
+    " let g:airline_exclude_preview = 1
+    " hi CtrlSpaceSelected guifg=#586e75 guibg=#eee8d5 guisp=#839496 gui=reverse,bold ctermfg=10 ctermbg=7 cterm=reverse,bold
+    " hi CtrlSpaceNormal   guifg=#839496 guibg=#021B25 guisp=#839496 gui=NONE ctermfg=12 ctermbg=0 cterm=NONE
+    " hi CtrlSpaceSearch   guifg=#cb4b16 guibg=NONE gui=bold ctermfg=9 ctermbg=NONE term=bold cterm=bold
+    " hi CtrlSpaceStatus   guifg=#839496 guibg=#002b36 gui=reverse term=reverse cterm=reverse ctermfg=12 ctermbg=8
+    " if has("gui_running")
+        " " Settings for MacVim and Inconsolata font
+        " let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
+    " endif
+"}}}
+
+" ctrlpvim/ctrlp.vim " 文件导航插件"{{{
+" --------Brief help------------
+" :CtrlP for file mode.
+" :CtrlPBuffer  for buffer or find MRU file mode.
+" :CtrlPMRU for Most Recently Used mode
+" :CtrlPMixed to search in Files, Buffers and MRU files at the same time.
+
+    " c-j/k : 在导航窗口上下选择
+    " c-v : 垂直分屏打开选择文件
+    " c-x : 水平分屏打开文件
+    " c-z : 多选文件
+    " c-f/b : 在导航窗口进行模式的切换
+    " c-d : 在全路径搜索和文件名搜索间切换。
+    "  默认的mapping 与 Binding 的命令
+    let g:ctrlp_map = '<c-p>' | let g:ctrlp_cmd = 'CtrlP'
+    " Working diretory setting 
+    " -r : diretory of current file
+    let g:ctrlp_working_path_mode = 'ra'
+    if MySys() == 'windows'
+        let g:ctrlp_user_command=''
+    endif
+
+    " NOTE: 这些ignore的内容在使用custom_command的时候不生效
+    set wildignore=*.o,*~,*.pyc,*.class,*.so,*.swp,*.zip
+    if MySys()=='linux'
+        set wildignore+=*/tmp/*,*/undodirfile/*,*/vimfiles/view/*
+        set wildignore+=*/.git/*
+        " MacOSX/Linux Use a custom file listing command
+        " let g:ctrlp_user_command = 'find %s -type f'        
+    elseif MySys()=='windows'
+        set wildignore+=*\\tmp\\*,*.exe,*\\undodirfile\\*,*\\vimfiles\\view\\*
+        set wildignore+=*\\.git\\*
+        " Windows , Use a custom file listing command
+        let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  
+    endif
+    let g:ctrlp_custom_ignore = {
+        \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+        \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+        \ }
+"}}}
+
+" tacahiroy/ctrlp-funky complementary func navigator for ctrlp.vim"{{{
+    nnoremap <Leader>fu :CtrlPFunky<Cr>
+    " narrow the list down with a word under cursor
+    nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+"}}}
+
+" vim-scripts/Load_Template file setting " 模板文件"{{{
+    if MySys() == 'windows'
+        let g:template_path=g:ywl_path.'\vimfiles\bundle\load_template\template\'
+    elseif MySys() == 'linux'
+        let g:template_path=g:ywl_path.'/vimfiles/bundle/load_template/template/'
+    endif
+" Load_template 说明
+" 1. 静态模板文件中，`TEMPLATE_CURSOR`标明载入模板后光标所在位置
+" 2. 动态模板，Vim 脚本放置在`EXE_BEGIN_TEMPLATE (NEEDNEW)``EXE_END_TEMPLATE`
+"}}}
+
+" scrooloose/nerdtree  " 侧边文件导航栏 "{{{
+
+" The-NERD-Tree / netrw setting "{{{
+    let g:netrw_winsize = 31
+    " Vexplore!为在左侧打开netrw
+    " nmap <silent> <leader>fe :Vexplore<cr>
+    nmap <silent> <leader>fe :NERDTreeToggle<cr>
+
+    if MySys() == 'windows'
+        let g:NERDTreeBookmarksFile=g:ywl_path.'\vimfiles\plugindata\NERDTreeBookmarks.txt'
+    elseif MySys() == 'linux'
+        let g:NERDTreeBookmarksFile=g:ywl_path.'/vimfiles/plugindata/NERDTreeBookmarks.txt'     
+    endif
+    " 将 NERDTree 的窗口设置在 vim 窗口的右侧（默认为左侧）
+    let  g:NERDTreeWinPos="left"
+    " 当打开 NERDTree 窗口时，自动显示 Bookmarks
+    let g:NERDTreeShowBookmarks=1
+    " 让Tree把自己给装饰得多姿多彩漂亮点
+    let g:NERDChristmasTree=1
+    let g:NERDTreeWinSize=31
+    " 当输入 [:e filename]不再显示netrw,而是显示nerdtree
+    let g:NERDTreeHijackNetrw=1 
+    " Nerdtree Display line numbers
+    let NERDTreeShowLineNumbers=1
+    " 处理文件夹下单一文件夹的显示
+    let NERDTreeCascadeOpenSingleChildDir=0
+    " When to Change the current Working directory (CWD) for vim
+    let NERDTreeChDirMode = 2
+    " " Change default arrows
+    " let g:NERDTreeDirArrowExpandable = '▸'
+    " let g:NERDTreeDirArrowCollapsible = '▾'
+
+    " " Note: Now start vim with plain `vim`, not `vim .`
+    " if has("autocmd")
+        " autocmd StdinReadPre * let s:std_in=1
+        " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+    " endif
+" 自定义命令，让NERDTree进入当前文件所在的目录
+    command! -n=? -complete=dir -bar Ncd :call MyNerdtreeToggle('<args>')
+    function! MyNerdtreeToggle(dir) 
+        exec "cd ".expand('%:h')
+        exec "NERDTree ".expand('%:h')
+    endfunction
+"}}}
+
+" Used by winmanager "{{{
+    let g:NERDTree_title = "[NERDTree]" 
+    function! NERDTree_Start() 
+        exe 'NERDTree'
+    endfunction 
+
+    function! NERDTree_IsValid() 
+      return 1 
+    endfunction
+"}}}
+
+" Cunstomed Function"{{{
+        "if expand('%')=~"NERD_tree_\\d\\+"
+    "   nnoremap <buffer> <F4> :call OpenNERDTreeBoookmarks()
+    "endif
+    " if has("autocmd")
+        " autocmd! BufEnter _NERD_tree_ nnoremap <buffer> <F4> :call OpenNERDTreeBoookmarks()<CR>
+    " endif
+    function! OpenNERDTreeBoookmarks()
+        let a:bookmark_str = input("Please enter Bookmarkname: ")
+        execute "BookmarkToRoot ".a:bookmark_str
+        execute "normal pcd"
+    endfunction
+"}}}
+"}}}
+
+" Valloric/YouCompleteMe" 可能是最好用的自动补全工具 TODO:syntastic"{{{
+    " Turn on or off YCM
+    " nnoremap <leader>y :let g:ycm_auto_trigger=0<cr> "turn off YCM nnoremap
+    " nnoremap <leader>Y :let g:ycm_auto_trigger=1<cr> "turn on YCM nnoremap
+    if MySys() == 'windows'
+        let g:ycm_auto_trigger=0
+    else
+        let g:ycm_python_binary_path = '/home/ywl/.pyenv/versions/anaconda3-2.4.0/bin/python'
+        let g:ycm_auto_trigger=1
+        nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+        nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+        nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        let g:ycm_error_symbol = '>>'
+        let g:ycm_warning_symbol = '>*'
+        let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
+        let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
+        " 注释和字符串中的文字也会被收入补全
+        let g:ycm_collect_identifiers_from_comments_and_strings = 1   
+        let g:ycm_collect_identifiers_from_tags_files = 1
+        " nmap <F4> :YcmDiags<CR>
+        " 往前跳和往后跳的快捷键为Ctrl+O以及Ctrl+I
+        " 开启语法关键字补全
+        let g:ycm_seed_identifiers_with_syntax=1
+        " 黑名单策略
+        let g:ycm_filetype_blacklist = {'tagbar': 1,}
+    endif
+"}}}
+
+" xolox/vim-session" 会话，工作区保留"{{{
+" --------Brief help------------
+" :SaveSession sessionname  - 如果不提供sessionname，默认保存为default会话
+" :OpenSession sessionname  - 如果不提供sessionname，默认打开default会话
+" :CloseSession  - 关闭当前会话，关闭所有标签，打开一个空缓冲区
+" :DeleteSession - 关闭会话，当前标签保留
+
+" Session保存路径
+    if MySys() == 'windows'
+        let g:session_directory=g:ywl_path.'\vimfiles\Workspace'
+    elseif MySys() == 'linux'
+        let g:session_directory=g:ywl_path.'/vimfiles/Workspace'
+    endif
+
+    " 每次打开空Vim，不提示是否打开 default session
+    let g:session_autoload='no'
+
+    " 每次退出session时，是否提示保存会话
+    let g:session_autosave='no'
+
+    " 每十分钟自动保存Session
+    " let g:session_autosave_periodic = 10
+"}}}
+
+" Pydiction && SimpylFold " Python 的智能折叠 "{{{
+    if MySys() == 'windows'
+		let g:pydiction_location =
+		 \ g:ywl_path.'\vimfiles\bundle\Pydiction\complete-dict'
+    elseif MySys() == 'linux'
+		let g:pydiction_location = 
+		 \ g:ywl_path.'/vimfiles/bundle/Pydiction/complete-dict'
+    endif
+    let g:SimpylFold_docstring_preview=1
+"}}}
+
+" fs111/pydoc " python帮助文档 "{{{
+" --------Brief help------------
+" <c-k> 快捷键查询光标下的帮助文档
+    " let g:pydoc_cmd = g:pypath."/pydoc" 
+    let g:pydoc_cmd = "python -m pydoc" 
+    " 
+    let b:pydoc_width = '70 '
+    let g:pydoc_open_cmd = b:pydoc_width.'vsplit'
+"}}} 
+
+" Raimondi/delimitMate : 自动补全括号 "{{{
+" --------Brief help------------
+" <BS>         is mapped to <Plug>delimitMateBS
+" <S-BS>       is mapped to <Plug>delimitMateS-BS
+" <S-Tab>      is mapped to <Plug>delimitMateS-Tab
+" <C-G>g       is mapped to <Plug>delimitMateJumpMany
+    let g:delimitMate_matchpairs = "(:),[:],{:},<:>"
+    " 关闭某类型文件的自动补全
+    " au FileType mail,text let b:delimitMate_autoclose = 0
+    " for python docstring ",优化输入
+    au FileType python let b:delimitMate_nesting_quotes = ['"']
+    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} 
+        \ let b:delimitMate_quotes = "'" |
+        \ let b:delimitMate_excluded_regions = " "
+    "}}}
+
+" kien/rainbow_parentheses  彩虹括号"{{{
+    " 不加入这行, 防止黑色括号出现, 很难识别
+    " \ ['black',       'SeaGreen3'],
+    let g:rbpt_colorpairs = [
+        \ ['brown',       'RoyalBlue3'],
+        \ ['Darkblue',    'SeaGreen3'],
+        \ ['darkgray',    'DarkOrchid3'],
+        \ ['darkgreen',   'firebrick3'],
+        \ ['darkcyan',    'RoyalBlue3'],
+        \ ['darkred',     'SeaGreen3'],
+        \ ['darkmagenta', 'DarkOrchid3'],
+        \ ['brown',       'firebrick3'],
+        \ ['gray',        'RoyalBlue3'],
+        \ ['darkmagenta', 'DarkOrchid3'],
+        \ ['Darkblue',    'firebrick3'],
+        \ ['darkgreen',   'RoyalBlue3'],
+        \ ['darkcyan',    'SeaGreen3'],
+        \ ['darkred',     'DarkOrchid3'],
+        \ ['red',         'firebrick3'],
+        \ ]
+    let g:rbpt_max = 16
+    let g:rbpt_loadcmd_toggle = 0
+    au VimEnter * RainbowParenthesesToggle
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
+"}}}
+
+" tpope/vim-surround.vim " 快速增加括号／引号／自定义符号"{{{
+" :echo char2nr('-')=45
+" :echo char2nr('=')=61
+" :echo char2nr('b')=98
+    let g:surround_45 = "```\n\r```"
+    let g:surround_61 = "**\n\r**"
+    let g:surround_98 = "**\r**"
+"}}}
+
+" plasticboy/vim-markdown : markdown　syntax"{{{
+" --------Brief help------------
+" :Toc " 左侧打开目录栏quickfix Windows
+    " Add the following line to your '.vimrc' to disable the folding configuration:
+    let g:vim_markdown_folding_disabled = 0
+    " set the initial foldlevel
+    let g:vim_markdown_initial_foldlevel=0
+    " Markdown Toc width autofit
+    let g:vim_markdown_toc_autofit = 1
+    " Disable vim-markdown mapping :1 disable ; 0: enable
+    let g:vim_markdown_no_default_key_mappings = 1
+    " 列表的自动缩进
+    let g:vim_markdown_new_list_item_indent = 0
+    " 'g:vim_markdown_folding_level' setting is not active with this fold style.
+    let g:vim_markdown_folding_style_pythonic = 1
+    " Highlight YAML front matter as used by Jekyll or Hugo [7].
+    let g:vim_markdown_frontmatter = 1
+
+"}}}
+
+" scrooloose/nerdcommenter" 代码注释 :TODO "{{{
+" --------Brief help------------
+" <leader>cc  - Comment out the current line or text selected in visual mode.
+" <leader>cn  - Nested Comment 
+" <leader>cu  - Uncomments
+" <leader>cm  - multiple line NERDComMinimalComment 包裹性的注释时管用
+
+    " Add spaces after comment delimiters by default
+    let g:NERDSpaceDelims = 0
+    let g:NERDDefaultAlign = 'none'
+
+    let NERDCreateDefaultMappings = 1
+
+    let g:NERDCustomDelimiters = { 'vim': { 'left': '" ' } }
+    " unmap该快捷键的想法是尽量让十指不离开主键盘区太远
+    " nmap \\\ <Plug>NERDCommenterToggle
+    " xmap \\ <Plug>NERDCommenterToggle
+    nmap <leader>cc <plug>NERDCommenterComment
+    xmap <leader>cc <plug>NERDCommenterComment
+    nmap <leader>cu <plug>NERDCommenterUncomment
+    xmap <leader>cu <plug>NERDCommenterUncomment
+    xmap <leader>cm <Plug>NERDComMinimalComment
+"}}}
+
+" scrooloose/syntastic 代码检查"{{{
+" Recommend setting
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+
+    " syntax checkers :help syntastic-checkers
+    let g:syntastic_python_checkers=['pyflakes', 'pep8'] "
+    " 使用pyflakes,速度比pylint快
+    let g:syntastic_python_pep8_args='--ignore=E501,E225,E124,E712'
+"}}}
+
+" tpope/vim-fugitive " tpope 大神的git wrapper，gvdiff 同步滚动"{{{
+" 快捷键
+    nnoremap <leader>ge :Gvdiff<CR>
+"}}}
+
+" airblade/gitgutter　同用于git diff "{{{
+" 神器，与fugitive的区别在于，gitgutter单窗口较之前的文件显示
+" 修改，增加，和删除。且可能单独的就某处修改staged/undo
+" --------Brief help------------
+" ]c : jump to next hunk (change):
+" [c : jump to previous hunk (change):
+" <leader>hs : staged the hunk where cursor in it
+" <leader>hu : undo it 
+    " 同git diff,实时展示文件中修改的行
+    " 只是不喜欢除了行号多一列, 默认关闭,gs时打开
+    let g:gitgutter_map_keys = 0
+    let g:gitgutter_enabled = 0
+    let g:gitgutter_highlight_lines = 1
+    nnoremap <leader>gs :GitGutterToggle<CR>
+"}}}
+
+" sjl/gundo.vim 打开quickfix窗口查看修改历史"{{{
+    noremap <leader>h :GundoToggle<CR>
+" }}}
+
+" majutsushi/tagbar"{{{
+    nmap <F8> :TagbarToggle<CR>
+    " 打开Tagbar窗口后自动focus到Tagbar窗口
+    let g:tagbar_autofocus = 1
+    " Tagbar 显示行号
+    let g:tagbar_show_linenumbers = 1
+    " Set Windows Width
+    let g:tagbar_width = 35
+"}}}
+
+" Valloric/ListToggle
+    nnoremap <unique> <silent> <F4> :QToggle<CR>
