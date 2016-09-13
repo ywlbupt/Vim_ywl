@@ -36,7 +36,7 @@ call vundle#begin('$VIMFILES/bundle')
         Plugin 'jkeylu/vimcdoc'
 
     " Windows 下未安装成功
-        if MySys() == "linux"
+        if MySys() == "linux" || hostname() =~ "E420"
             Plugin 'Valloric/YouCompleteMe'
         endif
         Plugin 'Valloric/ListToggle'
@@ -96,6 +96,8 @@ call vundle#begin('$VIMFILES/bundle')
         
         " tmux 多终端操作
         Plugin 'christoomey/vim-tmux-navigator'
+        
+        Plugin 'itchyny/calendar.vim'
 
         " " text object
         " " 支持自定义文本对象
@@ -291,10 +293,13 @@ call vundle#begin('$VIMFILES/bundle')
     " Turn on or off YCM
     " nnoremap <leader>y :let g:ycm_auto_trigger=0<cr> "turn off YCM nnoremap
     " nnoremap <leader>Y :let g:ycm_auto_trigger=1<cr> "turn on YCM nnoremap
-    if MySys() == 'windows'
-        let g:ycm_auto_trigger=0
-    else
-        let g:ycm_python_binary_path = '/home/ywl/.pyenv/versions/anaconda3-2.4.0/bin/python'
+    if hostname() =~ 'E420' || Mysys() == 'linux'
+        " let g:ycm_python_binary_path = '/home/ywl/.pyenv/versions/anaconda3-2.4.0/bin/python'
+        let g:ycm_python_binary_path = 'python'
+        if MySys() == 'windows'
+            " Only used for ycm server, default to use python embemdded in vim
+            let g:ycm_server_python_interpreter = 'C:\\Anaconda3\\python'
+        endif
         let g:ycm_auto_trigger=1
         nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
         nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
@@ -312,6 +317,8 @@ call vundle#begin('$VIMFILES/bundle')
         let g:ycm_seed_identifiers_with_syntax=1
         " 黑名单策略
         let g:ycm_filetype_blacklist = {'tagbar': 1,}
+    else " for plugin not installed"
+        let g:ycm_auto_trigger=0
     endif
 "}}}
 
@@ -492,6 +499,12 @@ call vundle#begin('$VIMFILES/bundle')
     let g:gitgutter_map_keys = 0
     let g:gitgutter_enabled = 0
     let g:gitgutter_highlight_lines = 1
+    " customed mapping
+    nmap [c <Plug>GitGutterPrevHunk
+    nmap ]c <Plug>GitGutterNextHunk
+    nmap <Leader>hs <Plug>GitGutterStageHunk
+    nmap <Leader>hu <Plug>GitGutterUndoHunk
+    nmap <Leader>hp <Plug>GitGutterPreviewHunk
     nnoremap <leader>gs :GitGutterToggle<CR>
 "}}}
 
@@ -509,5 +522,17 @@ call vundle#begin('$VIMFILES/bundle')
     let g:tagbar_width = 35
 "}}}
 
-" Valloric/ListToggle
-    nnoremap <unique> <silent> <F4> :QToggle<CR>
+" Valloric/ListToggle"{{{
+    let g:lt_quickfix_list_toggle_map = '<F4>'
+"}}}
+
+" Calendar Setting"{{{
+" -position=left -width={50} 
+" specify the view of the calendar on starting the buffer
+    let g:calendar_view = "event"
+    " fix problem 5, refer to  help
+    let g:calendar_frame = 'default'
+    " a Toggle command
+    nmap <expr> <leader>cv &ft ==#'calendar'? "\<Plug>(calendar_exit)" :
+                \ ":\<C-u>Calendar -position=left\<CR>"
+    "}}}

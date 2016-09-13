@@ -494,10 +494,11 @@ endif "has("autocmd")
     set cursorline " 突出显示当前行
     " set cursorcolumn "突出当前列
     set background=dark
-    " colorscheme solarized
-    colorscheme evening_ywl
+    colorscheme solarized
+    " colorscheme evening_ywl
     " 使用鼠标操作
     set mouse=a
+    set t_Co=256
 
     if has("gui_running")
         set guioptions-=T " 隐藏工具栏
@@ -505,6 +506,7 @@ endif "has("autocmd")
         set guioptions-=L
         " set guioptions-=r
         set background=dark
+        set t_Co=256
         " colorscheme desert_ywl  "设定配色方案
         autocmd GUIEnter * set lines=40 |  set columns=149 
         if MySys() == 'linux'
@@ -559,7 +561,7 @@ endif "has("autocmd")
 "}}}
 
 "{{{
-" Time.function
+" Time.function 缩写定义
 " 在插入模式下输入xdate就会自动显示当前的时间
     iab tdate <c-r>=strftime("%Y/%m/%d %H:%M:%S")<cr>
     iab ydate <c-r>=strftime("%Y-%m-%d")<cr>
