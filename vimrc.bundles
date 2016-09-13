@@ -186,12 +186,12 @@ call vundle#begin('$VIMFILES/bundle')
     set wildignore=*.o,*~,*.pyc,*.class,*.so,*.swp,*.zip
     if MySys()=='linux'
         set wildignore+=*/tmp/*,*/undodirfile/*,*/vimfiles/view/*
-        set wildignore+=*/.git/*
+        " set wildignore+=*/.git/* " 此处会和fugitive 冲突
         " MacOSX/Linux Use a custom file listing command
         " let g:ctrlp_user_command = 'find %s -type f'        
     elseif MySys()=='windows'
         set wildignore+=*\\tmp\\*,*.exe,*\\undodirfile\\*,*\\vimfiles\\view\\*
-        set wildignore+=*\\.git\\*
+        " set wildignore+=*\\.git\\* " 此处会和fugitive 冲突
         " Windows , Use a custom file listing command
         let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  
     endif
@@ -293,7 +293,7 @@ call vundle#begin('$VIMFILES/bundle')
     " Turn on or off YCM
     " nnoremap <leader>y :let g:ycm_auto_trigger=0<cr> "turn off YCM nnoremap
     " nnoremap <leader>Y :let g:ycm_auto_trigger=1<cr> "turn on YCM nnoremap
-    if hostname() =~ 'E420' || Mysys() == 'linux'
+    if hostname() =~ 'E420' || MySys() == 'linux'
         " let g:ycm_python_binary_path = '/home/ywl/.pyenv/versions/anaconda3-2.4.0/bin/python'
         let g:ycm_python_binary_path = 'python'
         if MySys() == 'windows'
