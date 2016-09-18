@@ -1,5 +1,6 @@
 *.swp
 tags
-/vimfiles/
-!/vimfiles/UltiSnips/
+/vimfiles/bundle
+/vimfiles/Workspace
+/vimfiles/plugindata
 __pycache__

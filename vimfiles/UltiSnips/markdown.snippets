@@ -1,0 +1,13 @@
+# The default vim-snippets filetype priority is -50
+# For Self-Customizable snippet , set the priority to -45
+
+priority -45
+
+#################
+#  Anchor Jump  #
+#################
+snippet alink "Anchor Jump" w
+[${1:${VISUAL:Text}}](#${2:id})
+
+<span id="$2">$1</span>
+endsnippet

@@ -1,0 +1,14 @@
+#This file contains snippets that are always defined. I personally
+# Plugin vim-snippets's priority is -60
+# This file contains snippets that are always defined. I personally
+# Plugin vim-snippets's markdown.snippets priority is -50
+priority -50
+
+snippet verinfo "version, updatetime, Author and Description info" b
+version : ${1:1.0}
+Author : WiZero(<ywlbupt@163.com>)
+LastUpdate : `!v strftime("%Y-%m-%d %H:%M:%S")`
+Description : ${2:Description}
+endsnippet
+
+# vim:ft=snippets:
