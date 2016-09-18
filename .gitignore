@@ -1,4 +1,5 @@
 *.swp
 tags
 /vimfiles/
+!/vimfiles/UltiSnips/
 __pycache__

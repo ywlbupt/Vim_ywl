@@ -1,157 +1,46 @@
-" Author Wizero
-" Date : 2016.09.09
-" Version : 1.0
-" Email : ywl
+" version : 1.0
+" Author : WiZero(<ywlbupt@163.com>)
+" LastUpdate : 2016-09-17 13:56:35
+" Description : vimrc
+
+""""""""""""""""
+"  Dependency  "
+""""""""""""""""
+" # ubuntu
+" sudo apt-get install ctags
+" sudo apt-get install build-essential cmake python-dev
+" #编译YCM自动补全插件依赖
+" sudo apt-get install silversearcher-ag
+" # python # For syntastic
+" sudo pip install pyflakes
+" sudo pip install pylint
+" sudo pip install pep8
+
+
 " Set mapleader & Fast edit vimrc
-    let   mapleader = ","
-    let g:mapleader = ","
+let   mapleader = ","
+let g:mapleader = ","
 
-    " 开启语法高亮
-    syntax on
+" 开启语法高亮
+syntax on
 
+" Load Plugin and Customed_Func "{{{
 if filereadable(expand(g:ywl_path."/vimrc.bundles"))
     exec 'source '.g:ywl_path.'/vimrc.bundles'
+else
+    echo "no vimrc.bundles found"
 endif
 
+if filereadable(expand(g:ywl_path."/Customed_Func.vim"))
+    exec 'source '.g:ywl_path.'/Customed_Func.vim'
+else 
+    echo "no Customed_Func found"
+endif
 "  matchit.vim插件扩展了%匹配字符的范围,根据不同的filetype来做不同的匹配
     source $VIMRUNTIME/macros/matchit.vim
-
-    set history =1000
-
-    " 检测文件类型
-    filetype on
-    " 针对不同的文件类型采用不同的缩进格式
-    filetype indent on
-    " 允许插件
-    filetype plugin on
-    " 启动自动补全
-    filetype plugin indent on
-
-" For windows version, using gVIM with Cygwin on a Windows PC"{{{
-if MySys() == "windows"
-    " source $VIMRUNTIME/mswin.vim
-    " behave mswin
-    " unmap <C-A>
-    set diffexpr=MyDiff()
-    function! MyDiff()
-        let opt = '-a --binary '
-        if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-        if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-        let arg1 = v:fname_in
-        if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-        let arg2 = v:fname_new
-        if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-        let arg3 = v:fname_out
-        if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-        let eq = ''
-        if $VIMRUNTIME =~ ' '
-            if &sh =~ '/<cmd'
-                let cmd = '""' . $VIMRUNTIME . '/diff"'
-                let eq = '"'
-            else
-                let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '/diff"'
-            endif
-        else
-            let cmd = $VIMRUNTIME . '/diff'
-        endif
-        silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
-    endfunction
-endif
 "}}}
 
-" Fast edit vimrc & font coding Setting "{{{
-
-" Fast edit vimrc
-    if MySys() == "linux"
-    "   Fast reloading of the .vimrc
-        map <silent> <leader>ss :exec 'source '.g:ywl_path.'/_vimrc'<cr>
-        map <silent> <leader>rr :source ~/.vimrc<cr>
-    "   Fast editing of .vimrc
-        map <silent> <leader>ee :exec 'edit '.g:ywl_path.'/_vimrc'<cr>
-        map <silent> <leader>er :e ~/.vimrc<cr>
-    "   When .vimrc is edited, reload it 每次保存syntax总不太对头
-        " autocmd! bufwritepost _vimrc exec 'source ~/.vimrc'
-        " autocmd! bufwritepost .vimrc exec 'source ~/.vimrc'
-    elseif MySys() == "windows"
-    "   Set helplang
-    "   Set helplang=cn
-    "   Fast reloading of the _vimrc
-        map <silent> <leader>ss :exec 'source '.g:ywl_path.'\_vimrc'<cr>
-        map <silent> <leader>rr :source $VIM\_vimrc<cr>
-    "   Fast editing of _vimrc
-        map <silent> <leader>ee :exec 'edit '.g:ywl_path.'\_vimrc'<cr>
-        map <silent> <leader>er :e $VIM\_vimrc<cr>
-    "   When _vimrc is edited, reload it
-        " autocmd! bufwritepost _vimrc exec 'source $VIM\_vimrc'
-    "   Open my note about Vim
-    endif
-"}}}
- 
-" Reformate 排版与文本格式"{{{
-" 文本格式化
-" B在连接行时，不要在两个多字节字符之间插入空格。有'M' 标志位时无效。
-    set formatoptions+=B
-        
-    set expandtab
-    set shiftwidth=4 " 设定 << 和 >> 命令移动时的宽度为 4
-    set softtabstop=4 " 使得按退格键时可以一次删掉 4 个空格
-    set tabstop=4 " 设定 tab 长度为 4
-    " 缩进时，取整 use multiple of shiftwidth when indenting with '<' and '>'
-    set shiftround
-
-    set wrap "文本的回绕，不超过窗口宽度
-
-    auto FileType c,cpp  set cindent " Strict rules for C Programs
-    "auto FileType c,cpp  set smartindent " Strict rules for C Programs
-    set autoindent
-    set smartindent " 开启行时使用智能自动缩进，为C程序
-    " indent: 如果用了:set indent,
-        " :set ai 等自动缩进，想用退格键将字段缩进的删掉，必须设置这个选项。否则不响应。
-    " eol:如果插入模式下在行开头，想通过退格键合并两行，需要设置eol。
-    " start：要想删除此次插入前的输入，需设置这个。 
-    set backspace=indent,eol,start
-
-    if has("autocmd")
-    endif
-"}}}
-
-" Chinese encoding "{{{
-
-    set fileformats=unix,dos
-    " 缩略 set ffs = unix,dos
-    set fileformat =unix
-    
-    if MySys() == "windows"
-        set langmenu=zh_CN.UTF-8
-        language message zh_CN.UTF-8
-        set encoding=utf-8
-        set termencoding =GBK
-        set fileencodings=utf-8,ucs-bom,gb18030,cp936,big5,euc-jp,euc-kr,latin1
-    elseif MySys() == "linux"
-        set langmenu=zh_CN.UTF-8
-        set encoding=utf-8
-        let &termencoding=&encoding
-        set fileencoding=utf-8
-        set fencs=utf-8,usc-bom,gb18030,gbk,gb2312,cp936 
-    endif
-"}}}
-
-" Default Path & Global constant - chrome "{{{
-    " 启动进入自己的主目录
-        exec 'cd '.g:ywl_path
-
-    " python path
-    if MySys()=='linux'
-        let g:pypath="/home/ywl/.pyenv/versions/anaconda3-2.4.0/bin"
-    endif
-
-    " for windows
-    if hostname() == 'M-PC'
-        let g:path_chrome='C:\Users\m\AppData\Local\Google\Chrome\Application\chrome.exe'
-    else 
-        let g:path_chrome='C:\Users\ywl\AppData\Local\Google\Chrome\Application\chrome.exe'
-    endif
-"}}}
+set history =1000
 
 " Base Setting "{{{
 
@@ -219,8 +108,6 @@ endif
                 \strftime(\"%d/%m/%y\ -\ %H:%M\")}
     " 从左到右分别是: 相对路径, 光标处字符 Unicode 编码, 系统, 文件编码, " 文件类型, tab长度, 行/列, 光标位置, 视窗位置
     " set statusline=%h%w%r\ %f\ %m%=\ %B\ \|\ %{&ff}\ \|\ %{&fenc!=''?&fenc:&enc}\ \|\ %{&ft!=''?&ft:'none'}\ \|\ %{&tabstop}\ %8(%l,%v%)\ %10(%p%%,%P%)
-    "用空格键来开关折叠
-    nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
     
     "带有如下符号的单词不要被换行分割
     set iskeyword+=_,$,@,%,#,-
@@ -262,6 +149,9 @@ endif
     set foldmethod=marker
     set foldcolumn=3 " 设置折叠区域的宽度
     set foldtext=MyFoldText()
+    
+    " 用空格键来开关折叠
+    nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 "}}}
 
 "{{{
@@ -290,11 +180,149 @@ endif
 "}}}
 
 " undodir 持久保存撤销历史"{{{
-" TODO: remove this, use gundo
+" Remove this, use gundo
     " exec 'set undodir='.g:ywl_path.'/vimfiles/undodirfile'
     " set undolevels=1000 "maximum number of changes that can be undone
     " set undofile
 "}}}
+"}}}
+
+""""""""""""""""""""
+"  filtetype open  "
+""""""""""""""""""""
+" 检测文件类型
+filetype on
+" 针对不同的文件类型采用不同的缩进格式
+filetype indent on
+" 允许插件
+filetype plugin on
+" 启动自动补全
+filetype plugin indent on
+
+" For windows version, using gVIM with Cygwin on a Windows PC"{{{
+if MySys() == "windows"
+    " source $VIMRUNTIME/mswin.vim
+    " behave mswin
+    " unmap <C-A>
+    set diffexpr=MyDiff()
+    function! MyDiff()
+        let opt = '-a --binary '
+        if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+        if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+        let arg1 = v:fname_in
+        if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+        let arg2 = v:fname_new
+        if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+        let arg3 = v:fname_out
+        if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+        let eq = ''
+        if $VIMRUNTIME =~ ' '
+            if &sh =~ '/<cmd'
+                let cmd = '""' . $VIMRUNTIME . '/diff"'
+                let eq = '"'
+            else
+                let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '/diff"'
+            endif
+        else
+            let cmd = $VIMRUNTIME . '/diff'
+        endif
+        silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+    endfunction
+endif
+"}}}
+
+" Fast edit vimrc & font coding Setting "{{{
+
+" Fast edit vimrc
+    if MySys() == "linux"
+    "   Fast reloading of the .vimrc
+        map <silent> <leader>ss :exec 'source '.g:ywl_path.'/_vimrc'<cr>
+        map <silent> <leader>rr :source ~/.vimrc<cr>
+    "   Fast editing of .vimrc
+        map <silent> <leader>ee :exec 'edit '.g:ywl_path.'/_vimrc'<cr>
+        map <silent> <leader>er :e ~/.vimrc<cr>
+    "   When .vimrc is edited, reload it 每次保存syntax总不太对头
+        " autocmd! bufwritepost _vimrc exec 'source ~/.vimrc'
+        " autocmd! bufwritepost .vimrc exec 'source ~/.vimrc'
+    elseif MySys() == "windows"
+    "   Set helplang
+    "   Set helplang=cn
+    "   Fast reloading of the _vimrc
+        map <silent> <leader>ss :exec 'source '.g:ywl_path.'\_vimrc'<cr>
+        map <silent> <leader>rr :source $VIM\_vimrc<cr>
+    "   Fast editing of _vimrc
+        map <silent> <leader>ee :exec 'edit '.g:ywl_path.'\_vimrc'<cr>
+        map <silent> <leader>er :e $VIM\_vimrc<cr>
+    "   When _vimrc is edited, reload it
+        " autocmd! bufwritepost _vimrc exec 'source $VIM\_vimrc'
+    "   Open my note about Vim
+    endif
+"}}}
+ 
+" Reformate 排版与文本格式"{{{
+" 文本格式化
+    " B在连接行时，不要在两个多字节字符之间插入空格。有'M' 标志位时无效。
+    set formatoptions+=B
+        
+    set expandtab
+    set shiftwidth=4 " 设定 << 和 >> 命令移动时的宽度为 4
+    set softtabstop=4 " 使得按退格键时可以一次删掉 4 个空格
+    set tabstop=4 " 设定 tab 长度为 4
+    " 缩进时，取整 use multiple of shiftwidth when indenting with '<' and '>'
+    set shiftround
+
+    set wrap "文本的回绕，不超过窗口宽度
+
+    auto FileType c,cpp  set cindent " Strict rules for C Programs
+    "auto FileType c,cpp  set smartindent " Strict rules for C Programs
+    set autoindent
+    set smartindent " 开启行时使用智能自动缩进，为C程序
+    " indent: 如果用了:set indent,
+        " :set ai 等自动缩进，想用退格键将字段缩进的删掉，必须设置这个选项。否则不响应。
+    " eol:如果插入模式下在行开头，想通过退格键合并两行，需要设置eol。
+    " start：要想删除此次插入前的输入，需设置这个。 
+    set backspace=indent,eol,start
+
+    if has("autocmd")
+    endif
+"}}}
+
+" Text Encoding "{{{
+
+    set fileformats=unix,dos
+    " 缩略 set ffs = unix,dos
+    set fileformat =unix
+    
+    if MySys() == "windows"
+        set langmenu=zh_CN.UTF-8
+        language message zh_CN.UTF-8
+        set encoding=utf-8
+        set termencoding =GBK
+        set fileencodings=utf-8,ucs-bom,gb18030,cp936,big5,euc-jp,euc-kr,latin1
+    elseif MySys() == "linux"
+        set langmenu=zh_CN.UTF-8
+        set encoding=utf-8
+        let &termencoding=&encoding
+        set fileencoding=utf-8
+        set fencs=utf-8,usc-bom,gb18030,gbk,gb2312,cp936 
+    endif
+"}}}
+
+" Default Path & Global constant - chrome "{{{
+    " 启动进入自己的主目录
+    exec 'cd '.g:ywl_path
+
+    " python path
+    if MySys()=='linux'
+        let g:pypath="/home/ywl/.pyenv/versions/anaconda3-2.4.0/bin"
+    endif
+
+    " chrome path for windows 
+    if hostname() == 'M-PC'
+        let g:path_chrome='C:\Users\m\AppData\Local\Google\Chrome\Application\chrome.exe'
+    else 
+        let g:path_chrome='C:\Users\ywl\AppData\Local\Google\Chrome\Application\chrome.exe'
+    endif
 "}}}
 
 " Global Mapping "{{{ 
@@ -377,7 +405,7 @@ endif
     " noremap <C-k> <C-W>k
     " noremap <C-h> <C-W>h
     " noremap <C-l> <C-W>l
-    " imap <C-h> <Left>
+    imap <C-h> <Left>
     imap <C-l> <Right>
     imap <C-j> <Down>
     imap <C-k> <Up>
@@ -534,33 +562,6 @@ endif "has("autocmd")
 
 " Customed Function"{{{
 "{{{
-" function! RunmeCmd()
-    function! RunmeCmd()
-    let s:text = getline('.')
-    if strlen('s:text')!=0
-    exec ":! " . s:text
-    else
-    echo "no find"
-    endif
-    endfunction
-
-    function! RunmeCmdRead()
-    let s:text = getline('.')
-    if strlen('s:text')!=0
-    exec ":r ! " . s:text
-" 上行中的 . 为连接符号，连接前面的字符串和后面的字符变量
-    else
-    echo "no find"
-    endif
-    endfunction
-    
-" 将当前行作为命令行在shell/cmd中执行
-    " map <F4> :call RunmeCmd()<CR>
-" 将当前行作为命令行在shell/cmd中执行，并写入当前行中
-    " map <S-F4> :call RunmeCmdRead()<CR>
-"}}}
-
-"{{{
 " Time.function 缩写定义
 " 在插入模式下输入xdate就会自动显示当前的时间
     iab tdate <c-r>=strftime("%Y/%m/%d %H:%M:%S")<cr>
@@ -585,27 +586,6 @@ endif "has("autocmd")
 """"""""""""""""""""""""""""""
     let g:Align_xstrlen= 3
 "}}}
-
-"{{{
-" vimgrep.vim
-" 对搜索的设置
-    map <leader>ff :call Search_Word()<CR>:copen<CR>
-    function! Search_Word()
-        let w = expand("<cword>") " 在当前光标位置抓词
-        execute "vimgrep " w " %"
-    endfunction
-
-    " map <leader>tn :call Tabe_edit()<CR>
-    " function! Tabe_edit()
-        " let w = expand("%:p")   "当前文件的完整路径文件名
-        " execute "close|tabedit "w
-    " endfunction
-
-""""""""""""""""""""""""""""""
-" grep setting
-""""""""""""""""""""""""""""""
-    " nnoremap <silent> <F3> :Grep<CR>
-    "}}}
 
 "{{{
 " 调用AStyle程序，进行代码美化
@@ -637,7 +617,7 @@ func! CodeFormat()
 endfunc
 "映射代码美化函数到Shift+f快捷键
 if MySys() == "windows"
-    map <leader>fm <Esc>:call CodeFormat()<CR>
+    " map <leader>fm <Esc>:call CodeFormat()<CR>
 endif
 "}}}
 
@@ -730,7 +710,6 @@ endif
         return uFileSuffix
     endfunction
 
-
 "   进行版权声明的设置
 "   添加或更新头
     function! AddTitle()
@@ -756,8 +735,9 @@ endif
         echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
     endf
 
-"   更新最近修改时间和文件名
-"   以后考虑使用查找替换字符串函数来优化这段代码 ##
+
+" 更新最近修改时间和文件名
+" 以后考虑使用查找替换字符串函数来优化这段代码 ##
     function! UpdateTitle()
         if GetFileType() != 'wiki'
             normal m'

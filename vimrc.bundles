@@ -1,5 +1,6 @@
 " Dependency
 " python : [flake8](http://flake8.readthedocs.io/en/latest/#quickstart)
+
 " Plugin management "插件管理"{{{
 " --------Brief help----------------------------
 " :PluginList          - list configured bundles  
@@ -25,7 +26,6 @@ call vundle#begin('$VIMFILES/bundle')
 
         Plugin 'xolox/vim-misc' |  Plugin 'xolox/vim-session'
 
-    " 目前还没有用上
         Plugin 'yegappan/grep'
 
     " tpope 大神
@@ -45,8 +45,8 @@ call vundle#begin('$VIMFILES/bundle')
         " Plugin 'stlrefvim'
    
     " -------------------- Python ---------------- 
-    " Auto Completement of python
-        Plugin 'Pydiction'
+    " Auto Completement of python 自动补全的快捷键都冲突了
+        " Plugin 'Pydiction'
     " fold for python
         Plugin 'tmhedberg/SimpylFold'
     " python vim built-in help
@@ -68,7 +68,7 @@ call vundle#begin('$VIMFILES/bundle')
         Plugin 'Align'
         " Plugin 'TxtBrowser'
         " Plugin 'winmanager'
-        Plugin 'a.vim'
+        " Plugin 'a.vim'
 
         " autocomplete pairs自动补全括号
         Plugin 'Raimondi/delimitMate'
@@ -86,18 +86,28 @@ call vundle#begin('$VIMFILES/bundle')
         " ctlp-funky for super simple func navigator for vim
         " for lazy people who cannot wait until ctags finished
         Plugin 'ctrlpvim/ctrlp.vim' | Plugin 'tacahiroy/ctrlp-funky'
+        " fork from d11wtq, Extention of ctrlp
+        Plugin 'ywlbupt/ctrlp_bdelete.vim'
         Plugin 'majutsushi/tagbar'
         " gitgutter
         Plugin 'airblade/vim-gitgutter'
         
-        " gundo
-        " edit history, 可以查看回到某个历史状态
+        " gundo " edit history, 可以查看回到某个历史状态
         Plugin 'sjl/gundo.vim'
         
-        " tmux 多终端操作
-        Plugin 'christoomey/vim-tmux-navigator'
-        
-        Plugin 'itchyny/calendar.vim'
+        " Plugin 'itchyny/calendar.vim'
+
+        " Group dependencies, vim-snippets depends on ultisnips
+        Plugin 'SirVer/ultisnips' | Plugin 'honza/vim-snippets'
+
+        " simple to do 
+        Plugin 'vitalk/vim-simple-todo'
+
+        " two pane outliner
+        Plugin 'VOoM'
+
+        " 本地的插件 TODO 
+        Plugin 'file:///home/ywl/Vim_ywl/vimfiles/bundle/hexoblog.vim'
 
         " " text object
         " " 支持自定义文本对象
@@ -113,7 +123,7 @@ call vundle#begin('$VIMFILES/bundle')
     call vundle#end()            " required
     filetype plugin indent on    " required
 "}}}
-                                                                                                                
+
 " altercation/vim-colors-solarized" "主题方案"{{{
     " if g:colors_name == 'solarized' 
         let g:solarized_termcolors= 256
@@ -143,7 +153,7 @@ call vundle#begin('$VIMFILES/bundle')
 
 "}}}
 
-" vim-ctrlspace/vim-ctrlspace  " Tab 与 Buffer 的导航增强 TODO:Workspace"{{{
+" vim-ctrlspace/vim-ctrlspace  " Tab 与 Buffer 的导航增强 "{{{
     " set hidden
     " " 与airline statusline的冲突
     " let g:CtrlSpaceDefaultMappingKey = "<leader><Space>"
@@ -178,9 +188,6 @@ call vundle#begin('$VIMFILES/bundle')
     " Working diretory setting 
     " -r : diretory of current file
     let g:ctrlp_working_path_mode = 'ra'
-    if MySys() == 'windows'
-        let g:ctrlp_user_command=''
-    endif
 
     " NOTE: 这些ignore的内容在使用custom_command的时候不生效
     set wildignore=*.o,*~,*.pyc,*.class,*.so,*.swp,*.zip
@@ -205,6 +212,10 @@ call vundle#begin('$VIMFILES/bundle')
     nnoremap <Leader>fu :CtrlPFunky<Cr>
     " narrow the list down with a word under cursor
     nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+"}}}
+
+" ctrlp_bdelete : Extention of CtrlP"{{{
+    call ctrlp_bdelete#init()
 "}}}
 
 " vim-scripts/Load_Template file setting " 模板文件"{{{
@@ -300,10 +311,15 @@ call vundle#begin('$VIMFILES/bundle')
             " Only used for ycm server, default to use python embemdded in vim
             let g:ycm_server_python_interpreter = 'C:\\Anaconda3\\python'
         endif
-        let g:ycm_auto_trigger=1
         nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
         nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
         nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+        " make YCM compatible with UltiSnips (using supertab)
+        let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+        let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+        " let g:SuperTabDefaultCompletionType = '<C-n>'
+
         let g:ycm_error_symbol = '>>'
         let g:ycm_warning_symbol = '>*'
         let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
@@ -320,6 +336,23 @@ call vundle#begin('$VIMFILES/bundle')
     else " for plugin not installed"
         let g:ycm_auto_trigger=0
     endif
+"}}}
+
+" SirVer/UltiSnips "{{{
+    " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<tab>"
+    let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+    " If you want :UltiSnipsEdit to split your window.
+    let g:UltiSnipsEditSplit="vertical"
+    " 进入对应filetype的snippets进行编辑
+    map <leader>us :UltiSnipsEdit<CR>
+    " Explicityly tell UltiSnips To use python version 3.x
+    let g:UltiSnipsUsePythonVersion = 2
+    " Snippets的文件夹名字，查找rtp路径下的UltiSnips文件夹< plugin vim-snippets
+    let g:UltiSnipsSnippetDirectories = ['UltiSnips']
+    let g:UltiSnipsSnippetsDir = g:ywl_path.'/vimfiles/UltiSnips'
 "}}}
 
 " xolox/vim-session" 会话，工作区保留"{{{
@@ -379,7 +412,7 @@ call vundle#begin('$VIMFILES/bundle')
     " for python docstring ",优化输入
     au FileType python let b:delimitMate_nesting_quotes = ['"']
     au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} 
-        \ let b:delimitMate_quotes = "'" |
+        \ let b:delimitMate_quotes = "' ` \"" |
         \ let b:delimitMate_excluded_regions = " "
     "}}}
 
@@ -415,29 +448,29 @@ call vundle#begin('$VIMFILES/bundle')
 " :echo char2nr('-')=45
 " :echo char2nr('=')=61
 " :echo char2nr('b')=98
+
+    let g:surround_indent = 0
     let g:surround_45 = "```\n\r```"
     let g:surround_61 = "**\n\r**"
     let g:surround_98 = "**\r**"
 "}}}
 
 " plasticboy/vim-markdown : markdown　syntax"{{{
+"TODO 我修改了原文件中 Toc的打开命令,ftplugin中,vertical topleft lopen 
 " --------Brief help------------
 " :Toc " 左侧打开目录栏quickfix Windows
-    " Add the following line to your '.vimrc' to disable the folding configuration:
-    let g:vim_markdown_folding_disabled = 0
-    " set the initial foldlevel
-    let g:vim_markdown_initial_foldlevel=0
-    " Markdown Toc width autofit
-    let g:vim_markdown_toc_autofit = 1
     " Disable vim-markdown mapping :1 disable ; 0: enable
     let g:vim_markdown_no_default_key_mappings = 1
+    " set the initial foldlevel
+    let g:vim_markdown_initial_foldlevel=2
+    " Markdown Toc width autofit
+    let g:vim_markdown_toc_autofit = 1
     " 列表的自动缩进
     let g:vim_markdown_new_list_item_indent = 0
-    " 'g:vim_markdown_folding_level' setting is not active with this fold style.
+    " g:vim_markdown_folding_level' setting is not active with this fold style.
     let g:vim_markdown_folding_style_pythonic = 1
     " Highlight YAML front matter as used by Jekyll or Hugo [7].
     let g:vim_markdown_frontmatter = 1
-
 "}}}
 
 " scrooloose/nerdcommenter" 代码注释 :TODO "{{{
@@ -466,9 +499,11 @@ call vundle#begin('$VIMFILES/bundle')
 
 " scrooloose/syntastic 代码检查"{{{
 " Recommend setting
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
+
+    " " with airline, statusline setting is unnecessary
+    " set statusline+=%#warningmsg#
+    " set statusline+=%{SyntasticStatuslineFlag()}
+    " set statusline+=%*
 
     let g:syntastic_always_populate_loc_list = 1
     let g:syntastic_auto_loc_list = 1
@@ -479,6 +514,11 @@ call vundle#begin('$VIMFILES/bundle')
     let g:syntastic_python_checkers=['pyflakes', 'pep8'] "
     " 使用pyflakes,速度比pylint快
     let g:syntastic_python_pep8_args='--ignore=E501,E225,E124,E712'
+    let g:syntastic_mode_map = {
+        \ "mode": "passive",
+        \ "active_filetypes": ["ruby", "php"],
+        \ "passive_filetypes": ["puppet"] }
+    nnoremap <leader>ck :SyntasticCheck<cr>
 "}}}
 
 " tpope/vim-fugitive " tpope 大神的git wrapper，gvdiff 同步滚动"{{{
@@ -509,7 +549,7 @@ call vundle#begin('$VIMFILES/bundle')
 "}}}
 
 " sjl/gundo.vim 打开quickfix窗口查看修改历史"{{{
-    noremap <leader>h :GundoToggle<CR>
+    noremap <leader>hy :GundoToggle<CR>
 " }}}
 
 " majutsushi/tagbar"{{{
@@ -520,19 +560,65 @@ call vundle#begin('$VIMFILES/bundle')
     let g:tagbar_show_linenumbers = 1
     " Set Windows Width
     let g:tagbar_width = 35
+    " let g:tagbar_ctags_bin = 'C:\Ctags5.8\ctags.exe'
 "}}}
 
 " Valloric/ListToggle"{{{
     let g:lt_quickfix_list_toggle_map = '<F4>'
 "}}}
 
+" yegappan/grep 文件夹内字符串查找"{{{
+" :let Grep_Path = 'd:\tools\grep.exe'
+" :let Fgrep_Path = 'd:\tools\fgrep.exe'
+" :let Egrep_Path = 'd:\tools\egrep.exe' " 正则表达式搜索,相当于 grep -e
+" :let Agrep_Path = 'd:\tools\agrep.exe'
+"       :let Grep_Default_Options = '-i'
+    let Grep_Skip_Dirs = '.git vimfiles/view undodirfile'
+    let Grep_Skip_Files = '*.bak *~ *.swp'
+    " -i ignore-case
+    let Grep_Default_Options = '-i'
+" for Recursive search
+
+" vimgrep.vim
+" 对搜索的设置
+    map <leader>ff :call Search_Word("CurrentFile")<CR>:copen<CR>
+    map <leader>fF :call Search_Word("RecursiveFile")<CR>:copen<CR>
+    function! Search_Word(opt)
+        let w = expand("<cword>") " 在当前光标位置抓词
+        if a:opt == 'CurrentFile'
+            " execute "vimgrep " w " %"
+            " 在当前文件%中查找 光标下的单词
+            execute "Grep " w " %"
+        elseif a:opt == 'RecursiveFile'
+            execute "Grep -r" w " *"
+        endif
+    endfunction
+
+""""""""""""""""""""""""""""""
+" grep setting
+""""""""""""""""""""""""""""""
+    " nnoremap <silent> <F3> :Grep<CR>
+    "}}}
+
+" simple-todo-new : Disable default key bindings"{{{
+" TODO : 
+" 1. 按自己的想法改写该插件
+" 2. 支持列表形式，支持正则表达式的symbol list
+let g:simple_todo_map_keys = 0
+
+" Map your keys
+imap <leader>i <Plug>(simple-todo-new)
+nmap <leader>I <Plug>(simple-todo-new-start-of-line)
+nmap <leader>x <Plug>(simple-todo-mark-switch)
+" .nmap..etc."}}}
+
 " Calendar Setting"{{{
-" -position=left -width={50} 
-" specify the view of the calendar on starting the buffer
-    let g:calendar_view = "event"
-    " fix problem 5, refer to  help
-    let g:calendar_frame = 'default'
-    " a Toggle command
-    nmap <expr> <leader>cv &ft ==#'calendar'? "\<Plug>(calendar_exit)" :
-                \ ":\<C-u>Calendar -position=left\<CR>"
+" " -position=left -width={50} 
+" " specify the view of the calendar on starting the buffer
+    " let g:calendar_view = "event"
+    " " fix problem 5, refer to  help
+    " let g:calendar_frame = 'default'
+    " " a Toggle command
+    " nmap <expr> <leader>cv &ft ==#'calendar'? "\<Plug>(calendar_exit)" :
+                " \ ":\<C-u>Calendar -position=topright -view=week\<CR>"
     "}}}
