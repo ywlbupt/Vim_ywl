@@ -578,16 +578,6 @@ endif "has("autocmd")
 "}}}
 
 "{{{
-" Align
-" AlignCtrl lp0P0
-" p0P0表示分隔符前后有0个空格
-" 通过字母l和r进行对齐，l表示左对齐，r表示右对齐
-" help alignctrl-p
-""""""""""""""""""""""""""""""
-    let g:Align_xstrlen= 3
-"}}}
-
-"{{{
 " 调用AStyle程序，进行代码美化
 
 func! CodeFormat()
@@ -886,6 +876,16 @@ endif
     " let Txtbrowser_Search_Engine='https://www.google.com.hk/#newwindow=1&q=text&safe=strict'
 "   定制自己的词典:h txt-dict
     " let TxtBrowser_Dict_Url='http://dict.youdao.com/search?q=text&keyfrom=dict.index'
+"}}}
+
+"{{{
+" Align
+" AlignCtrl lp0P0
+" p0P0表示分隔符前后有0个空格
+" 通过字母l和r进行对齐，l表示左对齐，r表示右对齐
+" help alignctrl-p
+""""""""""""""""""""""""""""""
+    " let g:Align_xstrlen= 3
 "}}}
 
 "}}}

@@ -20,6 +20,8 @@ call vundle#begin('$VIMFILES/bundle')
     " vim-markdown 要求tabular插件，feature as Align
         Plugin 'godlygeek/tabular' | Plugin 'plasticboy/vim-markdown'
 
+        Plugin 'junegunn/vim-easy-align'
+
     " for Sourcecode-like ide
         " Plugin 'wesleyche/Trinity'
         " Plugin 'wesleyche/SrcExpl'
@@ -65,7 +67,7 @@ call vundle#begin('$VIMFILES/bundle')
         Plugin 'scrooloose/syntastic'
         
         " Plugin 'taglist.vim' 
-        Plugin 'Align'
+        " Plugin 'Align'
         " Plugin 'TxtBrowser'
         " Plugin 'winmanager'
         " Plugin 'a.vim'
@@ -106,8 +108,8 @@ call vundle#begin('$VIMFILES/bundle')
         " two pane outliner
         Plugin 'VOoM'
 
-        " 本地的插件 TODO 
-        Plugin 'file:///home/ywl/Vim_ywl/vimfiles/bundle/hexoblog.vim'
+        " Hexo 插件 TODO 
+        Plugin 'ywlbupt/vim-hexo'
 
         " " text object
         " " 支持自定义文本对象
@@ -200,7 +202,7 @@ call vundle#begin('$VIMFILES/bundle')
         set wildignore+=*\\tmp\\*,*.exe,*\\undodirfile\\*,*\\vimfiles\\view\\*
         " set wildignore+=*\\.git\\* " 此处会和fugitive 冲突
         " Windows , Use a custom file listing command
-        let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  
+        " let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  
     endif
     let g:ctrlp_custom_ignore = {
         \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
@@ -621,4 +623,14 @@ nmap <leader>x <Plug>(simple-todo-mark-switch)
     " " a Toggle command
     " nmap <expr> <leader>cv &ft ==#'calendar'? "\<Plug>(calendar_exit)" :
                 " \ ":\<C-u>Calendar -position=topright -view=week\<CR>"
-    "}}}
+"}}}
+
+" vim-easy-align"{{{
+
+" start interactive easyalign in visual mode (e.g. vip<enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+"}}}

@@ -9,8 +9,8 @@ function! CurrentLineUpdate(varname)
     if l:str_lastupdate =~ a:varname.'\v\s*:\s*(\d{4}-\d{2}-\d{2})'
         echo 'Change datetime to :'.strftime("%Y-%m-%d")
         call setline('.', substitute(l:str_lastupdate, 
-                    \ a:varname.'\v\s*:\s*\d{4}-\d{2}-\d{2}',
-                    \ a:varname." : ".strftime("%Y-%m-%d")
+                    \ a:varname.'\v\s*:\s*\d{4}-\d{2}-\d{2}\s+.*$',
+                    \ a:varname." : ".strftime("%Y-%m-%d %T")
                     \ ,''))
     else 
         echo "This line contain not date" 
