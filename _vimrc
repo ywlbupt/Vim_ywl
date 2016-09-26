@@ -24,6 +24,11 @@ let g:mapleader = ","
 " 开启语法高亮
 syntax on
 
+if MySys() == 'linux'
+    let g:hexo_path = '/home/ywl/hexo_blog'
+    set path +=/home/ywl/hexo_blog/source/images
+endif
+
 " Load Plugin and Customed_Func "{{{
 if filereadable(expand(g:ywl_path."/vimrc.bundles"))
     exec 'source '.g:ywl_path.'/vimrc.bundles'
@@ -31,8 +36,8 @@ else
     echo "no vimrc.bundles found"
 endif
 
-if filereadable(expand(g:ywl_path."/Customed_Func.vim"))
-    exec 'source '.g:ywl_path.'/Customed_Func.vim'
+if filereadable(expand(g:ywl_path."/vimrc.func"))
+    exec 'source '.g:ywl_path.'/vimrc.func'
 else 
     echo "no Customed_Func found"
 endif
@@ -473,7 +478,10 @@ if has("autocmd")
     augroup markdownevent
         autocmd! markdownevent
         autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
-                        \ set formatoptions+=n
+                    \ setlocal formatoptions+=n |
+                    \setlocal tabstop=2 |
+                    \setlocal softtabstop=2 |
+                    \setlocal shiftwidth=2 |
         if MySys() == 'linux'
             autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
                         \map <leader>p :!google-chrome "%:p"<CR>
@@ -500,7 +508,6 @@ if has("autocmd")
                     \ setlocal softtabstop=4 |
                     \ setlocal shiftwidth=4 |
                     " \ set textwidth=79 |
-                    \ setlocal expandtab |
                     \ setlocal autoindent |
                     \ setlocal fileformat=unix 
     augroup END

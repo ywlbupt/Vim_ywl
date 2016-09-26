@@ -9,3 +9,13 @@ unmap gT
 map gp previousTab
 map gn nextTab
 map <c-e> removeTab
+
+# Insert your preferred key mappings here.
+unmap d
+unmap u
+map <c-d> scrollPageDown
+map <c-u> scrollPageUp
+# <c-d> 可能和添加书签的快捷键冲突
+map <c-[> <ESC>
+map ,q removeTab
+

@@ -27,6 +27,7 @@ call vundle#begin('$VIMFILES/bundle')
         " Plugin 'wesleyche/SrcExpl'
 
         Plugin 'xolox/vim-misc' |  Plugin 'xolox/vim-session'
+        Plugin 'xolox/vim-easytags'
 
         Plugin 'yegappan/grep'
 
@@ -106,7 +107,7 @@ call vundle#begin('$VIMFILES/bundle')
         Plugin 'vitalk/vim-simple-todo'
 
         " two pane outliner
-        Plugin 'VOoM'
+        " Plugin 'VOoM'
 
         " Hexo 插件 TODO 
         Plugin 'ywlbupt/vim-hexo'
@@ -259,6 +260,8 @@ call vundle#begin('$VIMFILES/bundle')
     let NERDTreeCascadeOpenSingleChildDir=0
     " When to Change the current Working directory (CWD) for vim
     let NERDTreeChDirMode = 2
+    " Don't show these file types
+    let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
     " " Change default arrows
     " let g:NERDTreeDirArrowExpandable = '▸'
     " let g:NERDTreeDirArrowCollapsible = '▾'
@@ -453,7 +456,7 @@ call vundle#begin('$VIMFILES/bundle')
 
     let g:surround_indent = 0
     let g:surround_45 = "```\n\r```"
-    let g:surround_61 = "**\n\r**"
+    let g:surround_61 = "**n\r**"
     let g:surround_98 = "**\r**"
 "}}}
 
@@ -521,6 +524,11 @@ call vundle#begin('$VIMFILES/bundle')
         \ "active_filetypes": ["ruby", "php"],
         \ "passive_filetypes": ["puppet"] }
     nnoremap <leader>ck :SyntasticCheck<cr>
+
+    let g:syntastic_error_symbol = '✗'
+    let g:syntastic_warning_symbol = '⚠'
+    let g:syntastic_style_error_symbol = '✗'
+    let g:syntastic_style_warning_symbol = '⚠'
 "}}}
 
 " tpope/vim-fugitive " tpope 大神的git wrapper，gvdiff 同步滚动"{{{
@@ -563,7 +571,42 @@ call vundle#begin('$VIMFILES/bundle')
     " Set Windows Width
     let g:tagbar_width = 35
     " let g:tagbar_ctags_bin = 'C:\Ctags5.8\ctags.exe'
+    " tagbar 默认显示在右边，如需令其在左边显示，设置一下option
+    let g:tagbar_left = 1
+
+    " [Support for addtional filetype](https://github.com/majutsushi/tagbar/wiki)
+    " 自定义 tagbar 支持 markdown , g:tagbar_type_{vim filetype}
+    " 这里的 markdown2ctags 需要是可执行文件，TODO : win下如何处理？
+    if MySys() == "linux"
+    let g:tagbar_type_markdown = {
+        \ 'ctagstype': 'markdown',
+        \ 'ctagsbin' : g:ywl_path.'/vimfiles/Tagbar_support/markdown2ctags.py',
+        \ 'ctagsargs' : '-f - --sort=yes',
+        \ 'kinds' : [
+            \ 's:sections',
+            \ 'i:images'
+        \ ],
+        \ 'sro' : '|',
+        \ 'kind2scope' : {
+            \ 's' : 'section',
+        \ },
+        \ 'sort': 0,
+        \ }
+    endif
+        " let g:tagbar_type_markdown = {
+                    " \ 'ctagstype' : 'markdown',
+                    " \ 'kinds' : [
+                    " \ 'h:headings',
+                    " \ ],
+                    " \ 'sort' : 0
+                    " \ }
 "}}}
+
+" xolox/vim-easytags
+
+" if MySys() == 'windows'
+    " let g:easytags_cmd = 'ctags'
+" endif
 
 " Valloric/ListToggle"{{{
     let g:lt_quickfix_list_toggle_map = '<F4>'

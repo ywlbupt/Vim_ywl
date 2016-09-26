@@ -47,4 +47,47 @@ endfunction
     " map <S-F4> :call RunmeCmdRead()<CR>
 "}}}
 
+" 自动补全
+
+" 一个补全月份名的示例: >"{{{
+" :h complete-functions
+function! CompleteMonths(findstart, base)
+    if a:findstart
+        " 定位单词的开始处
+        let line = getline('.')
+        let start = col('.') - 1
+        while start > 0 && ( line[start - 1] =~ '\a' || line[start -1] == '/')
+            let start -= 1
+        endwhile
+        " a:base的取值区间
+        return start
+    else
+        " 寻找匹配 "a:base" 的月份
+        let res = []
+        " for m in split("Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec")
+            " if m =~ '^' . a:base
+                " call complete_add(m)
+            " endif
+            " if complete_check()
+                " break
+            " endif
+        " endfor
+        " let image_lists =  globpath(g:hexo_path.'/source/images', '*')
+        " for m in split(image_lists)
+            " call complete_add(fnamemodify(m, ":t"))
+        " endfor
+        call complete_add(a:base.'add')
+        return []
+    endif
+endfunction
+set completefunc=CompleteMonths
+
+
+    " echo globpath('/home/ywl/hexo_blog'.'/source/images', '**/*.jpg')
+    " echo lists
+    " exec 'cd '.g:ywl_path
+
+    " let lists =  system("ls -R ".g:hexo_path.'/source/images | egrep *.jpg')
+
+"}}}
 
