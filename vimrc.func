@@ -50,33 +50,38 @@ endfunction
 " 自动补全
 
 " 一个补全月份名的示例: >"{{{
+if !exists('g:user_complete_option')
+    let g:user_complete_option = ['hexo']
+endif
+
 " :h complete-functions
 function! CompleteMonths(findstart, base)
     if a:findstart
         " 定位单词的开始处
         let line = getline('.')
         let start = col('.') - 1
-        while start > 0 && ( line[start - 1] =~ '\a' || line[start -1] == '/')
+        while start > 0 && ( line[start - 1] =~ '\a' || line[start -1] == g:os_sep)
             let start -= 1
         endwhile
-        " a:base的取值区间
+        " 返回start,即a:base的取值区间
         return start
     else
         " 寻找匹配 "a:base" 的月份
         let res = []
-        " for m in split("Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec")
-            " if m =~ '^' . a:base
-                " call complete_add(m)
-            " endif
-            " if complete_check()
-                " break
-            " endif
-        " endfor
-        " let image_lists =  globpath(g:hexo_path.'/source/images', '*')
-        " for m in split(image_lists)
-            " call complete_add(fnamemodify(m, ":t"))
-        " endfor
-        call complete_add(a:base.'add')
+
+        if count(g:user_complete_option, 'hexo')
+            let image_lists =  globpath(g:hexo_path.'/source', a:base.'*')
+            for m in split(image_lists)
+                " 对于路径补全，fnamemodify无法包含路径符号前面的文件夹名字
+                " call complete_add(fnamemodify(m, ":t"))       
+                let completestr = substitute(m, g:hexo_path.'/source/', '', '')
+                call complete_add(completestr)
+            endfor
+            if complete_check()
+                break
+            endif
+        endif
+
         return []
     endif
 endfunction

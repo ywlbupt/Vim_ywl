@@ -525,10 +525,10 @@ call vundle#begin('$VIMFILES/bundle')
         \ "passive_filetypes": ["puppet"] }
     nnoremap <leader>ck :SyntasticCheck<cr>
 
-    let g:syntastic_error_symbol = '✗'
-    let g:syntastic_warning_symbol = '⚠'
-    let g:syntastic_style_error_symbol = '✗'
-    let g:syntastic_style_warning_symbol = '⚠'
+    " let g:syntastic_error_symbol = '✗'
+    " let g:syntastic_warning_symbol = '⚠'
+    " let g:syntastic_style_error_symbol = '✗'
+    " let g:syntastic_style_warning_symbol = '⚠'
 "}}}
 
 " tpope/vim-fugitive " tpope 大神的git wrapper，gvdiff 同步滚动"{{{

@@ -3,8 +3,7 @@
 " LastUpdate : 2016-09-17 13:56:35
 " Description : vimrc
 
-""""""""""""""""
-"  Dependency  "
+"  Install Dependency"{{{
 """"""""""""""""
 " # ubuntu
 " sudo apt-get install ctags
@@ -15,31 +14,32 @@
 " sudo pip install pyflakes
 " sudo pip install pylint
 " sudo pip install pep8
-
+"}}}
 
 " Set mapleader & Fast edit vimrc
 let   mapleader = ","
 let g:mapleader = ","
 
-" 开启语法高亮
-syntax on
-
 if MySys() == 'linux'
-    let g:hexo_path = '/home/ywl/hexo_blog'
-    set path +=/home/ywl/hexo_blog/source/images
+    let g:hexo_path = expand('~/hexo_blog')
 endif
+
+if !exists('g:plugin_groups')
+    let g:plugin_groups = ['hexo']
+endif
+
 
 " Load Plugin and Customed_Func "{{{
-if filereadable(expand(g:ywl_path."/vimrc.bundles"))
+if filereadable(expand(g:ywl_path.'/vimrc.bundles'))
     exec 'source '.g:ywl_path.'/vimrc.bundles'
 else
-    echo "no vimrc.bundles found"
+    echo 'No vimrc.bundles found'
 endif
 
-if filereadable(expand(g:ywl_path."/vimrc.func"))
+if filereadable(expand(g:ywl_path.'/vimrc.func'))
     exec 'source '.g:ywl_path.'/vimrc.func'
 else 
-    echo "no Customed_Func found"
+    echo 'No vimrc.func found'
 endif
 "  matchit.vim插件扩展了%匹配字符的范围,根据不同的filetype来做不同的匹配
     source $VIMRUNTIME/macros/matchit.vim
@@ -192,6 +192,9 @@ set history =1000
 "}}}
 "}}}
 
+" 开启语法高亮
+syntax on
+
 """"""""""""""""""""
 "  filtetype open  "
 """"""""""""""""""""
@@ -204,8 +207,9 @@ filetype plugin on
 " 启动自动补全
 filetype plugin indent on
 
+
 " For windows version, using gVIM with Cygwin on a Windows PC"{{{
-if MySys() == "windows"
+if MySys() == 'windows'
     " source $VIMRUNTIME/mswin.vim
     " behave mswin
     " unmap <C-A>
@@ -239,7 +243,7 @@ endif
 " Fast edit vimrc & font coding Setting "{{{
 
 " Fast edit vimrc
-    if MySys() == "linux"
+    if MySys() == 'linux'
     "   Fast reloading of the .vimrc
         map <silent> <leader>ss :exec 'source '.g:ywl_path.'/_vimrc'<cr>
         map <silent> <leader>rr :source ~/.vimrc<cr>
@@ -249,9 +253,7 @@ endif
     "   When .vimrc is edited, reload it 每次保存syntax总不太对头
         " autocmd! bufwritepost _vimrc exec 'source ~/.vimrc'
         " autocmd! bufwritepost .vimrc exec 'source ~/.vimrc'
-    elseif MySys() == "windows"
-    "   Set helplang
-    "   Set helplang=cn
+    elseif MySys() == 'windows'
     "   Fast reloading of the _vimrc
         map <silent> <leader>ss :exec 'source '.g:ywl_path.'\_vimrc'<cr>
         map <silent> <leader>rr :source $VIM\_vimrc<cr>
@@ -260,7 +262,6 @@ endif
         map <silent> <leader>er :e $VIM\_vimrc<cr>
     "   When _vimrc is edited, reload it
         " autocmd! bufwritepost _vimrc exec 'source $VIM\_vimrc'
-    "   Open my note about Vim
     endif
 "}}}
  

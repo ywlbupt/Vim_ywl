@@ -1,51 +1,53 @@
 ﻿" -----------------------------------------------------------------------------
-"  < 判断是终端还是 Gvim >
-" -----------------------------------------------------------------------------
-    if has("gui_running")
-        let g:isGUI = 1
-    else
-        let g:isGUI = 0
-    endif
-
-"   Platform
-" -----------------------------------------------------------------------------
 "  < 判断操作系统是否是 Windows 还是 Linux >
 " ----------------------------------------------------------------------------- 
     function! MySys()
-        if(has("win32") || has("win64") || has("win95") || has("win16"))
-          return "windows"
-        else
-          return "linux"
+        if(has('win32') || has('win64') || has('win95') || has('win16'))
+          return 'windows'
+      elseif has('unix')
+          return 'linux'
       endif
     endfunction
 
 "   设置$VIMFILES变量，设置$HOME变量
-
-    if MySys() == "linux"
-        let g:ywl_path = '/home/ywl/Vim_ywl'
-        let $VIMFILES  = g:ywl_path.'/vimfiles'
-    elseif MySys() == "windows"
-        "let g:ywl_path = 'E:\yanweilin\Dropbox'
+    if MySys() == 'linux'
+        let g:os_sep = '/'
+        let g:ywl_path = expand('~/Vim_ywl')
+    elseif MySys() == 'windows'
+        let g:os_sep = '\'
         let g:ywl_path = 'C:\Vim_ywl'
-        "let $VIMFILES  = 'E:\yanweilin\Dropbox\vimfiles'
-        let $VIMFILES  = g:ywl_path.'\vimfiles'
+        " let g:ywl_path = "C:\\Vim_ywl"
     endif
 
+    " Windows与linux的路径转换
+    function! PathTrans(pathtrans)
+        if MySys() == 'windows'
+            return fnamemodify(a:pathtrans, ":gs?/?\\?")
+        else
+            return a:pathtrans
+        endif
+    endfunc
+
+    let $VIMFILES = join([g:ywl_path, 'vimfiles'], g:os_sep)
 
 "   个人文件夹路径的设定
-    if MySys() == "linux"
+    if MySys() == 'linux'
         set runtimepath=$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after
         set runtimepath+=$HOME/vimfiles,$HOME/vimfiles/after
-        " set runtimepath+=$HOME/Dropbox/vimfiles,$HOME/Dropbox/vimfiles/after
-    elseif MySys() == "windows"
+        set runtimepath+=$VIMFILES,$VIMFILES\after
+    elseif MySys() == 'windows'
         set runtimepath=$VIM\vimfiles,$VIMRUNTIME,$VIM\vimfiles\after
         set runtimepath+=$HOME\vimfiles,$HOME\vimfiles\after
-        "set runtimepath+=E:\yanweilin\Dropbox\vimfiles,E:\yanweilin\Dropbox\vimfiles\after
         set runtimepath+=$VIMFILES,$VIMFILES\after
     endif	
 
-if MySys() == "windows"
-        exec 'source '.g:ywl_path.'\_vimrc'
-elseif MySys() == "linux"
-        exec 'source '.g:ywl_path.'/_vimrc'
-endif
+    " if MySys() == 'windows'
+        " exec 'source '.g:ywl_path.'\_vimrc'
+    " elseif MySys() == 'linux'
+        " exec 'source '.g:ywl_path.'/_vimrc'
+    " endif
+    if filereadable(expand(join([g:ywl_path, '_vimrc'], g:os_sep)))
+        exec 'source '.join([g:ywl_path, '_vimrc'], g:os_sep)
+    else
+        echo 'No _vimrc found'
+    endif
