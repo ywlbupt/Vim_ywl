@@ -20,9 +20,9 @@
 let   mapleader = ","
 let g:mapleader = ","
 
-if MySys() == 'linux'
+" if MySys() == 'linux'
     let g:hexo_path = expand('~/hexo_blog')
-endif
+" endif
 
 if !exists('g:plugin_groups')
     let g:plugin_groups = ['hexo']

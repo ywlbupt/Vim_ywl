@@ -60,7 +60,8 @@ function! CompleteMonths(findstart, base)
         " 定位单词的开始处
         let line = getline('.')
         let start = col('.') - 1
-        while start > 0 && ( line[start - 1] =~ '\a' || line[start -1] == g:os_sep)
+        while start > 0 && ( line[start - 1] =~ '\a' 
+                    \ || line[start - 1 ] == ('/' || '\'))
             let start -= 1
         endwhile
         " 返回start,即a:base的取值区间
@@ -73,9 +74,9 @@ function! CompleteMonths(findstart, base)
             let image_lists =  globpath(g:hexo_path.'/source', a:base.'*')
             for m in split(image_lists)
                 " 对于路径补全，fnamemodify无法包含路径符号前面的文件夹名字
-                " call complete_add(fnamemodify(m, ":t"))       
-                let completestr = substitute(m, g:hexo_path.'/source/', '', '')
-                call complete_add(completestr)
+                let completestr = RelpathPython(join([g:hexo_path, 'source'],
+                            \ g:os_sep), m)
+                call complete_add('./'.completestr)
             endfor
             if complete_check()
                 break
@@ -87,12 +88,18 @@ function! CompleteMonths(findstart, base)
 endfunction
 set completefunc=CompleteMonths
 
+" function embeded python script
+function! RelpathPython(rpath, abspath)
 
-    " echo globpath('/home/ywl/hexo_blog'.'/source/images', '**/*.jpg')
-    " echo lists
-    " exec 'cd '.g:ywl_path
+let l:abspath = fnamemodify(a:abspath, ":p")
+let l:rpath = fnamemodify(a:rpath, ":p")
 
-    " let lists =  system("ls -R ".g:hexo_path.'/source/images | egrep *.jpg')
+python <<EOF
+import os,vim
+pyrelpath = os.path.relpath(vim.eval("l:abspath"), vim.eval("l:rpath"))
+EOF
+
+return pyeval("pyrelpath")
+endfunction
 
 "}}}
-
