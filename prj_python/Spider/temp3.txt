@@ -1,4 +1,0 @@
-<h2 class="zm-profile-section-name">回答</h2>
-<a class="question_link" href="/question/36812245/answer/76830827">你听过看过的觉得好笑的英文笑话？</a>
-<h2 class="zm-profile-section-name">提问</h2>
-<a class="question_link" href="/question/36812245/answer/76830827">笑话？</a>

@@ -20,9 +20,7 @@
 let   mapleader = ","
 let g:mapleader = ","
 
-" if MySys() == 'linux'
-    let g:hexo_path = expand('~/hexo_blog')
-" endif
+let g:hexo_blogpath = expand('~/hexo_blog')
 
 if !exists('g:plugin_groups')
     let g:plugin_groups = ['hexo']
@@ -206,7 +204,6 @@ filetype indent on
 filetype plugin on
 " 启动自动补全
 filetype plugin indent on
-
 
 " For windows version, using gVIM with Cygwin on a Windows PC"{{{
 if MySys() == 'windows'
@@ -480,9 +477,10 @@ if has("autocmd")
         autocmd! markdownevent
         autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
                     \ setlocal formatoptions+=n |
-                    \setlocal tabstop=2 |
-                    \setlocal softtabstop=2 |
-                    \setlocal shiftwidth=2 |
+                    \setlocal tabstop=4 |
+                    \setlocal softtabstop=4 |
+                    \setlocal shiftwidth=4 |
+                    \setlocal cc=81
         if MySys() == 'linux'
             autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
                         \map <leader>p :!google-chrome "%:p"<CR>
@@ -533,7 +531,8 @@ endif "has("autocmd")
     colorscheme solarized
     " colorscheme evening_ywl
     " 使用鼠标操作
-    set mouse=a
+    " set mouse=a
+    set mouse=cvn
     set t_Co=256
 
     if has("gui_running")
@@ -566,6 +565,17 @@ endif "has("autocmd")
         " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
         set t_ut=
     endif 
+
+    " 调整光标的形状
+    if exists('$ITERM_PROFILE')
+        if exists('$TMUX') 
+            let &amp;t_SI = "<Esc>[3 q"
+            let &amp;t_EI = "<Esc>[0 q"
+        else
+            let &amp;t_SI = "<Esc>]50;CursorShape=1x7"
+            let &amp;t_EI = "<Esc>]50;CursorShape=0x7"
+        endif
+    end
 "}}}
 
 " Customed Function"{{{
@@ -575,14 +585,6 @@ endif "has("autocmd")
     iab tdate <c-r>=strftime("%Y/%m/%d %H:%M:%S")<cr>
     iab ydate <c-r>=strftime("%Y-%m-%d")<cr>
 "}}}
-"}}}
-
-"{{{
-" Ctags
-" """"""""""""""""""""""""""""""
-" 将当前的工程的tags导入
-" 如果源文件在当前文件夹下没有找到tags,可以到它的上层目录下继续寻找
-    set tags=tags;
 "}}}
 
 "{{{

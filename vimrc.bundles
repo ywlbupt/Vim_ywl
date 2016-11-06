@@ -240,11 +240,9 @@ call vundle#begin('$VIMFILES/bundle')
     " nmap <silent> <leader>fe :Vexplore<cr>
     nmap <silent> <leader>fe :NERDTreeToggle<cr>
 
-    if MySys() == 'windows'
-        let g:NERDTreeBookmarksFile=g:ywl_path.'\vimfiles\plugindata\NERDTreeBookmarks.txt'
-    elseif MySys() == 'linux'
-        let g:NERDTreeBookmarksFile=g:ywl_path.'/vimfiles/plugindata/NERDTreeBookmarks.txt'     
-    endif
+    " 设置书签目录
+    let g:NERDTreeBookmarksFile = join([g:ywl_path, 'vimfiles', 'plugindata', 
+                \ 'NERDTreeBookmarks.txt'], g:os_sep)
     " 将 NERDTree 的窗口设置在 vim 窗口的右侧（默认为左侧）
     let  g:NERDTreeWinPos="left"
     " 当打开 NERDTree 窗口时，自动显示 Bookmarks
@@ -456,7 +454,7 @@ call vundle#begin('$VIMFILES/bundle')
 
     let g:surround_indent = 0
     let g:surround_45 = "```\n\r```"
-    let g:surround_61 = "**n\r**"
+    let g:surround_61 = "**\r**"
     let g:surround_98 = "**\r**"
 "}}}
 
@@ -476,6 +474,8 @@ call vundle#begin('$VIMFILES/bundle')
     let g:vim_markdown_folding_style_pythonic = 1
     " Highlight YAML front matter as used by Jekyll or Hugo [7].
     let g:vim_markdown_frontmatter = 1
+    " 链接的显示方式
+    let g:vim_markdown_conceal = 0
 "}}}
 
 " scrooloose/nerdcommenter" 代码注释 :TODO "{{{
@@ -602,11 +602,28 @@ call vundle#begin('$VIMFILES/bundle')
                     " \ }
 "}}}
 
-" xolox/vim-easytags
-
+" xolox/vim-easytags"{{{
+" --------Brief help------------
+" :UpdateTags  : 显式更新tags 
+" :HighlightTags  : 显式highlight tags 
 " if MySys() == 'windows'
     " let g:easytags_cmd = 'ctags'
 " endif
+
+    " 自动更新 tags 的发生时机，只在保存文件时更新，
+    " 可选的event有 Cursorhold,  CursorholdI
+    let g:easytags_events = ['BufWritePost']
+
+    let g:easytags_auto_highlight = 0
+"}}}
+
+"{{{
+" Ctags
+" """"""""""""""""""""""""""""""
+" 将当前的工程的tags导入
+" 如果源文件在当前文件夹下没有找到tags,可以到它的上层目录下继续寻找
+    set tags=tags;
+"}}}
 
 " Valloric/ListToggle"{{{
     let g:lt_quickfix_list_toggle_map = '<F4>'

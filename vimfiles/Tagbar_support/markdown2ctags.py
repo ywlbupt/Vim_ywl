@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 # Copyright (C) 2013 John Szakmeister <john@szakmeister.net>
 # All rights reserved.
@@ -108,6 +109,7 @@ def findSections(filename, lines):
 
     for i, line in enumerate(lines):
         # Skip GitHub Markdown style code blocks.
+        # MODIFY: if line.startswith("```"):
         if line.startswith("```"):
             inCodeBlock = not inCodeBlock
             continue

@@ -47,9 +47,7 @@ endfunction
     " map <S-F4> :call RunmeCmdRead()<CR>
 "}}}
 
-" 自动补全
-
-" 一个补全月份名的示例: >"{{{
+" FUNCTION : CompleteMonths  用户自定义自动补全 : >"{{{
 if !exists('g:user_complete_option')
     let g:user_complete_option = ['hexo']
 endif
@@ -60,8 +58,9 @@ function! CompleteMonths(findstart, base)
         " 定位单词的开始处
         let line = getline('.')
         let start = col('.') - 1
+        " \a 英文字符字符
         while start > 0 && ( line[start - 1] =~ '\a' 
-                    \ || line[start - 1 ] == ('/' || '\'))
+                    \ || line[start - 1 ] =~ '/' )
             let start -= 1
         endwhile
         " 返回start,即a:base的取值区间
@@ -69,14 +68,18 @@ function! CompleteMonths(findstart, base)
     else
         " 寻找匹配 "a:base" 的月份
         let res = []
+        call complete_add(a:base)
 
         if count(g:user_complete_option, 'hexo')
-            let image_lists =  globpath(g:hexo_path.'/source', a:base.'*')
+            let image_lists =  globpath(g:hexo_blogpath. 
+                        \ g:os_sep.'source', a:base.'*')
             for m in split(image_lists)
                 " 对于路径补全，fnamemodify无法包含路径符号前面的文件夹名字
-                let completestr = RelpathPython(join([g:hexo_path, 'source'],
+                let completestr = RelpathPython(join([g:hexo_blogpath, 'source'],
                             \ g:os_sep), m)
-                call complete_add('./'.completestr)
+                " call complete_add(join(['.', completestr], g:os_sep))
+                " if a:base[0] == '/' 
+                    call complete_add((a:base[0]=='/' ? '/' : '') . completestr)
             endfor
             if complete_check()
                 break
