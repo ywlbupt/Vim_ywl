@@ -541,7 +541,6 @@ endif "has("autocmd")
         set guioptions-=L
         " set guioptions-=r
         set background=dark
-        set t_Co=256
         " colorscheme desert_ywl  "设定配色方案
         autocmd GUIEnter * set lines=40 |  set columns=149 
         if MySys() == 'linux'
@@ -552,7 +551,6 @@ endif "has("autocmd")
             " set t_Co=16
             " set t_Sb=^[[4%dm " 设置背景色
             " set t_Sf=^[[3%dm " 设置前景色
-            set t_Co=256
             " colorscheme evening_ywl
             autocmd VimEnter * set lines=40 | set columns=149
         endif 

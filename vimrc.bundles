@@ -244,12 +244,12 @@ call vundle#begin('$VIMFILES/bundle')
     let g:NERDTreeBookmarksFile = join([g:ywl_path, 'vimfiles', 'plugindata', 
                 \ 'NERDTreeBookmarks.txt'], g:os_sep)
     " 将 NERDTree 的窗口设置在 vim 窗口的右侧（默认为左侧）
-    let  g:NERDTreeWinPos="left"
+    let  g:NERDTreeWinPos="right"
     " 当打开 NERDTree 窗口时，自动显示 Bookmarks
     let g:NERDTreeShowBookmarks=1
     " 让Tree把自己给装饰得多姿多彩漂亮点
     let g:NERDChristmasTree=1
-    let g:NERDTreeWinSize=31
+    let g:NERDTreeWinSize=62
     " 当输入 [:e filename]不再显示netrw,而是显示nerdtree
     let g:NERDTreeHijackNetrw=1 
     " Nerdtree Display line numbers
