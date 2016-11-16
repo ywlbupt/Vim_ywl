@@ -40,6 +40,9 @@ call vundle#begin('$VIMFILES/bundle')
 
     " Windows 下未安装成功
         if MySys() == "linux" || hostname() =~ "E420"
+            " if hostname() != 'raspberrypi'
+            " endif
+            " 树莓派安装，各种问题，内存空间不足等
             Plugin 'Valloric/YouCompleteMe'
         endif
         Plugin 'Valloric/ListToggle'

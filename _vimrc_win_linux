@@ -19,7 +19,7 @@
         " let g:ywl_path = "C:\\Vim_ywl"
     endif
 
-    " Windows与linux的路径转换
+    " Windows与linux的路径转换，没用上
     function! PathTrans(pathtrans)
         if MySys() == 'windows'
             return fnamemodify(a:pathtrans, ":gs?/?\\?")
