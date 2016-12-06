@@ -1,3 +1,0 @@
-注意windows下换行符与ubuntu的不同
-<img src="../images/Gvim-1.jpg">
-<img src="../images/Gvim-2.jpg">

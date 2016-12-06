@@ -1,3 +1,0 @@
-<center>
-	<img src="../images/网页排名和谷歌算法的诞生.jpg">
-</center>
