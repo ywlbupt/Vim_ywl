@@ -14,6 +14,7 @@ filetype off        " required
 " ----------------------------------------------
 " for VundleVim/Vundle.vim "
 set rtp+=$VIMFILES/bundle/Vundle.vim
+
 call vundle#begin('$VIMFILES/bundle')
 	"let Vundle manage Vundle, required
         Plugin 'VundleVim/Vundle.vim'
@@ -83,12 +84,13 @@ call vundle#begin('$VIMFILES/bundle')
         Plugin 'vim-airline/vim-airline' 
         Plugin 'vim-airline/vim-airline-themes'
 
-        " Plugin 'vim-ctrlspace/vim-ctrlspace'
         Plugin 'ywlbupt/vim-color-ywl'
         Plugin 'altercation/vim-colors-solarized'
 
         " 括号显示增强
         Plugin 'kien/rainbow_parentheses.vim'
+        " 书签可视化
+        Plugin 'kshenoy/vim-signature'
         " ctlp-funky for super simple func navigator for vim
         " for lazy people who cannot wait until ctags finished
         Plugin 'ctrlpvim/ctrlp.vim' | Plugin 'tacahiroy/ctrlp-funky'
@@ -109,8 +111,11 @@ call vundle#begin('$VIMFILES/bundle')
         " simple to do 
         Plugin 'vitalk/vim-simple-todo'
 
-        " two pane outliner
-        " Plugin 'VOoM'
+        " 中英文的切换问题
+        " set ttimeoutlen = 100
+		" set timeout timeoutlen=3000 ttimeoutlen=100
+        " (映射上的超时在三秒以后发生，键码上的超时在十分之一秒后发生)。
+        Plugin 'lilydjwg/fcitx.vim'
 
         " Hexo 插件 TODO 
         Plugin 'ywlbupt/vim-hexo'
@@ -132,7 +137,10 @@ call vundle#begin('$VIMFILES/bundle')
 
 " altercation/vim-colors-solarized" "主题方案"{{{
     " if g:colors_name == 'solarized' 
-        let g:solarized_termcolors= 256
+    " 非gui模式的时候 
+    if &term !~ "gui"
+        let g:solarized_termcolors= 16
+    endif
         let g:solarized_termtrans = 1
         let g:solarized_contrast = "normal"    " 'normal' 'high' or 'low'
         let g:solarized_visibility= "normal"
@@ -448,6 +456,40 @@ call vundle#begin('$VIMFILES/bundle')
     au Syntax * RainbowParenthesesLoadRound
     au Syntax * RainbowParenthesesLoadSquare
     au Syntax * RainbowParenthesesLoadBraces
+"}}}
+
+" kshenoy/vim-signature 书签可视化与操作"{{{
+" 需要支持 :echo has("signs")
+" :SignatureToggle Show/Hide signs
+" :SignatureRefresh refresh signs
+
+" 独立书签mark，重新打开文档后仍存在
+" mx           Toggle mark 'x' and display it in the leftmost column
+" dmx          Remove mark 'x' where x is a-zA-Z
+
+" m,           Place the next available mark
+" m.           If no mark on line, place the next available mark. Otherwise, remove (first) existing mark.
+" m-           Delete all marks from the current line
+" m<Space>     Delete all marks from the current buffer
+" ]`           Jump to next mark by pos
+" [`           Jump to prev mark by pos
+" ]'           Jump to start of next line containing a mark
+" ['           Jump to start of prev line containing a mark
+" `]           Jump by alphabetical order to next mark
+" `[           Jump by alphabetical order to prev mark
+" ']           Jump by alphabetical order to start of next line having a mark
+" '[           Jump by alphabetical order to start of prev line having a mark
+" m/           Open location list and display marks from current buffer
+
+" 分类书签marker，重新打开文档后不存在
+" m[0-9]       Toggle the corresponding marker !@#$%^&*()
+" m<S-[0-9]>   Remove all markers of the same type
+" ]-           Jump to next line having a marker of the same type
+" [-           Jump to prev line having a marker of the same type
+" ]=           Jump to next line having a marker of any type
+" [=           Jump to prev line having a marker of any type
+" m?           Open location list and display markers from current buffer
+" m<BS>        Remove all markers
 "}}}
 
 " tpope/vim-surround.vim " 快速增加括号／引号／自定义符号"{{{

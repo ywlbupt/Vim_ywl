@@ -101,6 +101,11 @@ set history =1000
     " 置空错误铃声的终端代码,set silent (no beep)
     set vb t_vb=
 
+    " 针对Ubuntu下中文输入法的切换
+    if MySys() == "linux" || hostname() =~ "E420"
+        set timeout timeoutlen=3000 ttimeoutlen=100
+    endif
+
     " set showmatch " 插入括号时，短暂地跳转到匹配的对应括号
     " set matchtime=2 " 短暂跳转到匹配括号的时间
 
@@ -279,11 +284,6 @@ endif
     auto FileType c,cpp  set cindent " Strict rules for C Programs
     "auto FileType c,cpp  set smartindent " Strict rules for C Programs
     set autoindent
-    set smartindent " 开启行时使用智能自动缩进，为C程序
-    " indent: 如果用了:set indent,
-        " :set ai 等自动缩进，想用退格键将字段缩进的删掉，必须设置这个选项。否则不响应。
-    " eol:如果插入模式下在行开头，想通过退格键合并两行，需要设置eol。
-    " start：要想删除此次插入前的输入，需设置这个。 
     set backspace=indent,eol,start
 
     if has("autocmd")
@@ -463,6 +463,13 @@ if has("autocmd")
                     \setlocal cc=81
     augroup END
 
+    autocmd! FileType c,cpp set smartindent
+    " set smartindent " 开启行时使用智能自动缩进，为C程序
+    " indent: 如果用了:set indent,
+        " :set ai 等自动缩进，想用退格键将字段缩进的删掉，必须设置这个选项。否则不响应。
+    " eol:如果插入模式下在行开头，想通过退格键合并两行，需要设置eol。
+    " start：要想删除此次插入前的输入，需设置这个。 
+
     augroup xml-fold
         autocmd! xml-fold
         autocmd BufReadPre *.xml 
@@ -527,13 +534,11 @@ endif "has("autocmd")
     match WhitespaceEOL /\s\+$/
     set cursorline " 突出显示当前行
     " set cursorcolumn "突出当前列
-    set background=dark
-    colorscheme solarized
-    " colorscheme evening_ywl
+
+    syntax enable
     " 使用鼠标操作
     " set mouse=a
     set mouse=cvn
-    set t_Co=256
 
     if has("gui_running")
         set guioptions-=T " 隐藏工具栏
@@ -541,20 +546,24 @@ endif "has("autocmd")
         set guioptions-=L
         " set guioptions-=r
         set background=dark
+        colorscheme solarized
         " colorscheme desert_ywl  "设定配色方案
         autocmd GUIEnter * set lines=40 |  set columns=149 
         if MySys() == 'linux'
             "exec "winpos 400 70"
         endif
     else
-        if &term == "xterm"
+        set background=dark
+        set t_Co=16
+        colorscheme solarized
+        " if &term =~ "xterm"
             " set t_Co=16
             " set t_Sb=^[[4%dm " 设置背景色
             " set t_Sf=^[[3%dm " 设置前景色
-            " colorscheme evening_ywl
-            autocmd VimEnter * set lines=40 | set columns=149
-        endif 
+        autocmd VimEnter * set lines=40 | set columns=149
+        " endif 
     endif
+
     " 防止tmux下vim的背景色显示异常
     " Refer: http://sunaku.github.io/vim-256color-bce.html
     if &term =~ '256color'
