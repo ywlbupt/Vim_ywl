@@ -51,7 +51,7 @@ endfunction
 if !exists('g:user_complete_option')
     let g:user_complete_option = ['hexo']
 endif
-
+    
 " :h complete-functions
 function! CompleteMonths(findstart, base)
     if a:findstart
@@ -69,7 +69,7 @@ function! CompleteMonths(findstart, base)
         " 寻找匹配 "a:base" 的月份
         let res = []
         call complete_add(a:base)
-
+        " hexo section
         if count(g:user_complete_option, 'hexo')
             let image_lists =  globpath(g:hexo_blogpath. 
                         \ g:os_sep.'source', a:base.'*')
@@ -89,7 +89,8 @@ function! CompleteMonths(findstart, base)
         return []
     endif
 endfunction
-set completefunc=CompleteMonths
+" 启用自定义补全，感觉和ycm冲突了
+" set completefunc=CompleteMonths
 
 " function embeded python script
 function! RelpathPython(rpath, abspath)

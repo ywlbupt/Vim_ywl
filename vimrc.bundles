@@ -1,4 +1,5 @@
 " Dependency
+
 " python : [flake8](http://flake8.readthedocs.io/en/latest/#quickstart)
 
 " Plugin management "插件管理"{{{
@@ -44,7 +45,9 @@ call vundle#begin('$VIMFILES/bundle')
             " if hostname() != 'raspberrypi'
             " endif
             " 树莓派安装，各种问题，内存空间不足等
-            Plugin 'Valloric/YouCompleteMe'
+            if count(g:plugin_function_groups, 'YouCompleteMe')
+                Plugin 'Valloric/YouCompleteMe'
+            endif
         endif
         Plugin 'Valloric/ListToggle'
 
@@ -102,8 +105,6 @@ call vundle#begin('$VIMFILES/bundle')
         
         " gundo " edit history, 可以查看回到某个历史状态
         Plugin 'sjl/gundo.vim'
-        
-        " Plugin 'itchyny/calendar.vim'
 
         " Group dependencies, vim-snippets depends on ultisnips
         Plugin 'SirVer/ultisnips' | Plugin 'honza/vim-snippets'
@@ -111,24 +112,10 @@ call vundle#begin('$VIMFILES/bundle')
         " simple to do 
         Plugin 'vitalk/vim-simple-todo'
 
-        " 中英文的切换问题
-        " set ttimeoutlen = 100
-		" set timeout timeoutlen=3000 ttimeoutlen=100
-        " (映射上的超时在三秒以后发生，键码上的超时在十分之一秒后发生)。
-        Plugin 'lilydjwg/fcitx.vim'
-
-        " Hexo 插件 TODO 
-        Plugin 'ywlbupt/vim-hexo'
-
-        " " text object
-        " " 支持自定义文本对象
-        " Plug 'kana/vim-textobj-user'
-        " " 增加行文本对象: l   dal yal cil
-        " Plug 'kana/vim-textobj-line'
-        " " 增加文件文本对象: e   dae yae cie
-        " Plug 'kana/vim-textobj-entire'
-        " " 增加缩进文本对象: i   dai yai cii - 相同缩进属于同一块
-        " Plug 'kana/vim-textobj-indent'
+        if count(g:plugin_function_groups, 'hexo')
+            " Hexo 插件 TODO 
+            Plugin 'ywlbupt/vim-hexo'
+        endif
     
     " endif
     call vundle#end()            " required
@@ -146,6 +133,10 @@ call vundle#begin('$VIMFILES/bundle')
         let g:solarized_visibility= "normal"
     " endif
 "}}}
+
+if count(g:plugin_function_groups, 'hexo')
+    let g:hexo_blogpath = expand('~/hexo_blog')
+endif
 
 " vim-airline/vim-airline  "好看轻量级的powerline，不依赖python "{{{
     let g:airline_powerline_fonts = 1    
@@ -507,8 +498,6 @@ call vundle#begin('$VIMFILES/bundle')
 "TODO 我修改了原文件中 Toc的打开命令,ftplugin中,vertical topleft lopen 
 " --------Brief help------------
 " :Toc " 左侧打开目录栏quickfix Windows
-    " Disable vim-markdown mapping :1 disable ; 0: enable
-    let g:vim_markdown_no_default_key_mappings = 1
     " set the initial foldlevel
     let g:vim_markdown_initial_foldlevel=2
     " Markdown Toc width autofit
@@ -520,7 +509,15 @@ call vundle#begin('$VIMFILES/bundle')
     " Highlight YAML front matter as used by Jekyll or Hugo [7].
     let g:vim_markdown_frontmatter = 1
     " 链接的显示方式
-    let g:vim_markdown_conceal = 0
+    " let g:vim_markdown_conceal = 0
+    set conceallevel =2
+    " Disable vim-markdown mapping :1 disable ; 0: enable
+    let g:vim_markdown_no_default_key_mappings = 1
+    if g:vim_markdown_no_default_key_mappings
+        map ]u <Plug>Markdown_MoveToParentHeader
+        map [[ <Plug>Markdown_MoveToPreviousSiblingHeader
+        map ]] <Plug>Markdown_MoveToNextSiblingHeader
+    endif
 "}}}
 
 " scrooloose/nerdcommenter" 代码注释 :TODO "{{{
@@ -700,6 +697,23 @@ call vundle#begin('$VIMFILES/bundle')
             execute "Grep -r" w " *"
         endif
     endfunction
+    if count(g:plugin_function_groups, 'hexo')
+        function! Search_word_in_hexo()  
+            call inputsave() 
+            let w = input ("searching word in hexo :") 
+            call inputrestore() 
+            if !empty(w)
+                let searchpath = join([g:hexo_blogpath, 'source', '_posts'],
+                \ g:os_sep)
+                execute "Grep -r ".w." ".searchpath
+            else 
+                echo "nothing to search"
+            endif
+        endfunc
+        map <leader>fn :call Search_word_in_hexo()<CR>
+
+    endif
+
 
 """"""""""""""""""""""""""""""
 " grep setting
@@ -719,17 +733,6 @@ nmap <leader>I <Plug>(simple-todo-new-start-of-line)
 nmap <leader>x <Plug>(simple-todo-mark-switch)
 " .nmap..etc."}}}
 
-" Calendar Setting"{{{
-" " -position=left -width={50} 
-" " specify the view of the calendar on starting the buffer
-    " let g:calendar_view = "event"
-    " " fix problem 5, refer to  help
-    " let g:calendar_frame = 'default'
-    " " a Toggle command
-    " nmap <expr> <leader>cv &ft ==#'calendar'? "\<Plug>(calendar_exit)" :
-                " \ ":\<C-u>Calendar -position=topright -view=week\<CR>"
-"}}}
-
 " vim-easy-align"{{{
 
 " start interactive easyalign in visual mode (e.g. vip<enter>)
@@ -739,3 +742,4 @@ vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 "}}}
+

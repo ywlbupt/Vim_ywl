@@ -20,12 +20,10 @@
 let   mapleader = ","
 let g:mapleader = ","
 
-let g:hexo_blogpath = expand('~/hexo_blog')
 
-if !exists('g:plugin_groups')
-    let g:plugin_groups = ['hexo']
+if !exists('g:plugin_function_groups')
+    let g:plugin_function_groups = ['hexo', "YouCompleteMe"]
 endif
-
 
 " Load Plugin and Customed_Func "{{{
 if filereadable(expand(g:ywl_path.'/vimrc.bundles'))
@@ -100,11 +98,6 @@ set history =1000
     set novisualbell " 关闭使用可视响铃代替呼叫
     " 置空错误铃声的终端代码,set silent (no beep)
     set vb t_vb=
-
-    " 针对Ubuntu下中文输入法的切换
-    if MySys() == "linux" || hostname() =~ "E420"
-        set timeout timeoutlen=3000 ttimeoutlen=100
-    endif
 
     " set showmatch " 插入括号时，短暂地跳转到匹配的对应括号
     " set matchtime=2 " 短暂跳转到匹配括号的时间
