@@ -251,7 +251,7 @@ endif
     let g:NERDTreeShowBookmarks=1
     " 让Tree把自己给装饰得多姿多彩漂亮点
     let g:NERDChristmasTree=1
-    let g:NERDTreeWinSize=62
+    let g:NERDTreeWinSize=30
     " 当输入 [:e filename]不再显示netrw,而是显示nerdtree
     let g:NERDTreeHijackNetrw=1 
     " Nerdtree Display line numbers
