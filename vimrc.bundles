@@ -251,7 +251,7 @@ endif
     let g:NERDTreeShowBookmarks=1
     " 让Tree把自己给装饰得多姿多彩漂亮点
     let g:NERDChristmasTree=1
-    let g:NERDTreeWinSize=30
+    let g:NERDTreeWinSize=40
     " 当输入 [:e filename]不再显示netrw,而是显示nerdtree
     let g:NERDTreeHijackNetrw=1 
     " Nerdtree Display line numbers
@@ -698,6 +698,9 @@ endif
             execute "Grep -r" w " *"
         endif
     endfunction
+""""""""""""""""""""""""""""""
+"  在hexo中使用grep搜索笔记  "
+""""""""""""""""""""""""""""""
     if count(g:plugin_function_groups, 'hexo')
         function! Search_word_in_hexo()  
             call inputsave() 
