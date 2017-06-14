@@ -4,11 +4,28 @@
 # Plugin vim-snippets's markdown.snippets priority is -50
 priority -50
 
+global !p
+
+def num_multi_str(_str, num):
+	return _str * num 
+
+endglobal
+
 snippet verinfo "version, updatetime, Author and Description info" b
-version : ${1:1.0}
-Author : WiZero(<ywlbupt@163.com>)
-LastUpdate : `!v strftime("%Y-%m-%d %H:%M:%S")`
-Description : ${2:Description}
+`!p snip.rv=num_multi_str("-", 50)`
+version		: ${1:1.0}
+Author		: WiZero(<ywlbupt@163.com>)
+CreatTime	: `!v strftime("%Y-%m-%d")`
+Description : ${2}
+`!p snip.rv=num_multi_str("-", 50)`
 endsnippet
+
+snippet verchange "version change record" b
+`!p snip.rv=num_multi_str("-", 50)`
+version		: ${1}
+modified	: `!v strftime("%Y-%m-%d")`
+Description : ${2}
+endsnippet
+
 
 # vim:ft=snippets:

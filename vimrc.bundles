@@ -490,7 +490,7 @@ endif
 
     let g:surround_indent = 0
     let g:surround_45 = "```\n\r```"
-    let g:surround_61 = "**\r**"
+    let g:surround_61 = "~~\r~~"
     let g:surround_98 = "**\r**"
 "}}}
 
@@ -621,9 +621,13 @@ endif
     " 自定义 tagbar 支持 markdown , g:tagbar_type_{vim filetype}
     " 这里的 markdown2ctags 需要是可执行文件，TODO : win下如何处理？
     if MySys() == "linux"
+        let b:tagbar_tail = "py"
+    elseif MySys() == 'windows'
+        let b:tagbar_tail = "exe"
+    endif
     let g:tagbar_type_markdown = {
         \ 'ctagstype': 'markdown',
-        \ 'ctagsbin' : g:ywl_path.'/vimfiles/Tagbar_support/markdown2ctags.py',
+        \ 'ctagsbin' : g:ywl_path.'/vimfiles/Tagbar_support/markdown2ctags.'.b:tagbar_tail ,
         \ 'ctagsargs' : '-f - --sort=yes',
         \ 'kinds' : [
             \ 's:sections',
@@ -635,7 +639,7 @@ endif
         \ },
         \ 'sort': 0,
         \ }
-    endif
+
         " let g:tagbar_type_markdown = {
                     " \ 'ctagstype' : 'markdown',
                     " \ 'kinds' : [
@@ -707,9 +711,8 @@ endif
             let w = input ("searching word in hexo :") 
             call inputrestore() 
             if !empty(w)
-                let searchpath = join([g:hexo_blogpath, 'source', '_posts'],
-                \ g:os_sep)
-                execute "Grep -r ".w." ".searchpath
+                let searchpath = join([g:hexo_blogpath, 'source', '_posts'],g:os_sep)
+            execute "Grep -r ".w." ".searchpath
             else 
                 echo "nothing to search"
             endif

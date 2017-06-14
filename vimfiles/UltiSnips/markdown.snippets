@@ -72,3 +72,19 @@ snippet hmore "Read more" b
 <!-- more -->
 $0
 endsnippet
+
+
+global !p
+
+ANTI_QUOTE = "`"
+
+def triple_anti_quotes(snip):
+	return ANTI_QUOTE * 3
+
+endglobal
+
+snippet cc "code block (triple quotes)"
+`!p snip.rv = triple_anti_quotes(snip)`
+${1:${VISUAL:code}}
+`!p snip.rv = triple_anti_quotes(snip)`
+endsnippet
