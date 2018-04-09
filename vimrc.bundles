@@ -41,7 +41,7 @@ call vundle#begin('$VIMFILES/bundle')
         Plugin 'jkeylu/vimcdoc'
 
     " Windows 下未安装成功
-        if MySys() == "linux" || hostname() =~ "E420"
+        if MySys() == "linux" || hostname() =~ "E420" || hostname() =="M-PC"
             " if hostname() != 'raspberrypi'
             " endif
             " 树莓派安装，各种问题，内存空间不足等
@@ -309,7 +309,7 @@ endif
     " Turn on or off YCM
     " nnoremap <leader>y :let g:ycm_auto_trigger=0<cr> "turn off YCM nnoremap
     " nnoremap <leader>Y :let g:ycm_auto_trigger=1<cr> "turn on YCM nnoremap
-    if hostname() =~ 'E420' || MySys() == 'linux'
+    if hostname() =~ 'E420' || MySys() == 'linux' || hostname() == 'M-PC'
         " let g:ycm_python_binary_path = '/home/ywl/.pyenv/versions/anaconda3-2.4.0/bin/python'
         let g:ycm_python_binary_path = 'python'
         if MySys() == 'windows'

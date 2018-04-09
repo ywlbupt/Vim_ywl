@@ -625,7 +625,11 @@ endif
 " 定义Run函数  
     func! RunX()  
         if &filetype == 'c' || &filetype == 'cpp'  
-            exec "!./%<"
+            if MySys() == 'windows'
+                exec "!%<"
+            elseif MySys() == 'linux'
+                exec "!./%<"
+            endif
         elseif &filetype == 'java'  
             exec "!java %<"
         elseif &filetype == 'python'
@@ -653,38 +657,32 @@ endif
         endif  
     endfunc  
 
-"-----------------CPP @ windows---------------
-    if MySys() == 'windows'
-        func! ComplieRunGpp()
-            "if &filetype == 'cpp'
-                exec "w"
-                exec "!cl -EHsc %"
-                exec "!%<"
-                " %< 表示没有后缀的本文件
-            "endif
-        endfunc
-" -------------Cpp @ ubuntu --------------------
-    elseif MySys() == 'linux'
-        func! ComplieRunGpp()
-            if &filetype == 'cpp'
-                exec "w"
-                exec "!g++ % -g -Wall -o %<"
-                exec "! %<"
-                " exec "! ./%<"     
-                " %< 表示没有后缀的本文件
-            endif
-            if &filetype == 'c'
-                exec "w"
-                exec "!gcc % -g -Wall -o %<"
+"   Windows和linux的单文件编译
+    func! ComplieRunCpp()
+        if &filetype == 'cpp'
+            exec "w"
+            exec "!g++ % -g -Wall -o %<"
+            if MySys() == 'linux'
+                " %< 表示没有后缀的本文件 ，参考 :help %<
                 exec "! ./%<"       
-                " %< 表示没有后缀的本文件
+            elseif MySys() == 'windows'
+                exec "!%<"       
             endif
-        endfunc
-    endif
-    
+        endif
+        if &filetype == 'c'
+            exec "w"
+            exec "!gcc % -g -Wall -o %<"
+            if MySys() == 'linux'
+                " %< 表示没有后缀的本文件 ，参考 :help %<
+                exec "! ./%<"       
+            elseif MySys() == 'windows'
+                exec "!%<"       
+            endif
+        endif
+    endfunc
     
 " 单文件编译运行
-    map <silent> <C-F5> :call ComplieRunGpp()<CR>
+    map <silent> <C-F5> :call ComplieRunCpp()<CR>
     map <silent> <F5> :call ComplieX()<CR>
     map <silent> <F7> :call RunX()<CR>
 " make
