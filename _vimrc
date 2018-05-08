@@ -20,7 +20,6 @@
 let   mapleader = ","
 let g:mapleader = ","
 
-
 if !exists('g:plugin_function_groups')
     let g:plugin_function_groups = ['hexo', "YouCompleteMe"]
 endif

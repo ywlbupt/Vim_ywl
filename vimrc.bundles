@@ -28,8 +28,8 @@ call vundle#begin('$VIMFILES/bundle')
         " Plugin 'wesleyche/Trinity'
         " Plugin 'wesleyche/SrcExpl'
 
-        Plugin 'xolox/vim-misc' |  Plugin 'xolox/vim-session'
         Plugin 'xolox/vim-easytags'
+        Plugin 'xolox/vim-misc' |  Plugin 'xolox/vim-session'
 
         Plugin 'yegappan/grep'
 
@@ -41,7 +41,7 @@ call vundle#begin('$VIMFILES/bundle')
         Plugin 'jkeylu/vimcdoc'
 
     " Windows 下未安装成功
-        if MySys() == "linux" || hostname() =~ "E420" || hostname() =="M-PC"
+        if MySys() == "linux" || hostname() =~ "E420" || hostname() =="M-PC" || hostname() == "XMYWL"
             " if hostname() != 'raspberrypi'
             " endif
             " 树莓派安装，各种问题，内存空间不足等
@@ -309,12 +309,16 @@ endif
     " Turn on or off YCM
     " nnoremap <leader>y :let g:ycm_auto_trigger=0<cr> "turn off YCM nnoremap
     " nnoremap <leader>Y :let g:ycm_auto_trigger=1<cr> "turn on YCM nnoremap
-    if hostname() =~ 'E420' || MySys() == 'linux' || hostname() == 'M-PC'
+    if hostname() =~ 'E420' || MySys() == 'linux' || hostname() == 'M-PC' || hostname() == "XMYWL"
         " let g:ycm_python_binary_path = '/home/ywl/.pyenv/versions/anaconda3-2.4.0/bin/python'
         let g:ycm_python_binary_path = 'python'
         if MySys() == 'windows'
             " Only used for ycm server, default to use python embemdded in vim
             let g:ycm_server_python_interpreter = 'C:\\Anaconda3\\python'
+        endif
+        if hostname() == 'XMYWL'
+            " let g:ycm_server_python_interpreter = 'C:\\python35\\python'
+            let g:ycm_server_python_interpreter = 'C:/python35/python'
         endif
         nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
         nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
@@ -653,9 +657,9 @@ endif
 " --------Brief help------------
 " :UpdateTags  : 显式更新tags 
 " :HighlightTags  : 显式highlight tags 
-" if MySys() == 'windows'
-    " let g:easytags_cmd = 'ctags'
-" endif
+    if MySys() == 'windows'
+        let g:easytags_cmd = g:ywl_path.'/Archive_gvim/ctags.exe'
+    endif
 
     " 自动更新 tags 的发生时机，只在保存文件时更新，
     " 可选的event有 Cursorhold,  CursorholdI
