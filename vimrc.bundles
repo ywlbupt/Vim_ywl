@@ -628,6 +628,7 @@ endif
         let b:tagbar_tail = "py"
     elseif MySys() == 'windows'
         let b:tagbar_tail = "exe"
+        let g:tagbar_ctags_bin = g:ywl_path.'/Archive_gvim/ctags.exe'
     endif
     let g:tagbar_type_markdown = {
         \ 'ctagstype': 'markdown',
