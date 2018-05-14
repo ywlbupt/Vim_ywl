@@ -314,11 +314,11 @@ endif
         let g:ycm_python_binary_path = 'python'
         if MySys() == 'windows'
             " Only used for ycm server, default to use python embemdded in vim
-            let g:ycm_server_python_interpreter = 'C:\\Anaconda3\\python'
+            let g:ycm_server_python_interpreter = 'C:/Anaconda3/python'
         endif
         if hostname() == 'XMYWL'
-            " let g:ycm_server_python_interpreter = 'C:\\python35\\python'
-            let g:ycm_server_python_interpreter = 'C:/python35/python'
+            " let g:ycm_server_python_interpreter = 'C:/python35/python'
+            let g:ycm_global_ycm_extra_conf = g:ywl_path.'/vimfiles/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
         endif
         nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
         nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
