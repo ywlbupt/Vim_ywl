@@ -316,7 +316,7 @@ endif
             " Only used for ycm server, default to use python embemdded in vim
             let g:ycm_server_python_interpreter = 'C:/Anaconda3/python'
         endif
-        if hostname() == 'XMYWL'
+        if hostname() == 'XMYWL' || hostname()=="ywl-ThinkPad-E420"
             " let g:ycm_server_python_interpreter = 'C:/python35/python'
             let g:ycm_global_ycm_extra_conf = g:ywl_path.'/vimfiles/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
         endif
