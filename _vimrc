@@ -625,6 +625,7 @@ endif
     func! RunX()  
         if &filetype == 'c' || &filetype == 'cpp'  
             if MySys() == 'windows'
+                " exec "!%<"
                 exec "!%<"
             elseif MySys() == 'linux'
                 exec "!./%<"
@@ -634,7 +635,7 @@ endif
         elseif &filetype == 'python'
             exec "w"  
             if MySys() == 'windows'
-                exec "!python %"
+                exec "AsyncRun python %"
             elseif MySys() == 'linux'
                 exec "!python %"
             endif  

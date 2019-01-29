@@ -24,6 +24,8 @@ call vundle#begin('$VIMFILES/bundle')
 
         Plugin 'junegunn/vim-easy-align'
 
+        Plugin 'skywind3000/asyncrun.vim'
+
     " for Sourcecode-like ide
         " Plugin 'wesleyche/Trinity'
         " Plugin 'wesleyche/SrcExpl'
@@ -36,7 +38,7 @@ call vundle#begin('$VIMFILES/bundle')
     " tpope 大神
         Plugin 'tpope/vim-repeat' | Plugin 'tpope/vim-surround'
         " Git 集成工具
-        Plugin 'tpope/vim-fugitive'
+        " Plugin 'tpope/vim-fugitive'
 
         Plugin 'jkeylu/vimcdoc'
 
@@ -581,7 +583,7 @@ endif
 
 " tpope/vim-fugitive " tpope 大神的git wrapper，gvdiff 同步滚动"{{{
 " 快捷键
-    nnoremap <leader>ge :Gvdiff<CR>
+    " nnoremap <leader>ge :Gvdiff<CR>
 "}}}
 
 " airblade/gitgutter　同用于git diff "{{{
@@ -665,7 +667,10 @@ endif
 
     " 自动更新 tags 的发生时机，只在保存文件时更新，
     " 可选的event有 Cursorhold,  CursorholdI
-    let g:easytags_events = ['BufWritePost']
+    " let g:easytags_events = ['BufWritePost']
+    let g:easytags_events = []
+    nmap <silent> <leader>ct :UpdateTags<cr>
+    let g:easytags_async =1
 
     let g:easytags_auto_highlight = 0
 "}}}
