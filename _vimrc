@@ -636,6 +636,7 @@ endif
             exec "w"  
             if MySys() == 'windows'
                 exec "AsyncRun python %"
+                exec "copen"
             elseif MySys() == 'linux'
                 exec "!python %"
             endif  
