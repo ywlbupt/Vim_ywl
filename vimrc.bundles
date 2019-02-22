@@ -30,10 +30,10 @@ call vundle#begin('$VIMFILES/bundle')
         " Plugin 'wesleyche/Trinity'
         " Plugin 'wesleyche/SrcExpl'
 
-        Plugin 'xolox/vim-easytags'
+        Plugin 'xolox/vim-shell'
         Plugin 'xolox/vim-misc' |  Plugin 'xolox/vim-session'
-
-        Plugin 'yegappan/grep'
+        " allow vim-easytags work background
+        Plugin 'xolox/vim-easytags'
 
     " tpope 大神
         Plugin 'tpope/vim-repeat' | Plugin 'tpope/vim-surround'
@@ -52,6 +52,10 @@ call vundle#begin('$VIMFILES/bundle')
             endif
         endif
         Plugin 'Valloric/ListToggle'
+
+        " cd ~\.vim\bundle\LeaderF
+        " .\install.bat
+        Plugin 'Yggdroot/LeaderF'
 
     " provide a reference manual for the C++ standard template library (STL)
         " Plugin 'stlrefvim'
@@ -151,6 +155,8 @@ endif
         endif
     endif
 
+    " tagbar和vim-airline冲突了
+    let g:airline#extensions#tagbar#enabled = 0
     " 打开tabline功能,方便查看Buffer和切换，这个功能比较不错
     let g:airline#extensions#tabline#enabled = 1
     " show just the filename
@@ -613,7 +619,7 @@ endif
 " }}}
 
 " majutsushi/tagbar"{{{
-    nmap <F8> :TagbarToggle<CR>
+    nnoremap <silent> <F8> :TagbarToggle<CR>
     " 打开Tagbar窗口后自动focus到Tagbar窗口
     let g:tagbar_autofocus = 1
     " Tagbar 显示行号
@@ -647,14 +653,6 @@ endif
         \ },
         \ 'sort': 0,
         \ }
-
-        " let g:tagbar_type_markdown = {
-                    " \ 'ctagstype' : 'markdown',
-                    " \ 'kinds' : [
-                    " \ 'h:headings',
-                    " \ ],
-                    " \ 'sort' : 0
-                    " \ }
 "}}}
 
 " xolox/vim-easytags"{{{
@@ -664,15 +662,19 @@ endif
     if MySys() == 'windows'
         let g:easytags_cmd = g:ywl_path.'/Archive_gvim/ctags.exe'
     endif
+    " let g:easytags_opts = ['-R']
+    " let g:easytags_file = expand('$HOME')."/_vimtags"
 
-    " 自动更新 tags 的发生时机，只在保存文件时更新，
     " 可选的event有 Cursorhold,  CursorholdI
+    " 自动更新 tags 的发生时机，只在保存文件时更新，
     " let g:easytags_events = ['BufWritePost']
-    let g:easytags_events = []
-    nmap <silent> <leader>ct :UpdateTags<cr>
-    let g:easytags_async =1
-
+    let g:easytags_events = ['']
+    " 貌似 不加 -R 异步执行不成功
+    nmap <silent> <leader>ct :UpdateTags -R<cr>
+    let g:easytags_async=0
     let g:easytags_auto_highlight = 0
+    set tags=./tags;
+    let g:easytags_dynamic_files = 1
 "}}}
 
 "{{{
@@ -680,63 +682,51 @@ endif
 " """"""""""""""""""""""""""""""
 " 将当前的工程的tags导入
 " 如果源文件在当前文件夹下没有找到tags,可以到它的上层目录下继续寻找
-    set tags=tags;
+    " set tags=./tags;
+    " set tags=~/_vimtags;
 "}}}
 
 " Valloric/ListToggle"{{{
     let g:lt_quickfix_list_toggle_map = '<F4>'
 "}}}
 
-" yegappan/grep 文件夹内字符串查找"{{{
-" :let Grep_Path = 'd:\tools\grep.exe'
-" :let Fgrep_Path = 'd:\tools\fgrep.exe'
-" :let Egrep_Path = 'd:\tools\egrep.exe' " 正则表达式搜索,相当于 grep -e
-" :let Agrep_Path = 'd:\tools\agrep.exe'
-"       :let Grep_Default_Options = '-i'
-    let Grep_Skip_Dirs = '.git vimfiles/view undodirfile'
-    let Grep_Skip_Files = '*.bak *~ *.swp'
-    " -i ignore-case
-    let Grep_Default_Options = '-i'
-" for Recursive search
-
-" vimgrep.vim
+" vimgrep.vim {{{
 " 对搜索的设置
-    map <leader>ff :call Search_Word("CurrentFile")<CR>:copen<CR>
-    map <leader>fF :call Search_Word("RecursiveFile")<CR>:copen<CR>
-    function! Search_Word(opt)
-        let w = expand("<cword>") " 在当前光标位置抓词
-        if a:opt == 'CurrentFile'
-            " execute "vimgrep " w " %"
-            " 在当前文件%中查找 光标下的单词
-            execute "Grep " w " %"
-        elseif a:opt == 'RecursiveFile'
-            execute "Grep -r" w " *"
-        endif
-    endfunction
+    " map <leader>ff :call Search_Word("CurrentFile")<CR>:copen<CR>
+    " map <leader>fF :call Search_Word("RecursiveFile")<CR>:copen<CR>
+    " function! Search_Word(opt)
+        " let w = expand("<cword>") " 在当前光标位置抓词
+        " if a:opt == 'CurrentFile'
+            " " execute "vimgrep " w " %"
+            " " 在当前文件%中查找 光标下的单词
+            " execute "Grep " w " %"
+        " elseif a:opt == 'RecursiveFile'
+            " execute "Grep -r" w " *"
+        " endif
+    " endfunction
 """"""""""""""""""""""""""""""
 "  在hexo中使用grep搜索笔记  "
 """"""""""""""""""""""""""""""
-    if count(g:plugin_function_groups, 'hexo')
-        function! Search_word_in_hexo()  
-            call inputsave() 
-            let w = input ("searching word in hexo :") 
-            call inputrestore() 
-            if !empty(w)
-                let searchpath = join([g:hexo_blogpath, 'source', '_posts'],g:os_sep)
-            execute "Grep -r ".w." ".searchpath
-            else 
-                echo "nothing to search"
-            endif
-        endfunc
-        map <leader>fn :call Search_word_in_hexo()<CR>
+    " if count(g:plugin_function_groups, 'hexo')
+        " function! Search_word_in_hexo()  
+            " call inputsave() 
+            " let w = input ("searching word in hexo :") 
+            " call inputrestore() 
+            " if !empty(w)
+                " let searchpath = join([g:hexo_blogpath, 'source', '_posts'],g:os_sep)
+            " execute "Grep -r ".w." ".searchpath
+            " else 
+                " echo "nothing to search"
+            " endif
+        " endfunc
+        " map <leader>fn :call Search_word_in_hexo()<CR>
 
-    endif
-
+    " endif
 
 """"""""""""""""""""""""""""""
 " grep setting
 """"""""""""""""""""""""""""""
-    " nnoremap <silent> <F3> :Grep<CR>
+    nnoremap <silent> <F3> :Grep<CR>
     "}}}
 
 " simple-todo-new : Disable default key bindings"{{{
@@ -761,3 +751,25 @@ nmap ga <Plug>(EasyAlign)
 
 "}}}
 
+" leaderF {{{
+"   move rg.exe to C:\windows\System32
+"   vimrun 搜索路径
+    let g:Lf_PythonVersion =3
+
+    let g:Lf_Ctags = g:ywl_path.'/Archive_gvim/ctags.exe'
+    " preview code when navigating
+    let g:Lf_PreviewCode  = 1
+    " let g:Lf_CtagsFuncOpts = {
+            " \ 'c': '--c-kinds=fp',
+            " \ 'rust': '--rust-kinds=f',
+            " \ }
+    " function! LeaderfTag_cword() 
+        " let w = expand("<cword>") " 在当前光标位置抓词
+        " exec 'LeaderfTag'
+    " endfunction
+    " noremap <C-F> :LeaderfFunction!<cr>
+    " search word under cursor, the pattern is treated as regex, and enter normal mode directly
+    " nnoremap <C-F> :<C-U><C-R>=printf("Leaderf! %s ", expand("<cword>"))<CR>
+    " search word under cursor literally only in current buffer
+    " nnoremap <C-B> :<C-U><C-R>=printf("Leaderf! rg -F --current-buffer -e %s ", expand("<cword>"))<CR>
+" }}}
