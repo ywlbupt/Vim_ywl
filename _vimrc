@@ -244,6 +244,7 @@ endif
     "   Fast editing of .vimrc
         map <silent> <leader>ee :exec 'edit '.g:ywl_path.'/_vimrc'<cr>
         map <silent> <leader>er :e ~/.vimrc<cr>
+        map <silent> <leader>eb :exec 'edit '.g:ywl_path.'/vimrc.bundles'<cr>
     "   When .vimrc is edited, reload it 每次保存syntax总不太对头
         " autocmd! bufwritepost _vimrc exec 'source ~/.vimrc'
         " autocmd! bufwritepost .vimrc exec 'source ~/.vimrc'
@@ -254,6 +255,7 @@ endif
     "   Fast editing of _vimrc
         map <silent> <leader>ee :exec 'edit '.g:ywl_path.'\_vimrc'<cr>
         map <silent> <leader>er :e $VIM\_vimrc<cr>
+        map <silent> <leader>eb :exec 'edit '.g:ywl_path.'\vimrc.bundles'<cr>
     "   When _vimrc is edited, reload it
         " autocmd! bufwritepost _vimrc exec 'source $VIM\_vimrc'
     endif

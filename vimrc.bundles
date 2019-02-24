@@ -2,6 +2,8 @@
 
 " python : [flake8](http://flake8.readthedocs.io/en/latest/#quickstart)
 
+
+
 " Plugin management "插件管理"{{{
 " --------Brief help----------------------------
 " :PluginList          - list configured bundles  
@@ -30,8 +32,8 @@ call vundle#begin('$VIMFILES/bundle')
         " Plugin 'wesleyche/Trinity'
         " Plugin 'wesleyche/SrcExpl'
 
-        Plugin 'xolox/vim-shell'
         Plugin 'xolox/vim-misc' |  Plugin 'xolox/vim-session'
+        Plugin 'xolox/vim-shell'
         " allow vim-easytags work background
         Plugin 'xolox/vim-easytags'
 
@@ -100,11 +102,6 @@ call vundle#begin('$VIMFILES/bundle')
         Plugin 'kien/rainbow_parentheses.vim'
         " 书签可视化
         Plugin 'kshenoy/vim-signature'
-        " ctlp-funky for super simple func navigator for vim
-        " for lazy people who cannot wait until ctags finished
-        Plugin 'ctrlpvim/ctrlp.vim' | Plugin 'tacahiroy/ctrlp-funky'
-        " fork from d11wtq, Extention of ctrlp
-        Plugin 'ywlbupt/ctrlp_bdelete.vim'
         Plugin 'majutsushi/tagbar'
         " gitgutter
         Plugin 'airblade/vim-gitgutter'
@@ -127,6 +124,11 @@ call vundle#begin('$VIMFILES/bundle')
     call vundle#end()            " required
     filetype plugin indent on    " required
 "}}}
+
+call plug#begin('$VIMFILES/plugged')
+Plug 'junegunn/vim-easy-align'
+" Initialize plugin system
+call plug#end()
 
 " altercation/vim-colors-solarized" "主题方案"{{{
     " if g:colors_name == 'solarized' 
@@ -183,52 +185,8 @@ endif
     " endif
 "}}}
 
-" ctrlpvim/ctrlp.vim " 文件导航插件"{{{
-" --------Brief help------------
-" :CtrlP for file mode.
-" :CtrlPBuffer  for buffer or find MRU file mode.
-" :CtrlPMRU for Most Recently Used mode
-" :CtrlPMixed to search in Files, Buffers and MRU files at the same time.
-
-    " c-j/k : 在导航窗口上下选择
-    " c-v : 垂直分屏打开选择文件
-    " c-x : 水平分屏打开文件
-    " c-z : 多选文件
-    " c-f/b : 在导航窗口进行模式的切换
-    " c-d : 在全路径搜索和文件名搜索间切换。
-    "  默认的mapping 与 Binding 的命令
-    let g:ctrlp_map = '<c-p>' | let g:ctrlp_cmd = 'CtrlP'
-    " Working diretory setting 
-    " -r : diretory of current file
-    let g:ctrlp_working_path_mode = 'ra'
-
-    " NOTE: 这些ignore的内容在使用custom_command的时候不生效
-    set wildignore=*.o,*~,*.pyc,*.class,*.so,*.swp,*.zip
-    if MySys()=='linux'
-        set wildignore+=*/tmp/*,*/undodirfile/*,*/vimfiles/view/*
-        " set wildignore+=*/.git/* " 此处会和fugitive 冲突
-        " MacOSX/Linux Use a custom file listing command
-        " let g:ctrlp_user_command = 'find %s -type f'        
-    elseif MySys()=='windows'
-        set wildignore+=*\\tmp\\*,*.exe,*\\undodirfile\\*,*\\vimfiles\\view\\*
-        " set wildignore+=*\\.git\\* " 此处会和fugitive 冲突
-        " Windows , Use a custom file listing command
-        " let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  
-    endif
-    let g:ctrlp_custom_ignore = {
-        \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
-        \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
-        \ }
-"}}}
-
-" tacahiroy/ctrlp-funky complementary func navigator for ctrlp.vim"{{{
-    nnoremap <Leader>fu :CtrlPFunky<Cr>
-    " narrow the list down with a word under cursor
-    nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-"}}}
-
 " ctrlp_bdelete : Extention of CtrlP"{{{
-    call ctrlp_bdelete#init()
+    " call ctrlp_bdelete#init()
 "}}}
 
 " vim-scripts/Load_Template file setting " 模板文件"{{{
@@ -380,6 +338,7 @@ endif
 " :DeleteSession - 关闭会话，当前标签保留
 
 " Session保存路径
+"   g:os_sep
     if MySys() == 'windows'
         let g:session_directory=g:ywl_path.'\vimfiles\Workspace'
     elseif MySys() == 'linux'
@@ -663,18 +622,19 @@ endif
         let g:easytags_cmd = g:ywl_path.'/Archive_gvim/ctags.exe'
     endif
     " let g:easytags_opts = ['-R']
-    " let g:easytags_file = expand('$HOME')."/_vimtags"
+    let g:easytags_file = expand('$HOME')."/_vimtags"
 
     " 可选的event有 Cursorhold,  CursorholdI
     " 自动更新 tags 的发生时机，只在保存文件时更新，
     " let g:easytags_events = ['BufWritePost']
     let g:easytags_events = ['']
-    " 貌似 不加 -R 异步执行不成功
-    nmap <silent> <leader>ct :UpdateTags -R<cr>
+    
+    " 生成与 ~/_vimtags 为根的绝对路径，且此时 set tags = ./tags;,~/_vimtags
+    nmap <silent> <leader>ct :exec ':UpdateTags --tag-relative=yes -f '.g:easytags_file.' -R'<cr>
     let g:easytags_async=0
     let g:easytags_auto_highlight = 0
     set tags=./tags;
-    let g:easytags_dynamic_files = 1
+    " let g:easytags_dynamic_files = 1
 "}}}
 
 "{{{
@@ -759,6 +719,16 @@ nmap ga <Plug>(EasyAlign)
     let g:Lf_Ctags = g:ywl_path.'/Archive_gvim/ctags.exe'
     " preview code when navigating
     let g:Lf_PreviewCode  = 1
+    let g:Lf_PreviewResult = {
+            \ 'File': 0,
+            \ 'Buffer': 0,
+            \ 'Mru': 0,
+            \ 'Tag': 0,
+            \ 'BufTag': 0,
+            \ 'Function': 1,
+            \ 'Line': 0,
+            \ 'Colorscheme': 0
+            \}
     " let g:Lf_CtagsFuncOpts = {
             " \ 'c': '--c-kinds=fp',
             " \ 'rust': '--rust-kinds=f',
@@ -767,9 +737,60 @@ nmap ga <Plug>(EasyAlign)
         " let w = expand("<cword>") " 在当前光标位置抓词
         " exec 'LeaderfTag'
     " endfunction
-    " noremap <C-F> :LeaderfFunction!<cr>
+    let g:Lf_ShortcutF = '<C-P>'
+    nnoremap <leader>fu :LeaderfFunction!<cr>
+    " search word recursive
+    nnoremap <leader>f :Leaderf! rg -e
+    " let g:Lf_CommandMap = {'<C-P>': ['<C-L>'], }
+    
+
     " search word under cursor, the pattern is treated as regex, and enter normal mode directly
-    " nnoremap <C-F> :<C-U><C-R>=printf("Leaderf! %s ", expand("<cword>"))<CR>
+    nnoremap <C-B> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR><CR>
     " search word under cursor literally only in current buffer
-    " nnoremap <C-B> :<C-U><C-R>=printf("Leaderf! rg -F --current-buffer -e %s ", expand("<cword>"))<CR>
+    nnoremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -F --current-buffer -e %s ", expand("<cword>"))<CR><CR>
 " }}}
+
+" ctrlpvim/ctrlp.vim " 文件导航插件"{{{
+" --------Brief help------------
+" :CtrlP for file mode.
+" :CtrlPBuffer  for buffer or find MRU file mode.
+" :CtrlPMRU for Most Recently Used mode
+" :CtrlPMixed to search in Files, Buffers and MRU files at the same time.
+
+    " " c-j/k : 在导航窗口上下选择
+    " " c-v : 垂直分屏打开选择文件
+    " " c-x : 水平分屏打开文件
+    " " c-z : 多选文件
+    " " c-f/b : 在导航窗口进行模式的切换
+    " " c-d : 在全路径搜索和文件名搜索间切换。
+    " "  默认的mapping 与 Binding 的命令
+    " let g:ctrlp_map = '<c-p>' | let g:ctrlp_cmd = 'CtrlP'
+    " " Working diretory setting 
+    " " -r : diretory of current file
+    " let g:ctrlp_working_path_mode = 'ra'
+
+    " " NOTE: 这些ignore的内容在使用custom_command的时候不生效
+    " set wildignore=*.o,*~,*.pyc,*.class,*.so,*.swp,*.zip
+    " if MySys()=='linux'
+        " set wildignore+=*/tmp/*,*/undodirfile/*,*/vimfiles/view/*
+        " " set wildignore+=*/.git/* " 此处会和fugitive 冲突
+        " " MacOSX/Linux Use a custom file listing command
+        " " let g:ctrlp_user_command = 'find %s -type f'        
+    " elseif MySys()=='windows'
+        " set wildignore+=*\\tmp\\*,*.exe,*\\undodirfile\\*,*\\vimfiles\\view\\*
+        " " set wildignore+=*\\.git\\* " 此处会和fugitive 冲突
+        " " Windows , Use a custom file listing command
+        " " let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  
+    " endif
+    " let g:ctrlp_custom_ignore = {
+        " \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+        " \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+        " \ }
+"}}}
+
+" tacahiroy/ctrlp-funky complementary func navigator for ctrlp.vim"{{{
+    " nnoremap <Leader>fu :CtrlPFunky<Cr>
+    " narrow the list down with a word under cursor
+    nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+"}}}
+

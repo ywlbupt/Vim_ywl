@@ -3,4 +3,5 @@ tags
 /vimfiles/bundle
 /vimfiles/Workspace
 /vimfiles/plugindata
+/vimfiles/plugged
 __pycache__
