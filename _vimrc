@@ -21,7 +21,10 @@ let   mapleader = ","
 let g:mapleader = ","
 
 if !exists('g:plugin_function_groups')
-    let g:plugin_function_groups = ['hexo', "YouCompleteMe"]
+    " "syntastic", "hexo" , "YouCompleteMe" , "ale", "airline",
+    " "tagbar"
+    " let g:plugin_function_groups = ["hexo"  "YouCompleteMe" , "ale", "airline"]
+    let g:plugin_function_groups = ['hexo', "YouCompleteMe", "airline" ,"ale"]
 endif
 
 " Load Plugin and Customed_Func "{{{
@@ -334,9 +337,10 @@ endif
     set pastetoggle=<F6>
     " disbale paste mode when leaving insert mode
     " au InsertLeave * set nopaste   
+
     " F11 doesn't work in terms 全屏模式 buftype = 'quickfix'
-    nmap <S-F11> :cw 10<cr>
-    nmap <C-F11> :ccl<cr>
+    " nmap <S-F11> :cw 10<cr>
+    " nmap <C-F11> :ccl<cr>
     " nmap <leader>cc :botright lw 10<cr>
     " map <c-u> <c-l><c-j>:q<cr>:botright cw 10<cr>
     
@@ -610,86 +614,6 @@ endfunc
 if MySys() == "windows"
     " map <leader>fm <Esc>:call CodeFormat()<CR>
 endif
-"}}}
-
-"{{{
-" 定义CompileRun函数，用来调用编译和运行  
-    func! ComplieX()  
-        exec "w"  
-        if &filetype == 'c'  
-            exec "!gcc % -g -Wall -o %<"
-        elseif &filetype == 'cpp'  
-            exec "!g++ % -g -Wall -o %<"
-        endif
-    endfunc
-
-" 定义Run函数  
-    func! RunX()  
-        if &filetype == 'c' || &filetype == 'cpp'  
-            if MySys() == 'windows'
-                " exec "!%<"
-                exec "!%<"
-            elseif MySys() == 'linux'
-                exec "!./%<"
-            endif
-        elseif &filetype == 'java'  
-            exec "!java %<"
-        elseif &filetype == 'python'
-            exec "w"  
-            if MySys() == 'windows'
-                exec "AsyncRun python %"
-                exec "copen"
-            elseif MySys() == 'linux'
-                exec "!python %"
-            endif  
-        endif  
-    endfunc  
-
-" 定义Debug函数，用来调试程序  
-    func! Debug()  
-        exec "w"  
-        if &filetype == 'c'  
-            exec "!gcc % -g -o %<" 
-            exec "!gdb %<"
-        elseif &filetype == 'cpp'  
-            exec "!g++ % -g -o %<"
-            exec "!gdb %<" 
-        elseif &filetype == 'java'  
-            exec "!javac %"  
-            exec "!jdb %<"
-        endif  
-    endfunc  
-
-"   Windows和linux的单文件编译
-    func! ComplieRunCpp()
-        if &filetype == 'cpp'
-            exec "w"
-            exec "!g++ % -g -Wall -o %<"
-            if MySys() == 'linux'
-                " %< 表示没有后缀的本文件 ，参考 :help %<
-                exec "! ./%<"       
-            elseif MySys() == 'windows'
-                exec "!%<"       
-            endif
-        endif
-        if &filetype == 'c'
-            exec "w"
-            exec "!gcc % -g -Wall -o %<"
-            if MySys() == 'linux'
-                " %< 表示没有后缀的本文件 ，参考 :help %<
-                exec "! ./%<"       
-            elseif MySys() == 'windows'
-                exec "!%<"       
-            endif
-        endif
-    endfunc
-    
-" 单文件编译运行
-    map <silent> <C-F5> :call ComplieRunCpp()<CR>
-    map <silent> <F5> :call ComplieX()<CR>
-    map <silent> <F7> :call RunX()<CR>
-" make
-    autocmd FileType c,cpp map <silent> <leader><space> :make<CR>
 "}}}
 
 "{{{

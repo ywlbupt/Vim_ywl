@@ -2,8 +2,6 @@
 
 " python : [flake8](http://flake8.readthedocs.io/en/latest/#quickstart)
 
-
-
 " Plugin management "插件管理"{{{
 " --------Brief help----------------------------
 " :PluginList          - list configured bundles  
@@ -21,21 +19,15 @@ set rtp+=$VIMFILES/bundle/Vundle.vim
 call vundle#begin('$VIMFILES/bundle')
 	"let Vundle manage Vundle, required
         Plugin 'VundleVim/Vundle.vim'
-    " vim-markdown 要求tabular插件，feature as Align
-        Plugin 'godlygeek/tabular' | Plugin 'plasticboy/vim-markdown'
 
         Plugin 'junegunn/vim-easy-align'
 
         Plugin 'skywind3000/asyncrun.vim'
 
-    " for Sourcecode-like ide
-        " Plugin 'wesleyche/Trinity'
-        " Plugin 'wesleyche/SrcExpl'
-
         Plugin 'xolox/vim-misc' |  Plugin 'xolox/vim-session'
-        Plugin 'xolox/vim-shell'
+        " Plugin 'xolox/vim-shell'
         " allow vim-easytags work background
-        Plugin 'xolox/vim-easytags'
+        " Plugin 'xolox/vim-easytags'
 
     " tpope 大神
         Plugin 'tpope/vim-repeat' | Plugin 'tpope/vim-surround'
@@ -46,9 +38,6 @@ call vundle#begin('$VIMFILES/bundle')
 
     " Windows 下未安装成功
         if MySys() == "linux" || hostname() =~ "E420" || hostname() =="M-PC" || hostname() == "XMYWL"
-            " if hostname() != 'raspberrypi'
-            " endif
-            " 树莓派安装，各种问题，内存空间不足等
             if count(g:plugin_function_groups, 'YouCompleteMe')
                 Plugin 'Valloric/YouCompleteMe'
             endif
@@ -61,10 +50,7 @@ call vundle#begin('$VIMFILES/bundle')
 
     " provide a reference manual for the C++ standard template library (STL)
         " Plugin 'stlrefvim'
-   
     " -------------------- Python ---------------- 
-    " Auto Completement of python 自动补全的快捷键都冲突了
-        " Plugin 'Pydiction'
     " fold for python
         Plugin 'tmhedberg/SimpylFold'
     " python vim built-in help
@@ -80,13 +66,9 @@ call vundle#begin('$VIMFILES/bundle')
         Plugin 'scrooloose/nerdtree'
         " " nerd tree tabs, tab操作，使各个窗口的tab布局一致
         " Plugin 'jistr/vim-nerdtree-tabs'
-        Plugin 'scrooloose/syntastic'
-        
-        " Plugin 'taglist.vim' 
-        " Plugin 'Align'
-        " Plugin 'TxtBrowser'
-        " Plugin 'winmanager'
-        " Plugin 'a.vim'
+        " if count(g:plugin_function_groups, 'syntastic')
+            " Plugin 'scrooloose/syntastic'
+        " endif
 
         " autocomplete pairs自动补全括号
         Plugin 'Raimondi/delimitMate'
@@ -102,7 +84,6 @@ call vundle#begin('$VIMFILES/bundle')
         Plugin 'kien/rainbow_parentheses.vim'
         " 书签可视化
         Plugin 'kshenoy/vim-signature'
-        Plugin 'majutsushi/tagbar'
         " gitgutter
         Plugin 'airblade/vim-gitgutter'
         
@@ -126,8 +107,19 @@ call vundle#begin('$VIMFILES/bundle')
 "}}}
 
 call plug#begin('$VIMFILES/plugged')
-Plug 'junegunn/vim-easy-align'
+" Plug 'junegunn/vim-easy-align'
 " Initialize plugin system
+    Plug 'ludovicchabant/vim-gutentags'
+    Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown' , {'for': 'markdown'}
+    autocmd! User vim-markdowm echom 'markdown is now loaded!'
+    autocmd! User vim-markdowm.vim echom 'markdown.vim is now loaded!'
+    if count(g:plugin_function_groups, "ale")
+        Plug 'w0rp/ale'
+    endif
+    " vim-markdown 要求tabular插件，feature as Align
+    if count(g:plugin_function_groups, "tagbar")
+        Plug 'majutsushi/tagbar'
+    endif
 call plug#end()
 
 " altercation/vim-colors-solarized" "主题方案"{{{
@@ -147,46 +139,35 @@ if count(g:plugin_function_groups, 'hexo')
 endif
 
 " vim-airline/vim-airline  "好看轻量级的powerline，不依赖python "{{{
-    let g:airline_powerline_fonts = 1    
-    let g:airline_theme = "base16_google"
-    if MySys() == 'windows'
-        set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI
-    else 
-	    if has("gui_gtk2")
-            set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
+    if count(g:plugin_function_groups, "airline")
+        let g:airline_powerline_fonts = 1    
+        let g:airline_theme = "base16_google"
+        if MySys() == 'windows'
+            set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI
+        else 
+            if has("gui_gtk2")
+                set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
+            endif
+        endif
+
+        " tagbar和vim-airline冲突了
+        let g:airline#extensions#tagbar#enabled = 0
+        " 打开tabline功能,方便查看Buffer和切换，这个功能比较不错
+        let g:airline#extensions#tabline#enabled = 1
+        " show just the filename
+        let g:airline#extensions#tabline#fnamemod = ":t"
+        " show buffer number
+        let g:airline#extensions#tabline#buffer_nr_show = 1
+        if count(g:plugin_function_groups, "YouCompleteMe")
+            " enable/disable YCM integration >
+            let g:airline#extensions#ycm#enabled = 1
+            " set error count prefix >
+            let g:airline#extensions#ycm#error_symbol = 'E:'
+            " set warning count prefix >
+            let g:airline#extensions#ycm#warning_symbol = 'W:'
         endif
     endif
 
-    " tagbar和vim-airline冲突了
-    let g:airline#extensions#tagbar#enabled = 0
-    " 打开tabline功能,方便查看Buffer和切换，这个功能比较不错
-    let g:airline#extensions#tabline#enabled = 1
-    " show just the filename
-    let g:airline#extensions#tabline#fnamemod = ":t"
-    " show buffer number
-    let g:airline#extensions#tabline#buffer_nr_show = 1
-
-"}}}
-
-" vim-ctrlspace/vim-ctrlspace  " Tab 与 Buffer 的导航增强 "{{{
-    " set hidden
-    " " 与airline statusline的冲突
-    " let g:CtrlSpaceDefaultMappingKey = "<leader><Space>"
-    " " Should Vim-CtrlSpace change your default tabline to its own? default:1 
-    " let g:CtrlSpaceUseTabline = 0
-    " let g:airline_exclude_preview = 1
-    " hi CtrlSpaceSelected guifg=#586e75 guibg=#eee8d5 guisp=#839496 gui=reverse,bold ctermfg=10 ctermbg=7 cterm=reverse,bold
-    " hi CtrlSpaceNormal   guifg=#839496 guibg=#021B25 guisp=#839496 gui=NONE ctermfg=12 ctermbg=0 cterm=NONE
-    " hi CtrlSpaceSearch   guifg=#cb4b16 guibg=NONE gui=bold ctermfg=9 ctermbg=NONE term=bold cterm=bold
-    " hi CtrlSpaceStatus   guifg=#839496 guibg=#002b36 gui=reverse term=reverse cterm=reverse ctermfg=12 ctermbg=8
-    " if has("gui_running")
-        " " Settings for MacVim and Inconsolata font
-        " let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
-    " endif
-"}}}
-
-" ctrlp_bdelete : Extention of CtrlP"{{{
-    " call ctrlp_bdelete#init()
 "}}}
 
 " vim-scripts/Load_Template file setting " 模板文件"{{{
@@ -257,7 +238,7 @@ endif
 "}}}
 
 " Cunstomed Function"{{{
-        "if expand('%')=~"NERD_tree_\\d\\+"
+    "if expand('%')=~"NERD_tree_\\d\\+"
     "   nnoremap <buffer> <F4> :call OpenNERDTreeBoookmarks()
     "endif
     " if has("autocmd")
@@ -273,6 +254,8 @@ endif
 
 " Valloric/YouCompleteMe" 可能是最好用的自动补全工具 TODO:syntastic"{{{
     " Turn on or off YCM
+    " 主动补全：<c-space>
+    let g:ycm_key_list_stop_completion = ['<C-y>']
     " nnoremap <leader>y :let g:ycm_auto_trigger=0<cr> "turn off YCM nnoremap
     " nnoremap <leader>Y :let g:ycm_auto_trigger=1<cr> "turn on YCM nnoremap
     if hostname() =~ 'E420' || MySys() == 'linux' || hostname() == 'M-PC' || hostname() == "XMYWL"
@@ -286,14 +269,14 @@ endif
             " let g:ycm_server_python_interpreter = 'C:/python35/python'
             let g:ycm_global_ycm_extra_conf = g:ywl_path.'/vimfiles/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
         endif
-        nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
-        nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
-        nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
+        " nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+        " nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+        " nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+        
         " make YCM compatible with UltiSnips (using supertab)
+        " c-k, c-j is Ok
         let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
         let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-        " let g:SuperTabDefaultCompletionType = '<C-n>'
 
         let g:ycm_error_symbol = '>>'
         let g:ycm_warning_symbol = '>*'
@@ -308,8 +291,10 @@ endif
         let g:ycm_seed_identifiers_with_syntax=1
         " 黑名单策略
         let g:ycm_filetype_blacklist = {'tagbar': 1,}
-    else " for plugin not installed"
-        let g:ycm_auto_trigger=0
+        " 关闭语法检测提示
+        let g:ycm_enable_diagnostic_signs = 0
+        let g:ycm_enable_diagnostic_highlighting = 0
+        let g:ycm_show_diagnostics_ui = 0
     endif
 "}}}
 
@@ -516,36 +501,6 @@ endif
     xmap <leader>cm <Plug>NERDComMinimalComment
 "}}}
 
-" scrooloose/syntastic 代码检查"{{{
-" Recommend setting
-
-    " " with airline, statusline setting is unnecessary
-    " set statusline+=%#warningmsg#
-    " set statusline+=%{SyntasticStatuslineFlag()}
-    " set statusline+=%*
-
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 2
-    let g:syntastic_check_on_open = 1
-    let g:syntastic_check_on_wq = 0
-
-    " syntax checkers :help syntastic-checkers
-    let g:syntastic_python_checkers=['pyflakes', 'pep8'] "
-    " 使用pyflakes,速度比pylint快
-    let g:syntastic_python_pep8_args='--ignore=E501,E225,E124,E712'
-    let g:syntastic_mode_map = {
-        \ "mode": "passive",
-        \ "active_filetypes": ["ruby", "php"],
-        \ "passive_filetypes": ["puppet"] }
-    " nnoremap <leader>ck :SyntasticCheck<cr>
-    nnoremap <leader>ck :SyntasticCheck<cr>:Error<cr>
-
-    " let g:syntastic_error_symbol = '✗'
-    " let g:syntastic_warning_symbol = '⚠'
-    " let g:syntastic_style_error_symbol = '✗'
-    " let g:syntastic_style_warning_symbol = '⚠'
-"}}}
-
 " tpope/vim-fugitive " tpope 大神的git wrapper，gvdiff 同步滚动"{{{
 " 快捷键
     " nnoremap <leader>ge :Gvdiff<CR>
@@ -578,62 +533,63 @@ endif
 " }}}
 
 " majutsushi/tagbar"{{{
-    nnoremap <silent> <F8> :TagbarToggle<CR>
-    " 打开Tagbar窗口后自动focus到Tagbar窗口
-    let g:tagbar_autofocus = 1
-    " Tagbar 显示行号
-    let g:tagbar_show_linenumbers = 1
-    " Set Windows Width
-    let g:tagbar_width = 35
-    " let g:tagbar_ctags_bin = 'C:\Ctags5.8\ctags.exe'
-    " tagbar 默认显示在右边，如需令其在左边显示，设置一下option
-    let g:tagbar_left = 1
+    if count(g:plugin_function_groups, "tagbar")
+        nnoremap <silent> <F8> :TagbarToggle<CR>
+        " 打开Tagbar窗口后自动focus到Tagbar窗口
+        let g:tagbar_autofocus = 1
+        " Tagbar 显示行号
+        let g:tagbar_show_linenumbers = 1
+        " Set Windows Width
+        let g:tagbar_width = 35
+        " let g:tagbar_ctags_bin = 'C:\Ctags5.8\ctags.exe'
+        " tagbar 默认显示在右边，如需令其在左边显示，设置一下option
+        let g:tagbar_left = 1
 
-    " [Support for addtional filetype](https://github.com/majutsushi/tagbar/wiki)
-    " 自定义 tagbar 支持 markdown , g:tagbar_type_{vim filetype}
-    " 这里的 markdown2ctags 需要是可执行文件，TODO : win下如何处理？
-    if MySys() == "linux"
-        let b:tagbar_tail = "py"
-    elseif MySys() == 'windows'
-        let b:tagbar_tail = "exe"
-        let g:tagbar_ctags_bin = g:ywl_path.'/Archive_gvim/ctags.exe'
+        " [Support for addtional filetype](https://github.com/majutsushi/tagbar/wiki)
+        " 自定义 tagbar 支持 markdown , g:tagbar_type_{vim filetype}
+        " 这里的 markdown2ctags 需要是可执行文件，TODO : win下如何处理？
+        if MySys() == "linux"
+            let b:tagbar_tail = "py"
+        elseif MySys() == 'windows'
+            let b:tagbar_tail = "exe"
+            let g:tagbar_ctags_bin = g:ywl_path.'/Archive_gvim/ctags.exe'
+        endif
+        let g:tagbar_type_markdown = {
+            \ 'ctagstype': 'markdown',
+            \ 'ctagsbin' : g:ywl_path.'/vimfiles/Tagbar_support/markdown2ctags.'.b:tagbar_tail ,
+            \ 'ctagsargs' : '-f - --sort=yes',
+            \ 'kinds' : [
+                \ 's:sections',
+                \ 'i:images'
+            \ ],
+            \ 'sro' : '|',
+            \ 'kind2scope' : {
+                \ 's' : 'section',
+            \ },
+            \ 'sort': 0,
+            \ }
     endif
-    let g:tagbar_type_markdown = {
-        \ 'ctagstype': 'markdown',
-        \ 'ctagsbin' : g:ywl_path.'/vimfiles/Tagbar_support/markdown2ctags.'.b:tagbar_tail ,
-        \ 'ctagsargs' : '-f - --sort=yes',
-        \ 'kinds' : [
-            \ 's:sections',
-            \ 'i:images'
-        \ ],
-        \ 'sro' : '|',
-        \ 'kind2scope' : {
-            \ 's' : 'section',
-        \ },
-        \ 'sort': 0,
-        \ }
 "}}}
 
 " xolox/vim-easytags"{{{
 " --------Brief help------------
 " :UpdateTags  : 显式更新tags 
 " :HighlightTags  : 显式highlight tags 
-    if MySys() == 'windows'
-        let g:easytags_cmd = g:ywl_path.'/Archive_gvim/ctags.exe'
-    endif
-    " let g:easytags_opts = ['-R']
-    let g:easytags_file = expand('$HOME')."/_vimtags"
+    " if MySys() == 'windows'
+        " let g:easytags_cmd = g:ywl_path.'/Archive_gvim/ctags.exe'
+    " endif
+    " " let g:easytags_opts = ['-R']
+    " let g:easytags_file = expand('$HOME')."/_vimtags"
 
-    " 可选的event有 Cursorhold,  CursorholdI
-    " 自动更新 tags 的发生时机，只在保存文件时更新，
-    " let g:easytags_events = ['BufWritePost']
-    let g:easytags_events = ['']
+    " " 可选的event有 Cursorhold,  CursorholdI
+    " " 自动更新 tags 的发生时机，只在保存文件时更新，
+    " " let g:easytags_events = ['BufWritePost']
+    " let g:easytags_events = ['']
     
-    " 生成与 ~/_vimtags 为根的绝对路径，且此时 set tags = ./tags;,~/_vimtags
-    nmap <silent> <leader>ct :exec ':UpdateTags --tag-relative=yes -f '.g:easytags_file.' -R'<cr>
-    let g:easytags_async=0
-    let g:easytags_auto_highlight = 0
-    set tags=./tags;
+    " " 生成与 ~/_vimtags 为根的绝对路径，且此时 set tags = ./tags;,~/_vimtags
+    " nmap <silent> <leader>ct :exec ':UpdateTags --tag-relative=yes -f '.g:easytags_file.' -R'<cr>
+    " let g:easytags_async=0
+    " let g:easytags_auto_highlight = 0
     " let g:easytags_dynamic_files = 1
 "}}}
 
@@ -643,7 +599,17 @@ endif
 " 将当前的工程的tags导入
 " 如果源文件在当前文件夹下没有找到tags,可以到它的上层目录下继续寻找
     " set tags=./tags;
-    " set tags=~/_vimtags;
+    set tags=./.tags;,.tags
+    " 解释一下，首先我把 tag 文件的名字从“tags” 换成了".tags"，
+    " 前面多加了一个点，这样即便放到项目中也不容易污染当前项目的文件，删除时也好删除，
+    " gitignore也好写，默认忽略点开头的文件名即可。
+    " 前半部分 "./.tags;" 代表在文件的所在目录下（不是 “:pwd”返回的 Vim 当前目录）查找名字为".tags"的符号文件，
+    " 后面一个分号代表查找不到的话向上递归到父目录，直到找到 .tags文件或者递归到了根目录还没找到
+    " 这样对于复杂工程很友好，源代码都是分布在不同子目录中，而只需要在项目顶层目录放一个 ".tags"文件即可；
+    " 逗号分隔的后半部分 .tags 是指同时在 Vim的当前目录（“:pwd”命令返回的目录，可以用 :cd ..命令改变）下面查找 .tags 文件。
+    "
+    " 少用 CTRL-] 直接在当前窗口里跳转到定义，多使用 CTRL-W ]
+    " 用新窗口打开并查看光标下符号的定义，或者 CTRL-W } 使用 preview 窗口预览光标下符号的定义。
 "}}}
 
 " Valloric/ListToggle"{{{
@@ -686,8 +652,30 @@ endif
 """"""""""""""""""""""""""""""
 " grep setting
 """"""""""""""""""""""""""""""
-    nnoremap <silent> <F3> :Grep<CR>
+    " nnoremap <silent> <F3> :Grep<CR>
     "}}}
+
+" scrooloose/syntastic 代码检查"{{{
+" Recommend setting
+    if count(g:plugin_function_groups, 'syntastic')
+        let g:syntastic_always_populate_loc_list = 1
+        let g:syntastic_auto_loc_list = 2
+        let g:syntastic_check_on_open = 1
+        let g:syntastic_check_on_wq = 0
+
+        " syntax checkers :help syntastic-checkers
+        let g:syntastic_python_checkers=['pyflakes', 'pep8'] "
+        " 使用pyflakes,速度比pylint快
+        let g:syntastic_python_pep8_args='--ignore=E501,E225,E124,E712'
+        let g:syntastic_mode_map = {
+            \ "mode": "passive",
+            \ "active_filetypes": ["ruby", "php"],
+            \ "passive_filetypes": ["puppet"] }
+        " nnoremap <leader>ck :SyntasticCheck<cr>
+        nnoremap <leader>ck :SyntasticCheck<cr>:Error<cr>
+    endif
+
+"}}}
 
 " simple-todo-new : Disable default key bindings"{{{
 " TODO : 
@@ -750,7 +738,7 @@ nmap ga <Plug>(EasyAlign)
     nnoremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -F --current-buffer -e %s ", expand("<cword>"))<CR><CR>
 " }}}
 
-" ctrlpvim/ctrlp.vim " 文件导航插件"{{{
+" ctrlpvim/ctrlp.vim " 文件导航插件" && tacahiroy/ctrlp-funky {{{
 " --------Brief help------------
 " :CtrlP for file mode.
 " :CtrlPBuffer  for buffer or find MRU file mode.
@@ -786,11 +774,172 @@ nmap ga <Plug>(EasyAlign)
         " \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
         " \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
         " \ }
-"}}}
 
-" tacahiroy/ctrlp-funky complementary func navigator for ctrlp.vim"{{{
+" tacahiroy/ctrlp-funky complementary func navigator for ctrlp.vim"
     " nnoremap <Leader>fu :CtrlPFunky<Cr>
     " narrow the list down with a word under cursor
-    nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+    " nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+"}}}
+
+" asyncrun.vim"{{{
+
+    " 自动打开 quickfix window ，高度为 6
+    let g:asyncrun_open = 6
+    " 设置 F10 打开/关闭 Quickfix 窗口
+    nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
+"}}}
+
+" vim-gutentags replace of easytags, work async Successful"{{{
+    " gutentags插件启动后，会从文件当前路径递归往上查找 gutentags_project_root
+    " 中指定的文件或目录名，直到第一次找到对应目标文件或目录名停止。若没有找到
+    " gutentags_project_root
+    " 变量指定的文件或目录名，则gutentags不会生成tag文件。
+    " 想要避免的话，你可以在你的野文件目录中放一个名字为 .root 的空白文件，主动告诉 gutentags 这里就是工程目录。
+
+    " gutentags搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归 "
+    let g:gutentags_project_root = ['.root', '.svn', '.git', '.project']
+
+    "  所生成的数据文件的名称 "
+    let g:gutentags_ctags_tagfile = '.tags'
+
+    "  将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录 "
+    let s:vim_tags = expand('~/.cache/tags')
+    let g:gutentags_cache_dir = s:vim_tags
+    "  检测 ~/.cache/tags 不存在就新建 "
+    if !isdirectory(s:vim_tags)
+       silent! call mkdir(s:vim_tags, 'p')
+   endif
+
+    "  配置 ctags 的参数 "
+    " let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+    " let g:gutentags_ctags_extra_args += ['--c++-kinds=+pxI']
+    " let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+    if MySys() == "windows"
+        let g:gutentags_ctags_executable = expand(g:ywl_path."/Archive_gvim/ctags.exe")
+    endif
+    let g:gutentags_exclude_filetypes = ['vim']
+    " use .notags instead for each project
+    let g:gutentags_exclude_project_root = [expand(g:ywl_path)]
+    let g:gutentags_file_list_command = 'rg --files'
+    " autocmd FileType qf nnoremap <silent><buffer> p :PreviewQuickfix<cr>
+    " autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
+    " To know when Gutentags is generating tags, add this to your vimrc:
+    " set statusline+=%{gutentags#statusline()}
+    " help trace execute :call gutentags#toggletrace() and then  :GutentagsUpdate!
+    " the update script will also leave a tags.log file next to your tags file
+"}}}
+
+" w0rp/ale Asynchronous linting 异步代码检查"{{{
+    if count(g:plugin_function_groups, "ale")
+        " show errors or warnings in my statusline
+        if count(g:plugin_function_groups, "airline")
+            let g:airline#extensions#ale#enabled = 1
+        endif
+        let g:ale_sign_column_always = 1
+        let g:ale_sign_error = '>>'
+        let g:ale_sign_warning = '--'
+
+        let g:ale_lint_on_save = 0
+        let g:ale_set_highlights = 0
+        let g:ale_lint_on_text_changed = 'never'
+        "打开文件时不进行检查
+        let g:ale_lint_on_enter = 0
+        "普通模式下，cp前往上一个错误或警告，cn前往下一个错误或警告
+        nmap <silent> cp <Plug>(ale_previous_wrap)
+        nmap cn <Plug>(ale_next_wrap)
+        "<Leader>s触发/关闭语法检查
+        nmap <Leader>ck :ALEToggle<CR>
+        " "<Leader>d查看错误或警告的详细信息
+        nmap <Leader>cd :ALEDetail<CR>
+        " use quickfix list instead of the loclist
+        let g:ale_set_loclist = 0
+        let g:ale_set_quickfix = 1
+
+        " 使用clang对c和c++进行语法检查，对python使用pylint/flake8进行语法检查
+        let g:ale_linters = {
+        \   'c++': ['clang'],
+        \   'c': ['clang'],
+        \   'python': ['pylint'],
+        \}
+        let g:ale_fixers = {'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8']}
+    endif
+"}}}
+
+" 定义CompileRun函数，用来调用编译和运行  "{{{ 
+    func! ComplieX()  
+        exec "w"  
+        if &filetype == 'c'  
+            exec "AsyncRun gcc % -g -Wall -o %<"
+        elseif &filetype == 'cpp'  
+            exec "AsyncRun g++ % -g -Wall -o %<"
+        endif
+    endfunc
+
+" 定义Run函数  
+    func! RunX()  
+        if &filetype == 'c' || &filetype == 'cpp'  
+            if MySys() == 'windows'
+                exec "AsyncRun %<"
+            elseif MySys() == 'linux'
+                exec "!./%<"
+            endif
+        elseif &filetype == 'java'  
+            exec "!java %<"
+        elseif &filetype == 'python'
+            exec "w"  
+            if MySys() == 'windows'
+                exec "AsyncRun python %"
+                exec "copen"
+            elseif MySys() == 'linux'
+                exec "!python %"
+            endif  
+        endif  
+    endfunc  
+
+" 定义Debug函数，用来调试程序  
+    func! Debug()  
+        exec "w"  
+        if &filetype == 'c'  
+            exec "!gcc % -g -o %<" 
+            exec "!gdb %<"
+        elseif &filetype == 'cpp'  
+            exec "!g++ % -g -o %<"
+            exec "!gdb %<" 
+        elseif &filetype == 'java'  
+            exec "!javac %"  
+            exec "!jdb %<"
+        endif  
+    endfunc  
+
+"   Windows和linux的单文件编译
+    func! ComplieRunCpp()
+        if &filetype == 'cpp'
+            exec "w"
+            exec "!g++ % -g -Wall -o %<"
+            if MySys() == 'linux'
+                " %< 表示没有后缀的本文件 ，参考 :help %<
+                exec "! ./%<"       
+            elseif MySys() == 'windows'
+                exec "!%<"       
+            endif
+        endif
+        if &filetype == 'c'
+            exec "w"
+            exec "!gcc % -g -Wall -o %<"
+            if MySys() == 'linux'
+                " %< 表示没有后缀的本文件 ，参考 :help %<
+                exec "! ./%<"       
+            elseif MySys() == 'windows'
+                exec "!%<"       
+            endif
+        endif
+    endfunc
+    
+" 单文件编译运行
+    map <silent> <C-F5> :call ComplieRunCpp()<CR>
+    map <silent> <F5> :call ComplieX()<CR>
+    map <silent> <F7> :call RunX()<CR>
+" make
+    autocmd FileType c,cpp map <silent> <leader><space> :make<CR>
 "}}}
 
