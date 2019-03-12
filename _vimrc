@@ -21,10 +21,10 @@ let   mapleader = ","
 let g:mapleader = ","
 
 if !exists('g:plugin_function_groups')
+    " optional :
     " "syntastic", "hexo" , "YouCompleteMe" , "ale", "airline",
-    " "tagbar"
-    " let g:plugin_function_groups = ["hexo"  "YouCompleteMe" , "ale", "airline"]
-    let g:plugin_function_groups = ['hexo', "YouCompleteMe", "airline" ,"ale"]
+    " "tagbar" , "LeaderF"
+    let g:plugin_function_groups = ['hexo', "YouCompleteMe", "airline" ,"ale", "LeaderF"]
 endif
 
 " Load Plugin and Customed_Func "{{{

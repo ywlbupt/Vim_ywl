@@ -44,12 +44,6 @@ call vundle#begin('$VIMFILES/bundle')
         endif
         Plugin 'Valloric/ListToggle'
 
-        " cd ~\.vim\bundle\LeaderF
-        " .\install.bat
-        Plugin 'Yggdroot/LeaderF'
-
-    " provide a reference manual for the C++ standard template library (STL)
-        " Plugin 'stlrefvim'
     " -------------------- Python ---------------- 
     " fold for python
         Plugin 'tmhedberg/SimpylFold'
@@ -64,11 +58,6 @@ call vundle#begin('$VIMFILES/bundle')
     """""""""""""""""""""""""""""""""""""""""""""
         Plugin 'scrooloose/nerdcommenter'
         Plugin 'scrooloose/nerdtree'
-        " " nerd tree tabs, tab操作，使各个窗口的tab布局一致
-        " Plugin 'jistr/vim-nerdtree-tabs'
-        " if count(g:plugin_function_groups, 'syntastic')
-            " Plugin 'scrooloose/syntastic'
-        " endif
 
         " autocomplete pairs自动补全括号
         Plugin 'Raimondi/delimitMate'
@@ -106,6 +95,7 @@ call vundle#begin('$VIMFILES/bundle')
     filetype plugin indent on    " required
 "}}}
 
+" vim-plug 异步插件管理" {{{
 call plug#begin('$VIMFILES/plugged')
 " Plug 'junegunn/vim-easy-align'
 " Initialize plugin system
@@ -114,13 +104,22 @@ call plug#begin('$VIMFILES/plugged')
     autocmd! User vim-markdowm echom 'markdown is now loaded!'
     autocmd! User vim-markdowm.vim echom 'markdown.vim is now loaded!'
     if count(g:plugin_function_groups, "ale")
+        " Plug 'w0rp/ale',{'tag' : 'v2.3.0'}
         Plug 'w0rp/ale'
     endif
     " vim-markdown 要求tabular插件，feature as Align
     if count(g:plugin_function_groups, "tagbar")
         Plug 'majutsushi/tagbar'
     endif
+    if count(g:plugin_function_groups, "LeaderF")
+        if MySys() == 'windows'
+            Plug 'Yggdroot/LeaderF',{ 'do': '.\install.bat' }
+        elseif MySys() == 'linux'
+            Plug 'Yggdroot/LeaderF',{ 'do': './install.sh' }
+        endif
+    endif
 call plug#end()
+"}}}
 
 " altercation/vim-colors-solarized" "主题方案"{{{
     " if g:colors_name == 'solarized' 
@@ -706,7 +705,8 @@ nmap ga <Plug>(EasyAlign)
 " leaderF {{{
 "   move rg.exe to C:\windows\System32
 "   vimrun 搜索路径
-    let g:Lf_PythonVersion =3
+
+    " let g:Lf_PythonVersion =3
 
     let g:Lf_Ctags = g:ywl_path.'/Archive_gvim/ctags.exe'
     " preview code when navigating
