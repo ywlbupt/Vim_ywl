@@ -190,6 +190,55 @@ set history =1000
 "}}}
 "}}}
 
+"{{{
+" gui_running 此行需要在syntax on 之前配置
+    highlight WhitespaceEOL ctermbg=red guibg=red
+    match WhitespaceEOL /\s\+$/
+    highlight WhitespaceHOL ctermbg=red guibg=red
+    match WhitespaceHOL /^\s\+/
+    set cursorline " 突出显示当前行
+    " set cursorcolumn "突出当前列
+
+    syntax enable
+    " 使用鼠标操作
+    " set mouse=a
+    set mouse=cvn
+
+    if has("gui_running")
+        set guioptions-=T " 隐藏工具栏
+        set guioptions-=m " 隐藏菜单栏
+        set guioptions-=L
+        " set guioptions-=r
+        set background=dark
+        colorscheme solarized
+        " colorscheme desert_ywl  "设定配色方案
+        autocmd GUIEnter * set lines=40 |  set columns=149 
+        if MySys() == 'linux'
+            "exec "winpos 400 70"
+        endif
+    else
+        set background=dark
+        set t_Co=16
+        colorscheme solarized
+        " if &term =~ "xterm"
+            " set t_Co=16
+            " set t_Sb=^[[4%dm " 设置背景色
+            " set t_Sf=^[[3%dm " 设置前景色
+        autocmd VimEnter * set lines=40 | set columns=149
+        " endif 
+    endif
+
+    " 防止tmux下vim的背景色显示异常
+    " Refer: http://sunaku.github.io/vim-256color-bce.html
+    if &term =~ '256color'
+        " disable Background Color Erase (BCE) so that color schemes
+        " render properly when inside 256-color tmux and GNU screen.
+        " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+        set t_ut=
+    endif 
+
+"}}}
+
 " 开启语法高亮
 syntax on
 
@@ -524,53 +573,6 @@ if has("autocmd")
 "   autocmd BufNewFile  *.php  0r ~/.vim/template/php.tpl
     
 endif "has("autocmd")
-"}}}
-
-"{{{
-" gui_running 此行需要在syntax on 之前配置
-    highlight WhitespaceEOL ctermbg=red guibg=red
-    match WhitespaceEOL /\s\+$/
-    set cursorline " 突出显示当前行
-    " set cursorcolumn "突出当前列
-
-    syntax enable
-    " 使用鼠标操作
-    " set mouse=a
-    set mouse=cvn
-
-    if has("gui_running")
-        set guioptions-=T " 隐藏工具栏
-        set guioptions-=m " 隐藏菜单栏
-        set guioptions-=L
-        " set guioptions-=r
-        set background=dark
-        colorscheme solarized
-        " colorscheme desert_ywl  "设定配色方案
-        autocmd GUIEnter * set lines=40 |  set columns=149 
-        if MySys() == 'linux'
-            "exec "winpos 400 70"
-        endif
-    else
-        set background=dark
-        set t_Co=16
-        colorscheme solarized
-        " if &term =~ "xterm"
-            " set t_Co=16
-            " set t_Sb=^[[4%dm " 设置背景色
-            " set t_Sf=^[[3%dm " 设置前景色
-        autocmd VimEnter * set lines=40 | set columns=149
-        " endif 
-    endif
-
-    " 防止tmux下vim的背景色显示异常
-    " Refer: http://sunaku.github.io/vim-256color-bce.html
-    if &term =~ '256color'
-        " disable Background Color Erase (BCE) so that color schemes
-        " render properly when inside 256-color tmux and GNU screen.
-        " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-        set t_ut=
-    endif 
-
 "}}}
 
 " Customed Function"{{{

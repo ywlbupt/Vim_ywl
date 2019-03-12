@@ -48,19 +48,16 @@ def get_quoting_style(snip):
 endglobal
 
 snippet "" "triple quoted string (double quotes)" b
-"""
-${1:${VISUAL:dox}}
+""" ${1:${VISUAL:dox}}
 `!p triple_quotes_handle_trailing(snip, '"')`
 endsnippet
 
 snippet '' "triple quoted string (single quotes)" b
-'''
-${1:${VISUAL:dox}}
+''' ${1:${VISUAL:dox}}
 `!p triple_quotes_handle_trailing(snip, "'")`
 endsnippet
 
 snippet dox "doc block (triple quotes)"
-`!p snip.rv = triple_quotes(snip)`
-${1:${VISUAL:dox}}
+`!p snip.rv = triple_quotes(snip)` ${1:${VISUAL:dox}}
 `!p snip.rv = triple_quotes(snip)`
 endsnippet

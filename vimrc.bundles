@@ -367,7 +367,8 @@ endif
 " <S-BS>       is mapped to <Plug>delimitMateS-BS
 " <S-Tab>      is mapped to <Plug>delimitMateS-Tab
 " <C-G>g       is mapped to <Plug>delimitMateJumpMany
-    let g:delimitMate_matchpairs = "(:),[:],{:},<:>"
+    let g:delimitMate_matchpairs = "(:),[:],{:}"
+    " let g:delimitMate_matchpairs = "(:),[:],{:},<:>"
     " 关闭某类型文件的自动补全
     " au FileType mail,text let b:delimitMate_autoclose = 0
     " for python docstring ",优化输入
@@ -445,7 +446,8 @@ endif
 " :echo char2nr('b')=98
 
     let g:surround_indent = 0
-    let g:surround_45 = "```\n\r```"
+    let g:surround_45 = "```\r```"
+    " let g:surround_45 = "```\n\r```"
     let g:surround_61 = "~~\r~~"
     let g:surround_98 = "**\r**"
 "}}}
@@ -487,10 +489,12 @@ endif
     " Add spaces after comment delimiters by default
     let g:NERDSpaceDelims = 0
     let g:NERDDefaultAlign = 'none'
-
     let NERDCreateDefaultMappings = 1
 
-    let g:NERDCustomDelimiters = { 'vim': { 'left': '" ' } }
+    let g:NERDCustomDelimiters = { 'vim': { 'left': '" ' }, 
+                \ 'cpp': {'left':'// ', 'leftAlt':'/* ', 'rightAlt':' */'},
+                \ 'c': {'left':'// '} 
+                \ }
     " unmap该快捷键的想法是尽量让十指不离开主键盘区太远
     " nmap \\\ <Plug>NERDCommenterToggle
     " xmap \\ <Plug>NERDCommenterToggle
