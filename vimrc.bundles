@@ -850,7 +850,7 @@ nmap ga <Plug>(EasyAlign)
         let g:ale_lint_on_enter = 0
         "普通模式下，cp前往上一个错误或警告，cn前往下一个错误或警告
         nmap <silent> cp <Plug>(ale_previous_wrap)
-        nmap cn <Plug>(ale_next_wrap)
+        nmap <silent> cn <Plug>(ale_next_wrap)
         "<Leader>s触发/关闭语法检查
         nmap <Leader>ck :ALEToggle<CR>
         " "<Leader>d查看错误或警告的详细信息
@@ -861,10 +861,10 @@ nmap ga <Plug>(EasyAlign)
 
         " 使用clang对c和c++进行语法检查，对python使用pylint/flake8进行语法检查
         let g:ale_linters = {
-        \   'c++': ['clang'],
-        \   'c': ['clang'],
-        \   'python': ['pylint'],
         \}
+        " \   'c++': ['clang'],
+        " \   'c': ['clang'],
+        " \   'python': ['pylint'],
         let g:ale_fixers = {'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8']}
     endif
 "}}}
