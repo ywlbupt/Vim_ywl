@@ -34,6 +34,81 @@ endif
 
 set history =1000
 
+" For windows version, using gVIM with Cygwin on a Windows PC"{{{
+if MySys() == 'windows'
+    " source $VIMRUNTIME/mswin.vim
+    " behave mswin
+    " unmap <C-A>
+    set diffexpr=MyDiff()
+    function! MyDiff()
+        let opt = '-a --binary '
+        if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+        if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+        let arg1 = v:fname_in
+        if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+        let arg2 = v:fname_new
+        if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+        let arg3 = v:fname_out
+        if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+        let eq = ''
+        if $VIMRUNTIME =~ ' '
+            if &sh =~ '/<cmd'
+                let cmd = '""' . $VIMRUNTIME . '/diff"'
+                let eq = '"'
+            else
+                let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '/diff"'
+            endif
+        else
+            let cmd = $VIMRUNTIME . '/diff'
+        endif
+        silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+    endfunction
+endif
+"}}}
+
+" Fast edit vimrc & font coding Setting "{{{
+
+" Fast edit vimrc
+    if MySys() == 'linux'
+    "   Fast reloading of the .vimrc
+        nnoremap <silent> <leader>ss :exec 'source '.g:ywl_path.'/_vimrc'<cr>
+        nnoremap <silent> <leader>rr :source ~/.vimrc<cr>
+    "   Fast editing of .vimrc
+        nnoremap <silent> <leader>ee :exec 'edit '.g:ywl_path.'/_vimrc'<cr>
+        nnoremap <silent> <leader>er :e ~/.vimrc<cr>
+        nnoremap <silent> <leader>eb :exec 'edit '.g:ywl_path.'/vimrc.bundles'<cr>
+    "   When .vimrc is edited, reload it 每次保存syntax总不太对头
+        " autocmd! bufwritepost _vimrc exec 'source ~/.vimrc'
+        " autocmd! bufwritepost .vimrc exec 'source ~/.vimrc'
+    elseif MySys() == 'windows'
+    "   Fast reloading of the _vimrc
+        nnoremap <silent> <leader>ss :exec 'source '.g:ywl_path.'\_vimrc'<cr>
+        nnoremap <silent> <leader>rr :source $VIM\_vimrc<cr>
+    "   Fast editing of _vimrc
+        nnoremap <silent> <leader>ee :exec 'edit '.g:ywl_path.'\_vimrc'<cr>
+        nnoremap <silent> <leader>er :e $VIM\_vimrc<cr>
+        nnoremap <silent> <leader>eb :exec 'edit '.g:ywl_path.'\vimrc.bundles'<cr>
+    "   When _vimrc is edited, reload it
+        " autocmd! bufwritepost _vimrc exec 'source $VIM\_vimrc'
+    endif
+"}}}
+
+" Load Plugin and Customed_Func "{{{
+if filereadable(expand(g:ywl_path.'/vimrc.bundles'))
+    exec 'source '.g:ywl_path.'/vimrc.bundles'
+else
+    echo 'No vimrc.bundles found'
+endif
+
+if filereadable(expand(g:ywl_path.'/vimrc.func'))
+    exec 'source '.g:ywl_path.'/vimrc.func'
+else 
+    echo 'No vimrc.func found'
+endif
+"  matchit.vim插件扩展了%匹配字符的范围,根据不同的filetype来做不同的匹配
+    source $VIMRUNTIME/macros/matchit.vim
+"}}}
+
 " Base Setting "{{{
 
 " Basic{{{
@@ -151,81 +226,22 @@ set history =1000
     set viewoptions=cursor,folds,slash,unix
 "}}}
 
-" For windows version, using gVIM with Cygwin on a Windows PC"{{{
-if MySys() == 'windows'
-    " source $VIMRUNTIME/mswin.vim
-    " behave mswin
-    " unmap <C-A>
-    set diffexpr=MyDiff()
-    function! MyDiff()
-        let opt = '-a --binary '
-        if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-        if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-        let arg1 = v:fname_in
-        if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-        let arg2 = v:fname_new
-        if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-        let arg3 = v:fname_out
-        if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-        let eq = ''
-        if $VIMRUNTIME =~ ' '
-            if &sh =~ '/<cmd'
-                let cmd = '""' . $VIMRUNTIME . '/diff"'
-                let eq = '"'
-            else
-                let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '/diff"'
-            endif
-        else
-            let cmd = $VIMRUNTIME . '/diff'
-        endif
-        silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
-    endfunction
-endif
+" Advanced base setting"{{{
+" ref : https://github.com/wsdjeg/vim-galore-zh_cn
+    " 防止水平滑动的时候失去选择
+    xnoremap <  <gv
+    xnoremap >  >gv
+    " 快速添加空行, 设置之后，连续按下 5 [ 空格 在当前行上方插入 5 个空行。
+    nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+    nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+    " 智能 Ctrl-l
+    " Ctrl + l 的默认功能是清空并「重新绘制」当前的屏幕，就和 :redraw!
+    " 的功能一样。下面的这个映射就是执行重新绘制，并且取消通过 / 和 ?
+    " 匹配字符的高亮，而且还可以修复代码高亮问题（有时候，由于多个代码高亮的脚本重叠，或者规则过于复杂，Vim
+    " 的代码高亮显示会出现问题）。不仅如此，还可以刷新「比较模式」
+    nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 "}}}
 
-" Fast edit vimrc & font coding Setting "{{{
-
-" Fast edit vimrc
-    if MySys() == 'linux'
-    "   Fast reloading of the .vimrc
-        map <silent> <leader>ss :exec 'source '.g:ywl_path.'/_vimrc'<cr>
-        map <silent> <leader>rr :source ~/.vimrc<cr>
-    "   Fast editing of .vimrc
-        map <silent> <leader>ee :exec 'edit '.g:ywl_path.'/_vimrc'<cr>
-        map <silent> <leader>er :e ~/.vimrc<cr>
-        map <silent> <leader>eb :exec 'edit '.g:ywl_path.'/vimrc.bundles'<cr>
-    "   When .vimrc is edited, reload it 每次保存syntax总不太对头
-        " autocmd! bufwritepost _vimrc exec 'source ~/.vimrc'
-        " autocmd! bufwritepost .vimrc exec 'source ~/.vimrc'
-    elseif MySys() == 'windows'
-    "   Fast reloading of the _vimrc
-        map <silent> <leader>ss :exec 'source '.g:ywl_path.'\_vimrc'<cr>
-        map <silent> <leader>rr :source $VIM\_vimrc<cr>
-    "   Fast editing of _vimrc
-        map <silent> <leader>ee :exec 'edit '.g:ywl_path.'\_vimrc'<cr>
-        map <silent> <leader>er :e $VIM\_vimrc<cr>
-        map <silent> <leader>eb :exec 'edit '.g:ywl_path.'\vimrc.bundles'<cr>
-    "   When _vimrc is edited, reload it
-        " autocmd! bufwritepost _vimrc exec 'source $VIM\_vimrc'
-    endif
-"}}}
-
-" Load Plugin and Customed_Func "{{{
-if filereadable(expand(g:ywl_path.'/vimrc.bundles'))
-    exec 'source '.g:ywl_path.'/vimrc.bundles'
-else
-    echo 'No vimrc.bundles found'
-endif
-
-if filereadable(expand(g:ywl_path.'/vimrc.func'))
-    exec 'source '.g:ywl_path.'/vimrc.func'
-else 
-    echo 'No vimrc.func found'
-endif
-"  matchit.vim插件扩展了%匹配字符的范围,根据不同的filetype来做不同的匹配
-    source $VIMRUNTIME/macros/matchit.vim
-"}}}
- 
 " Reformate 排版与文本格式"{{{
 " 文本格式化
     " B在连接行时，不要在两个多字节字符之间插入空格。有'M' 标志位时无效。
@@ -329,7 +345,6 @@ endif
     " nnoremap gp :tabprev<CR>
     " nnoremap <C-t> :tabnew<cr>
     " nnoremap <C-e> :tabclose<cr>
-" map te :tabedit
 " tabd[o] {cmd} 对每个标签页执行{cmd}, 遍历标签页
 " tablast 最后一个标签页
 " tabmove N  将当前标签页移动到N个标签页之后
@@ -353,14 +368,14 @@ endif
     " noremap <C-k> <C-W>k
     " noremap <C-h> <C-W>h
     " noremap <C-l> <C-W>l
-    imap <C-h> <Left>
-    imap <C-l> <Right>
-    imap <C-j> <Down>
-    imap <C-k> <Up>
+    inoremap <C-h> <Left>
+    inoremap <C-l> <Right>
+    inoremap <C-j> <Down>
+    inoremap <C-k> <Up>
 
     " 这个可以用 <C-W>替代
     " <C-B>插入模式下一次性删除一个词
-    " imap <c-b> <c-o>diw
+    " inoremap <c-b> <c-o>diw
     
 
 " Treat long lines as break lines (useful when moving around in them)
@@ -371,8 +386,8 @@ endif
 "{{{
 " Quickfix
 """"""""""""""""""""""""""""""
-"   nmap <leader>cn :cn<cr>
-"   nmap <leader>cp :cp<cr>
+"   nnoremap <leader>cn :cn<cr>
+"   nnoremap <leader>cp :cp<cr>
 "}}}
 
 "{{{
@@ -411,7 +426,7 @@ if has("autocmd")
                     \setlocal cc=81
     augroup END
 
-    autocmd! FileType c,cpp set smartindent
+    autocmd! FileType c,cpp setlocal smartindent
     " auto FileType c,cpp  set cindent " Strict rules for C Programs
     " set smartindent " 开启行时使用智能自动缩进，为C程序
     " indent: 如果用了:set indent,
@@ -439,13 +454,13 @@ if has("autocmd")
                     \setlocal cc=81
         if MySys() == 'linux'
             autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
-                        \map <leader>p :!google-chrome "%:p"<CR>
+                        \nnoremap <buffer> <leader>p :!google-chrome "%:p"<CR>
         elseif MySys() == 'windows'
             " autocmd Filetype html,xml,xsl source $HOME\vimfiles\plugin\closetag.vim
             " autocmd Filetype matlab source $HOME\vimfiles\syntax\matlab.vim|set cms=%\ %s
             " autocmd BufEnter *.m compiler mlint
             autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
-                        \map <Leader>p :exec "!start ".g:path_chrome." %:p"<CR>
+                        \nnoremap <buffer> <Leader>p :exec "!start ".g:path_chrome." %:p"<CR>
             "   autocmd Bufenter * normal zn    
         endif
     augroup END
