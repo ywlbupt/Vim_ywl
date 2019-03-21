@@ -23,25 +23,14 @@ let g:mapleader = ","
 if !exists('g:plugin_function_groups')
     " optional :
     " "syntastic", "hexo" , "YouCompleteMe" , "ale", "airline",
-    " "tagbar" , "LeaderF"
-    let g:plugin_function_groups = ['hexo', "YouCompleteMe", "airline" ,"ale", "LeaderF"]
+    " "tagbar" , "LeaderF", "coc.nvim"
+    let g:plugin_function_groups = ['hexo',  "airline" ,"ale", 
+                \ "LeaderF", "tagbar", 
+                \ "YouCompleteMe",
+                \ "vim-youdao-translater"
+                \]
+                " \"coc.nvim",
 endif
-
-" Load Plugin and Customed_Func "{{{
-if filereadable(expand(g:ywl_path.'/vimrc.bundles'))
-    exec 'source '.g:ywl_path.'/vimrc.bundles'
-else
-    echo 'No vimrc.bundles found'
-endif
-
-if filereadable(expand(g:ywl_path.'/vimrc.func'))
-    exec 'source '.g:ywl_path.'/vimrc.func'
-else 
-    echo 'No vimrc.func found'
-endif
-"  matchit.vim插件扩展了%匹配字符的范围,根据不同的filetype来做不同的匹配
-    source $VIMRUNTIME/macros/matchit.vim
-"}}}
 
 set history =1000
 
@@ -56,7 +45,8 @@ set history =1000
         
     " 增强模式中的命令行自动完成操作
     set wildmenu 
-    set completeopt=longest,menu
+    " 这个貌似会影响到YCM
+    " set completeopt=longest,menu
     " wildmenu" 激活时，下面的键有特殊含义:
     " <Left> <Right> - 选择前项/后项匹配 (类似于 CTRL-P/CTRL-N)
     " <Down> - 文件名/菜单名补全中: 移进子目录和子菜单。
@@ -78,7 +68,7 @@ set history =1000
     
     " 设置宽度不明的文字(如 “”①②→ )为双宽度文本
     set ambiwidth=double
-" Set to auto read when a file is changed from the outside
+    " Set to auto read when a file is changed from the outside
     set autoread
     set number " 显示行号
     " set relativenumber " 显示相对行号
@@ -90,7 +80,7 @@ set history =1000
 
     if has("autocmd")
         "windows下，对包含空格的路径会有问题，修改如下：
-        autocmd! BufEnter * silent! lcd %:p:h:gs/ /\\ /
+        " autocmd! BufEnter * silent! lcd %:p:h:gs/ /\\ /
         "开/tmp文件夹下的文件时不自动切换，则设置如下：
         "autocmd! BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
     endif
@@ -120,18 +110,19 @@ set history =1000
     endif
 " 提示自己代码别超过81列"}}}
 
-" Fold setting "{{{
+" Fold setting "{{{ 
    
     function! MyFoldText()
-      let a:line=getline(v:foldstart)
-      let a:foldcms_1=substitute(&commentstring,'%s',get(split(&foldmarker,','),0),"")
-      " if matchstr(a:line,'^\s*'.a:foldcms_1)!=""
-      if '^\s*'.a:foldcms_1=~a:line
-      "if a:line==a:foldcms_1
-          let a:line=getline(v:foldstart+1)
+      let b:_line=getline(v:foldstart)
+      let b:foldcms_1=substitute(&commentstring,'%s',get(split(&foldmarker,','),0),"")
+      " if matchstr(b:_line,'^\s*'.a:foldcms_1)!=""
+      if '^\s*'.b:foldcms_1=~b:_line
+      "if b:_line==a:foldcms_1
+          let b:_line=getline(v:foldstart+1)
       endif
-      let sub=substitute(a:line, a:foldcms_1, '', 'g')
+      let sub=substitute(b:_line, b:foldcms_1, '', 'g')
       return v:folddashes.sub
+      " return b:line
     endfunction
 
     function! MyFoldExpr_Markdown(lnum)
@@ -157,102 +148,8 @@ set history =1000
     nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 "}}}
 
-"{{{
-" view,buffer Operation
-    " if MySys() == 'linux'
-        " set viewdir=$HOME/Dropbox/vimfiles/view
-    " elseif MySys() == 'windows'
-        " set viewdir=$HOME/vimfiles/view
-    " endif
-" 谨慎使用，防止修改了全局映射变量在里面没有体现
     set viewoptions=cursor,folds,slash,unix
-    " ,options
-" au BufWinLeave * if expand("%") != '' && &buftype=='' | silent
-"               \mkview! | endif
-"   au BufWinEnter * if expand("%") != '' && &buftype=='' | silent
-"               \loadview |syntax on| endif
-
-"   function! RemoveOldViewFiles()
-"   if MySys() == 'windows'
-"       exe '!find '.g:ywl_path.'/vimfiles/view/* -mtime +90 -exec rm {} \;'
-"   else if MySys() == 'linux'
-"       exe '!find '.g:ywl_path.'/vimfiles/view/* -mtime +90 -exec rm {} \;'
-"   endfunction
-
-"------------------------view--------------------------------
 "}}}
-
-" undodir 持久保存撤销历史"{{{
-" Remove this, use gundo
-    " exec 'set undodir='.g:ywl_path.'/vimfiles/undodirfile'
-    " set undolevels=1000 "maximum number of changes that can be undone
-    " set undofile
-"}}}
-"}}}
-
-"{{{
-" gui_running 此行需要在syntax on 之前配置
-    highlight WhitespaceEOL ctermbg=red guibg=red
-    match WhitespaceEOL /\s\+$/
-    highlight WhitespaceHOL ctermbg=red guibg=red
-    match WhitespaceHOL /^\s\+/
-    set cursorline " 突出显示当前行
-    " set cursorcolumn "突出当前列
-
-    syntax enable
-    " 使用鼠标操作
-    " set mouse=a
-    set mouse=cvn
-
-    if has("gui_running")
-        set guioptions-=T " 隐藏工具栏
-        set guioptions-=m " 隐藏菜单栏
-        set guioptions-=L
-        " set guioptions-=r
-        set background=dark
-        colorscheme solarized
-        " colorscheme desert_ywl  "设定配色方案
-        autocmd GUIEnter * set lines=40 |  set columns=149 
-        if MySys() == 'linux'
-            "exec "winpos 400 70"
-        endif
-    else
-        set background=dark
-        set t_Co=16
-        colorscheme solarized
-        " if &term =~ "xterm"
-            " set t_Co=16
-            " set t_Sb=^[[4%dm " 设置背景色
-            " set t_Sf=^[[3%dm " 设置前景色
-        autocmd VimEnter * set lines=40 | set columns=149
-        " endif 
-    endif
-
-    " 防止tmux下vim的背景色显示异常
-    " Refer: http://sunaku.github.io/vim-256color-bce.html
-    if &term =~ '256color'
-        " disable Background Color Erase (BCE) so that color schemes
-        " render properly when inside 256-color tmux and GNU screen.
-        " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-        set t_ut=
-    endif 
-
-"}}}
-
-" 开启语法高亮
-syntax on
-
-""""""""""""""""""""
-"  filtetype open  "
-""""""""""""""""""""
-" 检测文件类型
-filetype on
-" 针对不同的文件类型采用不同的缩进格式
-filetype indent on
-" 允许插件
-filetype plugin on
-" 启动自动补全
-filetype plugin indent on
 
 " For windows version, using gVIM with Cygwin on a Windows PC"{{{
 if MySys() == 'windows'
@@ -312,12 +209,27 @@ endif
         " autocmd! bufwritepost _vimrc exec 'source $VIM\_vimrc'
     endif
 "}}}
+
+" Load Plugin and Customed_Func "{{{
+if filereadable(expand(g:ywl_path.'/vimrc.bundles'))
+    exec 'source '.g:ywl_path.'/vimrc.bundles'
+else
+    echo 'No vimrc.bundles found'
+endif
+
+if filereadable(expand(g:ywl_path.'/vimrc.func'))
+    exec 'source '.g:ywl_path.'/vimrc.func'
+else 
+    echo 'No vimrc.func found'
+endif
+"  matchit.vim插件扩展了%匹配字符的范围,根据不同的filetype来做不同的匹配
+    source $VIMRUNTIME/macros/matchit.vim
+"}}}
  
 " Reformate 排版与文本格式"{{{
 " 文本格式化
     " B在连接行时，不要在两个多字节字符之间插入空格。有'M' 标志位时无效。
     set formatoptions+=B
-        
     set expandtab
     set shiftwidth=4 " 设定 << 和 >> 命令移动时的宽度为 4
     set softtabstop=4 " 使得按退格键时可以一次删掉 4 个空格
@@ -327,13 +239,9 @@ endif
 
     set wrap "文本的回绕，不超过窗口宽度
 
-    auto FileType c,cpp  set cindent " Strict rules for C Programs
-    "auto FileType c,cpp  set smartindent " Strict rules for C Programs
     set autoindent
     set backspace=indent,eol,start
 
-    if has("autocmd")
-    endif
 "}}}
 
 " Text Encoding "{{{
@@ -344,10 +252,13 @@ endif
     
     if MySys() == "windows"
         set langmenu=zh_CN.UTF-8
-        language message zh_CN.UTF-8
+        " language message zh_CN.UTF-8
         set encoding=utf-8
+        let &termencoding=&encoding
+        " set termencoding =GBK
         set termencoding =GBK
         set fileencodings=utf-8,ucs-bom,gb18030,cp936,big5,euc-jp,euc-kr,latin1
+        set fileencoding=utf-8
     elseif MySys() == "linux"
         set langmenu=zh_CN.UTF-8
         set encoding=utf-8
@@ -360,11 +271,6 @@ endif
 " Default Path & Global constant - chrome "{{{
     " 启动进入自己的主目录
     exec 'cd '.g:ywl_path
-
-    " python path
-    if MySys()=='linux'
-        let g:pypath="/home/ywl/.pyenv/versions/anaconda3-2.4.0/bin"
-    endif
 
     " chrome path for windows 
     if hostname() == 'M-PC'
@@ -387,12 +293,6 @@ endif
     " disbale paste mode when leaving insert mode
     " au InsertLeave * set nopaste   
 
-    " F11 doesn't work in terms 全屏模式 buftype = 'quickfix'
-    " nmap <S-F11> :cw 10<cr>
-    " nmap <C-F11> :ccl<cr>
-    " nmap <leader>cc :botright lw 10<cr>
-    " map <c-u> <c-l><c-j>:q<cr>:botright cw 10<cr>
-    
     " Quickly close the current window
     nnoremap <leader>q :q<CR>
 
@@ -417,12 +317,9 @@ endif
     " inoremap <c-h> <BS>
     " <C-O>    : 依次沿着你的跳转记录向回跳 (从最近的一次开始)
     " <C-I>    : 依次沿着你的跳转记录向前跳
-    " :ju(mps) : 列出你跳转的足迹
+    " :ju(mps) : 列出你跳转的足迹 
 
-
-"{{{
-" 自定义／个性化快捷键
-
+"{{{ " 自定义／个性化快捷键 
 " 关于tab buffer 的快捷键
 " 跳转，翻页 向下翻半夜  向上翻半夜
 " Tab操作快捷方式!
@@ -443,6 +340,7 @@ endif
     " nnoremap g4 4gt
     " nnoremap g5 5gt
     " nnoremap g6 6gt
+    " buffer mapping
     nnoremap gn :bn<CR>
     nnoremap gp :bp<CR>
     nnoremap <leader>bd :bd<CR>
@@ -459,8 +357,11 @@ endif
     imap <C-l> <Right>
     imap <C-j> <Down>
     imap <C-k> <Up>
+
+    " 这个可以用 <C-W>替代
     " <C-B>插入模式下一次性删除一个词
-    imap <c-b> <c-o>diw
+    " imap <c-b> <c-o>diw
+    
 
 " Treat long lines as break lines (useful when moving around in them)
     nnoremap j gj
@@ -511,14 +412,15 @@ if has("autocmd")
     augroup END
 
     autocmd! FileType c,cpp set smartindent
+    " auto FileType c,cpp  set cindent " Strict rules for C Programs
     " set smartindent " 开启行时使用智能自动缩进，为C程序
     " indent: 如果用了:set indent,
         " :set ai 等自动缩进，想用退格键将字段缩进的删掉，必须设置这个选项。否则不响应。
     " eol:如果插入模式下在行开头，想通过退格键合并两行，需要设置eol。
     " start：要想删除此次插入前的输入，需设置这个。 
 
-    augroup xml-fold
-        autocmd! xml-fold
+    augroup xml_fold
+        autocmd! xml_fold
         autocmd BufReadPre *.xml 
                     \let g:xml_syntax_folding = 1 |  
                     \setlocal foldmethod=syntax |
@@ -575,6 +477,54 @@ if has("autocmd")
 endif "has("autocmd")
 "}}}
 
+" gui_running 此行需要在syntax on 之前配置 "{{{
+    if exists('g:syntax_on')
+        syn off
+    endif
+    " 这几行会被colorscheme覆盖
+    " highlight WhitespaceEOL ctermbg=red guibg=red
+    " match WhitespaceEOL /\s\+$/
+    " highlight WhitespaceHOL ctermbg=red guibg=red
+    " match WhitespaceHOL /^\s\+/
+    set cursorline " 突出显示当前行
+    " set cursorcolumn "突出当前列
+
+    " 使用鼠标操作
+    set mouse=cvn
+
+    if has("gui_running")
+        set guioptions-=T " 隐藏工具栏
+        set guioptions-=m " 隐藏菜单栏
+        set guioptions-=L
+        " set guioptions-=r
+        set background=dark
+        " colorscheme desert_ywl  "设定配色方案
+        autocmd GUIEnter * set lines=40 |  set columns=149 
+        if MySys() == 'linux'
+            "exec "winpos 400 70"
+        endif
+    else
+        set background=dark
+        set t_Co=16
+       " if &term =~ "xterm"
+            " set t_Co=16
+            " set t_Sb=^[[4%dm " 设置背景色
+            " set t_Sf=^[[3%dm " 设置前景色
+        autocmd VimEnter * set lines=40 | set columns=149
+        " endif 
+    endif
+
+    " 防止tmux下vim的背景色显示异常
+    " Refer: http://sunaku.github.io/vim-256color-bce.html
+    if &term =~ '256color'
+        " disable Background Color Erase (BCE) so that color schemes
+        " render properly when inside 256-color tmux and GNU screen.
+        " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+        set t_ut=
+    endif 
+
+"}}}
+
 " Customed Function"{{{
 "{{{
 " Time.function 缩写定义
@@ -582,40 +532,6 @@ endif "has("autocmd")
     iab tdate <c-r>=strftime("%Y/%m/%d %H:%M:%S")<cr>
     iab ydate <c-r>=strftime("%Y-%m-%d")<cr>
 "}}}
-"}}}
-
-"{{{
-" 调用AStyle程序，进行代码美化
-
-func! CodeFormat()
-    "取得当前光标所在行号
-    let lineNum = line(".")
-    "C源程序
-    if &filetype == 'c'
-        "执行调用外部程序的命令
-        exec "! astyle --style=ansi -A3Lfpjk3NS %"
-        "H头文件(文件类型识别为cpp)，CPP源程序
-    elseif &filetype == 'cpp'
-        "执行调用外部程序的命令
-        "exec "%! astyle -A3Lfpjk3NS\<CR>"
-        "exec '! astyle --style=ansi -A3Lfpjk3NS '.expand('%:p')
-        exec '! astyle --style=ansi -A3Lfpjk3NS %'
-        "exec "%! astyle -p -V --style=ansi --indent=spaces=4"
-        "JAVA源程序
-    elseif &filetype == 'java'
-        "执行调用外部程序的命令
-        exec "%! astyle -A2Lfpjk3NS\<CR>"
-    else 
-        "提示信息
-        echo "no support ".&filetype." filetype."
-    endif
-    "返回先前光标所在行
-    exec lineNum
-endfunc
-"映射代码美化函数到Shift+f快捷键
-if MySys() == "windows"
-    " map <leader>fm <Esc>:call CodeFormat()<CR>
-endif
 "}}}
 
 "{{{
@@ -701,118 +617,18 @@ endif
     endfunction
 "}}}
 
-"{{{
-" Plugin unused 
-"{{{
-" taglist.vim
-""""""""""""""""""""""""""""""
-    " noremap <leader>tl :TlistToggle<cr>
-    " if MySys() == "windows"                "设定windows系统中ctags程序的位
-        " let Tlist_Ctags_Cmd = 'ctags'
-    " elseif MySys() == "linux"              "设定linux系统中ctags程序的位置
-        " let Tlist_Ctags_Cmd = '/usr/bin/ctags'
-    " endif
-    " " let Tlist_Show_One_File = 1
-    " "不同时显示多个文件的tag，只显示当前文件的
-    " let Tlist_Exit_OnlyWindow = 1
-    " "如果taglist窗口是最后一个窗口，则退出vim
-    " let Tlist_Use_Right_Window = 0         "在右侧窗口中显示taglist窗口
-    " let Tlist_WinWidth=31
-    " " 如果希望taglist始终解析文件中的tag，不管taglist窗口有没有打开，设置Tlist_Process_File_Always 为 1
-"}}}
+" 开启语法高亮
+syntax on
 
-" BufExplorer "{{{
-""""""""""""""""""""""""""""""
-    " let g:bufExplorerDefaultHelp=0       " Do not show default help.
-    " let g:bufExplorerShowRelativePath=1  " Show relative paths.
-    " let g:bufExplorerSortBy='mru'        " Sort by most recently used.
-    " let g:bufExplorerSplitRight=0        " Split left.
-    " let g:bufExplorerSplitVertical=1     " Split vertically.
-    " let g:bufExplorerSplitVertSize = 30  " Split width
-    " let g:bufExplorerUseCurrentWindow=1  " Open in new window.
-    " autocmd! BufWinEnter \[Buf\ List\] setl nonumber 
-"}}}
+""""""""""""""""""""
+"  filtetype open  "
+""""""""""""""""""""
+" 检测文件类型
+filetype on
+" 针对不同的文件类型采用不同的缩进格式
+filetype indent on
+" 允许插件
+filetype plugin on
+" 启动自动补全
+filetype plugin indent on
 
-" Tohtml 将缓冲区的配色转成html"{{{
-""""""""""""""""""""""""""""""
-" 步骤如下：
-" 1、vim编辑代码；
-" 2、如果有中文字符，则:let html_use_encoding='gb2312'；
-" 4、设置let html_no_pre = 1，This makes it show up as you see it in Vim, but without wrapping。懒得翻译，自己看吧
-" 3、:TOhtml，保存；
-" 4、用浏览器将3保存的文件打开；
-" 5、复制4的页面内容粘贴到博客的编辑框（如果是cnblogs，则需要将4生成的html代码拷贝到html编辑框内）；
-" 6、搞定。
-    " let g:html_start_line = line("'<")
-    " let g:html_end_line = line("'>")
-    " " 强制给行编号
-    " let g:html_number_lines = 0
-    " "let g:html_no_pre = 1 
-    " "let g:html_use_css = 0
-    " "let g:html_use_xhtml = 1
-"}}}
-    
-" Yggdroot/vim-mark "{{{
-""""""""""""""""""""""""""""""
-"   To enable the automatic restore of marks from a previous Vim session
-    " let g:mwAutoLoadMarks = 1
-
-    " noremap <Leader>1  <Plug>MarkSearchGroup1Next
-    " noremap <Leader>!  <Plug>MarkSearchGroup1Prev
-    " noremap <Leader>2  <Plug>MarkSearchGroup2Next
-    " noremap <Leader>@  <Plug>MarkSearchGroup2Prev
-    " noremap <Leader>3  <Plug>MarkSearchGroup3Next
-    " noremap <Leader>#  <Plug>MarkSearchGroup3Prev
-    " noremap <Leader>4  <Plug>MarkSearchGroup4Next
-    " noremap <Leader>$  <Plug>MarkSearchGroup4Prev
-    " noremap <Leader>5  <Plug>MarkSearchGroup5Next
-    " noremap <Leader>%  <Plug>MarkSearchGroup5Prev
-    " noremap <Leader>6  <Plug>MarkSearchGroup6Next
-    " noremap <Leader>^  <Plug>MarkSearchGroup6Prev
-" "   There are no default mappings for toggling all marks and for the :MarkClear 
-" "   command, but you can define some yourself: 
-    " nmap <Leader>M <Plug>MarkToggle
-    " nmap <Leader>N <Plug>MarkAllClear
-"}}}
-
-" winManager setting "{{{
-"""""""""""""""""""""""""""""""
-""  let g:winManagerWindowLayout = "TagList"            
-""  FileExplorer,BufExplorer
-""  let g:winManagerWindowLayout='FileExplorer|TagList'
-"   let g:winManagerWindowLayout='NERDTree|TagList'
-"   let g:winManagerWidth = 31
-"   let g:defaultExplorer = 0
-""  nmap <C-W><C-F> :FirstExplorerWindow<cr>
-""  nmap <C-W><C-B> :BottomExplorerWindow<cr>
-"   nmap <silent> <leader>wm :WMToggle<cr>
-""  nmap <leader>wm :if IsWinManagerVisible() <BAR> WMToggle<CR> <BAR> else <BAR> WMToggle<CR>:q<CR> endif <CR><CR>
-"}}}
-
-" Trinity of wesleyche"{{{
-"   " Open and close all the three plugins on the same time 
-"   nmap <F8>  :TrinityToggleAll<CR> 
-"
-""  Open and close the Source Explorer separately 
-"   nmap <F9>  :TrinityToggleSourceExplorer<CR> 
-"
-""}}}
-
-" Txtbrowser"{{{
-"   定制自己的搜索引擎:h txt-search-engine
-    " let Txtbrowser_Search_Engine='https://www.google.com.hk/#newwindow=1&q=text&safe=strict'
-"   定制自己的词典:h txt-dict
-    " let TxtBrowser_Dict_Url='http://dict.youdao.com/search?q=text&keyfrom=dict.index'
-"}}}
-
-"{{{
-" Align
-" AlignCtrl lp0P0
-" p0P0表示分隔符前后有0个空格
-" 通过字母l和r进行对齐，l表示左对齐，r表示右对齐
-" help alignctrl-p
-""""""""""""""""""""""""""""""
-    " let g:Align_xstrlen= 3
-"}}}
-
-"}}}

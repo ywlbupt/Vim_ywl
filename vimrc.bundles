@@ -4,10 +4,10 @@
 
 " Plugin management "插件管理"{{{
 " --------Brief help----------------------------
-" :PluginList          - list configured bundles  
-" :PluginInstall(!)    - install(update) bundles  
-" :PluginSearch(!) foo - search(or refresh cache first) for foo   
-" :PluginClean(!)      - confirm(or auto-approve) removal of unused bundles 
+" :PluginList          - list configured bundles
+" :PluginInstall(!)    - install(update) bundles
+" :PluginSearch(!) foo - search(or refresh cache first) for foo
+" :PluginClean(!)      - confirm(or auto-approve) removal of unused bundles
 
 " Get out of VI's compatible mode.
 set nocompatible    " required
@@ -20,21 +20,14 @@ call vundle#begin('$VIMFILES/bundle')
 	"let Vundle manage Vundle, required
         Plugin 'VundleVim/Vundle.vim'
 
-        Plugin 'junegunn/vim-easy-align'
-
-        Plugin 'skywind3000/asyncrun.vim'
-
         Plugin 'xolox/vim-misc' |  Plugin 'xolox/vim-session'
-        " Plugin 'xolox/vim-shell'
-        " allow vim-easytags work background
-        " Plugin 'xolox/vim-easytags'
 
     " tpope 大神
         Plugin 'tpope/vim-repeat' | Plugin 'tpope/vim-surround'
         " Git 集成工具
         " Plugin 'tpope/vim-fugitive'
 
-        Plugin 'jkeylu/vimcdoc'
+        " Plugin 'jkeylu/vimcdoc'
 
     " Windows 下未安装成功
         if MySys() == "linux" || hostname() =~ "E420" || hostname() =="M-PC" || hostname() == "XMYWL"
@@ -44,7 +37,7 @@ call vundle#begin('$VIMFILES/bundle')
         endif
         Plugin 'Valloric/ListToggle'
 
-    " -------------------- Python ---------------- 
+    " -------------------- Python ----------------
     " fold for python
         Plugin 'tmhedberg/SimpylFold'
     " python vim built-in help
@@ -63,33 +56,24 @@ call vundle#begin('$VIMFILES/bundle')
         Plugin 'Raimondi/delimitMate'
 
         " colors
-        Plugin 'vim-airline/vim-airline' 
+        Plugin 'vim-airline/vim-airline'
         Plugin 'vim-airline/vim-airline-themes'
 
-        Plugin 'ywlbupt/vim-color-ywl'
-        Plugin 'altercation/vim-colors-solarized'
+        " Plugin 'ywlbupt/vim-color-ywl'
 
         " 括号显示增强
         Plugin 'kien/rainbow_parentheses.vim'
-        " 书签可视化
-        Plugin 'kshenoy/vim-signature'
         " gitgutter
         Plugin 'airblade/vim-gitgutter'
-        
+
         " gundo " edit history, 可以查看回到某个历史状态
         Plugin 'sjl/gundo.vim'
 
-        " Group dependencies, vim-snippets depends on ultisnips
-        Plugin 'SirVer/ultisnips' | Plugin 'honza/vim-snippets'
-
-        " simple to do 
-        Plugin 'vitalk/vim-simple-todo'
-
         if count(g:plugin_function_groups, 'hexo')
-            " Hexo 插件 TODO 
+            " Hexo 插件 TODO
             Plugin 'ywlbupt/vim-hexo'
         endif
-    
+
     " endif
     call vundle#end()            " required
     filetype plugin indent on    " required
@@ -97,12 +81,18 @@ call vundle#begin('$VIMFILES/bundle')
 
 " vim-plug 异步插件管理" {{{
 call plug#begin('$VIMFILES/plugged')
-" Plug 'junegunn/vim-easy-align'
+    Plug 'junegunn/vim-easy-align'
 " Initialize plugin system
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown' , {'for': 'markdown'}
+    " Group dependencies, vim-snippets depends on ultisnips
+    Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
     autocmd! User vim-markdowm echom 'markdown is now loaded!'
     autocmd! User vim-markdowm.vim echom 'markdown.vim is now loaded!'
+
+    Plug 'skywind3000/asyncrun.vim'
+
     if count(g:plugin_function_groups, "ale")
         " Plug 'w0rp/ale',{'tag' : 'v2.3.0'}
         Plug 'w0rp/ale'
@@ -118,12 +108,19 @@ call plug#begin('$VIMFILES/plugged')
             Plug 'Yggdroot/LeaderF',{ 'do': './install.sh' }
         endif
     endif
+    if count(g:plugin_function_groups, "coc.nvim")
+        Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
+    endif
+    Plug 'altercation/vim-colors-solarized'
+    if count(g:plugin_function_groups, 'vim-youdao-translater')
+        Plug 'ianva/vim-youdao-translater'
+    endif
 call plug#end()
 "}}}
 
 " altercation/vim-colors-solarized" "主题方案"{{{
-    " if g:colors_name == 'solarized' 
-    " 非gui模式的时候 
+    " if g:colors_name == 'solarized'
+    " 非gui模式的时候
     if &term !~ "gui"
         let g:solarized_termcolors= 16
     endif
@@ -137,13 +134,18 @@ if count(g:plugin_function_groups, 'hexo')
     let g:hexo_blogpath = expand('~/hexo_blog')
 endif
 
+" project root markers, used for gutentags and asyncrun
+
+let b:project_marker_list = ['.root', '.svn', '.git', '.project']
+
+
 " vim-airline/vim-airline  "好看轻量级的powerline，不依赖python "{{{
     if count(g:plugin_function_groups, "airline")
-        let g:airline_powerline_fonts = 1    
+        let g:airline_powerline_fonts = 1
         let g:airline_theme = "base16_google"
         if MySys() == 'windows'
             set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI
-        else 
+        else
             if has("gui_gtk2")
                 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
             endif
@@ -165,8 +167,16 @@ endif
             " set warning count prefix >
             let g:airline#extensions#ycm#warning_symbol = 'W:'
         endif
+        " enable/disable detection of whitespace errors. >
+        let g:airline#extensions#whitespace#enabled = 1
+        " must be all spaces or all tabs before the first non-whitespace character
+        let g:airline#extensions#whitespace#mixed_indent_algo = 0
     endif
 
+"}}}
+
+" colorscheme "{{{
+    colorscheme solarized
 "}}}
 
 " vim-scripts/Load_Template file setting " 模板文件"{{{
@@ -189,7 +199,7 @@ endif
     nmap <silent> <leader>fe :NERDTreeToggle<cr>
 
     " 设置书签目录
-    let g:NERDTreeBookmarksFile = join([g:ywl_path, 'vimfiles', 'plugindata', 
+    let g:NERDTreeBookmarksFile = join([g:ywl_path, 'vimfiles', 'plugindata',
                 \ 'NERDTreeBookmarks.txt'], g:os_sep)
     " 将 NERDTree 的窗口设置在 vim 窗口的右侧（默认为左侧）
     let  g:NERDTreeWinPos="right"
@@ -199,7 +209,7 @@ endif
     let g:NERDChristmasTree=1
     let g:NERDTreeWinSize=40
     " 当输入 [:e filename]不再显示netrw,而是显示nerdtree
-    let g:NERDTreeHijackNetrw=1 
+    let g:NERDTreeHijackNetrw=1
     " Nerdtree Display line numbers
     let NERDTreeShowLineNumbers=1
     " 处理文件夹下单一文件夹的显示
@@ -219,20 +229,20 @@ endif
     " endif
 " 自定义命令，让NERDTree进入当前文件所在的目录
     command! -n=? -complete=dir -bar Ncd :call MyNerdtreeToggle('<args>')
-    function! MyNerdtreeToggle(dir) 
+    function! MyNerdtreeToggle(dir)
         exec "cd ".expand('%:h')
         exec "NERDTree ".expand('%:h')
     endfunction
 "}}}
 
 " Used by winmanager "{{{
-    let g:NERDTree_title = "[NERDTree]" 
-    function! NERDTree_Start() 
+    let g:NERDTree_title = "[NERDTree]"
+    function! NERDTree_Start()
         exe 'NERDTree'
-    endfunction 
+    endfunction
 
-    function! NERDTree_IsValid() 
-      return 1 
+    function! NERDTree_IsValid()
+      return 1
     endfunction
 "}}}
 
@@ -254,47 +264,68 @@ endif
 " Valloric/YouCompleteMe" 可能是最好用的自动补全工具 TODO:syntastic"{{{
     " Turn on or off YCM
     " 主动补全：<c-space>
+if count(g:plugin_function_groups, 'YouCompleteMe')
+    nnoremap <silent> <leader>ry :YcmRestartServer<cr>
     let g:ycm_key_list_stop_completion = ['<C-y>']
     " nnoremap <leader>y :let g:ycm_auto_trigger=0<cr> "turn off YCM nnoremap
     " nnoremap <leader>Y :let g:ycm_auto_trigger=1<cr> "turn on YCM nnoremap
-    if hostname() =~ 'E420' || MySys() == 'linux' || hostname() == 'M-PC' || hostname() == "XMYWL"
-        " let g:ycm_python_binary_path = '/home/ywl/.pyenv/versions/anaconda3-2.4.0/bin/python'
-        let g:ycm_python_binary_path = 'python'
-        if MySys() == 'windows'
-            " Only used for ycm server, default to use python embemdded in vim
-            let g:ycm_server_python_interpreter = 'C:/Anaconda3/python'
-        endif
-        if hostname() == 'XMYWL' || hostname()=="ywl-ThinkPad-E420"
-            " let g:ycm_server_python_interpreter = 'C:/python35/python'
-            let g:ycm_global_ycm_extra_conf = g:ywl_path.'/vimfiles/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-        endif
-        " nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
-        " nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
-        " nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-        
-        " make YCM compatible with UltiSnips (using supertab)
-        " c-k, c-j is Ok
-        let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-        let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-
-        let g:ycm_error_symbol = '>>'
-        let g:ycm_warning_symbol = '>*'
-        let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
-        let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
-        " 注释和字符串中的文字也会被收入补全
-        let g:ycm_collect_identifiers_from_comments_and_strings = 1   
-        let g:ycm_collect_identifiers_from_tags_files = 1
-        " nmap <F4> :YcmDiags<CR>
-        " 往前跳和往后跳的快捷键为Ctrl+O以及Ctrl+I
-        " 开启语法关键字补全
-        let g:ycm_seed_identifiers_with_syntax=1
-        " 黑名单策略
-        let g:ycm_filetype_blacklist = {'tagbar': 1,}
-        " 关闭语法检测提示
-        let g:ycm_enable_diagnostic_signs = 0
-        let g:ycm_enable_diagnostic_highlighting = 0
-        let g:ycm_show_diagnostics_ui = 0
+    " let g:ycm_python_binary_path = '/home/ywl/.pyenv/versions/anaconda3-2.4.0/bin/python'
+    let g:ycm_python_binary_path = 'python'
+    if MySys() == 'windows'
+        " Only used for ycm server, default to use python embemdded in vim
+        let g:ycm_server_python_interpreter = 'C:/Anaconda3/python'
     endif
+    if hostname() == 'XMYWL' || hostname()=="ywl-ThinkPad-E420"
+        " let g:ycm_server_python_interpreter = 'C:/python35/python'
+        " let g:ycm_global_ycm_extra_conf = g:ywl_path.'/vimfiles/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+        let g:ycm_global_ycm_extra_conf = g:ywl_path.'/vimfiles/bundle/YouCompleteMe/.ycm_extra_conf.py'
+    endif
+    " make YCM compatible with UltiSnips (using supertab)
+    " c-k, c-j is Ok
+    let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+    let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+
+    let g:ycm_error_symbol = '>>'
+    let g:ycm_warning_symbol = '>*'
+    let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
+    let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
+    " 注释和字符串中的文字也会被收入补全
+    let g:ycm_collect_identifiers_from_comments_and_strings = 1
+    let g:ycm_collect_identifiers_from_tags_files = 1
+    " nmap <F4> :YcmDiags<CR>
+    " 往前跳和往后跳的快捷键为Ctrl+O以及Ctrl+I
+    " 开启语法关键字补全
+    let g:ycm_seed_identifiers_with_syntax=1
+    " 黑名单策略
+    let g:ycm_filetype_blacklist = {'tagbar': 1,}
+
+    " 关闭语法检测提示
+    let g:ycm_enable_diagnostic_signs = 0
+    let g:ycm_enable_diagnostic_highlighting = 0
+    let g:ycm_show_diagnostics_ui = 0
+    " 语义补全的触发
+    let g:ycm_semantic_triggers =  {
+                \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+                \ 'cs,lua,javascript': ['re!\w{2}'],
+                \ }
+    " let g:ycm_filetype_whitelist = {
+                " \ "c":1,
+                " \ "cpp":1,
+                " \ "python":1,
+                " \ "markdown":1,
+                " \ "vim":1,
+                " \ "objc":1,
+                " \ "sh":1,
+                " \ "zsh":1,
+                " \ "zimbu":1,
+                " \ }
+endif
+"}}}
+
+" coc.nvim "{{{
+if count(g:plugin_function_groups, "coc.nvim")
+    inoremap <silent><expr> <c-space> coc#refresh()
+endif
 "}}}
 
 " SirVer/UltiSnips "{{{
@@ -312,6 +343,8 @@ endif
     " Snippets的文件夹名字，查找rtp路径下的UltiSnips文件夹< plugin vim-snippets
     let g:UltiSnipsSnippetDirectories = ['UltiSnips']
     let g:UltiSnipsSnippetsDir = g:ywl_path.'/vimfiles/UltiSnips'
+    " set 0 to use snippets in both UltiSnips and snippets
+    let g:UltiSnipsEnableSnipMate = 0
 "}}}
 
 " xolox/vim-session" 会话，工作区保留"{{{
@@ -342,10 +375,10 @@ endif
 " Pydiction && SimpylFold " Python 的智能折叠 "{{{
     if MySys() == 'windows'
 		let g:pydiction_location =
-		 \ g:ywl_path.'\vimfiles\bundle\Pydiction\complete-dict'
+        \ g:ywl_path.'\vimfiles\bundle\Pydiction\complete-dict'
     elseif MySys() == 'linux'
-		let g:pydiction_location = 
-		 \ g:ywl_path.'/vimfiles/bundle/Pydiction/complete-dict'
+		let g:pydiction_location =
+        \ g:ywl_path.'/vimfiles/bundle/Pydiction/complete-dict'
     endif
     let g:SimpylFold_docstring_preview=1
 "}}}
@@ -353,12 +386,11 @@ endif
 " fs111/pydoc " python帮助文档 "{{{
 " --------Brief help------------
 " <c-k> 快捷键查询光标下的帮助文档
-    " let g:pydoc_cmd = g:pypath."/pydoc" 
-    let g:pydoc_cmd = "python -m pydoc" 
-    " 
+    let g:pydoc_cmd = "python -m pydoc"
+    "
     let b:pydoc_width = '70 '
     let g:pydoc_open_cmd = b:pydoc_width.'vsplit'
-"}}} 
+"}}}
 
 " Raimondi/delimitMate : 自动补全括号 "{{{
 " --------Brief help------------
@@ -372,7 +404,7 @@ endif
     " au FileType mail,text let b:delimitMate_autoclose = 0
     " for python docstring ",优化输入
     au FileType python let b:delimitMate_nesting_quotes = ['"']
-    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} 
+    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}
         \ let b:delimitMate_quotes = "' ` \"" |
         \ let b:delimitMate_excluded_regions = " "
     "}}}
@@ -405,40 +437,6 @@ endif
     au Syntax * RainbowParenthesesLoadBraces
 "}}}
 
-" kshenoy/vim-signature 书签可视化与操作"{{{
-" 需要支持 :echo has("signs")
-" :SignatureToggle Show/Hide signs
-" :SignatureRefresh refresh signs
-
-" 独立书签mark，重新打开文档后仍存在
-" mx           Toggle mark 'x' and display it in the leftmost column
-" dmx          Remove mark 'x' where x is a-zA-Z
-
-" m,           Place the next available mark
-" m.           If no mark on line, place the next available mark. Otherwise, remove (first) existing mark.
-" m-           Delete all marks from the current line
-" m<Space>     Delete all marks from the current buffer
-" ]`           Jump to next mark by pos
-" [`           Jump to prev mark by pos
-" ]'           Jump to start of next line containing a mark
-" ['           Jump to start of prev line containing a mark
-" `]           Jump by alphabetical order to next mark
-" `[           Jump by alphabetical order to prev mark
-" ']           Jump by alphabetical order to start of next line having a mark
-" '[           Jump by alphabetical order to start of prev line having a mark
-" m/           Open location list and display marks from current buffer
-
-" 分类书签marker，重新打开文档后不存在
-" m[0-9]       Toggle the corresponding marker !@#$%^&*()
-" m<S-[0-9]>   Remove all markers of the same type
-" ]-           Jump to next line having a marker of the same type
-" [-           Jump to prev line having a marker of the same type
-" ]=           Jump to next line having a marker of any type
-" [=           Jump to prev line having a marker of any type
-" m?           Open location list and display markers from current buffer
-" m<BS>        Remove all markers
-"}}}
-
 " tpope/vim-surround.vim " 快速增加括号／引号／自定义符号"{{{
 " :echo char2nr('-')=45
 " :echo char2nr('=')=61
@@ -452,7 +450,7 @@ endif
 "}}}
 
 " plasticboy/vim-markdown : markdown　syntax"{{{
-"TODO 我修改了原文件中 Toc的打开命令,ftplugin中,vertical topleft lopen 
+"TODO 我修改了原文件中 Toc的打开命令,ftplugin中,vertical topleft lopen
 " --------Brief help------------
 " :Toc " 左侧打开目录栏quickfix Windows
     " set the initial foldlevel
@@ -471,17 +469,17 @@ endif
     " set conceallevel =2
     " Disable vim-markdown mapping :1 disable ; 0: enable
     let g:vim_markdown_no_default_key_mappings = 1
-    if g:vim_markdown_no_default_key_mappings
-        map ]u <Plug>Markdown_MoveToParentHeader
-        map [[ <Plug>Markdown_MoveToPreviousSiblingHeader
-        map ]] <Plug>Markdown_MoveToNextSiblingHeader
-    endif
+    " if g:vim_markdown_no_default_key_mappings
+        " map ]u <Plug>Markdown_MoveToParentHeader
+        " map [[ <Plug>Markdown_MoveToPreviousSiblingHeader
+        " map ]] <Plug>Markdown_MoveToNextSiblingHeader
+    " endif
 "}}}
 
 " scrooloose/nerdcommenter" 代码注释 :TODO "{{{
 " --------Brief help------------
 " <leader>cc  - Comment out the current line or text selected in visual mode.
-" <leader>cn  - Nested Comment 
+" <leader>cn  - Nested Comment
 " <leader>cu  - Uncomments
 " <leader>cm  - multiple line NERDComMinimalComment 包裹性的注释时管用
 
@@ -490,9 +488,9 @@ endif
     let g:NERDDefaultAlign = 'none'
     let NERDCreateDefaultMappings = 1
 
-    let g:NERDCustomDelimiters = { 'vim': { 'left': '" ' }, 
+    let g:NERDCustomDelimiters = { 'vim': { 'left': '" ' },
                 \ 'cpp': {'left':'// ', 'leftAlt':'/* ', 'rightAlt':' */'},
-                \ 'c': {'left':'// '} 
+                \ 'c': {'left':'// '}
                 \ }
     " unmap该快捷键的想法是尽量让十指不离开主键盘区太远
     " nmap \\\ <Plug>NERDCommenterToggle
@@ -516,7 +514,7 @@ endif
 " ]c : jump to next hunk (change):
 " [c : jump to previous hunk (change):
 " <leader>hs : staged the hunk where cursor in it
-" <leader>hu : undo it 
+" <leader>hu : undo it
     " 同git diff,实时展示文件中修改的行
     " 只是不喜欢除了行号多一列, 默认关闭,gs时打开
     let g:gitgutter_map_keys = 0
@@ -532,7 +530,7 @@ endif
 "}}}
 
 " sjl/gundo.vim 打开quickfix窗口查看修改历史"{{{
-    noremap <leader>hy :GundoToggle<CR>
+    noremap <leader>hs :GundoToggle<CR>
 " }}}
 
 " majutsushi/tagbar"{{{
@@ -574,28 +572,6 @@ endif
     endif
 "}}}
 
-" xolox/vim-easytags"{{{
-" --------Brief help------------
-" :UpdateTags  : 显式更新tags 
-" :HighlightTags  : 显式highlight tags 
-    " if MySys() == 'windows'
-        " let g:easytags_cmd = g:ywl_path.'/Archive_gvim/ctags.exe'
-    " endif
-    " " let g:easytags_opts = ['-R']
-    " let g:easytags_file = expand('$HOME')."/_vimtags"
-
-    " " 可选的event有 Cursorhold,  CursorholdI
-    " " 自动更新 tags 的发生时机，只在保存文件时更新，
-    " " let g:easytags_events = ['BufWritePost']
-    " let g:easytags_events = ['']
-    
-    " " 生成与 ~/_vimtags 为根的绝对路径，且此时 set tags = ./tags;,~/_vimtags
-    " nmap <silent> <leader>ct :exec ':UpdateTags --tag-relative=yes -f '.g:easytags_file.' -R'<cr>
-    " let g:easytags_async=0
-    " let g:easytags_auto_highlight = 0
-    " let g:easytags_dynamic_files = 1
-"}}}
-
 "{{{
 " Ctags
 " """"""""""""""""""""""""""""""
@@ -619,7 +595,7 @@ endif
     let g:lt_quickfix_list_toggle_map = '<F4>'
 "}}}
 
-" vimgrep.vim {{{
+" vimgrep.vim "{{{
 " 对搜索的设置
     " map <leader>ff :call Search_Word("CurrentFile")<CR>:copen<CR>
     " map <leader>fF :call Search_Word("RecursiveFile")<CR>:copen<CR>
@@ -637,14 +613,14 @@ endif
 "  在hexo中使用grep搜索笔记  "
 """"""""""""""""""""""""""""""
     " if count(g:plugin_function_groups, 'hexo')
-        " function! Search_word_in_hexo()  
-            " call inputsave() 
-            " let w = input ("searching word in hexo :") 
-            " call inputrestore() 
+        " function! Search_word_in_hexo()
+            " call inputsave()
+            " let w = input ("searching word in hexo :")
+            " call inputrestore()
             " if !empty(w)
                 " let searchpath = join([g:hexo_blogpath, 'source', '_posts'],g:os_sep)
             " execute "Grep -r ".w." ".searchpath
-            " else 
+            " else
                 " echo "nothing to search"
             " endif
         " endfunc
@@ -680,18 +656,6 @@ endif
 
 "}}}
 
-" simple-todo-new : Disable default key bindings"{{{
-" TODO : 
-" 1. 按自己的想法改写该插件
-" 2. 支持列表形式，支持正则表达式的symbol list
-let g:simple_todo_map_keys = 0
-
-" Map your keys
-imap <leader>i <Plug>(simple-todo-new)
-nmap <leader>I <Plug>(simple-todo-new-start-of-line)
-nmap <leader>x <Plug>(simple-todo-mark-switch)
-" .nmap..etc."}}}
-
 " vim-easy-align"{{{
 
 " start interactive easyalign in visual mode (e.g. vip<enter>)
@@ -702,10 +666,9 @@ nmap ga <Plug>(EasyAlign)
 
 "}}}
 
-" leaderF {{{
+" leaderF "{{{
 "   move rg.exe to C:\windows\System32
 "   vimrun 搜索路径
-
     " let g:Lf_PythonVersion =3
 
     let g:Lf_Ctags = g:ywl_path.'/Archive_gvim/ctags.exe'
@@ -725,21 +688,22 @@ nmap ga <Plug>(EasyAlign)
             " \ 'c': '--c-kinds=fp',
             " \ 'rust': '--rust-kinds=f',
             " \ }
-    " function! LeaderfTag_cword() 
+    " function! LeaderfTag_cword()
         " let w = expand("<cword>") " 在当前光标位置抓词
         " exec 'LeaderfTag'
     " endfunction
     let g:Lf_ShortcutF = '<C-P>'
+    noremap <c-n> :LeaderfMru<cr>
     nnoremap <leader>fu :LeaderfFunction!<cr>
     " search word recursive
-    nnoremap <leader>f :Leaderf! rg -e
+    nnoremap <leader>f :Leaderf! rg --stayOpen -e 
     " let g:Lf_CommandMap = {'<C-P>': ['<C-L>'], }
-    
+
 
     " search word under cursor, the pattern is treated as regex, and enter normal mode directly
-    nnoremap <C-B> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR><CR>
+    nnoremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --stayOpen -e %s ", expand("<cword>"))<CR><CR>
     " search word under cursor literally only in current buffer
-    nnoremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -F --current-buffer -e %s ", expand("<cword>"))<CR><CR>
+    nnoremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -F --stayOpen --current-buffer -e %s ", expand("<cword>"))<CR><CR>
 " }}}
 
 " ctrlpvim/ctrlp.vim " 文件导航插件" && tacahiroy/ctrlp-funky {{{
@@ -757,7 +721,7 @@ nmap ga <Plug>(EasyAlign)
     " " c-d : 在全路径搜索和文件名搜索间切换。
     " "  默认的mapping 与 Binding 的命令
     " let g:ctrlp_map = '<c-p>' | let g:ctrlp_cmd = 'CtrlP'
-    " " Working diretory setting 
+    " " Working diretory setting
     " " -r : diretory of current file
     " let g:ctrlp_working_path_mode = 'ra'
 
@@ -767,12 +731,12 @@ nmap ga <Plug>(EasyAlign)
         " set wildignore+=*/tmp/*,*/undodirfile/*,*/vimfiles/view/*
         " " set wildignore+=*/.git/* " 此处会和fugitive 冲突
         " " MacOSX/Linux Use a custom file listing command
-        " " let g:ctrlp_user_command = 'find %s -type f'        
+        " " let g:ctrlp_user_command = 'find %s -type f'
     " elseif MySys()=='windows'
         " set wildignore+=*\\tmp\\*,*.exe,*\\undodirfile\\*,*\\vimfiles\\view\\*
         " " set wildignore+=*\\.git\\* " 此处会和fugitive 冲突
         " " Windows , Use a custom file listing command
-        " " let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  
+        " " let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'
     " endif
     " let g:ctrlp_custom_ignore = {
         " \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
@@ -785,14 +749,6 @@ nmap ga <Plug>(EasyAlign)
     " nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 "}}}
 
-" asyncrun.vim"{{{
-
-    " 自动打开 quickfix window ，高度为 6
-    let g:asyncrun_open = 6
-    " 设置 F10 打开/关闭 Quickfix 窗口
-    nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
-"}}}
-
 " vim-gutentags replace of easytags, work async Successful"{{{
     " gutentags插件启动后，会从文件当前路径递归往上查找 gutentags_project_root
     " 中指定的文件或目录名，直到第一次找到对应目标文件或目录名停止。若没有找到
@@ -801,7 +757,8 @@ nmap ga <Plug>(EasyAlign)
     " 想要避免的话，你可以在你的野文件目录中放一个名字为 .root 的空白文件，主动告诉 gutentags 这里就是工程目录。
 
     " gutentags搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归 "
-    let g:gutentags_project_root = ['.root', '.svn', '.git', '.project']
+    " let g:gutentags_project_root = ['.root', '.svn', '.git', '.project']
+    let g:gutentags_project_root = copy(b:project_marker_list)
 
     "  所生成的数据文件的名称 "
     let g:gutentags_ctags_tagfile = '.tags'
@@ -834,6 +791,8 @@ nmap ga <Plug>(EasyAlign)
 "}}}
 
 " w0rp/ale Asynchronous linting 异步代码检查"{{{
+" Dependency : pip install autopep8
+"  read :help channel
     if count(g:plugin_function_groups, "ale")
         " show errors or warnings in my statusline
         if count(g:plugin_function_groups, "airline")
@@ -843,10 +802,10 @@ nmap ga <Plug>(EasyAlign)
         let g:ale_sign_error = '>>'
         let g:ale_sign_warning = '--'
 
-        let g:ale_lint_on_save = 0
         let g:ale_set_highlights = 0
         let g:ale_lint_on_text_changed = 'never'
         "打开文件时不进行检查
+        let g:ale_lint_on_save =0
         let g:ale_lint_on_enter = 0
         "普通模式下，cp前往上一个错误或警告，cn前往下一个错误或警告
         nmap <silent> cp <Plug>(ale_previous_wrap)
@@ -865,55 +824,81 @@ nmap ga <Plug>(EasyAlign)
         " \   'c++': ['clang'],
         " \   'c': ['clang'],
         " \   'python': ['pylint'],
-        let g:ale_fixers = {'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8']}
+        " let g:ale_fixers = {'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8']
+        let g:ale_fixers = {
+                    \'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8',
+                    \'add_blank_lines_for_python_control_statements'
+                    \],
+                    \}
+        let g:ale_fix_on_save = 0
+        " let g:ale_fix_on_enter
+        " let g:ale_fix_on_insert_leave
+        " let g:ale_fix_on_text_changed
+        " :ALEFixSuggest
+        " :ALEFix
     endif
 "}}}
 
-" 定义CompileRun函数，用来调用编译和运行  "{{{ 
-    func! ComplieX()  
-        exec "w"  
-        if &filetype == 'c'  
-            exec "AsyncRun gcc % -g -Wall -o %<"
-        elseif &filetype == 'cpp'  
-            exec "AsyncRun g++ % -g -Wall -o %<"
+" skywind3000/asyncrun.vim"{{{
+
+    " stop the runing job
+    " :AsyncStop{!}
+    " 自动打开 quickfix window ，高度为 6
+    let g:asyncrun_open = 10
+    " 设置 F10 打开/关闭 Quickfix 窗口
+    nnoremap <F10> :call asyncrun#quickfix_toggle(10)<cr>
+    let $PYTHONUNBUFFERED=1
+    let g:asyncrun_rootmarks = copy(b:project_marker_list)
+
+    " 自定义一键编译运行 "{{{
+    " 定义CompileRun函数，用来调用编译和运行
+    func! ComplieX()
+        exec "w"
+        if &filetype == 'c'
+            exec 'AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
+        elseif &filetype == 'cpp'
+            exec 'AsyncRun g++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
         endif
     endfunc
+    nnoremap <silent> <F9> :call ComplieX()<CR>
 
-" 定义Run函数  
-    func! RunX()  
-        if &filetype == 'c' || &filetype == 'cpp'  
-            if MySys() == 'windows'
-                exec "AsyncRun %<"
-            elseif MySys() == 'linux'
-                exec "!./%<"
-            endif
-        elseif &filetype == 'java'  
-            exec "!java %<"
+    " 定义Run函数
+    func! RunX()
+        if &filetype == 'c' || &filetype == 'cpp'
+                " exec "AsyncRun %<"
+            exec 'AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
         elseif &filetype == 'python'
-            exec "w"  
-            if MySys() == 'windows'
-                exec "AsyncRun python %"
-                exec "copen"
-            elseif MySys() == 'linux'
-                exec "!python %"
-            endif  
-        endif  
-    endfunc  
+            exec "w"
+            exec "AsyncRun -raw python %"
+            exec "copen"
+            exec "wincmd p"
+        endif
+    endfunc
+    nnoremap <silent> <F7> :call RunX()<CR>
+    "}}}
 
-" 定义Debug函数，用来调试程序  
-    func! Debug()  
-        exec "w"  
-        if &filetype == 'c'  
-            exec "!gcc % -g -o %<" 
+"}}}
+
+" vim-youdao-translater{{{
+    nnoremap <silent> <m-f> :<C-u>Ydc<CR>
+    vnoremap <silent> <m-f> :<C-u>Ydv<CR>
+"}}}
+
+"{{{
+" 定义Debug函数，用来调试程序
+    func! Debug()
+        exec "w"
+        if &filetype == 'c'
+            exec "!gcc % -g -o %<"
             exec "!gdb %<"
-        elseif &filetype == 'cpp'  
+        elseif &filetype == 'cpp'
             exec "!g++ % -g -o %<"
-            exec "!gdb %<" 
-        elseif &filetype == 'java'  
-            exec "!javac %"  
+            exec "!gdb %<"
+        elseif &filetype == 'java'
+            exec "!javac %"
             exec "!jdb %<"
-        endif  
-    endfunc  
+        endif
+    endfunc
 
 "   Windows和linux的单文件编译
     func! ComplieRunCpp()
@@ -922,9 +907,9 @@ nmap ga <Plug>(EasyAlign)
             exec "!g++ % -g -Wall -o %<"
             if MySys() == 'linux'
                 " %< 表示没有后缀的本文件 ，参考 :help %<
-                exec "! ./%<"       
+                exec "! ./%<"
             elseif MySys() == 'windows'
-                exec "!%<"       
+                exec "!%<"
             endif
         endif
         if &filetype == 'c'
@@ -932,18 +917,58 @@ nmap ga <Plug>(EasyAlign)
             exec "!gcc % -g -Wall -o %<"
             if MySys() == 'linux'
                 " %< 表示没有后缀的本文件 ，参考 :help %<
-                exec "! ./%<"       
+                exec "! ./%<"
             elseif MySys() == 'windows'
-                exec "!%<"       
+                exec "!%<"
             endif
         endif
     endfunc
-    
+
 " 单文件编译运行
-    map <silent> <C-F5> :call ComplieRunCpp()<CR>
-    map <silent> <F5> :call ComplieX()<CR>
-    map <silent> <F7> :call RunX()<CR>
+    nnoremap <silent> <C-F5> :call ComplieRunCpp()<CR>
 " make
-    autocmd FileType c,cpp map <silent> <leader><space> :make<CR>
+    " autocmd FileType c,cpp map <silent> <leader><space> :make<CR>
+
+
+    " for reference of python from zhihu zhangyiteng
+    " nnoremap <F5> :call CompileRunGcc()<cr>
+    func! CompileRunGcc()
+        exec "w"
+        if &filetype == 'python'
+            if search("@profile")
+                exec "AsyncRun kernprof -l -v %"
+                exec "copen"
+                exec "wincmd p"
+            elseif search("set_trace()")
+                exec "!python3 %"
+            else
+                exec "AsyncRun -raw python3 %"
+                exec "copen"
+                " 光标移动到上一个窗口
+                exec "wincmd p"
+            endif
+        endif
+    endfunc
 "}}}
 
+" del, xolox/vim-easytags"{{{
+" --------Brief help------------
+" :UpdateTags  : 显式更新tags
+" :HighlightTags  : 显式highlight tags
+    " if MySys() == 'windows'
+        " let g:easytags_cmd = g:ywl_path.'/Archive_gvim/ctags.exe'
+    " endif
+    " " let g:easytags_opts = ['-R']
+    " let g:easytags_file = expand('$HOME')."/_vimtags"
+
+    " " 可选的event有 Cursorhold,  CursorholdI
+    " " 自动更新 tags 的发生时机，只在保存文件时更新，
+    " " let g:easytags_events = ['BufWritePost']
+    " let g:easytags_events = ['']
+
+    " " 生成与 ~/_vimtags 为根的绝对路径，且此时 set tags = ./tags;,~/_vimtags
+    " nmap <silent> <leader>ct :exec ':UpdateTags --tag-relative=yes -f '.g:easytags_file.' -R'<cr>
+    " let g:easytags_async=0
+    " let g:easytags_auto_highlight = 0
+    " let g:easytags_dynamic_files = 1
+"}}}
