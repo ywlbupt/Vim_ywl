@@ -204,7 +204,7 @@ endif
     set noerrorbells " 关闭错误信息响铃
     set novisualbell " 关闭使用可视响铃代替呼叫
     " 置空错误铃声的终端代码,set silent (no beep)
-    set vb t_vb=
+    set t_vb=
 
     " set showmatch " 插入括号时，短暂地跳转到匹配的对应括号
     " set matchtime=2 " 短暂跳转到匹配括号的时间
