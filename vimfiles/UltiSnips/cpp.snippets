@@ -1,11 +1,25 @@
 priority -45
 
-
 #  content 
 
-#snippet inch
-##include "${1:iostream}"
-#endsnippet
+snippet cl "class .. (class)"
+class ${1:`!p snip.rv = snip.basename or "name"`}
+{
+public:
+	${1/(\w+).*/$1/} (${2:arguments});
+	virtual ~${1/(\w+).*/$1/} ();
+
+private:
+	${0:/* data */}
+};
+endsnippet
+
+snippet cla "An entire .h generator" b
+#ifndef ${1:`!v substitute(vim_snippets#Filename('$1_H','ClassName'),'.*','\U&\E','')`}
+#define $1
+
+#endif /* $1 */
+endsnippet
 
 snippet inch
 #include "${1:`!v expand("%:r")`}.h"

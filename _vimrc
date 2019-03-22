@@ -3,7 +3,7 @@
 " LastUpdate : 2016-09-17 13:56:35
 " Description : vimrc
 
-"  Install Dependency"{{{
+" Install Dependency"{{{
 """"""""""""""""
 " # ubuntu
 " sudo apt-get install ctags
@@ -16,6 +16,35 @@
 " sudo pip install pep8
 "}}}
 
+" Initial setting"{{{
+" -----------------------------------------------------------------------------
+"  < 判断操作系统是否是 Windows 还是 Linux >
+" ----------------------------------------------------------------------------- 
+function! MySys()
+    if(has('win32') || has('win64') || has('win95') || has('win16'))
+        return 'windows'
+    elseif has('unix')
+        return 'linux'
+    endif
+endfunction
+
+if MySys() == 'linux'
+    let g:os_sep = '/'
+elseif MySys() == 'windows'
+    let g:os_sep = '\'
+endif
+
+"   个人文件夹路径的设定
+if MySys() == 'linux'
+    set runtimepath=$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after
+    set runtimepath+=$HOME/vimfiles,$HOME/vimfiles/after
+    set runtimepath+=$VIMFILES,$VIMFILES\after
+elseif MySys() == 'windows'
+    set runtimepath=$VIM\vimfiles,$VIMRUNTIME,$VIM\vimfiles\after
+    set runtimepath+=$HOME\vimfiles,$HOME\vimfiles\after
+    set runtimepath+=$VIMFILES,$VIMFILES\after
+endif	
+    
 " Set mapleader & Fast edit vimrc
 let   mapleader = ","
 let g:mapleader = ","
@@ -31,6 +60,12 @@ if !exists('g:plugin_function_groups')
                 \]
                 " \"coc.nvim",
 endif
+
+let $VIMFILES = expand('$VIMY/vimfiles')
+let $PLUG = expand("$VIMFILES/plugged")
+let $SETTING = expand("$VIMFILES/setting_of_plugin")
+let $CTAGS_WIN = expand("$VIMY/Archive_gvim/ctags.exe")
+"}}}
 
 set history =1000
 
@@ -69,39 +104,44 @@ endif
 " Fast edit vimrc & font coding Setting "{{{
 
 " Fast edit vimrc
-    if MySys() == 'linux'
+    "if MySys() == 'linux'
+    ""   Fast reloading of the .vimrc
+        "nnoremap <silent> <leader>ss :exec 'source '.g:ywl_path.'/_vimrc'<cr>
+        "nnoremap <silent> <leader>rr :source ~/.vimrc<cr>
+    ""   Fast editing of .vimrc
+        "nnoremap <silent> <leader>ee :exec 'edit '.g:ywl_path.'/_vimrc'<cr>
+        "nnoremap <silent> <leader>er :e ~/.vimrc<cr>
+        "nnoremap <silent> <leader>eb :exec 'edit '.g:ywl_path.'/vimrc.bundles'<cr>
+    "elseif MySys() == 'windows'
+    ""   Fast reloading of the _vimrc
+        "nnoremap <silent> <leader>ss :exec 'source '.g:ywl_path.'\_vimrc'<cr>
+        "nnoremap <silent> <leader>rr :source $VIM\_vimrc<cr>
+    ""   Fast editing of _vimrc
+        "nnoremap <silent> <leader>ee :exec 'edit '.g:ywl_path.'\_vimrc'<cr>
+        "nnoremap <silent> <leader>er :e $VIM\_vimrc<cr>
+        "nnoremap <silent> <leader>eb :exec 'edit '.g:ywl_path.'\vimrc.bundles'<cr>
+    ""   When _vimrc is edited, reload it
+        "" autocmd! bufwritepost _vimrc exec 'source $VIM\_vimrc'
+    "endif
     "   Fast reloading of the .vimrc
-        nnoremap <silent> <leader>ss :exec 'source '.g:ywl_path.'/_vimrc'<cr>
-        nnoremap <silent> <leader>rr :source ~/.vimrc<cr>
+        nnoremap <silent> <leader>ss :exec 'source '.expand('$VIMY/_vimrc')<cr>
+        nnoremap <silent> <leader>rr :source $MYVIMRC<cr>
     "   Fast editing of .vimrc
-        nnoremap <silent> <leader>ee :exec 'edit '.g:ywl_path.'/_vimrc'<cr>
-        nnoremap <silent> <leader>er :e ~/.vimrc<cr>
-        nnoremap <silent> <leader>eb :exec 'edit '.g:ywl_path.'/vimrc.bundles'<cr>
-    "   When .vimrc is edited, reload it 每次保存syntax总不太对头
-        " autocmd! bufwritepost _vimrc exec 'source ~/.vimrc'
-        " autocmd! bufwritepost .vimrc exec 'source ~/.vimrc'
-    elseif MySys() == 'windows'
-    "   Fast reloading of the _vimrc
-        nnoremap <silent> <leader>ss :exec 'source '.g:ywl_path.'\_vimrc'<cr>
-        nnoremap <silent> <leader>rr :source $VIM\_vimrc<cr>
-    "   Fast editing of _vimrc
-        nnoremap <silent> <leader>ee :exec 'edit '.g:ywl_path.'\_vimrc'<cr>
-        nnoremap <silent> <leader>er :e $VIM\_vimrc<cr>
-        nnoremap <silent> <leader>eb :exec 'edit '.g:ywl_path.'\vimrc.bundles'<cr>
-    "   When _vimrc is edited, reload it
-        " autocmd! bufwritepost _vimrc exec 'source $VIM\_vimrc'
-    endif
+        nnoremap <silent> <leader>ee :exec 'edit '.expand('$VIMY/_vimrc')<cr>
+        nnoremap <silent> <leader>eb :exec 'edit '.expand('$VIMY/vimrc.bundles')<cr>
+        nnoremap <silent> <leader>er :edit $MYVIMRC<cr>
+
 "}}}
 
 " Load Plugin and Customed_Func "{{{
-if filereadable(expand(g:ywl_path.'/vimrc.bundles'))
-    exec 'source '.g:ywl_path.'/vimrc.bundles'
+if filereadable(expand('$VIMY/vimrc.bundles'))
+    exec 'source '.expand('$VIMY/vimrc.bundles')
 else
     echo 'No vimrc.bundles found'
 endif
 
-if filereadable(expand(g:ywl_path.'/vimrc.func'))
-    exec 'source '.g:ywl_path.'/vimrc.func'
+if filereadable(expand('$VIMY/vimrc.func'))
+    exec 'source '.expand('$VIMY/vimrc.func')
 else 
     echo 'No vimrc.func found'
 endif
@@ -239,7 +279,10 @@ endif
     " 的功能一样。下面的这个映射就是执行重新绘制，并且取消通过 / 和 ?
     " 匹配字符的高亮，而且还可以修复代码高亮问题（有时候，由于多个代码高亮的脚本重叠，或者规则过于复杂，Vim
     " 的代码高亮显示会出现问题）。不仅如此，还可以刷新「比较模式」
-    nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+    nnoremap <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:redraw!<cr>
+    " 命令行下的上下条目映射
+    cnoremap <c-n> <down>
+    cnoremap <c-p> <up>  
 "}}}
 
 " Reformate 排版与文本格式"{{{
@@ -286,7 +329,7 @@ endif
 
 " Default Path & Global constant - chrome "{{{
     " 启动进入自己的主目录
-    exec 'cd '.g:ywl_path
+    exec 'cd '.$VIMY
 
     " chrome path for windows 
     if hostname() == 'M-PC'
@@ -297,15 +340,14 @@ endif
 "}}}
 
 " Global Mapping "{{{ 
-
     " F1 废弃这个键,防止调出系统帮助
     noremap <F1> <Esc>"
     " F2 语法开关，关闭语法可以加快大文件的展示
     nnoremap <F2> :exec exists('g:syntax_on') ? 'syn off' : 'syn enable'<CR>
     " F3 显示可打印字符开关
-    nnoremap <F3> :set list! list?<CR>
+    " nnoremap <F3> :set list! list?<CR>
     " set paste的Toggle，有格式的代码粘贴
-    set pastetoggle=<F6>
+    " set pastetoggle=<F6>
     " disbale paste mode when leaving insert mode
     " au InsertLeave * set nopaste   
 
@@ -479,7 +521,8 @@ if has("autocmd")
                     \ setlocal shiftwidth=4 |
                     " \ set textwidth=79 |
                     \ setlocal autoindent |
-                    \ setlocal fileformat=unix 
+                    \ setlocal fileformat=unix |
+                    \ let b:match_words = '\<if\>:\<elif\>:\<else\>'
     augroup END
 
 
@@ -638,6 +681,7 @@ syntax on
 """"""""""""""""""""
 "  filtetype open  "
 """"""""""""""""""""
+set nocompatible    " required
 " 检测文件类型
 filetype on
 " 针对不同的文件类型采用不同的缩进格式

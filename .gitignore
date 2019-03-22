@@ -1,8 +1,10 @@
 *.swp
 tags
+.viminfo
+_viminfo
+__pycache__
+mass_repo
 /vimfiles/bundle
 /vimfiles/Workspace
 /vimfiles/plugindata
 /vimfiles/plugged
-__pycache__
-mass_repo

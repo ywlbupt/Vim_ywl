@@ -1,0 +1,9 @@
+﻿    let $VIMY = expand('~/Vim_ywl')
+    let $VIMFILES = expand('$VIMY/vimfiles')
+
+
+    if filereadable(expand('$VIMY/_vimrc'))
+       exec 'source '.expand('$VIMY/_vimrc')
+    else
+        echo 'No _vimrc found'
+    endif

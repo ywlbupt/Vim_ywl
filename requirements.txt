@@ -1,2 +1,4 @@
 requests
 autopep8
+yapf
+pylint

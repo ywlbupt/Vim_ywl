@@ -2,103 +2,51 @@
 
 " python : [flake8](http://flake8.readthedocs.io/en/latest/#quickstart)
 
-" Plugin management "插件管理"{{{
-" --------Brief help----------------------------
-" :PluginList          - list configured bundles
-" :PluginInstall(!)    - install(update) bundles
-" :PluginSearch(!) foo - search(or refresh cache first) for foo
-" :PluginClean(!)      - confirm(or auto-approve) removal of unused bundles
-
-" Get out of VI's compatible mode.
-set nocompatible    " required
-filetype off        " required
-" ----------------------------------------------
-" for VundleVim/Vundle.vim "
-set rtp+=$VIMFILES/bundle/Vundle.vim
-
-call vundle#begin('$VIMFILES/bundle')
-	"let Vundle manage Vundle, required
-        Plugin 'VundleVim/Vundle.vim'
-
-        Plugin 'xolox/vim-misc' |  Plugin 'xolox/vim-session'
-
-    " tpope 大神
-        Plugin 'tpope/vim-repeat' | Plugin 'tpope/vim-surround'
-        " Git 集成工具
-        " Plugin 'tpope/vim-fugitive'
-
-        " Plugin 'jkeylu/vimcdoc'
-
-    " Windows 下未安装成功
-        if MySys() == "linux" || hostname() =~ "E420" || hostname() =="M-PC" || hostname() == "XMYWL"
-            if count(g:plugin_function_groups, 'YouCompleteMe')
-                " Plugin 'Valloric/YouCompleteMe'
-            endif
-        endif
-        Plugin 'Valloric/ListToggle'
-
-    " -------------------- Python ----------------
-    " fold for python
-        Plugin 'tmhedberg/SimpylFold'
-    " python vim built-in help
-        Plugin 'fs111/pydoc.vim'
-    " syntasitc checkers
-        Plugin 'hynek/vim-python-pep8-indent'
-
-    "---------模板输入 快捷输入--------
-        Plugin 'ywlbupt/load_template'
-
-    """""""""""""""""""""""""""""""""""""""""""""
-        Plugin 'scrooloose/nerdcommenter'
-        Plugin 'scrooloose/nerdtree'
-
-        " autocomplete pairs自动补全括号
-        Plugin 'Raimondi/delimitMate'
-
-        " colors
-        Plugin 'vim-airline/vim-airline'
-        Plugin 'vim-airline/vim-airline-themes'
-
-        " Plugin 'ywlbupt/vim-color-ywl'
-
-        " 括号显示增强
-        Plugin 'kien/rainbow_parentheses.vim'
-        " gitgutter
-        Plugin 'airblade/vim-gitgutter'
-
-        " gundo " edit history, 可以查看回到某个历史状态
-        Plugin 'sjl/gundo.vim'
-
-        if count(g:plugin_function_groups, 'hexo')
-            " Hexo 插件 TODO
-            Plugin 'ywlbupt/vim-hexo'
-        endif
-
-    " endif
-    call vundle#end()            " required
-    filetype plugin indent on    " required
-"}}}
-
 " vim-plug 异步插件管理" {{{
 call plug#begin('$VIMFILES/plugged')
+    " Plug '~/my-prototype-plugin' " 表示不用github托管的本地vim插件；
     Plug 'junegunn/vim-easy-align'
 " Initialize plugin system
     Plug 'ludovicchabant/vim-gutentags'
-    Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown' , {'for': 'markdown'}
     " Group dependencies, vim-snippets depends on ultisnips
     Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+    " 插入模式下 paste 优化
     Plug 'ConradIrwin/vim-bracketed-paste'
-
-    autocmd! User vim-markdowm echom 'markdown is now loaded!'
-    autocmd! User vim-markdowm.vim echom 'markdown.vim is now loaded!'
-
+    " 括号显示增强
+    Plug 'kien/rainbow_parentheses.vim'
+    Plug 'Valloric/ListToggle'
+    " for didn't work as expected in plugin vim-markdown
+    Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
     Plug 'skywind3000/asyncrun.vim'
+    Plug 'xolox/vim-misc' |  Plug 'xolox/vim-session'
+    " tpope 大神
+    Plug 'tpope/vim-repeat' | Plug 'tpope/vim-surround'
+    " -------------------- Python ----------------
+    " fold for python
+    Plug 'tmhedberg/SimpylFold', {'for': 'python'}
+    " python vim built-in help
+    Plug 'fs111/pydoc.vim', {'for': 'python'}
+    " syntasitc checkers
+    Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
+    " Git 集成工具
+    " Plug 'tpope/vim-fugitive'
+    "---------模板输入 快捷输入--------
+    Plug 'ywlbupt/load_template'
+    Plug 'scrooloose/nerdcommenter'
+    Plug 'scrooloose/nerdtree'
 
+    " autocomplete pairs自动补全括号
+    Plug 'Raimondi/delimitMate'
+    " colors
+    Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+    " gitgutter
+    Plug 'airblade/vim-gitgutter'
+    " gundo " edit history, 可以查看回到某个历史状态
+    Plug 'sjl/gundo.vim'
     if count(g:plugin_function_groups, "ale")
         " Plug 'w0rp/ale',{'tag' : 'v2.3.0'}
         Plug 'w0rp/ale'
     endif
-    " vim-markdown 要求tabular插件，feature as Align
     if count(g:plugin_function_groups, "tagbar")
         Plug 'majutsushi/tagbar'
     endif
@@ -117,11 +65,17 @@ call plug#begin('$VIMFILES/plugged')
         Plug 'ianva/vim-youdao-translater'
     endif
     if count(g:plugin_function_groups, 'YouCompleteMe')
-        " Plug 'Valloric/YouCompleteMe'
-        Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+        " Plug 'Valloric/YouCompleteMe', { 'do': 'python ./install.py 00clang-completer' }
+        " Plug 'Valloric/YouCompleteMe', { 'do': 'python ./install.py' }
+        " Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+        Plug 'Valloric/YouCompleteMe'
     endif
 call plug#end()
 "}}}
+
+" project root markers, used for gutentags and asyncrun
+
+let b:project_marker_list = ['.root', '.svn', '.git', '.project']
 
 " altercation/vim-colors-solarized" "主题方案"{{{
     " if g:colors_name == 'solarized'
@@ -138,11 +92,6 @@ call plug#end()
 if count(g:plugin_function_groups, 'hexo')
     let g:hexo_blogpath = expand('~/hexo_blog')
 endif
-
-" project root markers, used for gutentags and asyncrun
-
-let b:project_marker_list = ['.root', '.svn', '.git', '.project']
-
 
 " vim-airline/vim-airline  "好看轻量级的powerline，不依赖python "{{{
     if count(g:plugin_function_groups, "airline")
@@ -185,11 +134,7 @@ let b:project_marker_list = ['.root', '.svn', '.git', '.project']
 "}}}
 
 " vim-scripts/Load_Template file setting " 模板文件"{{{
-    if MySys() == 'windows'
-        let g:template_path=g:ywl_path.'\vimfiles\bundle\load_template\template\'
-    elseif MySys() == 'linux'
-        let g:template_path=g:ywl_path.'/vimfiles/bundle/load_template/template/'
-    endif
+    let g:template_path = join([$PLUG, 'load_template','template'], g:os_sep)
 " Load_template 说明
 " 1. 静态模板文件中，`TEMPLATE_CURSOR`标明载入模板后光标所在位置
 " 2. 动态模板，Vim 脚本放置在`EXE_BEGIN_TEMPLATE (NEEDNEW)``EXE_END_TEMPLATE`
@@ -204,8 +149,7 @@ let b:project_marker_list = ['.root', '.svn', '.git', '.project']
     nnoremap <silent> <leader>fe :NERDTreeToggle<cr>
 
     " 设置书签目录
-    let g:NERDTreeBookmarksFile = join([g:ywl_path, 'vimfiles', 'plugindata',
-                \ 'NERDTreeBookmarks.txt'], g:os_sep)
+    let g:NERDTreeBookmarksFile = expand('$VIMFILES/plugindata/NERDTreeBookmarks.txt')
     " 将 NERDTree 的窗口设置在 vim 窗口的右侧（默认为左侧）
     let  g:NERDTreeWinPos="right"
     " 当打开 NERDTree 窗口时，自动显示 Bookmarks
@@ -281,8 +225,7 @@ if count(g:plugin_function_groups, 'YouCompleteMe')
         let g:ycm_server_python_interpreter = 'C:/Anaconda3/python'
     endif
     
-    " let g:ycm_global_ycm_extra_conf = g:ywl_path.'/vimfiles/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-    let g:ycm_global_ycm_extra_conf = g:ywl_path.'/vimfiles/bundle/YouCompleteMe/.ycm_extra_conf.py'
+    let g:ycm_global_ycm_extra_conf = $SETTING.g:os_sep.'.ycm_extra_conf_backup.py'
     " make YCM compatible with UltiSnips (using supertab)
     " c-k, c-j is Ok
     let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
@@ -345,7 +288,7 @@ endif
     let g:UltiSnipsUsePythonVersion = 2
     " Snippets的文件夹名字，查找rtp路径下的UltiSnips文件夹< plugin vim-snippets
     let g:UltiSnipsSnippetDirectories = ["UltiSnips"]
-    let g:UltiSnipsSnippetsDir = g:ywl_path.'/vimfiles/UltiSnips'
+    let g:UltiSnipsSnippetsDir = expand('$VIMFILES/UltiSnips')
     
     " set 0 to use snippets in both UltiSnips and snippets
     " let g:UltiSnipsEnableSnipMate = 0
@@ -360,11 +303,7 @@ endif
 
 " Session保存路径
 "   g:os_sep
-    if MySys() == 'windows'
-        let g:session_directory=g:ywl_path.'\vimfiles\Workspace'
-    elseif MySys() == 'linux'
-        let g:session_directory=g:ywl_path.'/vimfiles/Workspace'
-    endif
+    let g:session_directory=expand('$VIMFILES/Workspace')
 
     " 每次打开空Vim，不提示是否打开 default session
     let g:session_autoload='no'
@@ -376,14 +315,7 @@ endif
     " let g:session_autosave_periodic = 10
 "}}}
 
-" Pydiction && SimpylFold " Python 的智能折叠 "{{{
-    if MySys() == 'windows'
-		let g:pydiction_location =
-        \ g:ywl_path.'\vimfiles\bundle\Pydiction\complete-dict'
-    elseif MySys() == 'linux'
-		let g:pydiction_location =
-        \ g:ywl_path.'/vimfiles/bundle/Pydiction/complete-dict'
-    endif
+" SimpylFold " Python 的智能折叠 "{{{
     let g:SimpylFold_docstring_preview=1
 "}}}
 
@@ -497,13 +429,13 @@ endif
                 \ 'c': {'left':'// '}
                 \ }
     " unmap该快捷键的想法是尽量让十指不离开主键盘区太远
-    " nnoremap \\\ <Plug>NERDCommenterToggle
-    " xnoremap \\ <Plug>NERDCommenterToggle
-    nnoremap <leader>cc <plug>NERDCommenterComment
-    xnoremap <leader>cc <plug>NERDCommenterComment
-    nnoremap <leader>cu <plug>NERDCommenterUncomment
-    xnoremap <leader>cu <plug>NERDCommenterUncomment
-    xnoremap <leader>cm <Plug>NERDComMinimalComment
+    " nmap \\\ <Plug>NERDCommenterToggle
+    " xmap \\ <Plug>NERDCommenterToggle
+    nmap <leader>cc <plug>NERDCommenterComment
+    xmap <leader>cc <plug>NERDCommenterComment
+    nmap <leader>cu <plug>NERDCommenterUncomment
+    xmap <leader>cu <plug>NERDCommenterUncomment
+    xmap <leader>cm <Plug>NERDComMinimalComment
 "}}}
 
 " tpope/vim-fugitive " tpope 大神的git wrapper，gvdiff 同步滚动"{{{
@@ -546,7 +478,6 @@ endif
         let g:tagbar_show_linenumbers = 1
         " Set Windows Width
         let g:tagbar_width = 35
-        " let g:tagbar_ctags_bin = 'C:\Ctags5.8\ctags.exe'
         " tagbar 默认显示在右边，如需令其在左边显示，设置一下option
         let g:tagbar_left = 1
 
@@ -557,11 +488,11 @@ endif
             let b:tagbar_tail = "py"
         elseif MySys() == 'windows'
             let b:tagbar_tail = "exe"
-            let g:tagbar_ctags_bin = g:ywl_path.'/Archive_gvim/ctags.exe'
+            let g:tagbar_ctags_bin = $CTAGS_WIN
         endif
         let g:tagbar_type_markdown = {
             \ 'ctagstype': 'markdown',
-            \ 'ctagsbin' : g:ywl_path.'/vimfiles/Tagbar_support/markdown2ctags.'.b:tagbar_tail ,
+            \ 'ctagsbin' : expand('$VIMFILES/Tagbar_support/markdown2ctags.').b:tagbar_tail ,
             \ 'ctagsargs' : '-f - --sort=yes',
             \ 'kinds' : [
                 \ 's:sections',
@@ -663,10 +594,10 @@ endif
 " vim-easy-align"{{{
 
 " start interactive easyalign in visual mode (e.g. vip<enter>)
-vnoremap <Enter> <Plug>(EasyAlign)
+vmap <Enter> <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nnoremap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 "}}}
 
@@ -675,7 +606,9 @@ nnoremap ga <Plug>(EasyAlign)
 "   vimrun 搜索路径
     " let g:Lf_PythonVersion =3
 
-    let g:Lf_Ctags = g:ywl_path.'/Archive_gvim/ctags.exe'
+    if MySys() == "windows"
+        let g:Lf_Ctags = $CTAGS_WIN
+    endif
     " preview code when navigating
     let g:Lf_PreviewCode  = 1
     let g:Lf_PreviewResult = {
@@ -780,11 +713,11 @@ nnoremap ga <Plug>(EasyAlign)
     " let g:gutentags_ctags_extra_args += ['--c++-kinds=+pxI']
     " let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
     if MySys() == "windows"
-        let g:gutentags_ctags_executable = expand(g:ywl_path."/Archive_gvim/ctags.exe")
+        let g:gutentags_ctags_executable = $CTAGS_WIN
     endif
     let g:gutentags_exclude_filetypes = ['vim']
     " use .notags instead for each project
-    let g:gutentags_exclude_project_root = [expand(g:ywl_path)]
+    let g:gutentags_exclude_project_root = [expand('$VIMY')]
     let g:gutentags_file_list_command = 'rg --files'
     " autocmd FileType qf nnoremap <silent><buffer> p :PreviewQuickfix<cr>
     " autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
@@ -796,7 +729,8 @@ nnoremap ga <Plug>(EasyAlign)
 
 " w0rp/ale Asynchronous linting 异步代码检查"{{{
 " Dependency : pip install autopep8
-"  read :help channel
+" Dependency : pip install yapf
+" clang 是LLVM 的子项目，clang-format in LLVM
     if count(g:plugin_function_groups, "ale")
         " show errors or warnings in my statusline
         if count(g:plugin_function_groups, "airline")
@@ -812,39 +746,42 @@ nnoremap ga <Plug>(EasyAlign)
         let g:ale_lint_on_save =0
         let g:ale_lint_on_enter = 0
         "普通模式下，cp前往上一个错误或警告，cn前往下一个错误或警告
-        nnoremap <silent> cp <Plug>(ale_previous_wrap)
-        nnoremap <silent> cn <Plug>(ale_next_wrap)
-        "<Leader>s触发/关闭语法检查
-        nnoremap <Leader>ck :ALEToggle<CR>
+        " nmap <silent> cp <Plug>(ale_previous_wrap)
+        " nmap <silent> cn <Plug>(ale_next_wrap)
+        " nnoremap <Leader>ck :ALEToggle<CR>
+        nnoremap <Leader>ck :ALELint<CR>
         " "<Leader>d查看错误或警告的详细信息
         " nnoremap <Leader>cd :ALEDetail<CR>
         " use quickfix list instead of the loclist
-        let g:ale_set_loclist = 0
-        let g:ale_set_quickfix = 1
+        let g:ale_set_loclist = 1
+        let g:ale_set_quickfix = 0
 
         " 使用clang对c和c++进行语法检查，对python使用pylint/flake8进行语法检查
         let g:ale_linters = {
+                \   'cpp': ['clang'],
+                \   'c': ['clang'],
+                \'python': ['pylint'],
         \}
-        " \   'c++': ['clang'],
-        " \   'c': ['clang'],
-        " \   'python': ['pylint'],
         " let g:ale_fixers = {'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8']
         let g:ale_fixers = {
-                    \'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8',
-                    \'add_blank_lines_for_python_control_statements'
+                    \'python': ['autopep8', 'yapf'
                     \],
+                    \ 'cpp': ['clang-format'],
+                    \ 'c': ['clang-format'],
                     \}
+                    " \'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8',
+                    " \'add_blank_lines_for_python_control_statements'
         let g:ale_fix_on_save = 0
         " let g:ale_fix_on_enter
         " let g:ale_fix_on_insert_leave
         " let g:ale_fix_on_text_changed
         " :ALEFixSuggest
         " :ALEFix
+        nnoremap <silent><leader>fx :ALEFix<cr>
     endif
 "}}}
 
 " skywind3000/asyncrun.vim"{{{
-
     " stop the runing job
     " :AsyncStop{!}
     " 自动打开 quickfix window ，高度为 6
@@ -960,12 +897,19 @@ nnoremap ga <Plug>(EasyAlign)
 
 " ConradIrwin/vim-bracketed-paste 
 
+" c cpp quick switch jump and mkdir c/h file
+
+
+" SimpylFold "{{{
+    let g:SimpylFold_docstring_preview = 1
+"}}}
+
 " del, xolox/vim-easytags"{{{
 " --------Brief help------------
 " :UpdateTags  : 显式更新tags
 " :HighlightTags  : 显式highlight tags
     " if MySys() == 'windows'
-        " let g:easytags_cmd = g:ywl_path.'/Archive_gvim/ctags.exe'
+        " let g:easytags_cmd = $CTAGS_WIN
     " endif
     " " let g:easytags_opts = ['-R']
     " let g:easytags_file = expand('$HOME')."/_vimtags"
