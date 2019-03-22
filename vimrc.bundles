@@ -32,7 +32,7 @@ call vundle#begin('$VIMFILES/bundle')
     " Windows 下未安装成功
         if MySys() == "linux" || hostname() =~ "E420" || hostname() =="M-PC" || hostname() == "XMYWL"
             if count(g:plugin_function_groups, 'YouCompleteMe')
-                Plugin 'Valloric/YouCompleteMe'
+                " Plugin 'Valloric/YouCompleteMe'
             endif
         endif
         Plugin 'Valloric/ListToggle'
@@ -87,6 +87,7 @@ call plug#begin('$VIMFILES/plugged')
     Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown' , {'for': 'markdown'}
     " Group dependencies, vim-snippets depends on ultisnips
     Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+    Plug 'ConradIrwin/vim-bracketed-paste'
 
     autocmd! User vim-markdowm echom 'markdown is now loaded!'
     autocmd! User vim-markdowm.vim echom 'markdown.vim is now loaded!'
@@ -114,6 +115,10 @@ call plug#begin('$VIMFILES/plugged')
     Plug 'altercation/vim-colors-solarized'
     if count(g:plugin_function_groups, 'vim-youdao-translater')
         Plug 'ianva/vim-youdao-translater'
+    endif
+    if count(g:plugin_function_groups, 'YouCompleteMe')
+        " Plug 'Valloric/YouCompleteMe'
+        Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
     endif
 call plug#end()
 "}}}
@@ -195,8 +200,8 @@ let b:project_marker_list = ['.root', '.svn', '.git', '.project']
 " The-NERD-Tree / netrw setting "{{{
     let g:netrw_winsize = 31
     " Vexplore!为在左侧打开netrw
-    " nmap <silent> <leader>fe :Vexplore<cr>
-    nmap <silent> <leader>fe :NERDTreeToggle<cr>
+    " nnoremap <silent> <leader>fe :Vexplore<cr>
+    nnoremap <silent> <leader>fe :NERDTreeToggle<cr>
 
     " 设置书签目录
     let g:NERDTreeBookmarksFile = join([g:ywl_path, 'vimfiles', 'plugindata',
@@ -275,11 +280,9 @@ if count(g:plugin_function_groups, 'YouCompleteMe')
         " Only used for ycm server, default to use python embemdded in vim
         let g:ycm_server_python_interpreter = 'C:/Anaconda3/python'
     endif
-    if hostname() == 'XMYWL' || hostname()=="ywl-ThinkPad-E420"
-        " let g:ycm_server_python_interpreter = 'C:/python35/python'
-        " let g:ycm_global_ycm_extra_conf = g:ywl_path.'/vimfiles/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-        let g:ycm_global_ycm_extra_conf = g:ywl_path.'/vimfiles/bundle/YouCompleteMe/.ycm_extra_conf.py'
-    endif
+    
+    " let g:ycm_global_ycm_extra_conf = g:ywl_path.'/vimfiles/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+    let g:ycm_global_ycm_extra_conf = g:ywl_path.'/vimfiles/bundle/YouCompleteMe/.ycm_extra_conf.py'
     " make YCM compatible with UltiSnips (using supertab)
     " c-k, c-j is Ok
     let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
@@ -292,7 +295,7 @@ if count(g:plugin_function_groups, 'YouCompleteMe')
     " 注释和字符串中的文字也会被收入补全
     let g:ycm_collect_identifiers_from_comments_and_strings = 1
     let g:ycm_collect_identifiers_from_tags_files = 1
-    " nmap <F4> :YcmDiags<CR>
+    " nnoremap <F4> :YcmDiags<CR>
     " 往前跳和往后跳的快捷键为Ctrl+O以及Ctrl+I
     " 开启语法关键字补全
     let g:ycm_seed_identifiers_with_syntax=1
@@ -341,10 +344,11 @@ endif
     " Explicityly tell UltiSnips To use python version 3.x
     let g:UltiSnipsUsePythonVersion = 2
     " Snippets的文件夹名字，查找rtp路径下的UltiSnips文件夹< plugin vim-snippets
-    let g:UltiSnipsSnippetDirectories = ['UltiSnips']
+    let g:UltiSnipsSnippetDirectories = ["UltiSnips"]
     let g:UltiSnipsSnippetsDir = g:ywl_path.'/vimfiles/UltiSnips'
+    
     " set 0 to use snippets in both UltiSnips and snippets
-    let g:UltiSnipsEnableSnipMate = 0
+    " let g:UltiSnipsEnableSnipMate = 0
 "}}}
 
 " xolox/vim-session" 会话，工作区保留"{{{
@@ -493,13 +497,13 @@ endif
                 \ 'c': {'left':'// '}
                 \ }
     " unmap该快捷键的想法是尽量让十指不离开主键盘区太远
-    " nmap \\\ <Plug>NERDCommenterToggle
-    " xmap \\ <Plug>NERDCommenterToggle
-    nmap <leader>cc <plug>NERDCommenterComment
-    xmap <leader>cc <plug>NERDCommenterComment
-    nmap <leader>cu <plug>NERDCommenterUncomment
-    xmap <leader>cu <plug>NERDCommenterUncomment
-    xmap <leader>cm <Plug>NERDComMinimalComment
+    " nnoremap \\\ <Plug>NERDCommenterToggle
+    " xnoremap \\ <Plug>NERDCommenterToggle
+    nnoremap <leader>cc <plug>NERDCommenterComment
+    xnoremap <leader>cc <plug>NERDCommenterComment
+    nnoremap <leader>cu <plug>NERDCommenterUncomment
+    xnoremap <leader>cu <plug>NERDCommenterUncomment
+    xnoremap <leader>cm <Plug>NERDComMinimalComment
 "}}}
 
 " tpope/vim-fugitive " tpope 大神的git wrapper，gvdiff 同步滚动"{{{
@@ -659,10 +663,10 @@ endif
 " vim-easy-align"{{{
 
 " start interactive easyalign in visual mode (e.g. vip<enter>)
-vmap <Enter> <Plug>(EasyAlign)
+vnoremap <Enter> <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+nnoremap ga <Plug>(EasyAlign)
 
 "}}}
 
@@ -808,12 +812,12 @@ nmap ga <Plug>(EasyAlign)
         let g:ale_lint_on_save =0
         let g:ale_lint_on_enter = 0
         "普通模式下，cp前往上一个错误或警告，cn前往下一个错误或警告
-        nmap <silent> cp <Plug>(ale_previous_wrap)
-        nmap <silent> cn <Plug>(ale_next_wrap)
+        nnoremap <silent> cp <Plug>(ale_previous_wrap)
+        nnoremap <silent> cn <Plug>(ale_next_wrap)
         "<Leader>s触发/关闭语法检查
-        nmap <Leader>ck :ALEToggle<CR>
+        nnoremap <Leader>ck :ALEToggle<CR>
         " "<Leader>d查看错误或警告的详细信息
-        nmap <Leader>cd :ALEDetail<CR>
+        " nnoremap <Leader>cd :ALEDetail<CR>
         " use quickfix list instead of the loclist
         let g:ale_set_loclist = 0
         let g:ale_set_quickfix = 1
@@ -865,8 +869,11 @@ nmap ga <Plug>(EasyAlign)
     " 定义Run函数
     func! RunX()
         if &filetype == 'c' || &filetype == 'cpp'
-                " exec "AsyncRun %<"
-            exec 'AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
+            if MySys() == "windows"
+                exec 'AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
+            elseif MySys() == 'linux'
+                exec "! %<"
+            endif
         elseif &filetype == 'python'
             exec "w"
             exec "AsyncRun -raw python %"
@@ -951,6 +958,8 @@ nmap ga <Plug>(EasyAlign)
     endfunc
 "}}}
 
+" ConradIrwin/vim-bracketed-paste 
+
 " del, xolox/vim-easytags"{{{
 " --------Brief help------------
 " :UpdateTags  : 显式更新tags
@@ -967,7 +976,7 @@ nmap ga <Plug>(EasyAlign)
     " let g:easytags_events = ['']
 
     " " 生成与 ~/_vimtags 为根的绝对路径，且此时 set tags = ./tags;,~/_vimtags
-    " nmap <silent> <leader>ct :exec ':UpdateTags --tag-relative=yes -f '.g:easytags_file.' -R'<cr>
+    " nnoremap <silent> <leader>ct :exec ':UpdateTags --tag-relative=yes -f '.g:easytags_file.' -R'<cr>
     " let g:easytags_async=0
     " let g:easytags_auto_highlight = 0
     " let g:easytags_dynamic_files = 1
