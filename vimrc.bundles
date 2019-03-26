@@ -10,8 +10,6 @@ call plug#begin('$VIMFILES/plugged')
     Plug 'ludovicchabant/vim-gutentags'
     " Group dependencies, vim-snippets depends on ultisnips
     Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-    " 插入模式下 paste 优化
-    Plug 'ConradIrwin/vim-bracketed-paste'
     " 括号显示增强
     Plug 'kien/rainbow_parentheses.vim'
     Plug 'Valloric/ListToggle'
@@ -29,7 +27,7 @@ call plug#begin('$VIMFILES/plugged')
     " syntasitc checkers
     Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
     " Git 集成工具
-    " Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-fugitive'
     "---------模板输入 快捷输入--------
     Plug 'ywlbupt/load_template'
     Plug 'scrooloose/nerdcommenter'
@@ -224,7 +222,7 @@ if count(g:plugin_function_groups, 'YouCompleteMe')
         " Only used for ycm server, default to use python embemdded in vim
         let g:ycm_server_python_interpreter = 'C:/Anaconda3/python'
     endif
-    
+
     let g:ycm_global_ycm_extra_conf = $SETTING.g:os_sep.'.ycm_extra_conf_backup.py'
     " make YCM compatible with UltiSnips (using supertab)
     " c-k, c-j is Ok
@@ -289,7 +287,7 @@ endif
     " Snippets的文件夹名字，查找rtp路径下的UltiSnips文件夹< plugin vim-snippets
     let g:UltiSnipsSnippetDirectories = ["UltiSnips"]
     let g:UltiSnipsSnippetsDir = expand('$VIMFILES/UltiSnips')
-    
+
     " set 0 to use snippets in both UltiSnips and snippets
     " let g:UltiSnipsEnableSnipMate = 0
 "}}}
@@ -440,7 +438,9 @@ endif
 
 " tpope/vim-fugitive " tpope 大神的git wrapper，gvdiff 同步滚动"{{{
 " 快捷键
-    " nnoremap <leader>ge :Gvdiff<CR>
+    nnoremap <leader>ge :Gvdiff<CR>
+    " :only<cr>
+     
 "}}}
 
 " airblade/gitgutter　同用于git diff "{{{
@@ -457,8 +457,8 @@ endif
     let g:gitgutter_enabled = 0
     let g:gitgutter_highlight_lines = 1
     " customed mapping
-    nmap [c <Plug>GitGutterPrevHunk
-    nmap ]c <Plug>GitGutterNextHunk
+    " nmap [c <Plug>GitGutterPrevHunk
+    " nmap ]c <Plug>GitGutterNextHunk
     nmap <Leader>hs <Plug>GitGutterStageHunk
     nmap <Leader>hu <Plug>GitGutterUndoHunk
     nmap <Leader>hp <Plug>GitGutterPreviewHunk
@@ -530,67 +530,6 @@ endif
     let g:lt_quickfix_list_toggle_map = '<F4>'
 "}}}
 
-" vimgrep.vim "{{{
-" 对搜索的设置
-    " map <leader>ff :call Search_Word("CurrentFile")<CR>:copen<CR>
-    " map <leader>fF :call Search_Word("RecursiveFile")<CR>:copen<CR>
-    " function! Search_Word(opt)
-        " let w = expand("<cword>") " 在当前光标位置抓词
-        " if a:opt == 'CurrentFile'
-            " " execute "vimgrep " w " %"
-            " " 在当前文件%中查找 光标下的单词
-            " execute "Grep " w " %"
-        " elseif a:opt == 'RecursiveFile'
-            " execute "Grep -r" w " *"
-        " endif
-    " endfunction
-""""""""""""""""""""""""""""""
-"  在hexo中使用grep搜索笔记  "
-""""""""""""""""""""""""""""""
-    " if count(g:plugin_function_groups, 'hexo')
-        " function! Search_word_in_hexo()
-            " call inputsave()
-            " let w = input ("searching word in hexo :")
-            " call inputrestore()
-            " if !empty(w)
-                " let searchpath = join([g:hexo_blogpath, 'source', '_posts'],g:os_sep)
-            " execute "Grep -r ".w." ".searchpath
-            " else
-                " echo "nothing to search"
-            " endif
-        " endfunc
-        " map <leader>fn :call Search_word_in_hexo()<CR>
-
-    " endif
-
-""""""""""""""""""""""""""""""
-" grep setting
-""""""""""""""""""""""""""""""
-    " nnoremap <silent> <F3> :Grep<CR>
-    "}}}
-
-" scrooloose/syntastic 代码检查"{{{
-" Recommend setting
-    if count(g:plugin_function_groups, 'syntastic')
-        let g:syntastic_always_populate_loc_list = 1
-        let g:syntastic_auto_loc_list = 2
-        let g:syntastic_check_on_open = 1
-        let g:syntastic_check_on_wq = 0
-
-        " syntax checkers :help syntastic-checkers
-        let g:syntastic_python_checkers=['pyflakes', 'pep8'] "
-        " 使用pyflakes,速度比pylint快
-        let g:syntastic_python_pep8_args='--ignore=E501,E225,E124,E712'
-        let g:syntastic_mode_map = {
-            \ "mode": "passive",
-            \ "active_filetypes": ["ruby", "php"],
-            \ "passive_filetypes": ["puppet"] }
-        " nnoremap <leader>ck :SyntasticCheck<cr>
-        nnoremap <leader>ck :SyntasticCheck<cr>:Error<cr>
-    endif
-
-"}}}
-
 " vim-easy-align"{{{
 
 " start interactive easyalign in visual mode (e.g. vip<enter>)
@@ -633,9 +572,8 @@ nmap ga <Plug>(EasyAlign)
     noremap <c-n> :LeaderfMru<cr>
     nnoremap <leader>fu :LeaderfFunction!<cr>
     " search word recursive
-    nnoremap <leader>f :Leaderf! rg --stayOpen -e 
-    " let g:Lf_CommandMap = {'<C-P>': ['<C-L>'], }
-
+    " nnoremap <leader>ff :Leaderf! rg --stayOpen -e
+    nnoremap <leader>ff :<C-U><C-R>=printf("Leaderf! rg --stayOpen -e ")<CR>
 
     " search word under cursor, the pattern is treated as regex, and enter normal mode directly
     nnoremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --stayOpen -e %s ", expand("<cword>"))<CR><CR>
@@ -764,10 +702,10 @@ nmap ga <Plug>(EasyAlign)
         \}
         " let g:ale_fixers = {'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8']
         let g:ale_fixers = {
-                    \'python': ['autopep8', 'yapf'
-                    \],
+                    \'python': ['autopep8', 'yapf'],
                     \ 'cpp': ['clang-format'],
                     \ 'c': ['clang-format'],
+                    \ 'vim': ['remove_trailing_lines', 'trim_whitespace'],
                     \}
                     " \'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8',
                     " \'add_blank_lines_for_python_control_statements'
@@ -801,7 +739,7 @@ nmap ga <Plug>(EasyAlign)
             exec 'AsyncRun g++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
         endif
     endfunc
-    nnoremap <silent> <F9> :call ComplieX()<CR>
+    au! FileType c,cpp nnoremap <silent> <F7> :call ComplieX()<CR>
 
     " 定义Run函数
     func! RunX()
@@ -818,33 +756,35 @@ nmap ga <Plug>(EasyAlign)
             exec "wincmd p"
         endif
     endfunc
-    nnoremap <silent> <F7> :call RunX()<CR>
-    "}}}
-
-"}}}
-
-" vim-youdao-translater{{{
-    nnoremap <silent> <m-f> :<C-u>Ydc<CR>
-    vnoremap <silent> <m-f> :<C-u>Ydv<CR>
-"}}}
-
-"{{{
-" 定义Debug函数，用来调试程序
+    nnoremap <silent> <F5> :call RunX()<CR>
+    " 定义Debug函数，用来调试程序
     func! Debug()
         exec "w"
         if &filetype == 'c'
+            " exec "!gcc % -g -o %<"
             exec "!gcc % -g -o %<"
             exec "!gdb %<"
         elseif &filetype == 'cpp'
             exec "!g++ % -g -o %<"
-            exec "!gdb %<"
+            exec "!gdb %<".".exe"
         elseif &filetype == 'java'
             exec "!javac %"
             exec "!jdb %<"
         endif
     endfunc
+    au! FileType c,cpp nnoremap <silent> <C-F5> :call Debug()<CR>
 
-"   Windows和linux的单文件编译
+    "}}}
+
+"}}}
+
+" vim-youdao-translater "{{{
+    nnoremap <silent> <m-f> :<C-u>Ydc<CR>
+    vnoremap <silent> <m-f> :<C-u>Ydv<CR>
+"}}}
+
+"{{{
+" Windows和linux的单文件编译
     func! ComplieRunCpp()
         if &filetype == 'cpp'
             exec "w"
@@ -868,8 +808,8 @@ nmap ga <Plug>(EasyAlign)
         endif
     endfunc
 
-" 单文件编译运行
-    nnoremap <silent> <C-F5> :call ComplieRunCpp()<CR>
+" " 单文件编译运行
+    " nnoremap <silent> <C-F5> :call ComplieRunCpp()<CR>
 " make
     " autocmd FileType c,cpp map <silent> <leader><space> :make<CR>
 
@@ -895,10 +835,9 @@ nmap ga <Plug>(EasyAlign)
     endfunc
 "}}}
 
-" ConradIrwin/vim-bracketed-paste 
+" ConradIrwin/vim-bracketed-paste
 
 " c cpp quick switch jump and mkdir c/h file
-
 
 " SimpylFold "{{{
     let g:SimpylFold_docstring_preview = 1
@@ -924,4 +863,65 @@ nmap ga <Plug>(EasyAlign)
     " let g:easytags_async=0
     " let g:easytags_auto_highlight = 0
     " let g:easytags_dynamic_files = 1
+"}}}
+
+" vimgrep.vim "{{{
+" 对搜索的设置
+    " map <leader>ff :call Search_Word("CurrentFile")<CR>:copen<CR>
+    " map <leader>fF :call Search_Word("RecursiveFile")<CR>:copen<CR>
+    " function! Search_Word(opt)
+        " let w = expand("<cword>") " 在当前光标位置抓词
+        " if a:opt == 'CurrentFile'
+            " " execute "vimgrep " w " %"
+            " " 在当前文件%中查找 光标下的单词
+            " execute "Grep " w " %"
+        " elseif a:opt == 'RecursiveFile'
+            " execute "Grep -r" w " *"
+        " endif
+    " endfunction
+""""""""""""""""""""""""""""""
+"  在hexo中使用grep搜索笔记  "
+""""""""""""""""""""""""""""""
+    " if count(g:plugin_function_groups, 'hexo')
+        " function! Search_word_in_hexo()
+            " call inputsave()
+            " let w = input ("searching word in hexo :")
+            " call inputrestore()
+            " if !empty(w)
+                " let searchpath = join([g:hexo_blogpath, 'source', '_posts'],g:os_sep)
+            " execute "Grep -r ".w." ".searchpath
+            " else
+                " echo "nothing to search"
+            " endif
+        " endfunc
+        " map <leader>fn :call Search_word_in_hexo()<CR>
+
+    " endif
+
+""""""""""""""""""""""""""""""
+" grep setting
+""""""""""""""""""""""""""""""
+    " nnoremap <silent> <F3> :Grep<CR>
+    "}}}
+
+" scrooloose/syntastic 代码检查"{{{
+" Recommend setting
+    if count(g:plugin_function_groups, 'syntastic')
+        let g:syntastic_always_populate_loc_list = 1
+        let g:syntastic_auto_loc_list = 2
+        let g:syntastic_check_on_open = 1
+        let g:syntastic_check_on_wq = 0
+
+        " syntax checkers :help syntastic-checkers
+        let g:syntastic_python_checkers=['pyflakes', 'pep8'] "
+        " 使用pyflakes,速度比pylint快
+        let g:syntastic_python_pep8_args='--ignore=E501,E225,E124,E712'
+        let g:syntastic_mode_map = {
+            \ "mode": "passive",
+            \ "active_filetypes": ["ruby", "php"],
+            \ "passive_filetypes": ["puppet"] }
+        " nnoremap <leader>ck :SyntasticCheck<cr>
+        nnoremap <leader>ck :SyntasticCheck<cr>:Error<cr>
+    endif
+
 "}}}

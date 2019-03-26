@@ -65,6 +65,17 @@ let $VIMFILES = expand('$VIMY/vimfiles')
 let $PLUG = expand("$VIMFILES/plugged")
 let $SETTING = expand("$VIMFILES/setting_of_plugin")
 let $CTAGS_WIN = expand("$VIMY/Archive_gvim/ctags.exe")
+
+" vim 801 feature support :terminal and termdebu
+" man: switch to terminal-normal mode <C-W> N
+" if (v:version >= 800 && (!has('nvim')))
+" if has("terminal")
+    " let g:term_support = 1
+" else
+    " let g:term_support = 0
+" endif
+
+let g:term_support = has("terminal")
 "}}}
 
 set history =1000
@@ -134,6 +145,20 @@ endif
 "}}}
 
 " Load Plugin and Customed_Func "{{{
+
+" filtetype open "{{{
+""""""""""""""""""""
+set nocompatible    " required
+" 检测文件类型
+filetype on
+" 针对不同的文件类型采用不同的缩进格式
+filetype indent on
+" 允许插件
+filetype plugin on
+" 启动自动补全
+filetype plugin indent on
+"}}}
+
 if filereadable(expand('$VIMY/vimrc.bundles'))
     exec 'source '.expand('$VIMY/vimrc.bundles')
 else
@@ -343,13 +368,13 @@ endif
     " F1 废弃这个键,防止调出系统帮助
     noremap <F1> <Esc>"
     " F2 语法开关，关闭语法可以加快大文件的展示
-    nnoremap <F2> :exec exists('g:syntax_on') ? 'syn off' : 'syn enable'<CR>
+    " nnoremap <F2> :exec exists('g:syntax_on') ? 'syn off' : 'syn enable'<CR>
     " F3 显示可打印字符开关
     " nnoremap <F3> :set list! list?<CR>
     " set paste的Toggle，有格式的代码粘贴
-    " set pastetoggle=<F6>
+    set pastetoggle=<F6>
     " disbale paste mode when leaving insert mode
-    " au InsertLeave * set nopaste   
+    au InsertLeave * set nopaste   
 
     " Quickly close the current window
     nnoremap <leader>q :q<CR>
@@ -428,8 +453,8 @@ endif
 "{{{
 " Quickfix
 """"""""""""""""""""""""""""""
-"   nnoremap <leader>cn :cn<cr>
-"   nnoremap <leader>cp :cp<cr>
+    " nnoremap <leader>cn :cn<cr>
+    " nnoremap <leader>cp :cp<cr>
 "}}}
 
 "{{{
@@ -454,6 +479,56 @@ endif
 
 "}}}
 
+" gui_running 此行需要在syntax on 之前配置 "{{{
+    if exists('g:syntax_on')
+        syn off
+    endif
+    " 这几行会被colorscheme覆盖
+    " highlight WhitespaceEOL ctermbg=red guibg=red
+    " match WhitespaceEOL /\s\+$/
+    " highlight WhitespaceHOL ctermbg=red guibg=red
+    " match WhitespaceHOL /^\s\+/
+    set cursorline " 突出显示当前行
+    " set cursorcolumn "突出当前列
+
+    " 使用鼠标操作
+    set mouse=cvn
+
+    if has("gui_running")
+        set guioptions-=T " 隐藏工具栏
+        set guioptions-=m " 隐藏菜单栏
+        set guioptions-=L
+        " set guioptions-=r
+        set background=dark
+        " colorscheme desert_ywl  "设定配色方案
+        autocmd GUIEnter * set lines=40 |  set columns=149 
+        if MySys() == 'linux'
+            "exec "winpos 400 70"
+        endif
+    else
+        set background=dark
+        set t_Co=16
+       " if &term =~ "xterm"
+            " set t_Co=16
+            " set t_Sb=^[[4%dm " 设置背景色
+            " set t_Sf=^[[3%dm " 设置前景色
+        autocmd VimEnter * set lines=40 | set columns=149
+        " endif 
+    endif
+
+    " 防止tmux下vim的背景色显示异常
+    " Refer: http://sunaku.github.io/vim-256color-bce.html
+    if &term =~ '256color'
+        " disable Background Color Erase (BCE) so that color schemes
+        " render properly when inside 256-color tmux and GNU screen.
+        " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+        set t_ut=
+    endif 
+
+" 开启语法高亮
+    syntax on
+"}}}
+
 " Autocmd "{{{
 if has("autocmd")
     autocmd! FileType c,cs,java,perl,
@@ -468,7 +543,12 @@ if has("autocmd")
                     \setlocal cc=81
     augroup END
 
-    autocmd! FileType c,cpp setlocal smartindent
+    augroup cppevent 
+        autocmd!     FileType c,cpp setlocal smartindent |
+                        \setlocal tabstop=2 |
+                        \setlocal softtabstop=2 |
+                        \setlocal shiftwidth=2 |
+    augroup END
     " auto FileType c,cpp  set cindent " Strict rules for C Programs
     " set smartindent " 开启行时使用智能自动缩进，为C程序
     " indent: 如果用了:set indent,
@@ -533,54 +613,6 @@ if has("autocmd")
 "   autocmd BufNewFile  *.php  0r ~/.vim/template/php.tpl
     
 endif "has("autocmd")
-"}}}
-
-" gui_running 此行需要在syntax on 之前配置 "{{{
-    if exists('g:syntax_on')
-        syn off
-    endif
-    " 这几行会被colorscheme覆盖
-    " highlight WhitespaceEOL ctermbg=red guibg=red
-    " match WhitespaceEOL /\s\+$/
-    " highlight WhitespaceHOL ctermbg=red guibg=red
-    " match WhitespaceHOL /^\s\+/
-    set cursorline " 突出显示当前行
-    " set cursorcolumn "突出当前列
-
-    " 使用鼠标操作
-    set mouse=cvn
-
-    if has("gui_running")
-        set guioptions-=T " 隐藏工具栏
-        set guioptions-=m " 隐藏菜单栏
-        set guioptions-=L
-        " set guioptions-=r
-        set background=dark
-        " colorscheme desert_ywl  "设定配色方案
-        autocmd GUIEnter * set lines=40 |  set columns=149 
-        if MySys() == 'linux'
-            "exec "winpos 400 70"
-        endif
-    else
-        set background=dark
-        set t_Co=16
-       " if &term =~ "xterm"
-            " set t_Co=16
-            " set t_Sb=^[[4%dm " 设置背景色
-            " set t_Sf=^[[3%dm " 设置前景色
-        autocmd VimEnter * set lines=40 | set columns=149
-        " endif 
-    endif
-
-    " 防止tmux下vim的背景色显示异常
-    " Refer: http://sunaku.github.io/vim-256color-bce.html
-    if &term =~ '256color'
-        " disable Background Color Erase (BCE) so that color schemes
-        " render properly when inside 256-color tmux and GNU screen.
-        " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-        set t_ut=
-    endif 
-
 "}}}
 
 " Customed Function"{{{
@@ -674,20 +706,4 @@ endif "has("autocmd")
         call AddTitle()
     endfunction
 "}}}
-
-" 开启语法高亮
-syntax on
-
-""""""""""""""""""""
-"  filtetype open  "
-""""""""""""""""""""
-set nocompatible    " required
-" 检测文件类型
-filetype on
-" 针对不同的文件类型采用不同的缩进格式
-filetype indent on
-" 允许插件
-filetype plugin on
-" 启动自动补全
-filetype plugin indent on
 
