@@ -66,6 +66,8 @@ let $PLUG = expand("$VIMFILES/plugged")
 let $SETTING = expand("$VIMFILES/setting_of_plugin")
 let $CTAGS_WIN = expand("$VIMY/Archive_gvim/ctags.exe")
 
+let $CPPPRJ = expand("$HOME/git_repos/Alg_C_Exercise")
+
 " vim 801 feature support :terminal and termdebu
 " man: switch to terminal-normal mode <C-W> N
 " if (v:version >= 800 && (!has('nvim')))
@@ -115,32 +117,18 @@ endif
 " Fast edit vimrc & font coding Setting "{{{
 
 " Fast edit vimrc
-    "if MySys() == 'linux'
-    ""   Fast reloading of the .vimrc
-        "nnoremap <silent> <leader>ss :exec 'source '.g:ywl_path.'/_vimrc'<cr>
-        "nnoremap <silent> <leader>rr :source ~/.vimrc<cr>
-    ""   Fast editing of .vimrc
-        "nnoremap <silent> <leader>ee :exec 'edit '.g:ywl_path.'/_vimrc'<cr>
-        "nnoremap <silent> <leader>er :e ~/.vimrc<cr>
-        "nnoremap <silent> <leader>eb :exec 'edit '.g:ywl_path.'/vimrc.bundles'<cr>
-    "elseif MySys() == 'windows'
-    ""   Fast reloading of the _vimrc
-        "nnoremap <silent> <leader>ss :exec 'source '.g:ywl_path.'\_vimrc'<cr>
-        "nnoremap <silent> <leader>rr :source $VIM\_vimrc<cr>
-    ""   Fast editing of _vimrc
-        "nnoremap <silent> <leader>ee :exec 'edit '.g:ywl_path.'\_vimrc'<cr>
-        "nnoremap <silent> <leader>er :e $VIM\_vimrc<cr>
-        "nnoremap <silent> <leader>eb :exec 'edit '.g:ywl_path.'\vimrc.bundles'<cr>
-    ""   When _vimrc is edited, reload it
-        "" autocmd! bufwritepost _vimrc exec 'source $VIM\_vimrc'
-    "endif
     "   Fast reloading of the .vimrc
+    if exists("$MYVIMRC") && exists("$VIMY")
         nnoremap <silent> <leader>ss :exec 'source '.expand('$VIMY/_vimrc')<cr>
         nnoremap <silent> <leader>rr :source $MYVIMRC<cr>
     "   Fast editing of .vimrc
         nnoremap <silent> <leader>ee :exec 'edit '.expand('$VIMY/_vimrc')<cr>
         nnoremap <silent> <leader>eb :exec 'edit '.expand('$VIMY/vimrc.bundles')<cr>
         nnoremap <silent> <leader>er :edit $MYVIMRC<cr>
+    else
+        echom exists("$MYVIMRC")?"$MYVIMRC": "$VIMY"."$VIMRC not define"
+        finish
+	endif
 
 "}}}
 
@@ -354,7 +342,8 @@ endif
 
 " Default Path & Global constant - chrome "{{{
     " 启动进入自己的主目录
-    exec 'cd '.$VIMY
+    " exec 'cd '.$VIMY
+    exec 'cd '.$CPPPRJ
 
     " chrome path for windows 
     if hostname() == 'M-PC'
@@ -523,6 +512,9 @@ endif
         " render properly when inside 256-color tmux and GNU screen.
         " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
         set t_ut=
+        set notimeout		" don't timeout on mappings
+        set ttimeout		" do timeout on terminal key codes
+        set timeoutlen=100	" timeout after 100 msec
     endif 
 
 " 开启语法高亮
@@ -707,3 +699,7 @@ endif "has("autocmd")
     endfunction
 "}}}
 
+" terminal 
+    if g:term_support
+        set notimeout ttimeout timeoutlen=100
+    endif
