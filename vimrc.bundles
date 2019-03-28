@@ -594,12 +594,15 @@ nmap ga <Plug>(EasyAlign)
     nnoremap <leader>fu :LeaderfFunction!<cr>
     " search word recursive
     " nnoremap <leader>ff :Leaderf! rg --stayOpen -e
-    nnoremap <leader>ff :<C-U><C-R>=printf("Leaderf! rg --stayOpen -e ")<CR>
-
-    " search word under cursor, the pattern is treated as regex, and enter normal mode directly
-    nnoremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --stayOpen -e %s ", expand("<cword>"))<CR><CR>
-    " search word under cursor literally only in current buffer
-    nnoremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -F --stayOpen --current-buffer -e %s ", expand("<cword>"))<CR><CR>
+    if executable("rg")
+        nnoremap <leader>ff :<C-U><C-R>=printf("Leaderf! rg --stayOpen -e ")<CR>
+        " search word under cursor, the pattern is treated as regex, and enter normal mode directly
+        nnoremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --stayOpen -e %s ", expand("<cword>"))<CR><CR>
+        " search word under cursor literally only in current buffer
+        nnoremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -F --stayOpen --current-buffer -e %s ", expand("<cword>"))<CR><CR>
+    else
+        echom "leaderf rg not install"
+    endif
 " }}}
 
 " ctrlpvim/ctrlp.vim " 文件导航插件" && tacahiroy/ctrlp-funky {{{
@@ -730,6 +733,9 @@ nmap ga <Plug>(EasyAlign)
                     \}
                     " \'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8',
                     " \'add_blank_lines_for_python_control_statements'
+        if !executable("clang-format") && !executable("clang")
+            echom "clang or clang-format isn't installed"
+        endif
         let g:ale_fix_on_save = 0
         " let g:ale_fix_on_enter
         " let g:ale_fix_on_insert_leave
