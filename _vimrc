@@ -19,7 +19,7 @@
 " Initial setting"{{{
 " -----------------------------------------------------------------------------
 "  < 判断操作系统是否是 Windows 还是 Linux >
-" ----------------------------------------------------------------------------- 
+" -----------------------------------------------------------------------------
 function! MySys()
     if(has('win32') || has('win64') || has('win95') || has('win16'))
         return 'windows'
@@ -34,6 +34,19 @@ elseif MySys() == 'windows'
     let g:os_sep = '\'
 endif
 
+if !exists("$VIMY")
+    let $VIMY = expand('~/Vim_ywl')
+endif
+
+if !exists("$VIMFILES")
+    let $VIMFILES = expand('$VIMY/vimfiles')
+endif
+let $PLUG = expand("$VIMFILES/plugged")
+let $SETTING = expand("$VIMFILES/setting_of_plugin")
+let $CTAGS_WIN = expand("$VIMY/Archive_gvim/ctags.exe")
+
+let $CPPPRJ = expand("$HOME/git_repos/Alg_C_Exercise")
+
 "   个人文件夹路径的设定
 if MySys() == 'linux'
     set runtimepath=$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after
@@ -43,8 +56,8 @@ elseif MySys() == 'windows'
     set runtimepath=$VIM\vimfiles,$VIMRUNTIME,$VIM\vimfiles\after
     set runtimepath+=$HOME\vimfiles,$HOME\vimfiles\after
     set runtimepath+=$VIMFILES,$VIMFILES\after
-endif	
-    
+endif
+
 " Set mapleader & Fast edit vimrc
 let   mapleader = ","
 let g:mapleader = ","
@@ -53,20 +66,21 @@ if !exists('g:plugin_function_groups')
     " optional :
     " "syntastic", "hexo" , "YouCompleteMe" , "ale", "airline",
     " "tagbar" , "LeaderF", "coc.nvim"
-    let g:plugin_function_groups = ['hexo',  "airline" ,"ale", 
-                \ "LeaderF", "tagbar", 
+    let g:plugin_function_groups = ['hexo',  "airline" ,"ale",
+                \ "LeaderF", "tagbar",
                 \ "YouCompleteMe",
                 \ "vim-youdao-translater"
                 \]
                 " \"coc.nvim",
 endif
 
-let $VIMFILES = expand('$VIMY/vimfiles')
-let $PLUG = expand("$VIMFILES/plugged")
-let $SETTING = expand("$VIMFILES/setting_of_plugin")
-let $CTAGS_WIN = expand("$VIMY/Archive_gvim/ctags.exe")
 
-let $CPPPRJ = expand("$HOME/git_repos/Alg_C_Exercise")
+if has("nvim")
+let g:python3_host_prog='C:\Anaconda3\python.exe'
+set clipboard=unnamed
+
+endif
+
 
 " vim 801 feature support :terminal and termdebu
 " man: switch to terminal-normal mode <C-W> N
@@ -155,7 +169,7 @@ endif
 
 if filereadable(expand('$VIMY/vimrc.func'))
     exec 'source '.expand('$VIMY/vimrc.func')
-else 
+else
     echo 'No vimrc.func found'
 endif
 "  matchit.vim插件扩展了%匹配字符的范围,根据不同的filetype来做不同的匹配
@@ -163,16 +177,15 @@ endif
 "}}}
 
 " Base Setting "{{{
-
 " Basic{{{
     set hidden " 允许在有未保存的修改时切换缓冲区，此时的修改由 vim 负责保存
-    
+
     " vim命令行补全增强，显示所有匹配的命令或文件名。
     " set wildmode=list:longest
     " Ignore compiled files
-        
+
     " 增强模式中的命令行自动完成操作
-    set wildmenu 
+    set wildmenu
     " 这个貌似会影响到YCM
     " set completeopt=longest,menu
     " wildmenu" 激活时，下面的键有特殊含义:
@@ -180,7 +193,7 @@ endif
     " <Down> - 文件名/菜单名补全中: 移进子目录和子菜单。
     " <CR> - 菜单补全中，如果光标在句号之后: 移进子菜单。
     " <Up> - 文件名/菜单名补全中: 上移到父目录或父菜单。
-    
+
     set showcmd     " Show (partial) command in status line."
     set cmdheight=1 " 设定命令行的行数为 1
 
@@ -191,9 +204,9 @@ endif
     set nowrapscan " 禁止在搜索到文件两端时重新搜索
     set incsearch " 输入搜索内容时就显示搜索结果
     " 取消搜索高亮"
-    exec "noh" 
+    exec "noh"
     set magic " 设置魔术，搜索设置
-    
+
     " 设置宽度不明的文字(如 “”①②→ )为双宽度文本
     set ambiwidth=double
     " Set to auto read when a file is changed from the outside
@@ -222,14 +235,14 @@ endif
     " set showmatch " 插入括号时，短暂地跳转到匹配的对应括号
     " set matchtime=2 " 短暂跳转到匹配括号的时间
 
-    
+
     set laststatus=2 " 显示状态栏 (默认值为 1, 无法显示状态栏)
     "   我的状态栏显示的内容
     set statusline=%F%m%r%h%w\[POS=%l,%v][%p%%]\%{
                 \strftime(\"%d/%m/%y\ -\ %H:%M\")}
     " 从左到右分别是: 相对路径, 光标处字符 Unicode 编码, 系统, 文件编码, " 文件类型, tab长度, 行/列, 光标位置, 视窗位置
     " set statusline=%h%w%r\ %f\ %m%=\ %B\ \|\ %{&ff}\ \|\ %{&fenc!=''?&fenc:&enc}\ \|\ %{&ft!=''?&ft:'none'}\ \|\ %{&tabstop}\ %8(%l,%v%)\ %10(%p%%,%P%)
-    
+
     "带有如下符号的单词不要被换行分割
     set iskeyword+=_,$,@,%,#,-
     " 在gui环境下altkey快捷键的
@@ -238,8 +251,8 @@ endif
     endif
 " 提示自己代码别超过81列"}}}
 
-" Fold setting "{{{ 
-   
+" Fold setting "{{{
+
     function! MyFoldText()
       let b:_line=getline(v:foldstart)
       let b:foldcms_1=substitute(&commentstring,'%s',get(split(&foldmarker,','),0),"")
@@ -255,7 +268,7 @@ endif
 
     function! MyFoldExpr_Markdown(lnum)
         return getline(a:lnum+1)=~'^##'?0:1
-    endfunction 
+    endfunction
 
     function! MyFoldText_Markdown()
         let a:line_1=getline(v:foldstart)
@@ -271,7 +284,7 @@ endif
     set foldmethod=marker
     set foldcolumn=3 " 设置折叠区域的宽度
     set foldtext=MyFoldText()
-    
+
     " 用空格键来开关折叠
     nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 "}}}
@@ -295,7 +308,7 @@ endif
     nnoremap <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>:redraw!<cr>
     " 命令行下的上下条目映射
     cnoremap <c-n> <down>
-    cnoremap <c-p> <up>  
+    cnoremap <c-p> <up>
 "}}}
 
 " Reformate 排版与文本格式"{{{
@@ -312,7 +325,9 @@ endif
     set wrap "文本的回绕，不超过窗口宽度
 
     set autoindent
-    set backspace=indent,eol,start
+    " set whichwrap = b,s,<,>,[,]
+    " set backspace=indent,eol,start
+    set backspace=indent,eol,start,
 
 "}}}
 
@@ -321,7 +336,7 @@ endif
     set fileformats=unix,dos
     " 缩略 set ffs = unix,dos
     set fileformat =unix
-    
+
     if MySys() == "windows"
         set langmenu=zh_CN.UTF-8
         " language message zh_CN.UTF-8
@@ -336,7 +351,7 @@ endif
         set encoding=utf-8
         let &termencoding=&encoding
         set fileencoding=utf-8
-        set fencs=utf-8,usc-bom,gb18030,gbk,gb2312,cp936 
+        set fencs=utf-8,usc-bom,gb18030,gbk,gb2312,cp936
     endif
 "}}}
 
@@ -345,15 +360,15 @@ endif
     " exec 'cd '.$VIMY
     exec 'cd '.$CPPPRJ
 
-    " chrome path for windows 
+    " chrome path for windows
     if hostname() == 'M-PC'
         let g:path_chrome='C:\Users\m\AppData\Local\Google\Chrome\Application\chrome.exe'
-    else 
+    else
         let g:path_chrome='C:\Users\ywl\AppData\Local\Google\Chrome\Application\chrome.exe'
     endif
 "}}}
 
-" Global Mapping "{{{ 
+" Global Mapping "{{{
     " F1 废弃这个键,防止调出系统帮助
     noremap <F1> <Esc>"
     " F2 语法开关，关闭语法可以加快大文件的展示
@@ -363,7 +378,7 @@ endif
     " set paste的Toggle，有格式的代码粘贴
     set pastetoggle=<F6>
     " disbale paste mode when leaving insert mode
-    au InsertLeave * set nopaste   
+    au InsertLeave * set nopaste
 
     " Quickly close the current window
     nnoremap <leader>q :q<CR>
@@ -389,9 +404,9 @@ endif
     " inoremap <c-h> <BS>
     " <C-O>    : 依次沿着你的跳转记录向回跳 (从最近的一次开始)
     " <C-I>    : 依次沿着你的跳转记录向前跳
-    " :ju(mps) : 列出你跳转的足迹 
+    " :ju(mps) : 列出你跳转的足迹
 
-"{{{ " 自定义／个性化快捷键 
+"{{{ " 自定义／个性化快捷键
 " 关于tab buffer 的快捷键
 " 跳转，翻页 向下翻半夜  向上翻半夜
 " Tab操作快捷方式!
@@ -415,10 +430,12 @@ endif
     nnoremap gn :bn<CR>
     nnoremap gp :bp<CR>
     nnoremap <leader>bd :bd<CR>
+
+    nnoremap <leader>on :only<CR>
 "}}}
 
 "{{{
-" Smart way to move .btw. windows 
+" Smart way to move .btw. windows
 " 关于窗口的扩大缩小, :help window-resize
     " noremap <C-j> <C-W>j
     " noremap <C-k> <C-W>k
@@ -432,7 +449,7 @@ endif
     " 这个可以用 <C-W>替代
     " <C-B>插入模式下一次性删除一个词
     " inoremap <c-b> <c-o>diw
-    
+
 
 " Treat long lines as break lines (useful when moving around in them)
     nnoremap j gj
@@ -446,29 +463,9 @@ endif
     " nnoremap <leader>cp :cp<cr>
 "}}}
 
-"{{{
-" 自动补全括号，包括大括号 ( 用插件 delimitMate 代替了）
-    " :inoremap ( ()<ESC>i
-    " :inoremap ) <c-r>=ClosePair(')')<CR>
-    " :inoremap { {}<ESC>i
-    " :inoremap } <c-r>=ClosePair('}')<CR>
-    " :inoremap [ []<ESC>i
-    " :inoremap ] <c-r>=ClosePair(''')<CR>
-    " :inoremap < <><ESC>i
-    " :inoremap > <c-r>=ClosePair('>')<CR>
-" 实现括号的自动配对后防止重复输入），适用python
-     " function! ClosePair(char)
-        " if getline('.')[col('.') - 1] == a:char
-            " return "\<Right>"
-        " else
-          " return a:char
-       " endif
-    " endf
 "}}}
 
-"}}}
-
-" gui_running 此行需要在syntax on 之前配置 "{{{
+" term && gui_running 此行需要在syntax on 之前配置 "{{{
     if exists('g:syntax_on')
         syn off
     endif
@@ -477,7 +474,10 @@ endif
     " match WhitespaceEOL /\s\+$/
     " highlight WhitespaceHOL ctermbg=red guibg=red
     " match WhitespaceHOL /^\s\+/
-    set cursorline " 突出显示当前行
+    set cursorline
+    " au WinEnter * set cursorline
+    " au WinLeave * set nocursorline
+    set termguicolors
     " set cursorcolumn "突出当前列
 
     " 使用鼠标操作
@@ -488,21 +488,29 @@ endif
         set guioptions-=m " 隐藏菜单栏
         set guioptions-=L
         " set guioptions-=r
-        set background=dark
         " colorscheme desert_ywl  "设定配色方案
-        autocmd GUIEnter * set lines=40 |  set columns=149 
+        autocmd GUIEnter * set lines=40 |  set columns=149
         if MySys() == 'linux'
             "exec "winpos 400 70"
         endif
+    elseif has ("nvim")
+        set t_Co=256
+        set guioptions-=T " 隐藏工具栏
+        set guioptions-=m " 隐藏菜单栏
+        set guioptions-=L
+        " set guioptions-=r
+        " colorscheme desert_ywl  "设定配色方案
+        autocmd GUIEnter * set lines=40 |  set columns=149
+
     else
-        set background=dark
         set t_Co=16
        " if &term =~ "xterm"
             " set t_Co=16
             " set t_Sb=^[[4%dm " 设置背景色
             " set t_Sf=^[[3%dm " 设置前景色
+        " autocmd VimEnter * set lines=40 | set columns=149
         autocmd VimEnter * set lines=40 | set columns=149
-        " endif 
+        " endif
     endif
 
     " 防止tmux下vim的背景色显示异常
@@ -512,10 +520,10 @@ endif
         " render properly when inside 256-color tmux and GNU screen.
         " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
         set t_ut=
-        set notimeout		" don't timeout on mappings
+        " set notimeout		" don't timeout on mappings
         set ttimeout		" do timeout on terminal key codes
         set timeoutlen=100	" timeout after 100 msec
-    endif 
+    endif
 
 " 开启语法高亮
     syntax on
@@ -525,17 +533,17 @@ endif
 if has("autocmd")
     autocmd! FileType c,cs,java,perl,
                 \shell,bash,cpp,python,vim,php,ruby  setlocal cc=81
-    
+
     augroup htmlevent
         autocmd! htmlevent
-        autocmd BufRead,BufNewFile *.html  
+        autocmd BufRead,BufNewFile *.html
                     \setlocal tabstop=2 |
                     \setlocal softtabstop=2 |
                     \setlocal shiftwidth=2 |
                     \setlocal cc=81
     augroup END
 
-    augroup cppevent 
+    augroup cppevent
         autocmd!     FileType c,cpp setlocal smartindent |
                         \setlocal tabstop=2 |
                         \setlocal softtabstop=2 |
@@ -546,36 +554,36 @@ if has("autocmd")
     " indent: 如果用了:set indent,
         " :set ai 等自动缩进，想用退格键将字段缩进的删掉，必须设置这个选项。否则不响应。
     " eol:如果插入模式下在行开头，想通过退格键合并两行，需要设置eol。
-    " start：要想删除此次插入前的输入，需设置这个。 
+    " start：要想删除此次插入前的输入，需设置这个。
 
     augroup xml_fold
         autocmd! xml_fold
-        autocmd BufReadPre *.xml 
-                    \let g:xml_syntax_folding = 1 |  
+        autocmd BufReadPre *.xml
+                    \let g:xml_syntax_folding = 1 |
                     \setlocal foldmethod=syntax |
                     \setlocal cc=81
     augroup END
 
-    au BufNewFile,BufRead *.swig,*.ejs set filetype=javascript 
+    au BufNewFile,BufRead *.swig,*.ejs set filetype=javascript
 
     augroup markdownevent
         autocmd! markdownevent
-        autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
+        autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html}
                     \ setlocal formatoptions+=n |
                     \setlocal tabstop=4 |
                     \setlocal softtabstop=4 |
                     \setlocal shiftwidth=4 |
                     \setlocal cc=81
         if MySys() == 'linux'
-            autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
+            autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html}
                         \nnoremap <buffer> <leader>p :!google-chrome "%:p"<CR>
         elseif MySys() == 'windows'
             " autocmd Filetype html,xml,xsl source $HOME\vimfiles\plugin\closetag.vim
             " autocmd Filetype matlab source $HOME\vimfiles\syntax\matlab.vim|set cms=%\ %s
             " autocmd BufEnter *.m compiler mlint
-            autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html} 
+            autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html}
                         \nnoremap <buffer> <Leader>p :exec "!start ".g:path_chrome." %:p"<CR>
-            "   autocmd Bufenter * normal zn    
+            "   autocmd Bufenter * normal zn
         endif
     augroup END
 
@@ -603,7 +611,7 @@ if has("autocmd")
 "   autocmd BufNewFile  *.html 0r ~/.vim/template/html.tpl
 "   autocmd BufNewFile  *.js   0r ~/.vim/template/javascript.tpl
 "   autocmd BufNewFile  *.php  0r ~/.vim/template/php.tpl
-    
+
 endif "has("autocmd")
 "}}}
 
@@ -629,7 +637,7 @@ endif "has("autocmd")
 "   添加或更新头
     function! AddTitle()
         if GetFileType() == 'wiki'
-            let uAnnotation = '# ' 
+            let uAnnotation = '# '
         else
             let uAnnotation = '//'
         endif
@@ -662,7 +670,7 @@ endif "has("autocmd")
             execute '/\/\/ *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
             execute "noh"
             normal 'k
-        else 
+        else
             normal m'
             execute '/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
             normal ''
@@ -679,7 +687,7 @@ endif "has("autocmd")
 "   如果有的话，那么只需要更新即可
     function! TitleDet()
         if GetFileType() == 'wiki'
-            let uAnnotation = '# ' 
+            let uAnnotation = '# '
         else
             let uAnnotation = '//'
         endif
@@ -699,7 +707,11 @@ endif "has("autocmd")
     endfunction
 "}}}
 
-" terminal 
-    if g:term_support
-        set notimeout ttimeout timeoutlen=100
-    endif
+if g:term_support
+    " SecureCRT 中使用 Vim 8 内嵌终端如看到奇怪字符，使用 :set t_RS= t_SH= 解决
+   au TerminalOpen * if &buftype == 'terminal' | setlocal bufhidden=hide | set nobuflisted | endif
+endif
+
+
+" archived operation
+" echohl WarningMsg | echom 'You need to install git!' | echohl None

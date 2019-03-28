@@ -41,6 +41,13 @@ call plug#begin('$VIMFILES/plugged')
     Plug 'airblade/vim-gitgutter'
     " gundo " edit history, 可以查看回到某个历史状态
     Plug 'sjl/gundo.vim'
+
+    " new added
+    Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+    Plug 'kassio/neoterm'
+
+
+
     if count(g:plugin_function_groups, "ale")
         " Plug 'w0rp/ale',{'tag' : 'v2.3.0'}
         Plug 'w0rp/ale'
@@ -59,6 +66,7 @@ call plug#begin('$VIMFILES/plugged')
         Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
     endif
     Plug 'altercation/vim-colors-solarized'
+    Plug 'morhetz/gruvbox'
     if count(g:plugin_function_groups, 'vim-youdao-translater')
         Plug 'ianva/vim-youdao-translater'
     endif
@@ -91,6 +99,16 @@ if count(g:plugin_function_groups, 'hexo')
     let g:hexo_blogpath = expand('~/hexo_blog')
 endif
 
+" colorscheme "{{{
+try
+    exec 'colorscheme solarized'
+    " exec 'colorscheme gruvbox'
+catch
+    exec 'colorscheme desert'
+endtry
+
+"}}}
+
 " vim-airline/vim-airline  "好看轻量级的powerline，不依赖python "{{{
     if count(g:plugin_function_groups, "airline")
         let g:airline_powerline_fonts = 1
@@ -107,6 +125,9 @@ endif
         let g:airline#extensions#tagbar#enabled = 0
         " 打开tabline功能,方便查看Buffer和切换，这个功能比较不错
         let g:airline#extensions#tabline#enabled = 1
+        let g:airline#extensions#tabline#show_splits = 1
+        let g:airline#extensions#tabline#show_buffers = 1
+        let g:airline#extensions#tabline#alt_sep = 1
         " show just the filename
         let g:airline#extensions#tabline#fnamemod = ":t"
         " show buffer number
@@ -125,10 +146,6 @@ endif
         let g:airline#extensions#whitespace#mixed_indent_algo = 0
     endif
 
-"}}}
-
-" colorscheme "{{{
-    colorscheme solarized
 "}}}
 
 " vim-scripts/Load_Template file setting " 模板文件"{{{
@@ -283,7 +300,7 @@ endif
     " 进入对应filetype的snippets进行编辑
     map <leader>us :UltiSnipsEdit<CR>
     " Explicityly tell UltiSnips To use python version 3.x
-    let g:UltiSnipsUsePythonVersion = 2
+    " let g:UltiSnipsUsePythonVersion = 2
     " Snippets的文件夹名字，查找rtp路径下的UltiSnips文件夹< plugin vim-snippets
     let g:UltiSnipsSnippetDirectories = ["UltiSnips"]
     let g:UltiSnipsSnippetsDir = expand('$VIMFILES/UltiSnips')
@@ -835,7 +852,32 @@ nmap ga <Plug>(EasyAlign)
     endfunc
 "}}}
 
-" ConradIrwin/vim-bracketed-paste
+" vim-which-key "{{{
+nnoremap <silent> <leader> :<c-u>WhichKey  ','<CR>
+let g:which_key_timeout = 300
+"}}}
+
+" neoterm REPL
+" "h mods
+    let g:neoterm_default_mod="vertical botright"
+    tnoremap <leader>tt <c-w>:Ttoggle<cr>
+    nnoremap <leader>tt :Ttoggle<cr>
+    nnoremap <leader>tl :TREPLSendLine<cr>
+    let g:neoterm_keep_term_open = 1
+    if MySys() == 'windows'
+        " let g:neoterm_eof="\r"
+        " let g:neoterm_repl_python = 'python.exe --no-autoindent'
+        " let g:neoterm_eof="\r\n"
+        " let g:neoterm_eof="<cr>"
+    endif
+    " let g:neoterm_autoinsert = 1
+    " let g:neoterm_autojump = 1
+
+    " Use gx{text-object} in normal mode
+    " nmap gx <Plug>(neoterm-repl-send)
+
+    " Send selected contents in visual mode.
+    " xmap gx <Plug>(neoterm-repl-send)
 
 " c cpp quick switch jump and mkdir c/h file
 
