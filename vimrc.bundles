@@ -44,7 +44,9 @@ call plug#begin('$VIMFILES/plugged')
 
     " new added
     Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
-    Plug 'kassio/neoterm'
+    if count(g:plugin_function_groups, 'neoterm')
+        Plug 'kassio/neoterm'
+    endif
 
 
 
@@ -99,16 +101,6 @@ if count(g:plugin_function_groups, 'hexo')
     let g:hexo_blogpath = expand('~/hexo_blog')
 endif
 
-" colorscheme "{{{
-try
-    exec 'colorscheme solarized'
-    " exec 'colorscheme gruvbox'
-catch
-    exec 'colorscheme desert'
-endtry
-
-"}}}
-
 " vim-airline/vim-airline  "好看轻量级的powerline，不依赖python "{{{
     if count(g:plugin_function_groups, "airline")
         let g:airline_powerline_fonts = 1
@@ -125,9 +117,9 @@ endtry
         let g:airline#extensions#tagbar#enabled = 0
         " 打开tabline功能,方便查看Buffer和切换，这个功能比较不错
         let g:airline#extensions#tabline#enabled = 1
-        let g:airline#extensions#tabline#show_splits = 1
-        let g:airline#extensions#tabline#show_buffers = 1
-        let g:airline#extensions#tabline#alt_sep = 1
+        " let g:airline#extensions#tabline#show_splits = 1
+        " let g:airline#extensions#tabline#show_buffers = 1
+        " let g:airline#extensions#tabline#alt_sep = 1
         " show just the filename
         let g:airline#extensions#tabline#fnamemod = ":t"
         " show buffer number
@@ -145,6 +137,17 @@ endtry
         " must be all spaces or all tabs before the first non-whitespace character
         let g:airline#extensions#whitespace#mixed_indent_algo = 0
     endif
+
+"}}}
+
+" colorscheme "{{{
+try
+    exec 'colorscheme solarized'
+    " exec 'colorscheme gruvbox'
+    exec 'set background=dark'
+catch
+    exec 'colorscheme desert'
+endtry
 
 "}}}
 
@@ -558,9 +561,10 @@ nmap ga <Plug>(EasyAlign)
 "}}}
 
 " leaderF "{{{
+"   rg : ripgrep
 "   move rg.exe to C:\windows\System32
 "   vimrun 搜索路径
-    " let g:Lf_PythonVersion =3
+"   if executable
 
     if MySys() == "windows"
         let g:Lf_Ctags = $CTAGS_WIN
@@ -742,7 +746,7 @@ nmap ga <Plug>(EasyAlign)
     " 自动打开 quickfix window ，高度为 6
     let g:asyncrun_open = 10
     " 设置 F10 打开/关闭 Quickfix 窗口
-    nnoremap <F10> :call asyncrun#quickfix_toggle(10)<cr>
+    " nnoremap <F10> :call asyncrun#quickfix_toggle(10)<cr>
     let $PYTHONUNBUFFERED=1
     let g:asyncrun_rootmarks = copy(b:project_marker_list)
 
@@ -756,7 +760,7 @@ nmap ga <Plug>(EasyAlign)
             exec 'AsyncRun g++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
         endif
     endfunc
-    au! FileType c,cpp nnoremap <silent> <F7> :call ComplieX()<CR>
+    autocmd! FileType c,cpp nnoremap <silent> <F7> :call ComplieX()<CR>
 
     " 定义Run函数
     func! RunX()
@@ -800,8 +804,7 @@ nmap ga <Plug>(EasyAlign)
     vnoremap <silent> <m-f> :<C-u>Ydv<CR>
 "}}}
 
-"{{{
-" Windows和linux的单文件编译
+" Windows和linux的单文件编译 "{{{
     func! ComplieRunCpp()
         if &filetype == 'cpp'
             exec "w"
@@ -857,8 +860,9 @@ nnoremap <silent> <leader> :<c-u>WhichKey  ','<CR>
 let g:which_key_timeout = 300
 "}}}
 
-" neoterm REPL
+" neoterm REPL"{{{
 " "h mods
+if g:term_support && count(g:plugin_function_groups, 'neoterm')
     let g:neoterm_default_mod="vertical botright"
     tnoremap <leader>tt <c-w>:Ttoggle<cr>
     nnoremap <leader>tt :Ttoggle<cr>
@@ -878,8 +882,11 @@ let g:which_key_timeout = 300
 
     " Send selected contents in visual mode.
     " xmap gx <Plug>(neoterm-repl-send)
+endif
+"}}}
 
 " c cpp quick switch jump and mkdir c/h file
+" :A
 
 " SimpylFold "{{{
     let g:SimpylFold_docstring_preview = 1

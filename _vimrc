@@ -57,44 +57,43 @@ elseif MySys() == 'windows'
     set runtimepath+=$HOME\vimfiles,$HOME\vimfiles\after
     set runtimepath+=$VIMFILES,$VIMFILES\after
 endif
-
 " Set mapleader & Fast edit vimrc
 let   mapleader = ","
 let g:mapleader = ","
+"}}}
 
+"{{{
 if !exists('g:plugin_function_groups')
     " optional :
     " "syntastic", "hexo" , "YouCompleteMe" , "ale", "airline",
     " "tagbar" , "LeaderF", "coc.nvim"
+    " "neoterm"
     let g:plugin_function_groups = ['hexo',  "airline" ,"ale",
                 \ "LeaderF", "tagbar",
                 \ "YouCompleteMe",
-                \ "vim-youdao-translater"
+                \ "vim-youdao-translater",
+                \ "neoterm"
                 \]
                 " \"coc.nvim",
 endif
 
-
 if has("nvim")
 let g:python3_host_prog='C:\Anaconda3\python.exe'
 set clipboard=unnamed
-
 endif
 
 
 " vim 801 feature support :terminal and termdebu
 " man: switch to terminal-normal mode <C-W> N
 " if (v:version >= 800 && (!has('nvim')))
-" if has("terminal")
-    " let g:term_support = 1
-" else
-    " let g:term_support = 0
-" endif
+if has("terminal")
+    let g:term_support = 1
+else
+    let g:term_support = 0
+endif
 
 let g:term_support = has("terminal")
 "}}}
-
-set history =1000
 
 " For windows version, using gVIM with Cygwin on a Windows PC"{{{
 if MySys() == 'windows'
@@ -179,7 +178,7 @@ endif
 " Base Setting "{{{
 " Basic{{{
     set hidden " 允许在有未保存的修改时切换缓冲区，此时的修改由 vim 负责保存
-
+    set history =1000
     " vim命令行补全增强，显示所有匹配的命令或文件名。
     " set wildmode=list:longest
     " Ignore compiled files
@@ -252,7 +251,6 @@ endif
 " 提示自己代码别超过81列"}}}
 
 " Fold setting "{{{
-
     function! MyFoldText()
       let b:_line=getline(v:foldstart)
       let b:foldcms_1=substitute(&commentstring,'%s',get(split(&foldmarker,','),0),"")
@@ -327,12 +325,10 @@ endif
     set autoindent
     " set whichwrap = b,s,<,>,[,]
     " set backspace=indent,eol,start
-    set backspace=indent,eol,start,
-
+    set backspace=indent,eol,start
 "}}}
 
 " Text Encoding "{{{
-
     set fileformats=unix,dos
     " 缩略 set ffs = unix,dos
     set fileformat =unix
@@ -475,9 +471,7 @@ endif
     " highlight WhitespaceHOL ctermbg=red guibg=red
     " match WhitespaceHOL /^\s\+/
     set cursorline
-    " au WinEnter * set cursorline
-    " au WinLeave * set nocursorline
-    set termguicolors
+    " set termguicolors " 会导致term下显示异常
     " set cursorcolumn "突出当前列
 
     " 使用鼠标操作
@@ -488,7 +482,6 @@ endif
         set guioptions-=m " 隐藏菜单栏
         set guioptions-=L
         " set guioptions-=r
-        " colorscheme desert_ywl  "设定配色方案
         autocmd GUIEnter * set lines=40 |  set columns=149
         if MySys() == 'linux'
             "exec "winpos 400 70"
@@ -499,16 +492,13 @@ endif
         set guioptions-=m " 隐藏菜单栏
         set guioptions-=L
         " set guioptions-=r
-        " colorscheme desert_ywl  "设定配色方案
         autocmd GUIEnter * set lines=40 |  set columns=149
-
     else
+        " set t_Co=16
         set t_Co=16
        " if &term =~ "xterm"
-            " set t_Co=16
             " set t_Sb=^[[4%dm " 设置背景色
             " set t_Sf=^[[3%dm " 设置前景色
-        " autocmd VimEnter * set lines=40 | set columns=149
         autocmd VimEnter * set lines=40 | set columns=149
         " endif
     endif
@@ -520,9 +510,9 @@ endif
         " render properly when inside 256-color tmux and GNU screen.
         " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
         set t_ut=
-        " set notimeout		" don't timeout on mappings
+        set notimeout		" don't timeout on mappings
         set ttimeout		" do timeout on terminal key codes
-        set timeoutlen=100	" timeout after 100 msec
+        set timeoutlen=1000	" timeout after 100 msec
     endif
 
 " 开启语法高亮
@@ -564,7 +554,7 @@ if has("autocmd")
                     \setlocal cc=81
     augroup END
 
-    au BufNewFile,BufRead *.swig,*.ejs set filetype=javascript
+    au! BufNewFile,BufRead *.swig,*.ejs set filetype=javascript
 
     augroup markdownevent
         autocmd! markdownevent
@@ -707,11 +697,16 @@ endif "has("autocmd")
     endfunction
 "}}}
 
+" vim81 :terminal support"{{{
 if g:term_support
     " SecureCRT 中使用 Vim 8 内嵌终端如看到奇怪字符，使用 :set t_RS= t_SH= 解决
-   au TerminalOpen * if &buftype == 'terminal' | setlocal bufhidden=hide | set nobuflisted | endif
-endif
+    if &term =~ 'xterm'
+        set t_RS= t_SH=
+    endif
 
+    au TerminalOpen * if &buftype == 'terminal' | setlocal bufhidden=hide | set nobuflisted | endif
+endif
+"}}}
 
 " archived operation
 " echohl WarningMsg | echom 'You need to install git!' | echohl None
