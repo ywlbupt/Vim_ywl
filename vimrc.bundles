@@ -1,5 +1,4 @@
 " Dependency
-
 " python : [flake8](http://flake8.readthedocs.io/en/latest/#quickstart)
 
 " vim-plug 异步插件管理" {{{
@@ -352,15 +351,21 @@ endif
 " <S-BS>       is mapped to <Plug>delimitMateS-BS
 " <S-Tab>      is mapped to <Plug>delimitMateS-Tab
 " <C-G>g       is mapped to <Plug>delimitMateJumpMany
-    let g:delimitMate_matchpairs = "(:),[:],{:}"
-    " let g:delimitMate_matchpairs = "(:),[:],{:},<:>"
+if count(g:plugin_function_groups, "delimitMate")
+    " let g:delimitMate_matchpairs = "(:),[:],{:}"
+    let g:delimitMate_matchpairs = "(:),[:],{:},<:>"
     " 关闭某类型文件的自动补全
     " au FileType mail,text let b:delimitMate_autoclose = 0
     " for python docstring ",优化输入
-    au FileType python let b:delimitMate_nesting_quotes = ['"']
-    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}
-        \ let b:delimitMate_quotes = "' ` \"" |
-        \ let b:delimitMate_excluded_regions = " "
+    augroup delimitMate
+        autocmd! delimitMate
+        au FileType python let b:delimitMate_nesting_quotes = ['"']
+        au FileType c,cpp let b:delimitMate_matchpairs = "(:),[:],{:}"
+        au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}
+            \ let b:delimitMate_quotes = "' ` \"" |
+            \ let b:delimitMate_excluded_regions = " "
+    augroup END
+endif
     "}}}
 
 " kien/rainbow_parentheses  彩虹括号"{{{
@@ -460,7 +465,7 @@ endif
 " 快捷键
     nnoremap <leader>ge :Gvdiff<CR>
     " :only<cr>
-     
+
 "}}}
 
 " airblade/gitgutter　同用于git diff "{{{
@@ -755,54 +760,7 @@ nmap ga <Plug>(EasyAlign)
     " nnoremap <F10> :call asyncrun#quickfix_toggle(10)<cr>
     let $PYTHONUNBUFFERED=1
     let g:asyncrun_rootmarks = copy(b:project_marker_list)
-
-    " 自定义一键编译运行 "{{{
-    " 定义CompileRun函数，用来调用编译和运行
-    func! ComplieX()
-        exec "w"
-        if &filetype == 'c'
-            exec 'AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
-        elseif &filetype == 'cpp'
-            exec 'AsyncRun g++ -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
-        endif
-    endfunc
-    autocmd! FileType c,cpp nnoremap <silent> <F7> :call ComplieX()<CR>
-
-    " 定义Run函数
-    func! RunX()
-        if &filetype == 'c' || &filetype == 'cpp'
-            if MySys() == "windows"
-                exec 'AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
-            elseif MySys() == 'linux'
-                exec "! %<"
-            endif
-        elseif &filetype == 'python'
-            exec "w"
-            exec "AsyncRun -raw python %"
-            exec "copen"
-            exec "wincmd p"
-        endif
-    endfunc
-    nnoremap <silent> <F5> :call RunX()<CR>
-    " 定义Debug函数，用来调试程序
-    func! Debug()
-        exec "w"
-        if &filetype == 'c'
-            " exec "!gcc % -g -o %<"
-            exec "!gcc % -g -o %<"
-            exec "!gdb %<"
-        elseif &filetype == 'cpp'
-            exec "!g++ % -g -o %<"
-            exec "!gdb %<".".exe"
-        elseif &filetype == 'java'
-            exec "!javac %"
-            exec "!jdb %<"
-        endif
-    endfunc
-    au! FileType c,cpp nnoremap <silent> <C-F5> :call Debug()<CR>
-
-    "}}}
-
+    let g:asyncrun_trim = 1
 "}}}
 
 " vim-youdao-translater "{{{
@@ -837,7 +795,7 @@ nmap ga <Plug>(EasyAlign)
 " " 单文件编译运行
     " nnoremap <silent> <C-F5> :call ComplieRunCpp()<CR>
 " make
-    " autocmd FileType c,cpp map <silent> <leader><space> :make<CR>
+    " autocmd FileType c,cpp map <silent><buffer> <leader><space> :make<CR>
 
 
     " for reference of python from zhihu zhangyiteng
@@ -891,33 +849,68 @@ if g:term_support && count(g:plugin_function_groups, 'neoterm')
 endif
 "}}}
 
+" 自定义一键编译运行 "{{{
+    " 定义CompileRun函数，用来调用编译和运行
+    func! ComplieX() abort
+        exec "w"
+        if &filetype == 'c'
+            exec 'AsyncRun gcc -g -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
+        elseif &filetype == 'cpp'
+            exec 'AsyncRun g++ -g -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
+        endif
+    endfunc
+
+    " 定义Run函数
+    func! RunX() abort
+        if &filetype == 'c' || &filetype == 'cpp'
+            if MySys() == "windows"
+                exec 'AsyncRun -raw -cwd=$(VIM_FILEDIR) -mode=4 "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
+            elseif MySys() == 'linux'
+                exec "! %<"
+            endif
+        elseif &filetype == 'python'
+            exec "w"
+            exec "AsyncRun -raw python %"
+            exec "copen"
+            exec "wincmd p"
+        endif
+    endfunc
+
+    " 定义Debug函数，用来调试程序
+    func! DebugX() abort
+        exec "w"
+        if g:term_support
+            let s:debug = "Termdebug"
+        else
+            let s:debug = "!gdb "
+        endif
+        if &filetype == 'c' || &filetype == 'cpp'
+
+            let l:winnr = winnr()
+            let s:file_name = expand("%<")
+            " noautocmd windo call TermDebugSendCommand('file '.s:file_name)
+            noautocmd silent! exec ''.l:winnr.'wincmd w'
+        endif
+    endfunc
+
+    augroup cfamilyDebug
+    autocmd! cfamilyDebug
+        autocmd FileType c,cpp nnoremap <silent><buffer> <F7> :call ComplieX()<CR>
+        autocmd FileType c,cpp nnoremap <silent><buffer> <C-F5> :call DebugX()<CR>
+        autocmd FileType c,cpp nnoremap <silent><buffer> <F5> :call RunX()<CR>
+    augroup END
+
+    augroup pydebug
+        autocmd! pydebug
+        autocmd FileType python nnoremap <silent><buffer> <F5> :call RunX()<CR>
+    augroup END
+    "}}}
+
 " c cpp quick switch jump and mkdir c/h file
 " :A
 
 " SimpylFold "{{{
     let g:SimpylFold_docstring_preview = 1
-"}}}
-
-" del, xolox/vim-easytags"{{{
-" --------Brief help------------
-" :UpdateTags  : 显式更新tags
-" :HighlightTags  : 显式highlight tags
-    " if MySys() == 'windows'
-        " let g:easytags_cmd = $CTAGS_WIN
-    " endif
-    " " let g:easytags_opts = ['-R']
-    " let g:easytags_file = expand('$HOME')."/_vimtags"
-
-    " " 可选的event有 Cursorhold,  CursorholdI
-    " " 自动更新 tags 的发生时机，只在保存文件时更新，
-    " " let g:easytags_events = ['BufWritePost']
-    " let g:easytags_events = ['']
-
-    " " 生成与 ~/_vimtags 为根的绝对路径，且此时 set tags = ./tags;,~/_vimtags
-    " nnoremap <silent> <leader>ct :exec ':UpdateTags --tag-relative=yes -f '.g:easytags_file.' -R'<cr>
-    " let g:easytags_async=0
-    " let g:easytags_auto_highlight = 0
-    " let g:easytags_dynamic_files = 1
 "}}}
 
 " vimgrep.vim "{{{
@@ -980,3 +973,19 @@ endif
     endif
 
 "}}}
+
+" vim-terminal at $VIMFILES/plugin/
+map <silent> <F12> :VSTerminalToggle<cr>
+if has('nvim')
+    tnoremap <F12> <C-\><C-n> :VSTerminalToggle<cr>
+    tnoremap <C-w> <C-\><C-n><C-w>
+else
+    tmap <silent> <F12> <c-w>:VSTerminalToggle<cr>
+endif
+let g:vs_terminal_custom_height = 10
+
+
+"
+"
+" Plugin 'octol/vim-cpp-enhanced-highlight'
+" h switchbuf

@@ -67,12 +67,13 @@ if !exists('g:plugin_function_groups')
     " optional :
     " "syntastic", "hexo" , "YouCompleteMe" , "ale", "airline",
     " "tagbar" , "LeaderF", "coc.nvim"
-    " "neoterm"
+    " "neoterm" "delimitMate"
     let g:plugin_function_groups = ['hexo',  "airline" ,"ale",
                 \ "LeaderF", "tagbar",
                 \ "YouCompleteMe",
                 \ "vim-youdao-translater",
-                \ "neoterm"
+                \ "neoterm",
+                \ "delimitMate",
                 \]
                 " \"coc.nvim",
 endif
@@ -437,8 +438,9 @@ endif
     " noremap <C-k> <C-W>k
     " noremap <C-h> <C-W>h
     " noremap <C-l> <C-W>l
-    inoremap <C-h> <Left>
-    inoremap <C-l> <Right>
+    
+    " inoremap <C-h> <Left>
+    " inoremap <C-l> <Right>
     inoremap <C-j> <Down>
     inoremap <C-k> <Up>
 
@@ -521,8 +523,11 @@ endif
 
 " Autocmd "{{{
 if has("autocmd")
-    autocmd! FileType c,cs,java,perl,
-                \shell,bash,cpp,python,vim,php,ruby  setlocal cc=81
+    augroup ccevent
+        autocmd! ccevent 
+        autocmd FileType c,cs,java,perl,
+                    \shell,bash,cpp,python,vim,php,ruby  setlocal cc=81
+    augroup END
 
     augroup htmlevent
         autocmd! htmlevent
@@ -534,7 +539,8 @@ if has("autocmd")
     augroup END
 
     augroup cppevent
-        autocmd!     FileType c,cpp setlocal smartindent |
+        autocmd! cppevent
+        autocmd! FileType c,cpp setlocal smartindent |
                         \setlocal tabstop=2 |
                         \setlocal softtabstop=2 |
                         \setlocal shiftwidth=2 |
@@ -553,6 +559,7 @@ if has("autocmd")
                     \setlocal foldmethod=syntax |
                     \setlocal cc=81
     augroup END
+
 
     au! BufNewFile,BufRead *.swig,*.ejs set filetype=javascript
 
