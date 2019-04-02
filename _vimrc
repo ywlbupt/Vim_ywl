@@ -3,19 +3,6 @@
 " LastUpdate : 2016-09-17 13:56:35
 " Description : vimrc
 
-" Install Dependency"{{{
-""""""""""""""""
-" # ubuntu
-" sudo apt-get install ctags
-" sudo apt-get install build-essential cmake python-dev
-" #编译YCM自动补全插件依赖
-" sudo apt-get install silversearcher-ag
-" # python # For syntastic
-" sudo pip install pyflakes
-" sudo pip install pylint
-" sudo pip install pep8
-"}}}
-
 " Initial setting"{{{
 " -----------------------------------------------------------------------------
 "  < 判断操作系统是否是 Windows 还是 Linux >
@@ -34,6 +21,11 @@ elseif MySys() == 'windows'
     let g:os_sep = '\'
 endif
 
+
+"""""""""""""""
+"  v:virable  "
+"""""""""""""""
+
 if !exists("$VIMY")
     let $VIMY = expand('~/Vim_ywl')
 endif
@@ -47,7 +39,10 @@ let $CTAGS_WIN = expand("$VIMY/Archive_gvim/ctags.exe")
 
 let $CPPPRJ = expand("$HOME/git_repos/Alg_C_Exercise")
 
+"""""""""""""
 "   个人文件夹路径的设定
+"""""""""""""
+
 if MySys() == 'linux'
     set runtimepath=$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after
     set runtimepath+=$HOME/vimfiles,$HOME/vimfiles/after
@@ -60,23 +55,6 @@ endif
 " Set mapleader & Fast edit vimrc
 let   mapleader = ","
 let g:mapleader = ","
-"}}}
-
-"{{{
-if !exists('g:plugin_function_groups')
-    " optional :
-    " "syntastic", "hexo" , "YouCompleteMe" , "ale", "airline",
-    " "tagbar" , "LeaderF", "coc.nvim"
-    " "neoterm" "delimitMate"
-    let g:plugin_function_groups = ['hexo',  "airline" ,"ale",
-                \ "LeaderF", "tagbar",
-                \ "YouCompleteMe",
-                \ "vim-youdao-translater",
-                \ "neoterm",
-                \ "delimitMate",
-                \]
-                " \"coc.nvim",
-endif
 
 if has("nvim")
 let g:python3_host_prog='C:\Anaconda3\python.exe'
@@ -94,6 +72,9 @@ else
 endif
 
 let g:term_support = has("terminal")
+
+
+
 "}}}
 
 " For windows version, using gVIM with Cygwin on a Windows PC"{{{
@@ -137,7 +118,7 @@ endif
         nnoremap <silent> <leader>rr :source $MYVIMRC<cr>
     "   Fast editing of .vimrc
         nnoremap <silent> <leader>ee :exec 'edit '.expand('$VIMY/_vimrc')<cr>
-        nnoremap <silent> <leader>eb :exec 'edit '.expand('$VIMY/vimrc.bundles')<cr>
+        nnoremap <silent> <leader>eb :exec 'edit '.expand('$VIMY/vimrc_plugged.vim')<cr>
         nnoremap <silent> <leader>er :edit $MYVIMRC<cr>
     else
         echom exists("$MYVIMRC")?"$MYVIMRC": "$VIMY"."$VIMRC not define"
@@ -160,11 +141,16 @@ filetype plugin on
 " 启动自动补全
 filetype plugin indent on
 "}}}
-
-if filereadable(expand('$VIMY/vimrc.bundles'))
-    exec 'source '.expand('$VIMY/vimrc.bundles')
+if filereadable(expand('$VIMY/vimrc_plug_list.vim'))
+    exec 'source '.expand('$VIMY/vimrc_plug_list.vim')
 else
-    echo 'No vimrc.bundles found'
+    echo 'No vimrc_plug_list found'
+endif
+
+if filereadable(expand('$VIMY/vimrc_plugged.vim'))
+    exec 'source '.expand('$VIMY/vimrc_plugged.vim')
+else
+    echo 'No vimrc_plugged found'
 endif
 
 if filereadable(expand('$VIMY/vimrc.func'))
@@ -285,7 +271,7 @@ endif
     set foldtext=MyFoldText()
 
     " 用空格键来开关折叠
-    nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+    " nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 "}}}
 
     set viewoptions=cursor,folds,slash,unix
@@ -297,6 +283,8 @@ endif
     xnoremap <  <gv
     xnoremap >  >gv
     " 快速添加空行, 设置之后，连续按下 5 [ 空格 在当前行上方插入 5 个空行。
+    " 这里的  'yel' 字符常量必须为单引号
+    " :<c-u>put=printf('yel'))<cr>
     nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
     nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
     " 智能 Ctrl-l
@@ -378,7 +366,8 @@ endif
     au InsertLeave * set nopaste
 
     " Quickly close the current window
-    nnoremap <leader>q :q<CR>
+    nnoremap <leader>q :call terminal#all_terms_exit()<CR>:q<cr>
+
 
     " Quickly save the current file
     nnoremap <leader>w :w<CR>
@@ -389,10 +378,13 @@ endif
     " 方便书签的跳转
     nnoremap ' `
     nnoremap ` '
-
     " mapping
     " 如果下拉菜单弹出，回车映射为接受当前所选项目，否则，仍映射为回车
-    inoremap <expr> <CR> pumvisible()?"\<C-Y>":"\<CR>"
+    if count(g:plugin_function_groups, 'delimitMate')
+        imap <expr> <CR> pumvisible()?"\<C-Y>":"<Plug>delimitMateCR"
+    else
+        inoremap <expr> <CR> pumvisible()?"\<C-Y>":"\<CR>"
+    endif
     " 如果下拉菜单弹出，CTRL-U映射为CTRL-E，即停止补全，否则，仍映射为CTRL-U
     " inoremap <expr> <C-U> pumvisible()?"\<C-E>":"\<C-U>"
 
@@ -424,8 +416,8 @@ endif
     " nnoremap g5 5gt
     " nnoremap g6 6gt
     " buffer mapping
-    nnoremap gn :bn<CR>
-    nnoremap gp :bp<CR>
+    nnoremap <leader>bn :bn<CR>
+    nnoremap <leader>bp :bp<CR>
     nnoremap <leader>bd :bd<CR>
 
     nnoremap <leader>on :only<CR>
@@ -439,8 +431,8 @@ endif
     " noremap <C-h> <C-W>h
     " noremap <C-l> <C-W>l
     
-    " inoremap <C-h> <Left>
-    " inoremap <C-l> <Right>
+    inoremap <C-h> <Left>
+    inoremap <C-l> <Right>
     inoremap <C-j> <Down>
     inoremap <C-k> <Up>
 

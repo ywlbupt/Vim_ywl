@@ -1,85 +1,5 @@
 " Dependency
 " python : [flake8](http://flake8.readthedocs.io/en/latest/#quickstart)
-
-" vim-plug 异步插件管理" {{{
-call plug#begin('$VIMFILES/plugged')
-    " Plug '~/my-prototype-plugin' " 表示不用github托管的本地vim插件；
-    Plug 'junegunn/vim-easy-align'
-" Initialize plugin system
-    Plug 'ludovicchabant/vim-gutentags'
-    " Group dependencies, vim-snippets depends on ultisnips
-    Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-    " 括号显示增强
-    Plug 'kien/rainbow_parentheses.vim'
-    Plug 'Valloric/ListToggle'
-    " for didn't work as expected in plugin vim-markdown
-    Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-    Plug 'skywind3000/asyncrun.vim'
-    Plug 'xolox/vim-misc' |  Plug 'xolox/vim-session'
-    " tpope 大神
-    Plug 'tpope/vim-repeat' | Plug 'tpope/vim-surround'
-    " -------------------- Python ----------------
-    " fold for python
-    Plug 'tmhedberg/SimpylFold', {'for': 'python'}
-    " python vim built-in help
-    Plug 'fs111/pydoc.vim', {'for': 'python'}
-    " syntasitc checkers
-    Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
-    " Git 集成工具
-    Plug 'tpope/vim-fugitive'
-    "---------模板输入 快捷输入--------
-    Plug 'ywlbupt/load_template'
-    Plug 'scrooloose/nerdcommenter'
-    Plug 'scrooloose/nerdtree'
-
-    " autocomplete pairs自动补全括号
-    Plug 'Raimondi/delimitMate'
-    " colors
-    Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
-    " gitgutter
-    Plug 'airblade/vim-gitgutter'
-    " gundo " edit history, 可以查看回到某个历史状态
-    Plug 'sjl/gundo.vim'
-
-    " new added
-    Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
-    if count(g:plugin_function_groups, 'neoterm')
-        Plug 'kassio/neoterm'
-    endif
-
-
-
-    if count(g:plugin_function_groups, "ale")
-        " Plug 'w0rp/ale',{'tag' : 'v2.3.0'}
-        Plug 'w0rp/ale'
-    endif
-    if count(g:plugin_function_groups, "tagbar")
-        Plug 'majutsushi/tagbar'
-    endif
-    if count(g:plugin_function_groups, "LeaderF")
-        if MySys() == 'windows'
-            Plug 'Yggdroot/LeaderF',{ 'do': '.\install.bat' }
-        elseif MySys() == 'linux'
-            Plug 'Yggdroot/LeaderF',{ 'do': './install.sh' }
-        endif
-    endif
-    if count(g:plugin_function_groups, "coc.nvim")
-        Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
-    endif
-    Plug 'altercation/vim-colors-solarized'
-    Plug 'morhetz/gruvbox'
-    if count(g:plugin_function_groups, 'vim-youdao-translater')
-        Plug 'ianva/vim-youdao-translater'
-    endif
-    if count(g:plugin_function_groups, 'YouCompleteMe')
-        " Plug 'Valloric/YouCompleteMe', { 'do': 'python ./install.py 00clang-completer' }
-        " Plug 'Valloric/YouCompleteMe', { 'do': 'python ./install.py' }
-        " Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-        Plug 'Valloric/YouCompleteMe'
-    endif
-call plug#end()
-"}}}
-
 " project root markers, used for gutentags and asyncrun
 
 let b:project_marker_list = ['.root', '.svn', '.git', '.project']
@@ -98,6 +18,7 @@ let b:project_marker_list = ['.root', '.svn', '.git', '.project']
 
 if count(g:plugin_function_groups, 'hexo')
     let g:hexo_blogpath = expand('~/hexo_blog')
+
 endif
 
 " vim-airline/vim-airline  "好看轻量级的powerline，不依赖python "{{{
@@ -106,6 +27,7 @@ endif
         let g:airline_theme = "base16_google"
         if MySys() == 'windows'
             set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI
+
         else
             if has("gui_gtk2")
                 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
@@ -141,13 +63,13 @@ endif
 
 " colorscheme "{{{
 try
-    exec 'colorscheme solarized'
-    " exec 'colorscheme gruvbox'
-    exec 'set background=dark'
+    " exec 'colorscheme solarized'
+    exec 'colorscheme gruvbox'
+    " exec 'colorscheme github'
 catch
     exec 'colorscheme desert'
 endtry
-
+    exec 'set background=dark'
 "}}}
 
 " vim-scripts/Load_Template file setting " 模板文件"{{{
@@ -160,6 +82,7 @@ endtry
 " scrooloose/nerdtree  " 侧边文件导航栏 "{{{
 
 " The-NERD-Tree / netrw setting "{{{
+    let g:netrw_nogx = get(g:, 'netrw_nogx', 1) " disable netrw's gx mapping.
     let g:netrw_winsize = 31
     " Vexplore!为在左侧打开netrw
     " nnoremap <silent> <leader>fe :Vexplore<cr>
@@ -225,6 +148,33 @@ endtry
         execute "normal pcd"
     endfunction
 "}}}
+"}}}
+
+" Raimondi/delimitMate : 自动补全括号 "{{{
+" --------Brief help------------
+" <BS>         is mapped to <Plug>delimitMateBS
+" <S-BS>       is mapped to <Plug>delimitMateS-BS
+" <S-Tab>      is mapped to <Plug>delimitMateS-Tab
+" <C-G>g       is mapped to <Plug>delimitMateJumpMany
+if count(g:plugin_function_groups, "delimitMate")
+    " let g:delimitMate_matchpairs = "(:),[:],{:}"
+    imap <BS> <Plug>delimitMateBS
+    let delimitMate_matchpairs = "(:),[:],{:},<:>"
+    let g:delimitMate_expand_cr = 1
+    let g:delimitMate_expand_space = 1
+    " 关闭某类型文件的自动补全
+    " au FileType mail,text let b:delimitMate_autoclose = 0
+    " for python docstring ",优化输入
+    augroup delimitMateevent
+        autocmd! delimitMateevent
+        au FileType python let b:delimitMate_nesting_quotes = ['"']
+        au FileType c,cpp let b:delimitMate_matchpairs = "(:),[:],{:}"
+        au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}
+            \ let b:delimitMate_quotes = "' ` \"" |
+            \ let b:delimitMate_excluded_regions = " "
+    augroup END
+endif
+
 "}}}
 
 " Valloric/YouCompleteMe" 可能是最好用的自动补全工具 TODO:syntastic"{{{
@@ -300,7 +250,7 @@ endif
     " If you want :UltiSnipsEdit to split your window.
     let g:UltiSnipsEditSplit="vertical"
     " 进入对应filetype的snippets进行编辑
-    map <leader>us :UltiSnipsEdit<CR>
+    map <leader>eu :UltiSnipsEdit<CR>
     " Explicityly tell UltiSnips To use python version 3.x
     " let g:UltiSnipsUsePythonVersion = 2
     " Snippets的文件夹名字，查找rtp路径下的UltiSnips文件夹< plugin vim-snippets
@@ -344,29 +294,6 @@ endif
     let b:pydoc_width = '70 '
     let g:pydoc_open_cmd = b:pydoc_width.'vsplit'
 "}}}
-
-" Raimondi/delimitMate : 自动补全括号 "{{{
-" --------Brief help------------
-" <BS>         is mapped to <Plug>delimitMateBS
-" <S-BS>       is mapped to <Plug>delimitMateS-BS
-" <S-Tab>      is mapped to <Plug>delimitMateS-Tab
-" <C-G>g       is mapped to <Plug>delimitMateJumpMany
-if count(g:plugin_function_groups, "delimitMate")
-    " let g:delimitMate_matchpairs = "(:),[:],{:}"
-    let g:delimitMate_matchpairs = "(:),[:],{:},<:>"
-    " 关闭某类型文件的自动补全
-    " au FileType mail,text let b:delimitMate_autoclose = 0
-    " for python docstring ",优化输入
-    augroup delimitMate
-        autocmd! delimitMate
-        au FileType python let b:delimitMate_nesting_quotes = ['"']
-        au FileType c,cpp let b:delimitMate_matchpairs = "(:),[:],{:}"
-        au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}
-            \ let b:delimitMate_quotes = "' ` \"" |
-            \ let b:delimitMate_excluded_regions = " "
-    augroup END
-endif
-    "}}}
 
 " kien/rainbow_parentheses  彩虹括号"{{{
     " 不加入这行, 防止黑色括号出现, 很难识别
@@ -484,10 +411,13 @@ endif
     " customed mapping
     " nmap [c <Plug>GitGutterPrevHunk
     " nmap ]c <Plug>GitGutterNextHunk
-    nmap <Leader>hs <Plug>GitGutterStageHunk
-    nmap <Leader>hu <Plug>GitGutterUndoHunk
-    nmap <Leader>hp <Plug>GitGutterPreviewHunk
+    nmap <Leader>gs <Plug>GitGutterStageHunk
+    nmap <Leader>gu <Plug>GitGutterUndoHunk
+    nmap <Leader>gp <Plug>GitGutterPreviewHunk
+    nmap <leader>gn <Plug>GitGutterNextHunk
     nnoremap <leader>gs :GitGutterToggle<CR>
+    command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+                \ | wincmd p | diffthis
 "}}}
 
 " sjl/gundo.vim 打开quickfix窗口查看修改历史"{{{
@@ -551,10 +481,6 @@ endif
     " 用新窗口打开并查看光标下符号的定义，或者 CTRL-W } 使用 preview 窗口预览光标下符号的定义。
 "}}}
 
-" Valloric/ListToggle"{{{
-    let g:lt_quickfix_list_toggle_map = '<F4>'
-"}}}
-
 " vim-easy-align"{{{
 
 " start interactive easyalign in visual mode (e.g. vip<enter>)
@@ -596,7 +522,7 @@ nmap ga <Plug>(EasyAlign)
     " endfunction
     let g:Lf_ShortcutF = '<C-P>'
     noremap <c-n> :LeaderfMru<cr>
-    nnoremap <leader>fu :LeaderfFunction!<cr>
+    nnoremap <leader>fu :LeaderfFunction<cr>
     " search word recursive
     " nnoremap <leader>ff :Leaderf! rg --stayOpen -e
     if executable("rg")
@@ -715,13 +641,11 @@ nmap ga <Plug>(EasyAlign)
         "普通模式下，cp前往上一个错误或警告，cn前往下一个错误或警告
         " nmap <silent> cp <Plug>(ale_previous_wrap)
         " nmap <silent> cn <Plug>(ale_next_wrap)
-        " nnoremap <Leader>ck :ALEToggle<CR>
-        nnoremap <Leader>ck :ALELint<CR>
         " "<Leader>d查看错误或警告的详细信息
         " nnoremap <Leader>cd :ALEDetail<CR>
         " use quickfix list instead of the loclist
-        let g:ale_set_loclist = 1
-        let g:ale_set_quickfix = 0
+        let g:ale_set_loclist = 0
+        let g:ale_set_quickfix = 1
 
         " 使用clang对c和c++进行语法检查，对python使用pylint/flake8进行语法检查
         let g:ale_linters = {
@@ -741,6 +665,9 @@ nmap ga <Plug>(EasyAlign)
         if !executable("clang-format") && !executable("clang")
             echom "clang or clang-format isn't installed"
         endif
+        if !executable("autopep8") && !executable("yapf")
+            echom "autopep8 or yapft isn't installed"
+        endif
         let g:ale_fix_on_save = 0
         " let g:ale_fix_on_enter
         " let g:ale_fix_on_insert_leave
@@ -748,6 +675,7 @@ nmap ga <Plug>(EasyAlign)
         " :ALEFixSuggest
         " :ALEFix
         nnoremap <silent><leader>fx :ALEFix<cr>
+        nnoremap <Leader>fc :ALELint<CR>
     endif
 "}}}
 
@@ -820,8 +748,40 @@ nmap ga <Plug>(EasyAlign)
 "}}}
 
 " vim-which-key "{{{
-nnoremap <silent> <leader> :<c-u>WhichKey  ','<CR>
-let g:which_key_timeout = 300
+if count(g:plugin_function_groups, "vim-which-key")
+    cabbrev WK WhichKey
+    " nnoremap <silent> <leader> :<c-u>WhichKey  ','<CR>
+    nnoremap <silent> <leader>t :<c-u>WhichKey  ',t'<CR>
+    nnoremap <silent> <leader>q :<c-u>WhichKey  ',q'<CR>
+    nnoremap <silent> <leader>f :<c-u>WhichKey  ',f'<CR>
+    nnoremap <silent> <leader>g :<c-u>WhichKey  ',g'<CR>
+    nnoremap <silent> <leader>u :<c-u>WhichKey  ',u'<CR>
+    let g:which_key_timeout = 300
+    let g:which_key_vertical = 1
+    let g:which_key_position = 'botright'
+    let g:WhichKeyFormatFunc = function('which_key#util#format')
+    " let g:which_key_map =  {}
+    " :WhichKey! g:which_key_map.w
+    " let g:which_key_map.w = {
+      " \ 'name' : '+windows' ,
+      " \ 'w' : ['<C-W>w'     , 'other-window']          ,
+      " \ 'd' : ['<C-W>c'     , 'delete-window']         ,
+      " \ '-' : ['<C-W>s'     , 'split-window-below']    ,
+      " \ '|' : ['<C-W>v'     , 'split-window-right']    ,
+      " \ '2' : ['<C-W>v'     , 'layout-double-columns'] ,
+      " \ 'h' : ['<C-W>h'     , 'window-left']           ,
+      " \ 'j' : ['<C-W>j'     , 'window-below']          ,
+      " \ 'l' : ['<C-W>l'     , 'window-right']          ,
+      " \ 'k' : ['<C-W>k'     , 'window-up']             ,
+      " \ 'H' : ['<C-W>5<'    , 'expand-window-left']    ,
+      " \ 'J' : ['resize +5'  , 'expand-window-below']   ,
+      " \ 'L' : ['<C-W>5>'    , 'expand-window-right']   ,
+      " \ 'K' : ['resize -5'  , 'expand-window-up']      ,
+      " \ '=' : ['<C-W>='     , 'balance-window']        ,
+      " \ 's' : ['<C-W>s'     , 'split-window-below']    ,
+      " \ 'v' : ['<C-W>v'     , 'split-window-below']    ,
+      " \ }
+endif
 "}}}
 
 " neoterm REPL"{{{
@@ -864,7 +824,9 @@ endif
     func! RunX() abort
         if &filetype == 'c' || &filetype == 'cpp'
             if MySys() == "windows"
-                exec 'AsyncRun -raw -cwd=$(VIM_FILEDIR) -mode=4 "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
+                exec 'AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
+                " run in cmd as vs
+                " exec 'AsyncRun -raw -cwd=$(VIM_FILEDIR) -mode=4 "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
             elseif MySys() == 'linux'
                 exec "! %<"
             endif
@@ -905,6 +867,16 @@ endif
         autocmd FileType python nnoremap <silent><buffer> <F5> :call RunX()<CR>
     augroup END
     "}}}
+
+" 
+"   tyru/open-browser.vim {{{
+"   This is my setting. 
+let g:netrw_nogx = 1 " disable netrw's gx mapping. 
+nmap gx <Plug>(openbrowser-smart-search) 
+vmap gx <Plug>(openbrowser-smart-search) 
+" vnoremap gob :OpenBrowser http://www.baidu.com/s?wd=<C-R>=expand("<cword>")<cr><cr>
+" nnoremap gob :OpenBrowser http://www.baidu.com/s?wd=<C-R>=expand("<cword>")<cr><cr>
+"}}}
 
 " c cpp quick switch jump and mkdir c/h file
 " :A
@@ -974,18 +946,23 @@ endif
 
 "}}}
 
+" Plug 'Valloric/ListToggle' " Valloric/ListToggle"{{{
+    " let g:lt_quickfix_list_toggle_map = '<F4>'
+"}}}
+
 " vim-terminal at $VIMFILES/plugin/
-map <silent> <F12> :VSTerminalToggle<cr>
+nnoremap <silent> <leader>tt :VSTerminalToggle<cr>
 if has('nvim')
-    tnoremap <F12> <C-\><C-n> :VSTerminalToggle<cr>
+    tnoremap <silent><leader>tt <C-\><C-n> :MXTerminalToggle<cr>
     tnoremap <C-w> <C-\><C-n><C-w>
 else
-    tmap <silent> <F12> <c-w>:VSTerminalToggle<cr>
+    tnoremap <silent> <leader>tt <c-w>:MXTerminalToggle<cr>
 endif
-let g:vs_terminal_custom_height = 10
+" let g:vs_terminal_custom_height = 10
+let g:vs_terminal_custom_height = 70
+let g:vs_terminal_custom_pos ="right"
 
 
-"
 "
 " Plugin 'octol/vim-cpp-enhanced-highlight'
 " h switchbuf
