@@ -3,8 +3,8 @@
 """"""""""""""""""""""""""
 
 command! -nargs=* QToggle call tool#Toggle_LQlist(<f-args>)
-nnoremap <silent> <leader>tq :call tool#Toggle_LQlist('l')<cr>
-nnoremap <silent> <leader>tl :call tool#Toggle_LQlist('q')<cr>
+nnoremap <silent> <leader>tl :call tool#Toggle_LQlist('l')<cr>
+nnoremap <silent> <leader>tq :call tool#Toggle_LQlist('q')<cr>
 
 augroup quickfix_event
     autocmd! quickfix_event

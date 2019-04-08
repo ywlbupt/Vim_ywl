@@ -3,6 +3,7 @@
 " project root markers, used for gutentags and asyncrun
 
 let b:project_marker_list = ['.root', '.svn', '.git', '.project']
+set wildignore=*.o,*~,*.pyc,*.class,*.so,*.swp,*.zip
 
 " altercation/vim-colors-solarized" "主题方案"{{{
     " if g:colors_name == 'solarized'
@@ -69,7 +70,7 @@ try
 catch
     exec 'colorscheme desert'
 endtry
-    exec 'set background=dark'
+    " exec 'set background=dark'
 "}}}
 
 " vim-scripts/Load_Template file setting " 模板文件"{{{
@@ -198,6 +199,7 @@ if count(g:plugin_function_groups, 'YouCompleteMe')
     let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
     let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 
+    let g:ycm_add_preview_to_completeopt = 0
     let g:ycm_error_symbol = '>>'
     let g:ycm_warning_symbol = '>*'
     let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
@@ -244,6 +246,8 @@ endif
 " SirVer/UltiSnips "{{{
     " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
     let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsListSnippets="<c-tab>"
+
     let g:UltiSnipsJumpForwardTrigger="<tab>"
     let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
@@ -411,8 +415,8 @@ endif
     " customed mapping
     " nmap [c <Plug>GitGutterPrevHunk
     " nmap ]c <Plug>GitGutterNextHunk
-    nmap <Leader>gs <Plug>GitGutterStageHunk
-    nmap <Leader>gu <Plug>GitGutterUndoHunk
+    " nmap <Leader>gs <Plug>GitGutterStageHunk
+    " nmap <Leader>gu <Plug>GitGutterUndoHunk
     nmap <Leader>gp <Plug>GitGutterPreviewHunk
     nmap <leader>gn <Plug>GitGutterNextHunk
     nnoremap <leader>gs :GitGutterToggle<CR>
@@ -501,6 +505,7 @@ nmap ga <Plug>(EasyAlign)
         let g:Lf_Ctags = $CTAGS_WIN
     endif
     " preview code when navigating
+    let Lf_WindowPosition = "bottom"
     let g:Lf_PreviewCode  = 1
     let g:Lf_PreviewResult = {
             \ 'File': 0,
@@ -512,6 +517,11 @@ nmap ga <Plug>(EasyAlign)
             \ 'Line': 0,
             \ 'Colorscheme': 0
             \}
+    let g:Lf_WildIgnore = {
+            \ 'dir': ['.svn','.git','.hg'],
+            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+            \}
+
     " let g:Lf_CtagsFuncOpts = {
             " \ 'c': '--c-kinds=fp',
             " \ 'rust': '--rust-kinds=f',
@@ -608,10 +618,11 @@ nmap ga <Plug>(EasyAlign)
     if MySys() == "windows"
         let g:gutentags_ctags_executable = $CTAGS_WIN
     endif
-    let g:gutentags_exclude_filetypes = ['vim']
-    " use .notags instead for each project
-    let g:gutentags_exclude_project_root = [expand('$VIMY')]
+    " or use .notags instead for each project
+    " let g:gutentags_exclude_project_root = [expand('$VIMY')]
+
     let g:gutentags_file_list_command = 'rg --files'
+    " let g:gutentags_ctags_exclude_wildignore='*/plugged/*'
     " autocmd FileType qf nnoremap <silent><buffer> p :PreviewQuickfix<cr>
     " autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
     " To know when Gutentags is generating tags, add this to your vimrc:
@@ -752,7 +763,7 @@ if count(g:plugin_function_groups, "vim-which-key")
     cabbrev WK WhichKey
     " nnoremap <silent> <leader> :<c-u>WhichKey  ','<CR>
     nnoremap <silent> <leader>t :<c-u>WhichKey  ',t'<CR>
-    nnoremap <silent> <leader>q :<c-u>WhichKey  ',q'<CR>
+    " nnoremap <silent> <leader>q :<c-u>WhichKey  ',q'<CR>
     nnoremap <silent> <leader>f :<c-u>WhichKey  ',f'<CR>
     nnoremap <silent> <leader>g :<c-u>WhichKey  ',g'<CR>
     nnoremap <silent> <leader>u :<c-u>WhichKey  ',u'<CR>
@@ -813,10 +824,18 @@ endif
     " 定义CompileRun函数，用来调用编译和运行
     func! ComplieX() abort
         exec "w"
+        let l:gdb = 0
+        let l:opt_gdb = l:gdb == 1 ? '-ggdb': ''
         if &filetype == 'c'
-            exec 'AsyncRun gcc -g -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
+            exec 'AsyncRun gcc '.l:opt_gdb .' -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
         elseif &filetype == 'cpp'
-            exec 'AsyncRun g++ -g -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
+            exec 'AsyncRun g++ '.l:opt_gdb .' -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
+        endif
+    endfunc
+
+    func! ComplieX_noasync() abort
+        if &filetype == 'cpp'
+            exec 'AsyncRun -mode=1  g++ -g -Wall -std=c++11 -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
         endif
     endfunc
 
@@ -860,16 +879,19 @@ endif
         autocmd FileType c,cpp nnoremap <silent><buffer> <F7> :call ComplieX()<CR>
         autocmd FileType c,cpp nnoremap <silent><buffer> <C-F5> :call DebugX()<CR>
         autocmd FileType c,cpp nnoremap <silent><buffer> <F5> :call RunX()<CR>
+        autocmd FileType c,cpp nnoremap <silent><buffer> <leader>te :call terminal#exec_file()<CR>
+        autocmd FileType c,cpp nnoremap <silent><buffer> <C-F7> :call ComplieX_noasync()<CR>:ccl<CR>:call terminal#exec_file()<CR>
     augroup END
 
     augroup pydebug
         autocmd! pydebug
         autocmd FileType python nnoremap <silent><buffer> <F5> :call RunX()<CR>
+        autocmd FileType python nnoremap <silent><buffer> <leader>te :call terminal#exec_file(expand('%<')."py")<CR>
     augroup END
     "}}}
 
-" 
-"   tyru/open-browser.vim {{{
+"{{{
+" tyru/open-browser.vim 
 "   This is my setting. 
 let g:netrw_nogx = 1 " disable netrw's gx mapping. 
 nmap gx <Plug>(openbrowser-smart-search) 
@@ -880,6 +902,17 @@ vmap gx <Plug>(openbrowser-smart-search)
 
 " c cpp quick switch jump and mkdir c/h file
 " :A
+
+"{{{
+" cpp enhanced hightlight
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+" let g:cpp_experimental_simple_template_highlight = 1
+let g:cpp_concepts_highlight = 1
+" let g:cpp_no_function_highlight = 1
+let c_no_curly_error=1
+"}}}
 
 " SimpylFold "{{{
     let g:SimpylFold_docstring_preview = 1
@@ -950,6 +983,7 @@ vmap gx <Plug>(openbrowser-smart-search)
     " let g:lt_quickfix_list_toggle_map = '<F4>'
 "}}}
 
+"{{{
 " vim-terminal at $VIMFILES/plugin/
 nnoremap <silent> <leader>tt :VSTerminalToggle<cr>
 if has('nvim')
@@ -961,7 +995,7 @@ endif
 " let g:vs_terminal_custom_height = 10
 let g:vs_terminal_custom_height = 70
 let g:vs_terminal_custom_pos ="right"
-
+"}}}
 
 "
 " Plugin 'octol/vim-cpp-enhanced-highlight'

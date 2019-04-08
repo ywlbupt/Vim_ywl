@@ -170,10 +170,12 @@ endif
     " set wildmode=list:longest
     " Ignore compiled files
 
+    " set wildignore+=*/node_modules/*,_site,*/__pycache__/,*/venv/*,*/target/*,*/.vim$,\~$,*/.log,*/.aux,*/.cls,*/.aux,*/.bbl,*/.blg,*/.fls,*/.fdb*/,*/.toc,*/.out,*/.glo,*/.log,*/.ist,*/.fdb_latexmk
     " 增强模式中的命令行自动完成操作
     set wildmenu
     " 这个貌似会影响到YCM
     " set completeopt=longest,menu
+    set completeopt=menu,menuone
     " wildmenu" 激活时，下面的键有特殊含义:
     " <Left> <Right> - 选择前项/后项匹配 (类似于 CTRL-P/CTRL-N)
     " <Down> - 文件名/菜单名补全中: 移进子目录和子菜单。
@@ -366,8 +368,11 @@ endif
     au InsertLeave * set nopaste
 
     " Quickly close the current window
-    nnoremap <leader>q :call terminal#all_terms_exit()<CR>:q<cr>
-
+    nnoremap <silent><leader>q :call Uclose()<cr>
+    function! Uclose()
+        if winnr('$')==1 | call terminal#all_terms_exit() | endif 
+        q
+    endfunc
 
     " Quickly save the current file
     nnoremap <leader>w :w<CR>
@@ -379,6 +384,7 @@ endif
     nnoremap ' `
     nnoremap ` '
     " mapping
+    " inoremap <expr> <CR> pumvisible()?"\<C-Y>":"\<CR>"
     " 如果下拉菜单弹出，回车映射为接受当前所选项目，否则，仍映射为回车
     if count(g:plugin_function_groups, 'delimitMate')
         imap <expr> <CR> pumvisible()?"\<C-Y>":"<Plug>delimitMateCR"
@@ -489,12 +495,12 @@ endif
         autocmd GUIEnter * set lines=40 |  set columns=149
     else
         " set t_Co=16
-        set t_Co=16
-       " if &term =~ "xterm"
+        if &term =~ "xterm"
             " set t_Sb=^[[4%dm " 设置背景色
             " set t_Sf=^[[3%dm " 设置前景色
-        autocmd VimEnter * set lines=40 | set columns=149
-        " endif
+            set t_Co=16
+            autocmd VimEnter * set lines=40 | set columns=149
+        endif
     endif
 
     " 防止tmux下vim的背景色显示异常

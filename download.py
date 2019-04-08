@@ -11,7 +11,6 @@ import io
 import re
 from datetime import date
 
-
 # import platform
 # def Mysys():
     # ''' return Windows or Linux '''

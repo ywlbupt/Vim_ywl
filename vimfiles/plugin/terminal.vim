@@ -306,7 +306,7 @@ command! -nargs=0 -bar MXTerminalToggle :call s:VSTerminalToggle()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call s:VSLazyLoadCMD()
 
-" if a
+"{{{
 function! s:term_send_text(...) abort
     if a:0 == 1
         let l:text = a:1
@@ -326,7 +326,9 @@ function! s:term_send_text(...) abort
         echo "no terminal exitst"
     endif
 endfunction
+"}}}
 
+"{{{
 function! terminal#all_terms_exit() abort
     let l:exit_cmd = "exit"
     for l:bufnr in term_list()
@@ -338,3 +340,40 @@ function! terminal#all_terms_exit() abort
         echom "still remain terminal not exit"
     endif
 endfunction
+"}}}
+
+"{{{
+function! terminal#exec_file(...) abort
+	function! s:WindowCheck()
+		if getbufvar('%', '&buftype') == 'terminal'
+			let s:terminal_open = 1
+            let s:term_bufnr = bufnr("%")
+			return
+        endif
+    endfunc
+
+    let s:terminal_open = 0
+    let s:term_bufnr = 0
+    let l:winnr = winnr()
+    let l:exec_file_name = "%"
+    if a:0 == 1
+        let l:exec_file_name = a:1
+    endif
+
+    if l:exec_file_name == '%' 
+        let l:exec_file_name = expand('%<')
+    endif
+
+	windo call s:WindowCheck()
+    silent exec l:winnr.'wincmd w'
+    if s:terminal_open == 1 && s:term_bufnr != 0
+        call s:term_send_text(s:term_bufnr, l:exec_file_name )
+    else
+        call s:VSTerminalToggle()
+        silent exec 'wincmd p'
+        let s:term_bufnr = g:vs_terminal_current_number
+        " let g:vs_terminal_current_number = 0
+        call s:term_send_text(s:term_bufnr, l:exec_file_name )
+    endif
+endfunction
+"}}}

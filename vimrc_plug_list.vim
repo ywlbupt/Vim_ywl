@@ -2,18 +2,20 @@ if !exists('g:plugin_function_groups')
     " optional :
     " "syntastic", "hexo" , "YouCompleteMe" , "ale", "airline",
     " "tagbar" , "LeaderF", "coc.nvim"
-    " "neoterm" "delimitMate"
+    " "neoterm", "delimitMate"
     let g:plugin_function_groups = ['hexo',  "airline" ,"ale",
                 \ "LeaderF", "tagbar",
-                \ "YouCompleteMe",
                 \ "vim-youdao-translater",
+                \ "YouCompleteMe",
                 \ "delimitMate",
                 \ "quickmenu",
                 \ "vim-which-key",
+                \ "vista.vim",
                 \]
                 " \ "vim-which-key",
+                " \ "vista.vim",
                 " \ "neoterm",
-                " \"coc.nvim",
+                " \ "coc.nvim",
 endif
 
 " vim-plug 异步插件管理"
@@ -57,6 +59,9 @@ call plug#begin('$VIMFILES/plugged')
     Plug 'sjl/gundo.vim'
     Plug 'tyru/open-browser.vim'
 
+    " cpp enhanced hightlight
+    Plug 'octol/vim-cpp-enhanced-highlight'
+
     " new added
     if count(g:plugin_function_groups, "vim-which-key")
         Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
@@ -70,6 +75,9 @@ call plug#begin('$VIMFILES/plugged')
     endif
     if count(g:plugin_function_groups, "tagbar")
         Plug 'majutsushi/tagbar'
+    endif
+    if count(g:plugin_function_groups, 'vista.vim')
+        Plug 'liuchengxu/vista.vim'
     endif
     if count(g:plugin_function_groups, "LeaderF")
         if MySys() == 'windows'
