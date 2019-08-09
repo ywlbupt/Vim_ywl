@@ -88,3 +88,14 @@ endfunction
 " augroup END
 "}}}
 
+"{{{
+function! tool#Html_Prettify() abort
+	if &ft != 'html'
+		echo "not a html file"
+		return
+	endif
+	silent! exec "s/<[^>]*>/\r&\r/g"
+	silent! exec "g/^$/d"
+	exec "normal ggVG="
+endfunc
+"}}}

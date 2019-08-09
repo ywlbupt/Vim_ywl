@@ -4,6 +4,7 @@ tags
 _viminfo
 __pycache__
 mass_repo
+cache
 /vimfiles/bundle
 /vimfiles/Workspace
 /vimfiles/plugindata

@@ -35,9 +35,10 @@ if !exists("$VIMFILES")
 endif
 let $PLUG = expand("$VIMFILES/plugged")
 let $SETTING = expand("$VIMFILES/setting_of_plugin")
-let $CTAGS_WIN = expand("$VIMY/Archive_gvim/ctags.exe")
+let $CTAGS_WIN = expand("$VIMY/archive_gvim/ectags.exe")
+let $UCTAGS_WIN = expand("$VIMY/archive_gvim/uctags.exe")
 
-let $CPPPRJ = expand("$HOME/git_repos/Alg_C_Exercise")
+let $GITPRJ = expand("$HOME/git_repos")
 
 """""""""""""
 "   个人文件夹路径的设定
@@ -345,7 +346,7 @@ endif
 " Default Path & Global constant - chrome "{{{
     " 启动进入自己的主目录
     " exec 'cd '.$VIMY
-    exec 'cd '.$CPPPRJ
+    exec 'cd '.$GITPRJ
 
     " chrome path for windows
     if hostname() == 'M-PC'

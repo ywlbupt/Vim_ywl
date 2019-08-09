@@ -29,6 +29,23 @@ snippet ustd
 using namespace std;
 endsnippet
 
+snippet #ifd "#if defined ..."
+#ifdef ${1}
+  ${2}
+#endif
+endsnippet
+
+snippet #ifdcpp "#if defined __cplusplus"
+#ifdef __cplusplus
+  extern "C"{
+#endif
+// code here
+
+#ifdef __cplusplus
+}
+#endif
+endsnippet
+
 #######################################################################
 #                          operator override                          #
 #######################################################################
@@ -46,3 +63,4 @@ istream& operator>>(istream &in, ${1:class_name} &${2:x}){
 	return in;
 }
 endsnippet
+

@@ -1,0 +1,7 @@
+priority -45
+
+snippet augroup "augroup snippet" b
+augroup ${1:groupevent}
+	autocmd! ${1/(\w+).*/$1/}
+augroup END
+endsnippet

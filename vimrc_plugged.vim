@@ -25,7 +25,7 @@ endif
 " vim-airline/vim-airline  "好看轻量级的powerline，不依赖python "{{{
     if count(g:plugin_function_groups, "airline")
         let g:airline_powerline_fonts = 1
-        let g:airline_theme = "base16_google"
+        " let g:airline_theme = "base16_google"
         if MySys() == 'windows'
             set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI
 
@@ -70,7 +70,7 @@ try
 catch
     exec 'colorscheme desert'
 endtry
-    " exec 'set background=dark'
+    exec 'set background=light'
 "}}}
 
 " vim-scripts/Load_Template file setting " 模板文件"{{{
@@ -495,6 +495,22 @@ nmap ga <Plug>(EasyAlign)
 
 "}}}
 
+"{{{
+" vista.vim
+if count(g:plugin_function_groups, "vista.vim")
+    nnoremap <silent> <leader>tv :Vista!!<cr>
+    " let g:vista_icon_indent = ["▸ ", "-> "]
+    let g:vista_sidebar_position="vertica topleft"
+    let g:vista_default_executive = 'ctags'
+    " let g:vista_ctags_cmd = {
+        " \ 'haskell': 'hasktags -o - -x',
+        " \ }
+        " \ 'cpp': 'ctags --c++-kinds=+pf --fields=+nKil --extras=+q -f -',
+        " \ 'cpp': 'ctags --languages=c++ --format=2 --excmd=pattern --fields=nksSaf --extras=q --file-scope=yes --sort=no --append=no -f - ',
+        " --options=/my/options/ctag
+endif
+"}}}
+
 " leaderF "{{{
 "   rg : ripgrep
 "   move rg.exe to C:\windows\System32
@@ -502,37 +518,41 @@ nmap ga <Plug>(EasyAlign)
 "   if executable
 
     if MySys() == "windows"
-        let g:Lf_Ctags = $CTAGS_WIN
+        let g:Lf_Ctags = $UCTAGS_WIN
     endif
     " preview code when navigating
     let Lf_WindowPosition = "bottom"
-    let g:Lf_PreviewCode  = 1
+    let g:Lf_ShowRelativePath = 0
+    let g:Lf_PreviewCode  = 0
     let g:Lf_PreviewResult = {
             \ 'File': 0,
             \ 'Buffer': 0,
             \ 'Mru': 0,
             \ 'Tag': 0,
             \ 'BufTag': 0,
-            \ 'Function': 1,
+            \ 'Function': 0,
             \ 'Line': 0,
-            \ 'Colorscheme': 0
+            \ 'Colorscheme': 1
             \}
     let g:Lf_WildIgnore = {
             \ 'dir': ['.svn','.git','.hg'],
             \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
             \}
 
-    " let g:Lf_CtagsFuncOpts = {
-            " \ 'c': '--c-kinds=fp',
-            " \ 'rust': '--rust-kinds=f',
-            " \ }
+    let g:Lf_CtagsFuncOpts = {
+            \ 'c': '--c-kinds=fp',
+            \ 'cpp': '--c++-kinds=+px',
+            \ 'rust': '--rust-kinds=f',
+            \ }
     " function! LeaderfTag_cword()
         " let w = expand("<cword>") " 在当前光标位置抓词
         " exec 'LeaderfTag'
     " endfunction
     let g:Lf_ShortcutF = '<C-P>'
     noremap <c-n> :LeaderfMru<cr>
-    nnoremap <leader>fu :LeaderfFunction<cr>
+    nnoremap <leader>fu :LeaderfFunction!<cr>
+    nnoremap <leader>ft :LeaderfBufTag!<cr>
+    let g:Lf_RootMarkers = copy(b:project_marker_list)
     " search word recursive
     " nnoremap <leader>ff :Leaderf! rg --stayOpen -e
     if executable("rg")
@@ -612,11 +632,13 @@ nmap ga <Plug>(EasyAlign)
    endif
 
     "  配置 ctags 的参数 "
-    " let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-    " let g:gutentags_ctags_extra_args += ['--c++-kinds=+pxI']
-    " let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+    let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+    let g:gutentags_ctags_extra_args += ['--c++-kinds=+pxI']
+    let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
     if MySys() == "windows"
-        let g:gutentags_ctags_executable = $CTAGS_WIN
+        let g:gutentags_ctags_executable = $UCTAGS_WIN
+        " 使用 u-ctags 增加这一行
+        let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
     endif
     " or use .notags instead for each project
     " let g:gutentags_exclude_project_root = [expand('$VIMY')]
@@ -675,9 +697,19 @@ nmap ga <Plug>(EasyAlign)
                     " \'add_blank_lines_for_python_control_statements'
         if !executable("clang-format") && !executable("clang")
             echom "clang or clang-format isn't installed"
+        else
+            augroup format_cpp
+                autocmd! format_cpp
+                autocmd FileType c,cpp vnoremap <silent><buffer> <leader>fx :!clang-format<CR>
+            augroup END
         endif
         if !executable("autopep8") && !executable("yapf")
             echom "autopep8 or yapft isn't installed"
+        else
+            augroup format_python
+                autocmd! format_python
+                autocmd FileType python vnoremap <silent><buffer> <leader>fx :!yapf<CR>
+            augroup END
         endif
         let g:ale_fix_on_save = 0
         " let g:ale_fix_on_enter
@@ -693,8 +725,10 @@ nmap ga <Plug>(EasyAlign)
 " skywind3000/asyncrun.vim"{{{
     " stop the runing job
     " :AsyncStop{!}
+
     " 自动打开 quickfix window ，高度为 6
     let g:asyncrun_open = 10
+
     " 设置 F10 打开/关闭 Quickfix 窗口
     " nnoremap <F10> :call asyncrun#quickfix_toggle(10)<cr>
     let $PYTHONUNBUFFERED=1
@@ -703,8 +737,8 @@ nmap ga <Plug>(EasyAlign)
 "}}}
 
 " vim-youdao-translater "{{{
-    nnoremap <silent> <m-f> :<C-u>Ydc<CR>
-    vnoremap <silent> <m-f> :<C-u>Ydv<CR>
+    nnoremap <silent> gw :<C-u>Ydc<CR>
+    " vnoremap <silent> <m-f> :<C-u>Ydv<CR>
 "}}}
 
 " Windows和linux的单文件编译 "{{{
@@ -766,7 +800,7 @@ if count(g:plugin_function_groups, "vim-which-key")
     " nnoremap <silent> <leader>q :<c-u>WhichKey  ',q'<CR>
     nnoremap <silent> <leader>f :<c-u>WhichKey  ',f'<CR>
     nnoremap <silent> <leader>g :<c-u>WhichKey  ',g'<CR>
-    nnoremap <silent> <leader>u :<c-u>WhichKey  ',u'<CR>
+    nnoremap <silent> <leader>uf :<c-u>WhichKey  ',uf'<CR>
     let g:which_key_timeout = 300
     let g:which_key_vertical = 1
     let g:which_key_position = 'botright'
@@ -820,82 +854,12 @@ if g:term_support && count(g:plugin_function_groups, 'neoterm')
 endif
 "}}}
 
-" 自定义一键编译运行 "{{{
-    " 定义CompileRun函数，用来调用编译和运行
-    func! ComplieX() abort
-        exec "w"
-        let l:gdb = 0
-        let l:opt_gdb = l:gdb == 1 ? '-ggdb': ''
-        if &filetype == 'c'
-            exec 'AsyncRun gcc '.l:opt_gdb .' -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
-        elseif &filetype == 'cpp'
-            exec 'AsyncRun g++ '.l:opt_gdb .' -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
-        endif
-    endfunc
-
-    func! ComplieX_noasync() abort
-        if &filetype == 'cpp'
-            exec 'AsyncRun -mode=1  g++ -g -Wall -std=c++11 -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
-        endif
-    endfunc
-
-    " 定义Run函数
-    func! RunX() abort
-        if &filetype == 'c' || &filetype == 'cpp'
-            if MySys() == "windows"
-                exec 'AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
-                " run in cmd as vs
-                " exec 'AsyncRun -raw -cwd=$(VIM_FILEDIR) -mode=4 "$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
-            elseif MySys() == 'linux'
-                exec "! %<"
-            endif
-        elseif &filetype == 'python'
-            exec "w"
-            exec "AsyncRun -raw python %"
-            exec "copen"
-            exec "wincmd p"
-        endif
-    endfunc
-
-    " 定义Debug函数，用来调试程序
-    func! DebugX() abort
-        exec "w"
-        if g:term_support
-            let s:debug = "Termdebug"
-        else
-            let s:debug = "!gdb "
-        endif
-        if &filetype == 'c' || &filetype == 'cpp'
-
-            let l:winnr = winnr()
-            let s:file_name = expand("%<")
-            " noautocmd windo call TermDebugSendCommand('file '.s:file_name)
-            noautocmd silent! exec ''.l:winnr.'wincmd w'
-        endif
-    endfunc
-
-    augroup cfamilyDebug
-    autocmd! cfamilyDebug
-        autocmd FileType c,cpp nnoremap <silent><buffer> <F7> :call ComplieX()<CR>
-        autocmd FileType c,cpp nnoremap <silent><buffer> <C-F5> :call DebugX()<CR>
-        autocmd FileType c,cpp nnoremap <silent><buffer> <F5> :call RunX()<CR>
-        autocmd FileType c,cpp nnoremap <silent><buffer> <leader>te :call terminal#exec_file()<CR>
-        autocmd FileType c,cpp nnoremap <silent><buffer> <C-F7> :call ComplieX_noasync()<CR>:ccl<CR>:call terminal#exec_file()<CR>
-    augroup END
-
-    augroup pydebug
-        autocmd! pydebug
-        autocmd FileType python nnoremap <silent><buffer> <F5> :call RunX()<CR>
-        autocmd FileType python nnoremap <silent><buffer> <leader>te :call terminal#exec_file(expand('%<')."py")<CR>
-    augroup END
-    "}}}
-
 "{{{
 " tyru/open-browser.vim 
 "   This is my setting. 
 let g:netrw_nogx = 1 " disable netrw's gx mapping. 
 nmap gx <Plug>(openbrowser-smart-search) 
-vmap gx <Plug>(openbrowser-smart-search) 
+" vmap gx <Plug>(openbrowser-smart-search) 
 " vnoremap gob :OpenBrowser http://www.baidu.com/s?wd=<C-R>=expand("<cword>")<cr><cr>
 " nnoremap gob :OpenBrowser http://www.baidu.com/s?wd=<C-R>=expand("<cword>")<cr><cr>
 "}}}
