@@ -345,8 +345,8 @@ endif
 
 " Default Path & Global constant - chrome "{{{
     " 启动进入自己的主目录
-    " exec 'cd '.$VIMY
-    exec 'cd '.$GITPRJ
+    exec 'cd '.$VIMY
+    " exec 'cd '.$GITPRJ
 
     " chrome path for windows
     if hostname() == 'M-PC'

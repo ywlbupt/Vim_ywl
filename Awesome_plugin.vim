@@ -20,3 +20,4 @@
     " nmap <expr> <leader>cv &ft ==#'calendar'? "\<Plug>(calendar_exit)" :
                 " \ ":\<C-u>Calendar -position=topright -view=week\<CR>"
 "}}}
+"
