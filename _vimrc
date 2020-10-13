@@ -35,8 +35,8 @@ if !exists("$VIMFILES")
 endif
 let $PLUG = expand("$VIMFILES/plugged")
 let $SETTING = expand("$VIMFILES/setting_of_plugin")
-let $CTAGS_WIN = expand("$VIMY/archive_gvim/ectags.exe")
-let $UCTAGS_WIN = expand("$VIMY/archive_gvim/uctags.exe")
+let $CTAGS_WIN = expand("$VIMY/gvim_exec/ectags.exe")
+let $UCTAGS_WIN = expand("$VIMY/gvim_exec/uctags.exe")
 
 let $GITPRJ = expand("$HOME/git_repos")
 
@@ -271,6 +271,7 @@ endif
     "set foldmethod=syntax " 设置语法折叠
     set foldmethod=marker
     set foldcolumn=3 " 设置折叠区域的宽度
+    " vmode zf 添加折叠
     set foldtext=MyFoldText()
 
     " 用空格键来开关折叠
@@ -352,7 +353,7 @@ endif
     if hostname() == 'M-PC'
         let g:path_chrome='C:\Users\m\AppData\Local\Google\Chrome\Application\chrome.exe'
     else
-        let g:path_chrome='C:\Users\ywl\AppData\Local\Google\Chrome\Application\chrome.exe'
+        let g:path_chrome='"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"'
     endif
 "}}}
 
@@ -566,10 +567,10 @@ if has("autocmd")
         autocmd! markdownevent
         autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html}
                     \ setlocal formatoptions+=n |
-                    \setlocal tabstop=4 |
-                    \setlocal softtabstop=4 |
-                    \setlocal shiftwidth=4 |
-                    \setlocal cc=81
+                    \ setlocal tabstop=4 |
+                    \ setlocal softtabstop=4 |
+                    \ setlocal shiftwidth=4 |
+                    \ setlocal cc=81
         if MySys() == 'linux'
             autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html}
                         \nnoremap <buffer> <leader>p :!google-chrome "%:p"<CR>
@@ -578,7 +579,7 @@ if has("autocmd")
             " autocmd Filetype matlab source $HOME\vimfiles\syntax\matlab.vim|set cms=%\ %s
             " autocmd BufEnter *.m compiler mlint
             autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn,html}
-                        \nnoremap <buffer> <Leader>p :exec "!start ".g:path_chrome." %:p"<CR>
+                        \ nnoremap <buffer> <Leader>p :exec "!start ".g:path_chrome." %:p"<CR>
             "   autocmd Bufenter * normal zn
         endif
     augroup END
@@ -614,7 +615,11 @@ endif "has("autocmd")
 " Customed Function"{{{
 "{{{
 " Time.function 缩写定义
+" 查看所有的缩写，只需要在命令模式下输入：ab即可
+" 当我们希望输入的字符不被替换时，只需要在缩写后面输入Ctrl+V;
 " 在插入模式下输入xdate就会自动显示当前的时间
+" 清除所有的缩写：
+" :abclear
     iab tdate <c-r>=strftime("%Y/%m/%d %H:%M:%S")<cr>
     iab ydate <c-r>=strftime("%Y-%m-%d")<cr>
 "}}}
@@ -634,7 +639,9 @@ endif "has("autocmd")
     function! AddTitle()
         if GetFileType() == 'wiki'
             let uAnnotation = '# '
-        else
+        elseif &filetype == 'python'
+            let uAnnotation = '##'
+        elseif
             let uAnnotation = '//'
         endif
             call append(0,uAnnotation."========================
@@ -642,14 +649,13 @@ endif "has("autocmd")
             call append(1,uAnnotation)
             call append(2,uAnnotation." Author: ywlbupt - ywlbupt@163.com")
             call append(3,uAnnotation)
-            call append(4,uAnnotation)
-            call append(5,uAnnotation." Last modified:  XXXX-XX-XX XX:XX")
-            call append(6,uAnnotation)
-            call append(7,uAnnotation." Filename:       _vimrc")
-            call append(8,uAnnotation)
-            call append(9,uAnnotation." Description: ")
-            call append(10,uAnnotation)
-            call append(11,uAnnotation."=======================
+            call append(4,uAnnotation." Last modified:\t".strftime("%Y-%m-%d %H:%M"))
+            call append(5,uAnnotation)
+            call append(6,uAnnotation." Filename:\t\t".expand("%:t"))
+            call append(7,uAnnotation)
+            call append(8,uAnnotation." Description: ")
+            call append(9,uAnnotation)
+            call append(10,uAnnotation."=======================
                         \======================================================")
         echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
     endf
@@ -658,23 +664,22 @@ endif "has("autocmd")
 " 更新最近修改时间和文件名
 " 以后考虑使用查找替换字符串函数来优化这段代码 ##
     function! UpdateTitle()
-        if GetFileType() != 'wiki'
-            normal m'
-            execute '/\/\/ *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
-            normal ''
-            normal mk
-            execute '/\/\/ *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
-            execute "noh"
-            normal 'k
-        else
-            normal m'
-            execute '/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
-            normal ''
-            normal mk
-            execute '/# *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
-            execute "noh"
-            normal 'k
+        if GetFileType() == 'wiki'
+            let uAnnotation = '# '
+        elseif &filetype == 'python'
+            let uAnnotation = '##'
+        elseif
+            let uAnnotation = '//'
         endif
+        normal m'
+        " execute '/\/\/ *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
+        execute '/'.uAnnotation.' *Last modified:/s@:.*$@\=":\t".strftime("%Y-%m-%d %H:%M")@'
+        normal ''
+        normal mk
+        " execute '/\/\/ *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
+        execute '/'.uAnnotation.' *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
+        execute "noh"
+        normal 'k
         echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
     endfunction
 
@@ -684,7 +689,9 @@ endif "has("autocmd")
     function! TitleDet()
         if GetFileType() == 'wiki'
             let uAnnotation = '# '
-        else
+        elseif &filetype == 'python'
+            let uAnnotation = '##'
+        elseif
             let uAnnotation = '//'
         endif
         let n=1
@@ -693,7 +700,7 @@ endif "has("autocmd")
         while n < 10
             let line = getline(n)
     "       if line =~ '^\/\/\s*\S*Last\smodified:\S*.*$'
-            if line =~ '^'.uAnnotation.'\s*\S*Last\smodified:\S*.*$'
+            if line =~ '^'.uAnnotation.'\s*\S*Last\smodified:\s*.*$'
                 call UpdateTitle()
                 return
             endif
@@ -703,9 +710,9 @@ endif "has("autocmd")
     endfunction
 "}}}
 
-" vim81 :terminal support"{{{
+" vim81 :terminal support"{{{{{{
 if g:term_support
-    " SecureCRT 中使用 Vim 8 内嵌终端如看到奇怪字符，使用 :set t_RS= t_SH= 解决
+    " SecureCRT 中使用 Vim 8 内嵌终端如看到奇怪字符，使用 :set t_RS= t_SH= 解决}}}
     if &term =~ 'xterm'
         set t_RS= t_SH=
     endif

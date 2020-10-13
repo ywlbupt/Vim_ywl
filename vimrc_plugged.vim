@@ -1,6 +1,7 @@
 " Dependency
 " python : [flake8](http://flake8.readthedocs.io/en/latest/#quickstart)
 " project root markers, used for gutentags and asyncrun
+"  font ： https://github.com/powerline/fonts
 
 let b:project_marker_list = ['.root', '.svn', '.git', '.project']
 set wildignore=*.o,*~,*.pyc,*.class,*.so,*.swp,*.zip
@@ -190,7 +191,8 @@ if count(g:plugin_function_groups, 'YouCompleteMe')
     let g:ycm_python_binary_path = 'python'
     if MySys() == 'windows'
         " Only used for ycm server, default to use python embemdded in vim
-        let g:ycm_server_python_interpreter = 'C:/Anaconda3/python'
+        " let g:ycm_server_python_interpreter = 'C:/Anaconda3/python'
+        let g:ycm_server_python_interpreter = 'python'
     endif
 
     let g:ycm_global_ycm_extra_conf = $SETTING.g:os_sep.'.ycm_extra_conf_backup.py'
@@ -466,8 +468,7 @@ endif
     endif
 "}}}
 
-"{{{
-" Ctags
+" Ctags "{{{
 " """"""""""""""""""""""""""""""
 " 将当前的工程的tags导入
 " 如果源文件在当前文件夹下没有找到tags,可以到它的上层目录下继续寻找
@@ -501,6 +502,7 @@ if count(g:plugin_function_groups, "vista.vim")
     nnoremap <silent> <leader>tv :Vista!!<cr>
     " let g:vista_icon_indent = ["▸ ", "-> "]
     let g:vista_sidebar_position="vertica topleft"
+    " See all the avaliable executives via `:echo g:vista#executives` .
     let g:vista_default_executive = 'ctags'
     " let g:vista_ctags_cmd = {
         " \ 'haskell': 'hasktags -o - -x',
@@ -556,8 +558,9 @@ endif
     " search word recursive
     " nnoremap <leader>ff :Leaderf! rg --stayOpen -e
     if executable("rg")
-        nnoremap <leader>ff :<C-U><C-R>=printf("Leaderf! rg --stayOpen -e ")<CR>
-        " search word under cursor, the pattern is treated as regex, and enter normal mode directly
+        nnoremap <leader>ff :<C-U><C-R>=printf("Leaderf! rg --stayOpen --current-buffer -e ")<CR>
+        nnoremap <leader>fb :<C-U><C-R>=printf("Leaderf! rg --stayOpen -e ")<CR>
+       " search word under cursor, the pattern is treated as regex, and enter normal mode directly
         nnoremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --stayOpen -e %s ", expand("<cword>"))<CR><CR>
         " search word under cursor literally only in current buffer
         nnoremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -F --stayOpen --current-buffer -e %s ", expand("<cword>"))<CR><CR>
@@ -677,8 +680,8 @@ endif
         " "<Leader>d查看错误或警告的详细信息
         " nnoremap <Leader>cd :ALEDetail<CR>
         " use quickfix list instead of the loclist
-        let g:ale_set_loclist = 0
-        let g:ale_set_quickfix = 1
+        let g:ale_set_loclist = 1
+        let g:ale_set_quickfix = 0
 
         " 使用clang对c和c++进行语法检查，对python使用pylint/flake8进行语法检查
         let g:ale_linters = {

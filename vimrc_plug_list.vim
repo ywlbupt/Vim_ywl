@@ -9,7 +9,6 @@ if !exists('g:plugin_function_groups')
                 \ "YouCompleteMe",
                 \ "delimitMate",
                 \ "quickmenu",
-                \ "vim-which-key",
                 \ "vista.vim",
                 \]
                 " \ "vim-which-key",
@@ -96,7 +95,7 @@ call plug#begin('$VIMFILES/plugged')
         Plug 'ianva/vim-youdao-translater'
     endif
     if count(g:plugin_function_groups, 'YouCompleteMe')
-        " Plug 'Valloric/YouCompleteMe', { 'do': 'python ./install.py 00clang-completer' }
+        " Plug 'Valloric/YouCompleteMe', { 'do': 'python ./install.py clang-completer' }
         " Plug 'Valloric/YouCompleteMe', { 'do': 'python ./install.py' }
         " Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
         Plug 'Valloric/YouCompleteMe'

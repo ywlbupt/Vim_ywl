@@ -1,11 +1,12 @@
 *.swp
 tags
+log
 .viminfo
 _viminfo
 __pycache__
 mass_repo
 cache
 /vimfiles/bundle
-/vimfiles/Workspace
-/vimfiles/plugindata
+/vimfiles/Workspace/*
+/vimfiles/plugindata/NERDTreeBookmarks.txt
 /vimfiles/plugged

@@ -27,11 +27,14 @@ call g:quickmenu#append('<lr>+fx: ALEFix', 'ALEFix', 'fix prog format','c,cpp,py
 call g:quickmenu#append('<lr>+fc: ALELint', 'ALELint', 'check prog grammar','c,cpp,python')
 call g:quickmenu#append('user format pretty', 'call tool#Html_Prettify()', 'format prety','html,xml')
 call g:quickmenu#append('<lr>+[n*-]: insert prefix', 'call tool#Line_insert_num()', 'insert prefix','markdown, text')
+call g:quickmenu#append('<lr>+p: markdown preview', 'call tool#Line_insert_num()', 'insert prefix','markdown, text')
 
-" section 2
+" section 
 call g:quickmenu#append('# text format Tips', '')
-call g:quickmenu#append('v<lr>+uf1: del multi blanklines','','g/^$\n^$/d')
-call g:quickmenu#append('v<lr>+uf2: del blank line', '', 'g/^\s*$/d')
-call g:quickmenu#append('v<lr>+uf3: del tail space', '', 's/\s\+$//g')
+call g:quickmenu#append('<c-b>  : Leaderf在所有buffers中查找光标下词','','')
+call g:quickmenu#append('<c-f>  : Leaerf在当前buffer中查找光标下词','','')
+call g:quickmenu#append('<lr>+ff: Leaderf在所有buffer中查找光标下词','','')
+call g:quickmenu#append('v<lr>+uf1: 多个空行删成一行','g/^$\n^$/d','del multi line')
+call g:quickmenu#append('v<lr>+uf2: 删除空行', 'g/^\s*$/d','del blank lines')
+call g:quickmenu#append('v<lr>+uf3: 删除行后空格', '%s/\s\+$//g','del tail spaces')
 call g:quickmenu#append('<lr>+eu: EditCustomSnips', 'UltiSnipsEdit', 'EditCustomSnips')
-call g:quickmenu#append('retab replace', 'retab', 'cmd:retab')
