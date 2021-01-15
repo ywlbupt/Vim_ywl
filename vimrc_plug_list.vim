@@ -60,6 +60,7 @@ call plug#begin('$VIMFILES/plugged')
 
     " cpp enhanced hightlight
     Plug 'octol/vim-cpp-enhanced-highlight'
+    Plug 'junegunn/fzf.vim'
 
     " new added
     if count(g:plugin_function_groups, "vim-which-key")
